@@ -1,23 +1,23 @@
 'use strict';
 
-var w = window.innerWidth * window.devicePixelRatio;
-var h = window.innerHeight * window.devicePixelRatio;
+var w = 800 //window.innerWidth * window.devicePixelRatio;
+var h = 600 //window.innerHeight * window.devicePixelRatio;
 
-var gameController = new Phaser.gam(w, h, Phaser.AUTO, 'controllerDiv'); 
+var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv'); 
 var controller_state = {};
 
-controller_state.main = () =>
+controller_state.main = function() { };
+controller_state.main = new function ()
 {
 var self = this;
 self.id;
-self.joystick1;
 
 self.game = gameController;
 
 self.preload = () =>
 	{
 	self.id = getParameter("id");
-	if (!self.id) self.id = game.rnd.integerInRange(0, 1000);
+	if (!self.id) self.id = self.game.rnd.integerInRange(0, 1000);
 
 	gameClient.connect("localhost", 8081, self.id, self.clientConnected);
 	};
@@ -31,8 +31,8 @@ self.create = () =>
 
 	var joystickRadius = 80;
 
-	self.joystick1 = self.game.plugins.add( Phaser.Plugin.VirtualJoystick(this));
-	self.joystick1.init(self.game.world.width/4, self.game.world.height/2, joystickRadius*2, joystickRaduis/3*4);
+	self.joystick1 = self.game.plugins.add(new Phaser.Plugin.VirtualJoystick(self))
+	self.joystick1.init(self.game.world.width/4, self.game.world.height/2, joystickRadius*2, joystickRadius/3*4);
 	self.joystick1.start()
 	};
 
@@ -44,9 +44,21 @@ self.update = () =>
 
 self.clientConnected = () =>
 	{
+	gameClient.exposeRpcMethod("setStickPosition", self, self.setStickPosition);
+	gameClient.exposeRpcMethod("getStickPosition", self, self.getStickPosition);
+	};
+
+self.setStickPosition = function(position)
+	{
+	console.log("DemoController::setStickPosition() "+position);
+	};
+
+self.getStickPosition = function(connectionId, callback)
+	{
+	callback(null, [666,667]);
 	};
 
 }
 
-controller.state.add('main', controller_state.main);
-controller.state.start('main');
+gameController.state.add('main', controller_state.main);
+gameController.state.start('main');
