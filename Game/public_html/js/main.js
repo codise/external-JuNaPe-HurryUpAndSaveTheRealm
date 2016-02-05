@@ -24,15 +24,15 @@ function update() {
         player.body.velocity.x = -150;
         //change player picture
     }
-    else if(cursors.right.isDown)
+    if(cursors.right.isDown)
     {
         player.body.velocity.x = 150;
     }
-    else if(cursors.up.isDown)
+    if(cursors.up.isDown)
     {
         player.body.velocity.y = -150;
     }
-    else if(cursors.down.isDown)
+    if(cursors.down.isDown)
     {
         player.body.velocity.y = 150;
     }
