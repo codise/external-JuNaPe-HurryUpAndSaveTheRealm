@@ -14,6 +14,8 @@ function create() {
     player = game.add.sprite(400, 300, 'dude');
     game.physics.arcade.enable(player);
     cursors = game.input.keyboard.createCursorKeys();
+    game.world.setBounds(0, 0, 800, 600);
+    player.body.collideWorldBounds = true;
 }
 
 function update() {
