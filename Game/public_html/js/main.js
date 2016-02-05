@@ -2,7 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
     game.load.image('sky', 'assets/sky.png');
-    game.load.spritesheet('dude', 'assets/1.png', 88, 135);
+    game.load.spritesheet('dude', 'assets/hahmo1.png', 90, 135);
 }
 
 //var platforms;
@@ -16,6 +16,8 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
     game.world.setBounds(0, 0, 800, 600);
     player.body.collideWorldBounds = true;
+    player.animations.add('left', [0], 20, true);
+    player.animations.add('right', [1], 20, true);
 }
 
 function update() {
@@ -24,11 +26,13 @@ function update() {
     if(cursors.left.isDown)
     {
         player.body.velocity.x = -150;
+        player.animations.play('left');
         //change player picture
     }
     if(cursors.right.isDown)
     {
         player.body.velocity.x = 150;
+        player.animations.play('right');
     }
     if(cursors.up.isDown)
     {
