@@ -1,13 +1,12 @@
 'use strict';
 
-var w = 800 //window.innerWidth * window.devicePixelRatio;
-var h = 600 //window.innerHeight * window.devicePixelRatio;
+var w = window.innerWidth * window.devicePixelRatio;
+var h = window.innerHeight * window.devicePixelRatio;
 
 var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv'); 
 var controller_state = {};
 
-controller_state.main = function() { };
-controller_state.main = new function ()
+controller_state.main = function ()
 {
 var self = this;
 self.id;
@@ -31,14 +30,15 @@ self.create = () =>
 
 	var joystickRadius = 80;
 
-	self.joystick1 = self.game.plugins.add(new Phaser.Plugin.VirtualJoystick(self))
+  self.joystick1 = self.game.plugins.add(new Phaser.Plugin.VirtualJoystick(self));
 	self.joystick1.init(self.game.world.width/4, self.game.world.height/2, joystickRadius*2, joystickRadius/3*4);
-	self.joystick1.start()
+	self.joystick1.start();
 	};
 
 self.update = () =>
 	{
-	var input = {X: self.joystick1.deltaX, Y: self.joystick1.deltaY};
+var input = {X:self.joystick1.deltaX, Y:self.joystick1.deltaY};
+  console.log("sending input" + input.X);
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
 

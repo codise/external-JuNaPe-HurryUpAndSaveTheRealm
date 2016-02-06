@@ -76,7 +76,7 @@ self.setScreenDisconnectionListener = (object_, listener_) =>
 
 //Events from the game server
 
-self.onClientConnected = function(id)
+self.onClientConnected = (id) =>
 	{
 	console.log("GameClient::onClientConnected() "+id);
 	clients[id] = true;
@@ -87,7 +87,7 @@ self.onClientConnected = function(id)
 		}
 	};
 	
-self.onClientDisconnected = function(id)
+self.onClientDisconnected = (id) =>
 	{
 	console.log("GameClient::onClientDisconnected() "+id);
 	if (clients[id])
@@ -99,7 +99,7 @@ self.onClientDisconnected = function(id)
 		}
 	};
 	
-self.onScreenConnected = function(id)
+self.onScreenConnected = (id) =>
 	{
 	console.log("GameClient::onScreenConnected() "+id);
 	screens[id] = true;
@@ -109,7 +109,7 @@ self.onScreenConnected = function(id)
 		}
 	};
 	
-self.onScreenDisconnected = function(id)
+self.onScreenDisconnected = (id) =>
 	{
 	console.log("GameClient::onScreenDisconnected() "+id);
 	if (screens[id])
@@ -121,7 +121,7 @@ self.onScreenDisconnected = function(id)
 		}
 	};	
 		
-self.connect = function(host, port, id, callback)
+self.connect = (host, port, id, callback) =>
 	{
 	var opts = {};
 	opts.host = host;
@@ -129,7 +129,7 @@ self.connect = function(host, port, id, callback)
 	if (id)
 		opts.id = id;
 	
-	serverConnection.connect(opts, function()
+	serverConnection.connect(opts, () =>
 		{
 		self.exposeRpcMethod("onClientConnected", self, self.onClientConnected);	
 		self.exposeRpcMethod("onClientDisconnected", self, self.onClientDisconnected);	
