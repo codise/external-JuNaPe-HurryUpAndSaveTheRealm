@@ -6,7 +6,7 @@ var gameHeight = window.innerHeight * window.devicePixelRatio;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
 var game_state = {};
 
-game_state.main = () =>
+game_state.main = function ()
 {
 var self = this;
 self.player;
