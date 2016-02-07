@@ -20,12 +20,20 @@ self.preload = () =>
 
   gameClient.connect("localhost", 8082, self.id, self.clientConnected);
 
+  game.load.image('sky', 'assets/bg/sky.png');
   game.load.image('player', 'assets/player_classes/knight.png');
   }
 
 self.create = () =>
   {
   game.stage.disableVisibilityChange = true;
+  self.bg = game.add.sprite(0, 0, 'sky');
+  self.bg.height = gameHeight;
+  self.bg.width = gameWidth;
+  self.bg.smoothed = false;
+
+
+
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -45,6 +53,7 @@ self.update = () =>
   {
   if (self.player != undefined)
   {
+    console.log("updating player");
     self.player.update();
   }
   };
