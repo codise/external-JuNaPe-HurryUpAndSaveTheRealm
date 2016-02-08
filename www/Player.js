@@ -39,4 +39,9 @@ self.update = () =>
     }
 	}
 	};
+
+self.kill = () =>
+	{
+	self.playerSprite.kill();
+	};
 }

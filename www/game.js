@@ -72,6 +72,7 @@ self.onControllerDisconnected = (id) =>
   if (self.player != undefined)
   {
   self.player.kill();
+  self.player = undefined;
   }
   };  
 
