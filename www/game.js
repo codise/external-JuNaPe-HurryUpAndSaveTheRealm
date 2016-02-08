@@ -6,11 +6,13 @@ var gameHeight = window.innerHeight * window.devicePixelRatio;
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
 var game_state = {};
 
+
 game_state.main = function ()
 {
 var self = this;
-self.player;
-//self.players = {}
+//self.player;
+
+self.players = {}
 //self.playerGroup;
 
 self.preload = () =>
@@ -40,18 +42,21 @@ self.create = () =>
 
 self.setPlayerInput = (id, input) =>
   {
-  if (self.player != undefined)
+  if (self.players[id] != undefined)
   {
     console.log("setting player input X: " + input.X);
-    self.player.setInput(input);
+    self.players[id].setInput(input);
   }
   };
 
 self.update = () =>
   {
-  if (self.player != undefined)
+  for (var id in self.players)
   {
-    self.player.update();
+  if (self.players[id] != undefined)
+  {
+    self.players[id].update();
+  }
   }
   };
 
@@ -60,8 +65,8 @@ self.render = () => {};
 
 self.onControllerConnected = (id) =>
   {
-  self.player = new Player(game, game.world.width/2, game.world.height/2);
-  //players[id] = new Player(game, game.world.width/2, game.world.height/2);
+  //self.player = new Player(game, game.world.width/2, game.world.height/2);
+  self.players[id] = new Player(game, game.world.width/2, game.world.height/2);
   //playerGroup.add(players[id]);
   };
 
@@ -69,10 +74,11 @@ self.onControllerDisconnected = (id) =>
   {
   //playerGroup.remove(players[id]);
   //players[id].kill();
-  if (self.player != undefined)
+  if (self.players[id] != undefined)
   {
-  self.player.kill();
-  self.player = undefined;
+  self.players[id].kill();
+  self.players[id] = undefined;
+  //playerGroup.remove(players[id]);
   }
   };  
 
