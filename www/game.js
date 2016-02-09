@@ -11,8 +11,6 @@ game_state.main = function ()
 {
 var self = this;
 //self.player;
-
-self.players = {}
 //self.playerGroup;
 
 self.preload = () =>
@@ -24,6 +22,7 @@ self.preload = () =>
 
   game.load.image('sky', 'assets/bg/sky.png');
   game.load.image('player', 'assets/player_classes/knight.png');
+  game.load.image('magic', 'assets/projectiles/bullet.png');
   }
 
 self.create = () =>
@@ -33,9 +32,11 @@ self.create = () =>
   self.bg.height = gameHeight;
   self.bg.width = gameWidth;
   self.bg.smoothed = false;
-
+  self.players = {};
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
+
+  self.bulletManager = new bulletManager(game);
 
   //playerGroup = game.add.group();
   }
@@ -44,13 +45,15 @@ self.setPlayerInput = (id, input) =>
   {
   if (self.players[id] != undefined)
   {
-    console.log("setting player input X: " + input.X);
+    console.log("setting player input X: " + input.X + " Y: " + input.Y);
     self.players[id].setInput(input);
   }
   };
 
 self.update = () =>
   {
+ // self.bulletManager.createBullet('magic', 0, {x:0.5, y:0.5}, {x:100, y:100});
+  self.bulletManager.update();
   for (var id in self.players)
   {
   if (self.players[id] != undefined)
@@ -66,7 +69,7 @@ self.render = () => {};
 self.onControllerConnected = (id) =>
   {
   //self.player = new Player(game, game.world.width/2, game.world.height/2);
-  self.players[id] = new Player(game, game.world.width/2, game.world.height/2);
+  self.players[id] = new Player(game, game.world.width/2, game.world.height/2, self.bulletManager, id);
   //playerGroup.add(players[id]);
   };
 

@@ -33,11 +33,15 @@ self.create = () =>
   self.joystick1 = self.game.plugins.add(new Phaser.Plugin.VirtualJoystick(self));
 	self.joystick1.init(self.game.world.width/4, self.game.world.height/2, joystickRadius*2, joystickRadius/3*4);
 	self.joystick1.start();
+
+  self.joystick2 = self.game.plugins.add(new Phaser.Plugin.VirtualJoystick(self));
+  self.joystick2.init(self.game.world.width - self.game.world.width/4, self.game.world.height/2, joystickRadius*2, joystickRadius/3 *4);
+  self.joystick2.start();
 	};
 
 self.update = () =>
 	{
-var input = {X:self.joystick1.deltaX, Y:self.joystick1.deltaY};
+var input = {X:self.joystick1.deltaX, Y:self.joystick1.deltaY, sX:self.joystick2.deltaX, sY:self.joystick2.deltaY};
   console.log("sending input" + input.X);
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
