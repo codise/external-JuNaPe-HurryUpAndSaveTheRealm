@@ -17,15 +17,15 @@ self.game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 self.playerSprite.body.collideWorldBounds = true;
 
 self.setInput = (input) =>
-	{
-	self.input = input;
-	}
+    {
+    self.input = input;
+    }
 
 
 self.update = () =>
-	{
-	if (self.input != undefined)
-	{
+    {
+    if (self.input != undefined)
+    {
     self.playerSprite.body.velocity.x = self.input.X * 100;
     self.playerSprite.body.velocity.y = self.input.Y * 100;
     if (self.playerSprite.body.velocity.x > 0 && self.flipped)
@@ -37,11 +37,11 @@ self.update = () =>
     self.playerSprite.scale.x = -1;
     self.flipped = true;
     }
-	}
-	};
+    }
+    };
 
 self.kill = () =>
-	{
-	self.playerSprite.kill();
-	};
+    {
+    self.playerSprite.kill();
+    };
 }

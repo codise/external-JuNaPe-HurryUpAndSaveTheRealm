@@ -13,7 +13,9 @@ var self = this;
 //self.player;
 
 self.players = {}
+self.enemies = {}
 //self.playerGroup;
+
 
 self.preload = () =>
   {
@@ -22,21 +24,22 @@ self.preload = () =>
 
   gameClient.connect("localhost", 8082, self.id, self.clientConnected);
 
-  game.load.image('sky', 'assets/bg/sky.png');
   game.load.image('player', 'assets/player_classes/knight.png');
+  game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
+  game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');
   }
-
 self.create = () =>
   {
   game.stage.disableVisibilityChange = true;
-  self.bg = game.add.sprite(0, 0, 'sky');
+  self.bg = game.add.sprite(0, 0, 'map');
   self.bg.height = gameHeight;
   self.bg.width = gameWidth;
   self.bg.smoothed = false;
-
+  
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
-
+  
+  self.enemies[0] = new Enemy(game, game.world.width/3, game.world.height/3);
   //playerGroup = game.add.group();
   }
 
@@ -56,6 +59,13 @@ self.update = () =>
   if (self.players[id] != undefined)
   {
     self.players[id].update();
+  }
+  }
+  for (var id in self.enemies)
+  {
+  if (self.enemies[id] != undefined)
+  {
+    self.enemies[id].update();
   }
   }
   };
