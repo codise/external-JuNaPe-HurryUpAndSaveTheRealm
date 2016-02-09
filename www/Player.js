@@ -23,9 +23,9 @@ self.fireRate = 100;
 self.nextFire = 0;
 
 self.setInput = (input) =>
-	{
-	self.input = input;
-	}
+    {
+    self.input = input;
+    }
 
 
 self.update = () =>

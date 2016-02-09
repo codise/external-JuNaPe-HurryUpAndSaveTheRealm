@@ -21,6 +21,12 @@ https://docs.google.com/spreadsheets/d/1qR0STTPIfG2O4oNOOeTi-rLpZHYI5CIzRS0F_ACi
 * Create your own branch in which you develop features
 * Create pull request when the feature is ready, someone will review it for you.
 
+##### How to manage branches.
+
+When starting a new task first pull latest master and then make a new branch on your local system with command `git branch -b <tasknamehere>`
+After making the feature, commit your changes and push them to server with `git push origin <tasknamehere>`
+When your branch is merged remember to make sure that it is deleted by deleting it with `git branch -d <tasknamehere> && git push origin :<tasknamehere>`
+
 #### Coding guidelines
 
 Follow this coding example to the point.
