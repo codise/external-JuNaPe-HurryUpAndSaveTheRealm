@@ -25,6 +25,7 @@ self.preload = () =>
 
   game.load.image('player', 'assets/player_classes/knight.png');
   game.load.image('magic', 'assets/projectiles/bullet.png');
+  game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
   game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
   game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');
   }
@@ -41,7 +42,7 @@ self.create = () =>
 
   self.bulletManager = new bulletManager(game);
 
-  self.enemies[0] = new Enemy(game, game.world.width/3, game.world.height/3);
+  self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
   //playerGroup = game.add.group();
   }
 

@@ -51,7 +51,7 @@ self.update = () =>
       var heading = new Phaser.Point();
       heading.x = i.sX;
       heading.y = i.sY;
-      self.bulletManager.createBullet('magic', self.id, heading, self.playerSprite.position);
+      self.bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
     }
 	}
 	};
@@ -60,4 +60,13 @@ self.kill = () =>
 	{
 	self.playerSprite.destroy();
 	};
+
+var headingToAngle = (heading) =>
+  { 
+    var vector = new Phaser.Point();
+    vector.x = -1;
+    vector.y = 0;
+    return (Phaser.Point.angle(heading, vector) * 360/Math.PI);
+  }
+
 }
