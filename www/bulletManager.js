@@ -5,44 +5,60 @@ function bulletManager(game)
 var self = this;
 console.log(game);
 self.game = game;
-console.log(self.game);
-self.bullets = self.game.add.group();
-self.bullets.enableBody = true;
-self.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-self.bulletPool = 10;
+
+self.playerBullets = self.game.add.group();
+self.playerBullets.enableBody = true;
+self.playerBullets.physicsBodyType = Phaser.Physics.ARCADE;
+self.playerBulletPool = 10;
+
+self.enemyBullets = self.game.add.group();
+self.enemyBullets.enableBody = true;
+self.enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+self.enemyBulletPool = 10;
+
 self.bulletSpeed = 1000;
 
-var angleCalc = (heading) =>
-	{
-    var vector = new Phaser.Point();
-    vector.x = -1;
-    vector.y = 0;
-    return (Phaser.Point.angle(heading, vector) * 360/Math.PI);
-	}
 
-
-self.createBullet = (type, playerid, heading, pos) =>
+self.createBullet = (type, playerid, angle, pos) => // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
 	{
-	if (self.bulletPool > 0)
-	{
-		switch (type)
-		{
-			case 'arrow':
-				var bullet = self.bullets.create(pos.x, pos.y, 'arrow');
-				// Other type spesific attributes
-				break;
-			case 'magic':
-				var bullet = self.bullets.create(pos.x, pos.y, 'magic');
-				break;
-			default:
-		    var bullet = self.bullets.create(pos.x, pos.y, 'magic');
-		}
-		self.bulletPool--;
+  if (playerid >= 0)
+  {
+    if (self.playerBulletPool > 0)
+    {
+      switch (type)
+      {
+        case 'arrow':
+          var bullet = self.playerBullets.create(pos.x, pos.y, 'arrow');
+          // Other type spesific attributes
+          break;
+        case 'magic':
+          var bullet = self.playerBullets.create(pos.x, pos.y, 'magic');
+          break;
+        default:
+          var bullet = self.playerBullets.create(pos.x, pos.y, 'magic');
+      }
+      self.playerBulletPool--;
+    }
+  } else
+  {
+    if (self.enemyBulletPool > 0)
+    {
+      switch (type)
+      {
+        case 'mosquitoBullet':
+          var bullet = self.enemyBullets.create(pos.x, pos.y, 'mosquitoBullet');
+          break;
+        default:
+          var bullet = self.enemyBullets.create(pos.x, pos.y, 'enemyBullet');
+      }
+      self.enemyBulletPool--;
+    }
+  }
+  if (bullet != undefined)
+  {
 		bullet.checkWorldBounds = true;
     bullet.events.onOutOfBounds.add(self.killbullet, this);
     bullet.anchor.setTo(0.5, 0.5);
-		var angle = angleCalc(heading);
-    console.log(angle);
 		self.game.physics.arcade.velocityFromAngle(angle, self.bulletSpeed, bullet.body.velocity);
 	}
 	}
@@ -54,7 +70,8 @@ self.killbullet = (bullet) =>
 
 self.update = () =>
   {
-  self.bulletPool = 10 - self.bullets.length;
+  self.enemyBulletPool = 10 - self.enemyBullets.length;
+  self.playerBulletPool = 10 - self.playerBullets.length;
   }
 
 
