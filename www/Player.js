@@ -22,6 +22,19 @@ self.playerSprite.body.collideWorldBounds = true;
 self.fireRate = 100;
 self.nextFire = 0;
 
+self.maxHealth = 1000;
+self.currentHealth = self.maxHealth;
+
+self.healthBarOutline = game.add.graphics(0,0);
+self.healthBarFill = game.add.graphics(0,0);
+self.healthBarOutline.lineStyle(2,0x000000,1);
+self.healthBarOutline.drawRect(self.playerSprite.X,self.playerSprite.Y,100,15);
+self.healthBarFill.beginFill(0xff3300);
+self.healthBarFill.drawRect(self.playerSprite.X,self.playerSprite.Y,(self.currentHealth/self.maxHealth*100),13);
+self.healthBarFill.endFill();
+self.playerSprite.addChild(self.healthBarOutline);
+self.playerSprite.addChild(self.healthBarFill);
+
 self.setInput = (input) =>
     {
     self.input = input;
@@ -55,6 +68,22 @@ self.update = () =>
     }
 	}
 	};
+
+self.takeDamage = function(damage) 
+  {
+    self.currentHealth = self.currentHealth-damage;
+    if(self.currentHealth <= 0) {
+      self.currentHealth = 0;
+    }
+    updateHealthBar();
+  };
+
+ var updateHealthBar = function() {
+    self.healthBarFill.clear();
+    self.healthBarFill.beginFill(0xFF3300);
+    self.healthBarFill.drawRect(self.playerSprite.X,self.playerSprite.Y,(self.currentHealth/self.maxHealth*100),13);
+    self.healthBarFill.endFill(); 
+ }; 
 
 self.kill = () =>
 	{
