@@ -1,36 +1,36 @@
 'use strict';
 
-function Enemy(game, bulletManager,  x, y)
+function Enemy(enemyInfo, game, bulletManager, player, position)
 {
 var self = this;
 
 
 self.game = game;
 self.bulletManager = bulletManager;
-self.maxSpeed = 150;
+self.maxSpeed = enemyInfo.maxSpeed;
 
-self.enemySprite = self.game.add.sprite(x, y, 'enemy_hellbug');
+self.enemySprite = self.game.add.sprite(position.x, position.y, enemyInfo.sprite);
 self.enemySprite.anchor.setTo(0.5, 0.5);
 self.flipped = false;
 
-self.game.physics.enable(self.enemySprite, Phaser.Physics.ARCADE);
-self.enemySprite.body.collideWorldBounds = true;
-
 self.nextMove = 0;
 self.moveRate = 2500;
+self.movementScheme = enemyInfo.movementScheme;
+
 self.xDirection = [1, -1];
 self.yDirection = [1, -1];
 
 self.fireRate = 5000;
 self.nextFire = 0;
+self.shootingScheme = enemyInfo.shootingScheme;
+
+self.player = player;
 
 self.update = () =>
     {
     if(self.game.time.now > self.nextMove) 
     {
-    self.enemySprite.body.velocity.x = self.xDirection[Math.floor(Math.random() * 2)]*50;
-    self.enemySprite.body.velocity.y = self.yDirection[Math.floor(Math.random() * 2)]*50;
-    self.nextMove = self.game.time.now + self.moveRate;
+			move();
     }
     if (self.enemySprite.body.velocity.x > 0 && self.flipped)
     {
@@ -44,11 +44,8 @@ self.update = () =>
 
     if (self.game.time.now > self.nextFire)
     {
-    	self.nextFire = self.game.time.now + self.fireRate;
-    	createBulletPulse(self.bulletManager);
+    	fire();
     }
-
-    
     };
 
 self.kill = () =>
@@ -56,13 +53,57 @@ self.kill = () =>
     self.enemySprite.destroy();
     };
 
-var createBulletPulse = (bManager) =>
+var move = () =>
 	{
-	// Creates five bullets radially from monster
+	switch (self.movementScheme)
+	{
+		case 'chargeSingle':
+			var angle = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+			self.game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
+
+			break;
+		default:
+    	self.enemySprite.body.velocity.x = self.xDirection[Math.floor(Math.random() * 2)]*50;
+    	self.enemySprite.body.velocity.y = self.yDirection[Math.floor(Math.random() * 2)]*50;
+	}
+  self.nextMove = self.game.time.now + self.moveRate;
+	}
+
+var fire = () =>
+	{
+	switch (self.shootingScheme[1])
+	{
+		case 'directedBurst':
+			createDirectedBurst(self.shootingScheme[0]);
+			break;
+		default:
+			createRadialPulse(self.shootingScheme[0]);	
+
+	}
+  self.nextFire = self.game.time.now + self.fireRate;
+	}
+
+var createRadialPulse = (n) =>
+	{
+	// Creates n bullets radially from monster
 	
-	for (var i = 0; i < 5; i++)
+	for (var i = 0; i < n; i++)
 	{
-	bManager.createBullet('enemyBullet', -1, 360/5 * i, self.enemySprite.position);
+		self.bulletManager.createBullet('enemyBullet', -1, 360/n * i, self.enemySprite.position);
 	}
 	}
+
+var createDirectedBurst = (n) =>
+	{
+	// Creates n bullets directed to player
+	
+	var angleBetween = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+	
+	for (var i = 0; i < n; i++)
+	{
+		self.bulletManager.createBullet('enemyBullet', -1, angleBetween, self.enemySprite.position);
+	}
+	}
+		
+
 }

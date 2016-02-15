@@ -11,8 +11,7 @@ game_state.main = function ()
 {
 var self = this;
 //self.player;
-self.players = {}
-self.enemies = {}
+//self.enemies = {}
 //self.playerGroup;
 
 
@@ -27,6 +26,7 @@ self.preload = () =>
   game.load.image('magic', 'assets/projectiles/bullet.png');
   game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
   game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
+  game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
   game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');
   }
 self.create = () =>
@@ -41,8 +41,9 @@ self.create = () =>
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
   self.bulletManager = new bulletManager(game);
+  self.enemyManager = new EnemyManager(game, self.bulletManager);
 
-  self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
+  //self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
   //playerGroup = game.add.group();
   }
 
@@ -66,13 +67,7 @@ self.update = () =>
     self.players[id].update();
   }
   }
-  for (var id in self.enemies)
-  {
-  if (self.enemies[id] != undefined)
-  {
-    self.enemies[id].update();
-  }
-  }
+  self.enemyManager.update(self.players);
   };
 
 self.render = () => {};
