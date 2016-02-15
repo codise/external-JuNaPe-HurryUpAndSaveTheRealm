@@ -35,6 +35,7 @@ self.healthBarFill.endFill();
 self.playerSprite.addChild(self.healthBarOutline);
 self.playerSprite.addChild(self.healthBarFill);
 
+
 self.setInput = (input) =>
     {
     self.input = input;
@@ -43,6 +44,9 @@ self.setInput = (input) =>
 
 self.update = () =>
 	{
+
+  
+
 	if (self.input != undefined)
 	{
     var i = self.input;
@@ -67,7 +71,18 @@ self.update = () =>
       self.bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
     }
 	}
+  //We should only check for collisions when there are collidable objects on screen
+  if(self.bulletManager.enemyBullets.length > 0) 
+    {
+      self.game.physics.arcade.overlap(self.bulletManager.enemyBullets, self.playerSprite, self.playerHit, null, self);  
+    }
 	};
+
+self.playerHit = function(bullet, player) 
+  {
+    self.takeDamage(10);
+  };
+
 
 self.takeDamage = function(damage) 
   {
@@ -78,12 +93,13 @@ self.takeDamage = function(damage)
     updateHealthBar();
   };
 
- var updateHealthBar = function() {
+ var updateHealthBar = function() 
+  {
     self.healthBarFill.clear();
     self.healthBarFill.beginFill(0xFF3300);
     self.healthBarFill.drawRect(self.playerSprite.X,self.playerSprite.Y,(self.currentHealth/self.maxHealth*100),13);
     self.healthBarFill.endFill(); 
- }; 
+  }; 
 
 self.kill = () =>
 	{

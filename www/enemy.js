@@ -24,6 +24,9 @@ self.fireRate = 5000;
 self.nextFire = 0;
 self.shootingScheme = enemyInfo.shootingScheme;
 
+self.maxHealth = 10;
+self.currentHealth = self.maxHealth;
+
 self.player = player;
 
 self.update = () =>
@@ -46,7 +49,28 @@ self.update = () =>
     {
     	fire();
     }
+
+    if(self.bulletManager.playerBullets.length > 0) 
+    {
+      self.game.physics.arcade.overlap(self.bulletManager.playerBullets, self.enemySprite, self.enemyHit, null, self); 
+    }
+
     };
+
+self.enemyHit = function() 
+  {
+    self.enemyTakeDamage(10);
+    console.log("Damage!");
+  };
+
+
+self.enemyTakeDamage = function(damage) 
+  {
+    self.currentHealth = self.currentHealth-damage;
+    if(self.currentHealth <= 0) {
+      self.enemySprite.alive = 0;
+    }
+  };
 
 self.kill = () =>
     {
