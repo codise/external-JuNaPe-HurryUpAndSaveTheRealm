@@ -25,6 +25,8 @@ self.nextFire = 0;
 self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
 
+self.dead = false;
+
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
 self.healthBarOutline.lineStyle(2,0x000000,1);
@@ -44,38 +46,42 @@ self.setInput = (input) =>
 
 self.update = () =>
 	{
+  if (!self.dead)
+  {
+    if (self.input != undefined)
+    {
+      var i = self.input;
+      self.playerSprite.body.velocity.x = i.X * 100;
+      self.playerSprite.body.velocity.y = i.Y * 100;
+      if (self.playerSprite.body.velocity.x > 0 && self.flipped)
+      {
+      self.playerSprite.scale.x = 1;
+      self.flipped = false;
+      } else if (self.playerSprite.body.velocity.x < 0 && !self.flipped)
+      {
+      self.playerSprite.scale.x = -1;
+      self.flipped = true;
+      }
 
-  
-
-	if (self.input != undefined)
-	{
-    var i = self.input;
-    self.playerSprite.body.velocity.x = i.X * 100;
-    self.playerSprite.body.velocity.y = i.Y * 100;
-    if (self.playerSprite.body.velocity.x > 0 && self.flipped)
-    {
-    self.playerSprite.scale.x = 1;
-    self.flipped = false;
-    } else if (self.playerSprite.body.velocity.x < 0 && !self.flipped)
-    {
-    self.playerSprite.scale.x = -1;
-    self.flipped = true;
+      if ((i.sX != 0 || i.sX != 0) && (self.game.time.now > self.nextFire))
+      {
+        self.nextFire = self.game.time.now + self.fireRate;
+        var heading = new Phaser.Point();
+        heading.x = i.sX;
+        heading.y = i.sY;
+        self.bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
+      }
     }
-
-    if ((i.sX != 0 || i.sX != 0) && (self.game.time.now > self.nextFire))
-    {
-      self.nextFire = self.game.time.now + self.fireRate;
-      var heading = new Phaser.Point();
-      heading.x = i.sX;
-      heading.y = i.sY;
-      self.bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
-    }
-	}
-  //We should only check for collisions when there are collidable objects on screen
-  if(self.bulletManager.enemyBullets.length > 0) 
-    {
-      self.game.physics.arcade.overlap(self.bulletManager.enemyBullets, self.playerSprite, self.playerHit, null, self);  
-    }
+    //We should only check for collisions when there are collidable objects on screen
+    if(self.bulletManager.enemyBullets.length > 0) 
+      {
+        self.game.physics.arcade.overlap(self.bulletManager.enemyBullets, self.playerSprite, self.playerHit, null, self);  
+      }
+    return true;
+  } else
+  {
+    return false;
+  }
 	};
 
 self.playerHit = function(bullet, player) 
@@ -88,6 +94,7 @@ self.takeDamage = function(damage)
   {
     self.currentHealth = self.currentHealth-damage;
     if(self.currentHealth <= 0) {
+      self.dead = true;
       self.currentHealth = 0;
     }
     updateHealthBar();

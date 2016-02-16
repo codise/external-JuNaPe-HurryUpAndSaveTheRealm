@@ -26,6 +26,7 @@ self.shootingScheme = enemyInfo.shootingScheme;
 
 self.maxHealth = 10;
 self.currentHealth = self.maxHealth;
+self.dead = false;
 
 self.player = player;
 
@@ -60,7 +61,6 @@ self.update = () =>
 self.enemyHit = function() 
   {
     self.enemyTakeDamage(10);
-    console.log("Damage!");
   };
 
 
@@ -68,7 +68,7 @@ self.enemyTakeDamage = function(damage)
   {
     self.currentHealth = self.currentHealth-damage;
     if(self.currentHealth <= 0) {
-      self.enemySprite.alive = 0;
+      self.enemySprite.dead = true;
     }
   };
 
