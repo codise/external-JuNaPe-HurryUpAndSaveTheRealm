@@ -15,6 +15,9 @@ self.maxSpeed = 400;
 self.playerSprite = self.game.add.sprite(x, y, 'player');
 self.playerSprite.anchor.setTo(0.5, 0.5);
 self.flipped = false;
+var textureWidth = self.playerSprite.width;
+var textureHeight = self.playerSprite.height;
+
 
 self.game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 self.playerSprite.body.collideWorldBounds = true;
@@ -30,12 +33,16 @@ self.dead = false;
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
 self.healthBarOutline.lineStyle(2,0x000000,1);
-self.healthBarOutline.drawRect(self.playerSprite.X,self.playerSprite.Y,100,15);
+self.healthBarOutline.drawRect(self.playerSprite.X, self.playerSprite.Y, 100, 15);
 self.healthBarFill.beginFill(0xff3300);
-self.healthBarFill.drawRect(self.playerSprite.X,self.playerSprite.Y,(self.currentHealth/self.maxHealth*100),13);
+self.healthBarFill.drawRect(self.playerSprite.X, self.playerSprite.Y, (self.currentHealth/self.maxHealth*100), 13);
 self.healthBarFill.endFill();
 self.playerSprite.addChild(self.healthBarOutline);
 self.playerSprite.addChild(self.healthBarFill);
+self.healthBarOutline.x = - textureWidth/2;
+self.healthBarFill.x = -textureWidth/2;;
+self.healthBarOutline.y = textureHeight/2;
+self.healthBarFill.y = textureHeight/2;
 
 
 self.setInput = (input) =>
