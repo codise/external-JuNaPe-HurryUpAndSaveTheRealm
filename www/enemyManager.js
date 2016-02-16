@@ -48,9 +48,9 @@ self.update = (players) =>
 	
 	for (var i = 0; i < self.enemyList.length; i++)
 	{
-	if (self.enemyList[i].enemySprite.alive === false)
+	if (self.enemyList[i].enemySprite.dead === true)
 	{
-		delete self.enemyList[i]
+    self.enemyList[i].kill();
 	} else
 	{
 		self.enemyList[i].update();
