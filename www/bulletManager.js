@@ -33,6 +33,13 @@ self.createBullet = (type, playerid, angle, pos) => // Type of bullet, player wh
           break;
         case 'magic':
           var bullet = self.playerBullets.create(pos.x, pos.y, 'magic');
+          var flame = self.game.add.sprite(pos.x, pos.y, 'flame');
+          self.game.physics.enable(flame, Phaser.Physics.ARCADE);
+          flame.anchor.setTo(0.5, 0.5);
+          flame.alpha = 1;
+          self.game.add.tween(flame).to({alpha: 0}, 100, "Linear", true);
+          self.game.physics.arcade.velocityFromAngle(angle, self.bulletSpeed, flame.body.velocity);
+          flame.events.onOutOfBounds.add(flame.destroy, this);
           break;
         default:
           var bullet = self.playerBullets.create(pos.x, pos.y, 'magic');

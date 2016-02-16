@@ -25,6 +25,7 @@ self.preload = () =>
   game.load.image('player', 'assets/player_classes/knight.png');
   game.load.image('magic', 'assets/projectiles/bullet.png');
   game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
+  game.load.image('flame', 'assets/projectiles/flame.png');
   game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
   game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
   game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');

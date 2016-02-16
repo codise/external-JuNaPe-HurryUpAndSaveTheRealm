@@ -33,9 +33,7 @@ self.update = (players) =>
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && self.game.time.now > self.nextSpawn)
 	{
 	// Spawn new mobs
-  console.log(players);
 	var randomPlayer = pickRandomFromDictionary(players);
-  console.log(randomPlayer);
 	var randomPos = {x: self.game.rnd.integerInRange(0, self.game.width), y: self.game.rnd.integerInRange(0, self.game.height)};
 	var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, randomPlayer, randomPos);
 	self.enemyGroup.add(newEnemy.enemySprite);
