@@ -52,7 +52,6 @@ self.setPlayerInput = (id, input) =>
   {
   if (self.players[id] != undefined)
   {
-    console.log("setting player input X: " + input.X + " Y: " + input.Y);
     self.players[id].setInput(input);
   }
   };
@@ -65,10 +64,7 @@ self.update = () =>
   {
   if (self.players[id] != undefined)
   {
-    if (!self.players[id].update())
-    {
-      self.players[id].kill();
-    }
+    self.players[id].update()
   }
   }
   self.enemyManager.update(self.players);
