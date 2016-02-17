@@ -29,6 +29,8 @@ self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
 
 self.dead = false;
+self.respawnTime = 100;
+self.nextRespawn = 0;
 
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
@@ -84,10 +86,14 @@ self.update = () =>
       {
         self.game.physics.arcade.overlap(self.bulletManager.enemyBullets, self.playerSprite, self.playerHit, null, self);  
       }
-    return true;
+  } else if (self.dead && self.nextRespawn < 0)
+  {
+    self.playerSprite.exists = true;
+    self.dead = false;
+    self.currentHealth = self.maxHealth;
   } else
   {
-    return false;
+    self.nextRespawn--;
   }
 	};
 
@@ -102,6 +108,7 @@ self.takeDamage = function(damage)
     self.currentHealth = self.currentHealth-damage;
     if(self.currentHealth <= 0) {
       self.dead = true;
+      self.kill();
       self.currentHealth = 0;
     }
     updateHealthBar();
@@ -117,7 +124,8 @@ self.takeDamage = function(damage)
 
 self.kill = () =>
 	{
-	self.playerSprite.destroy();
+  self.playerSprite.exists = false;
+  self.nextRespawn = self.respawnTime;
 	};
 
 var headingToAngle = (heading) =>
