@@ -64,10 +64,7 @@ self.update = () =>
   {
   if (self.players[id] != undefined)
   {
-    if (!self.players[id].update())
-    {
-      self.players[id].kill();
-    }
+    self.players[id].update()
   }
   }
   self.enemyManager.update(self.players);

@@ -57,7 +57,6 @@ self.update = () =>
 	{
   if (!self.dead)
   {
-    self.takeDamage(10);
     if (self.input != undefined)
     {
       var i = self.input;
@@ -90,18 +89,14 @@ self.update = () =>
           self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);  
         }
       }
-    return true;
   } else if (self.dead && self.nextRespawn < 0)
   {
     self.playerSprite.exists = true;
     self.dead = false;
-    currentHealth = self.maxHealth;
-    return true;
+    self.currentHealth = self.maxHealth;
   } else
   {
     self.nextRespawn--;
-    console.log(self.nextRespawn);
-    return false;
   }
 	};
 
@@ -117,6 +112,7 @@ self.takeDamage = function(damage)
     self.currentHealth = self.currentHealth-damage;
     if(self.currentHealth <= 0) {
       self.dead = true;
+      self.kill();
       self.currentHealth = 0;
     }
     updateHealthBar();
@@ -132,8 +128,8 @@ self.takeDamage = function(damage)
 
 self.kill = () =>
 	{
-    self.playerSprite.exists = false;
-    self.nextRespawn = self.respawnTime;
+  self.playerSprite.exists = false;
+  self.nextRespawn = self.respawnTime;
 	};
 
 var headingToAngle = (heading) =>
