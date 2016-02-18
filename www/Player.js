@@ -29,6 +29,8 @@ self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
 
 self.dead = false;
+self.respawnTime = 100;
+self.nextRespawn = 0;
 
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
@@ -55,6 +57,7 @@ self.update = () =>
 	{
   if (!self.dead)
   {
+    self.takeDamage(10);
     if (self.input != undefined)
     {
       var i = self.input;
@@ -88,8 +91,16 @@ self.update = () =>
         }
       }
     return true;
+  } else if (self.dead && self.nextRespawn < 0)
+  {
+    self.playerSprite.exists = true;
+    self.dead = false;
+    currentHealth = self.maxHealth;
+    return true;
   } else
   {
+    self.nextRespawn--;
+    console.log(self.nextRespawn);
     return false;
   }
 	};
@@ -121,7 +132,8 @@ self.takeDamage = function(damage)
 
 self.kill = () =>
 	{
-	self.playerSprite.destroy();
+    self.playerSprite.exists = false;
+    self.nextRespawn = self.respawnTime;
 	};
 
 var headingToAngle = (heading) =>
