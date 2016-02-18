@@ -84,8 +84,7 @@ self.update = () =>
       {
         for (var i = 0; i < self.bulletManager.enemyBulletGroups.length; i++)
         {
-          var bool = self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);  
-          console.log(bool);
+          self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);  
         }
       }
     return true;
