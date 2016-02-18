@@ -80,9 +80,13 @@ self.update = () =>
       }
     }
     //We should only check for collisions when there are collidable objects on screen
-    if(self.bulletManager.enemyBullets.length > 0) 
+    if(self.bulletManager.enemyBulletCount > 0) 
       {
-        self.game.physics.arcade.overlap(self.bulletManager.enemyBullets, self.playerSprite, self.playerHit, null, self);  
+        for (var i = 0; i < self.bulletManager.enemyBulletGroups.length; i++)
+        {
+          var bool = self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);  
+          console.log(bool);
+        }
       }
     return true;
   } else
@@ -91,9 +95,10 @@ self.update = () =>
   }
 	};
 
-self.playerHit = function(bullet, player) 
+self.playerHit = function(player, bullet) 
   {
     self.takeDamage(10);
+    bullet.kill();
   };
 
 
