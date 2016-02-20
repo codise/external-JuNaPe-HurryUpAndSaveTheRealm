@@ -12,7 +12,7 @@ game_state.main = function ()
 var self = this;
 //self.player;
 //self.enemies = {}
-//self.playerGroup;
+self.playerGroup;
 
 
 self.preload = () =>
@@ -45,7 +45,8 @@ self.create = () =>
   self.enemyManager = new EnemyManager(game, self.bulletManager);
 
   //self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
-  //playerGroup = game.add.group();
+  self.playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
+  self.playerGroup.enableBody = true;
   }
 
 self.setPlayerInput = (id, input) =>
@@ -68,8 +69,17 @@ self.update = () =>
   }
   }
   self.enemyManager.update(self.players);
+  game.physics.arcade.collide(self.playerGroup);
+  game.physics.arcade.collide(self.enemyManager.enemyGroup);
+  game.physics.arcade.collide(self.playerGroup, self.enemyManager.enemyGroup);
+  
+  for (var i = 0; i < self.bulletManager.playerBulletGroups.length; i++)
+  {
+  game.physics.arcade.collide(self.bulletManager.playerBulletGroups[i], self.playerGroup);
+  game.physics.arcade.collide(self.bulletManager.playerBulletGroups[i], self.enemyManager.enemyGroup);
+  }
   };
-
+  
 self.render = () => {};
 
 
@@ -77,7 +87,7 @@ self.onControllerConnected = (id) =>
   {
   //self.player = new Player(game, game.world.width/2, game.world.height/2);
   self.players[id] = new Player(game, game.world.width/2, game.world.height/2, self.bulletManager, id);
-  //playerGroup.add(players[id]);
+  self.playerGroup.add(self.players[id].playerSprite);
   };
 
 self.onControllerDisconnected = (id) =>
@@ -88,7 +98,7 @@ self.onControllerDisconnected = (id) =>
   {
   self.players[id].kill();
   self.players[id] = undefined;
-  //playerGroup.remove(players[id]);
+  self.playerGroup.remove(players[id].playerSprite);
   }
   };  
 
