@@ -51,16 +51,20 @@ self.update = () =>
     	fire();
     }
 
-    if(self.bulletManager.playerBullets.length > 0) 
+    if(self.bulletManager.playerBulletCount > 0) 
     {
-      self.game.physics.arcade.overlap(self.bulletManager.playerBullets, self.enemySprite, self.enemyHit, null, self); 
+      for (var i = 0; i < self.bulletManager.playerBulletGroups.length; i++)
+      {
+        self.game.physics.arcade.overlap(self.bulletManager.playerBulletGroups[i], self.enemySprite, self.enemyHit, null, self); 
+      }
     }
 
     };
 
-self.enemyHit = function() 
+self.enemyHit = function(enemy, bullet) 
   {
-    self.enemyTakeDamage(10);
+    bullet.kill();
+    self.enemyTakeDamage(1);
   };
 
 
