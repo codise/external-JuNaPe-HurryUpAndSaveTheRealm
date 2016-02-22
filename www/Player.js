@@ -11,8 +11,9 @@ self.id = id;
 self.game = game;
 self.bulletManager = bulletmanager;
 self.maxSpeed = 400;
-
-self.playerSprite = self.game.add.sprite(x, y, 'player');
+var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6']
+var randomSprite = sprites[Math.floor((Math.random() * 6))];
+self.playerSprite = self.game.add.sprite(x, y, randomSprite);
 self.playerSprite.anchor.setTo(0.5, 0.5);
 self.flipped = false;
 var textureWidth = self.playerSprite.width;

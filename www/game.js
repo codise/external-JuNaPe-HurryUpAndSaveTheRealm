@@ -22,7 +22,12 @@ self.preload = () =>
 
   gameClient.connect("localhost", 8082, self.id, self.clientConnected);
 
-  game.load.image('player', 'assets/player_classes/knight.png');
+  game.load.image('player1', 'assets/player_classes/knight.png');
+  game.load.image('player2', 'assets/player_classes/elfR.png');
+  game.load.image('player3', 'assets/player_classes/warlockR.png');
+  game.load.image('player4', 'assets/player_classes/ninjaR.png');
+  game.load.image('player5', 'assets/player_classes/mageR.png');
+  game.load.image('player6', 'assets/player_classes/vikingR.png');
   game.load.image('magic', 'assets/projectiles/bullet.png');
   game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
   game.load.image('flame', 'assets/projectiles/flame.png');
