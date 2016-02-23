@@ -22,18 +22,18 @@ self.preload = () =>
 
   gameClient.connect("localhost", 8082, self.id, self.clientConnected);
 
-  game.load.image('player1', 'assets/player_classes/knight.png');
-  game.load.image('player2', 'assets/player_classes/elfR.png');
-  game.load.image('player3', 'assets/player_classes/warlockR.png');
-  game.load.image('player4', 'assets/player_classes/ninjaR.png');
-  game.load.image('player5', 'assets/player_classes/mageR.png');
-  game.load.image('player6', 'assets/player_classes/vikingR.png');
+  game.load.image('player1', 'assets/player_classes/knightx.png');
+  game.load.image('player2', 'assets/player_classes/elfx.png');
+  game.load.image('player3', 'assets/player_classes/warlockx.png');
+  game.load.image('player4', 'assets/player_classes/ninjax.png');
+  game.load.image('player5', 'assets/player_classes/magex.png');
+  game.load.image('player6', 'assets/player_classes/vikingx.png');
   game.load.image('magic', 'assets/projectiles/bullet.png');
   game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
   game.load.image('flame', 'assets/projectiles/flame.png');
   game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
   game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
-  game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');
+  game.load.image('map', 'assets/maps/map.png');
   }
 self.create = () =>
   {
@@ -95,7 +95,7 @@ self.onControllerDisconnected = (id) =>
   self.players[id] = undefined;
   //playerGroup.remove(players[id]);
   }
-  };  
+  };
 
 self.onScreenConnected = (id) =>
   {
@@ -108,7 +108,7 @@ self.onScreenDisconnected = (id) =>
   {
   console.log("OwnScreen::onScreenDisconnected() "+id);
   console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
-  };  
+  };
 
 self.clientConnected = () =>
   {
@@ -122,7 +122,7 @@ self.clientConnected = () =>
 
   gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
 
-  gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);      
+  gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
   gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
   {
   console.log("Stick position received: "+data);
