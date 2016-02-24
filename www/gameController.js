@@ -3,7 +3,7 @@
 var w = window.innerWidth * window.devicePixelRatio;
 var h = window.innerHeight * window.devicePixelRatio;
 
-var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv'); 
+var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv');
 var controller_state = {};
 
 controller_state.main = function ()

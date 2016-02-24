@@ -33,7 +33,7 @@ self.preload = () =>
   game.load.image('flame', 'assets/projectiles/flame.png');
   game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
   game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
-  game.load.image('map', 'assets/maps/map.png');
+  game.load.image('map', 'assets/maps/castle_basic.png');
   }
 self.create = () =>
   {
