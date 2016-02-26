@@ -7,7 +7,7 @@ var w = 16 * 37;
 var h = 9 * 30;
 var serverAddress = 'localhost';
 
-var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv'); 
+var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv');
 var controller_state = {};
 
 controller_state.main = function ()
