@@ -7,7 +7,8 @@ var w = 16 * 37;
 var h = 9 * 30;
 var serverAddress = 'localhost';
 
-var gameController = new Phaser.Game(w, h, Phaser.AUTO, 'controllerDiv');
+var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
+
 var controller_state = {};
 
 controller_state.main = function ()
@@ -118,6 +119,7 @@ self.pointerOnDown = function()
 		self.reservePointer(self.shootStick, pointer);
 		self.matchShootStickCoords(pointer);
 		}
+	//aseta ympyrä ruutuun
 	};
 	
 self.pointerOnUp = function()
@@ -131,6 +133,7 @@ self.pointerOnUp = function()
 		self.matchShootStickCoords(pointer);
 		}
 	self.releasePointer(pointer);
+	//poista ympyrä ruudusta
 	};
 	
 self.dragPointer = (pointer) =>
