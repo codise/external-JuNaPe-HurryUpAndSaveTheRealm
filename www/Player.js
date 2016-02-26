@@ -83,11 +83,11 @@ self.update = () =>
       }
     }
     //We should only check for collisions when there are collidable objects on screen
-    if(self.bulletManager.enemyBulletCount > 0) 
+    if(self.bulletManager.enemyBulletCount > 0)
       {
         for (var i = 0; i < self.bulletManager.enemyBulletGroups.length; i++)
         {
-          self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);  
+          self.game.physics.arcade.overlap(self.bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);
         }
       }
   } else if (self.dead && self.nextRespawn < 0)
@@ -101,14 +101,14 @@ self.update = () =>
   }
 	};
 
-self.playerHit = function(player, bullet) 
+self.playerHit = function(player, bullet)
   {
     self.takeDamage(10);
     bullet.kill();
   };
 
 
-self.takeDamage = function(damage) 
+self.takeDamage = function(damage)
   {
     self.currentHealth = self.currentHealth-damage;
     if(self.currentHealth <= 0) {
@@ -119,13 +119,13 @@ self.takeDamage = function(damage)
     updateHealthBar();
   };
 
- var updateHealthBar = function() 
+ var updateHealthBar = function()
   {
     self.healthBarFill.clear();
     self.healthBarFill.beginFill(0xFF3300);
     self.healthBarFill.drawRect(self.playerSprite.X,self.playerSprite.Y,(self.currentHealth/self.maxHealth*100),13);
-    self.healthBarFill.endFill(); 
-  }; 
+    self.healthBarFill.endFill();
+  };
 
 self.kill = () =>
 	{
@@ -134,7 +134,7 @@ self.kill = () =>
 	};
 
 var headingToAngle = (heading) =>
-  { 
+  {
     var vector = new Phaser.Point();
     vector.x = -1;
     vector.y = 0;
