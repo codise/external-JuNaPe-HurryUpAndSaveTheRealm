@@ -61,8 +61,16 @@ self.update = () =>
     if (self.input != undefined)
     {
       var i = self.input;
-      self.playerSprite.body.velocity.x = i.X * 100;
-      self.playerSprite.body.velocity.y = i.Y * 100;
+      if(!(i.X == 0 && i.Y ==0)) 
+      {
+      var direction = new Phaser.Point();
+      direction.x = i.X;
+      direction.y = i.Y;
+      self.game.physics.arcade.velocityFromAngle(headingToAngle(direction), 100, self.playerSprite.body.velocity);
+      } else {
+        self.playerSprite.body.velocity.x = 0;
+        self.playerSprite.body.velocity.y = 0;
+      }
       if (self.playerSprite.body.velocity.x > 0 && self.flipped)
       {
       self.playerSprite.scale.x = 1;
