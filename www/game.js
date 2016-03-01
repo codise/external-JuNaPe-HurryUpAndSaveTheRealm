@@ -1,9 +1,11 @@
 'use strict';
 
-var gameWidth = window.innerWidth * window.devicePixelRatio;
-var gameHeight = window.innerHeight * window.devicePixelRatio;
+//var gameWidth = window.innerWidth * window.devicePixelRatio;
+//var gameHeight = window.innerHeight * window.devicePixelRatio;
+var gameWidth = 1920;
+var gameHeight = 1080;
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(gameWidth, gameHeight, Phaser.CANVAS, 'gameDiv');
 var game_state = {};
 
 
@@ -37,6 +39,7 @@ self.preload = () =>
   }
 self.create = () =>
   {
+	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.stage.disableVisibilityChange = true;
   self.bg = game.add.sprite(0, 0, 'map');
   self.bg.height = gameHeight;
