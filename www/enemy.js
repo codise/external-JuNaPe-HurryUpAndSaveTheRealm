@@ -18,7 +18,7 @@ self.moveRate = 2500;
 self.movementScheme = enemyInfo.movementScheme;
 
 self.xDirection = [1, -1];
-self.yDirection = [1, -1];
+/*self.yDirection = [1, -1];*/
 
 self.fireRate = 5000;
 self.nextFire = 0;
@@ -71,7 +71,8 @@ self.enemyHit = function(enemy, bullet)
 self.enemyTakeDamage = function(damage) 
   {
     self.currentHealth = self.currentHealth-damage;
-    if(self.currentHealth <= 0) {
+    if(self.currentHealth <= 0) 
+    {
       self.enemySprite.dead = true;
     }
   };
@@ -96,8 +97,11 @@ var move = () =>
 			
 			break;
 		default:
-    	self.enemySprite.body.velocity.x = self.xDirection[Math.floor(Math.random() * 2)]*50;
-    	self.enemySprite.body.velocity.y = self.yDirection[Math.floor(Math.random() * 2)]*50;
+    var angle = Math.floor(Math.random()*181);
+    angle *= self.xDirection[Math.floor(Math.random()*2)];
+    self.game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
+    	/*self.enemySprite.body.velocity.x = self.xDirection[Math.floor(Math.random() * 2)]*50;
+    	self.enemySprite.body.velocity.y = self.yDirection[Math.floor(Math.random() * 2)]*50;*/
 	}
   self.nextMove = self.game.time.now + self.moveRate;
 	}
