@@ -33,6 +33,9 @@ self.dead = false;
 self.respawnTime = 100;
 self.nextRespawn = 0;
 
+var pHUD = new playerHud(game,self);
+
+/*
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
 self.healthBarOutline.lineStyle(2,0x000000,1);
@@ -46,7 +49,7 @@ self.healthBarOutline.x = - textureWidth/2;
 self.healthBarFill.x = -textureWidth/2;;
 self.healthBarOutline.y = textureHeight/2;
 self.healthBarFill.y = textureHeight/2;
-
+*/
 
 self.setInput = (input) =>
     {
@@ -116,7 +119,7 @@ self.takeDamage = function(damage)
       self.kill();
       self.currentHealth = 0;
     }
-    updateHealthBar();
+    pHUD.updateHealthBar();
   };
 
  var updateHealthBar = function()
