@@ -23,6 +23,8 @@ var textureHeight = self.playerSprite.height;
 self.game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 self.playerSprite.body.collideWorldBounds = true;
 
+self.playerSprite.body.bounce = (1,1);
+
 self.fireRate = 100;
 self.nextFire = 0;
 
