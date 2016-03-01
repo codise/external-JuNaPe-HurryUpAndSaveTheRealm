@@ -86,9 +86,14 @@ var move = () =>
 	switch (self.movementScheme)
 	{
 		case 'chargeSingle':
-			var angle = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
-			self.game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
-
+			if(self.player != undefined)
+			{
+				var angle = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+				self.game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
+			} else {
+				console.log('tried to charge at undefined player');
+			}
+			
 			break;
 		default:
     	self.enemySprite.body.velocity.x = self.xDirection[Math.floor(Math.random() * 2)]*50;
@@ -124,8 +129,12 @@ var createRadialPulse = (n) =>
 var createDirectedBurst = (n) =>
 	{
 	// Creates n bullets directed to player
-	
-	var angleBetween = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+	if(self.player != undefined)
+	{	
+		var angleBetween = self.game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+	} else {
+		console.log('tried to shoot at undefined player');
+	}
 	
 	for (var i = 0; i < n; i++)
 	{
