@@ -23,11 +23,14 @@ var textureHeight = self.playerSprite.height;
 self.game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 self.playerSprite.body.collideWorldBounds = true;
 
+self.playerSprite.body.bounce = (1,1);
+
 self.fireRate = 100;
 self.nextFire = 0;
 
 self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
+self.movementSpeed = 200;
 
 self.dead = false;
 self.respawnTime = 100;
@@ -64,8 +67,14 @@ self.update = () =>
     if (self.input != undefined)
     {
       var i = self.input;
-      self.playerSprite.body.velocity.x = i.X * 100;
-      self.playerSprite.body.velocity.y = i.Y * 100;
+	  var length = i.moveLength;
+	  if(length > 1)
+	  {
+		  length = 1;
+	  }
+	  var angle = i.moveAngle;
+      self.game.physics.arcade.velocityFromAngle(angle, self.movementSpeed * length, self.playerSprite.body.velocity);
+	   
       if (self.playerSprite.body.velocity.x > 0 && self.flipped)
       {
       self.playerSprite.scale.x = 1;
