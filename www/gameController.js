@@ -21,10 +21,12 @@ self.startMove = new Phaser.Point(0, 0);
 self.endMove = new Phaser.Point(0, 0);
 self.startShoot = new Phaser.Point(0, 0);
 self.endShoot = new Phaser.Point(0, 0);
+var anglePoint = new Phaser.Point(-1, 0);
 
-self.moveStick = {pointer: false};
-self.shootStick = {pointer: false};
-
+self.moveStick = {pointer: false, pad: false};
+self.shootStick = {pointer: false, pad: false};
+var controllerpad1;
+var controllerpad2;
 
 self.preload = () =>
 	{
@@ -33,6 +35,7 @@ self.preload = () =>
 
 	gameClient.connect(serverAddress, 8081, self.id, self.clientConnected);
 	self.game.load.image('background', 'assets/bg/cbg.png');
+	self.game.load.image('circlepad', 'assets/other/controller_circle.png');
 	};
 
 self.render = () => 
@@ -52,14 +55,22 @@ self.create = () =>
 	self.background.smoothed = false;
 	self.game.input.onDown.add(self.pointerOnDown, this);
 	self.game.input.onUp.add(self.pointerOnUp, this);
+	controllerpad1 = self.game.add.sprite(0, 0, 'circlepad');
+	controllerpad1.exists = false;
+	controllerpad2 = self.game.add.sprite(0, 0, 'circlepad');
+	controllerpad2.exists = false;
 	};
 	
-self.reservePointer = (stick, pointer) =>
+self.reservePointer = (stick, pointer, pad) =>
 	{
 	if(!stick.pointer)
 		{
 		stick.pointer = pointer;
-		
+		pad.exists = true;
+		pad.x = pointer.position.x - 40;
+		pad.y = pointer.position.y - 40;
+		stick.pad = pad;
+		/*
 		if(pointer === self.moveStick.pointer)
 			{
 			//console.log('pointer reserved to move');
@@ -71,6 +82,7 @@ self.reservePointer = (stick, pointer) =>
 		} else 
 		{
 		//console.log("** failed to reserve pointer **");
+		*/
 		}
 	};
 	
@@ -79,10 +91,14 @@ self.releasePointer = (pointer) =>
 	if(self.moveStick.pointer === pointer)
 		{
 		self.moveStick.pointer = false;
+		self.moveStick.pad.exists = false;
+		self.moveStick.pad = false;
 		//console.log("released movestick");
 		} else if (self.shootStick.pointer === pointer)
 		{
 		self.shootStick.pointer = false;
+		self.shootStick.pad.exists = false;
+		self.shootStick.pad = false;
 		//console.log("released shootstick");
 		} else 
 		{
@@ -112,14 +128,13 @@ self.pointerOnDown = function()
 	var left = pointer.position.x < w/2;
 	if(left)
 		{
-		self.reservePointer(self.moveStick, pointer);
+		self.reservePointer(self.moveStick, pointer, controllerpad1);
 		self.matchMoveStickCoords(pointer);
 		} else 
 		{
-		self.reservePointer(self.shootStick, pointer);
+		self.reservePointer(self.shootStick, pointer, controllerpad2);
 		self.matchShootStickCoords(pointer);
 		}
-	//aseta ympyrä ruutuun
 	};
 	
 self.pointerOnUp = function()
@@ -133,7 +148,6 @@ self.pointerOnUp = function()
 		self.matchShootStickCoords(pointer);
 		}
 	self.releasePointer(pointer);
-	//poista ympyrä ruudusta
 	};
 	
 self.dragPointer = (pointer) =>
@@ -156,10 +170,10 @@ self.dragPointer = (pointer) =>
 		}
 	};
 	
-self.normalizeInput = (start, end) =>
+var vectorizeInput = (start, end) =>
 	{
 	var target = new Phaser.Point(end.x - start.x, end.y - start.y);
-	return target.normalize();
+	return target;//.normalize();
 	}
 	
 self.update = () =>
@@ -168,9 +182,13 @@ self.update = () =>
 	self.dragPointer(self.game.input.pointer2);
 	self.dragPointer(self.game.input.mousePointer);
 	
-	var normalMove = self.normalizeInput(self.startMove, self.endMove);
-	var normalShoot = self.normalizeInput(self.startShoot, self.endShoot);
-	var input = {X:normalMove.x, Y:normalMove.y, sX:normalShoot.x, sY:normalShoot.y};
+	var vectorMove = vectorizeInput(self.startMove, self.endMove);
+	var normalShoot = vectorizeInput(self.startShoot, self.endShoot).normalize();
+	
+	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
+	var length = vectorMove.getMagnitude() / 40;	
+	
+	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y};
 	//console.log(input);
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
