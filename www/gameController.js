@@ -31,7 +31,10 @@ var controllerpad2;
 self.preload = () =>
 	{
 	self.id = getParameter("id");
-	if (!self.id) self.id = self.game.rnd.integerInRange(0, 1000);
+	if (!self.id)
+		{
+		self.id = self.game.rnd.integerInRange(0, 1000);
+		}
 
 	gameClient.connect(serverAddress, 8081, self.id, self.clientConnected);
 	self.game.load.image('background', 'assets/bg/cbg.png');
