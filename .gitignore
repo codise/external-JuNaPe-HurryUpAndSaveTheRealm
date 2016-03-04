@@ -37,3 +37,6 @@ node_modules
 /Game/nbproject/private/
 spaceifyapplication/node_modules
 .DS_Store
+art/decorations/Thumbs.db
+art/traps/Thumbs.db
+*.db
