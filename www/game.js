@@ -26,7 +26,8 @@ self.preload = () =>
 		self.id = 1;
 		}
 	
-	gameClient.connect(serverAddress, 8082, self.id, self.clientConnected);
+  gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
+  //console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
 	
 	game.load.image('player1', 'assets/player_classes/knightx.png');
 	game.load.image('player2', 'assets/player_classes/elfx.png');
