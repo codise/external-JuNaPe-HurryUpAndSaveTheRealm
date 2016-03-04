@@ -71,8 +71,8 @@ self.reservePointer = (stick, pointer, pad) =>
 		{
 		stick.pointer = pointer;
 		pad.exists = true;
-		pad.x = pointer.position.x - 40;
-		pad.y = pointer.position.y - 40;
+		pad.x = pointer.position.x - 30;
+		pad.y = pointer.position.y - 30;
 		stick.pad = pad;
 		/*
 		if(pointer === self.moveStick.pointer)
@@ -190,10 +190,11 @@ self.update = () =>
 	var normalShoot = vectorizeInput(self.startShoot, self.endShoot).normalize();
 	
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
-	var length = vectorMove.getMagnitude() / 40;	
+	var length = vectorMove.getMagnitude() / 30;
 	
 	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y};
-	//console.log(input);
+	console.log(input);
+
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
 
