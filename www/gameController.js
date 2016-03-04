@@ -11,6 +11,25 @@ var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
 
 var controller_state = {};
 
+//get player name and class from url parameters
+var urlstring = window.location.href;
+var name;
+var playerclass;
+if (urlstring.indexOf('?') > -1)
+	{
+	var params = urlstring.split("?")[1];
+	//console.log(params);
+	var name = params.split("&")[0].split("=")[1];
+	var playerclass = params.split("&")[1].split("=")[1];
+	
+	if (name == "")
+		{
+		name = 'johndoe';
+		}
+	console.log("name = "+name);
+	console.log("class = "+playerclass);
+	}
+
 controller_state.main = function ()
 {
 var self = this;
@@ -193,7 +212,7 @@ self.update = () =>
 	var length = vectorMove.getMagnitude() / 30;
 	
 	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y};
-	console.log(input);
+	//console.log(input);
 
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
