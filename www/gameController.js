@@ -16,15 +16,15 @@ controller_state.main = function ()
 var self = this;
 self.id;
 
-self.game = gameController;
-self.startMove = new Phaser.Point(0, 0);
-self.endMove = new Phaser.Point(0, 0);
-self.startShoot = new Phaser.Point(0, 0);
-self.endShoot = new Phaser.Point(0, 0);
+var game = gameController;
+var startMove = new Phaser.Point(0, 0);
+var endMove = new Phaser.Point(0, 0);
+var startShoot = new Phaser.Point(0, 0);
+var endShoot = new Phaser.Point(0, 0);
 var anglePoint = new Phaser.Point(-1, 0);
 
-self.moveStick = {pointer: false, pad: false};
-self.shootStick = {pointer: false, pad: false};
+var moveStick = {pointer: false, pad: false};
+var shootStick = {pointer: false, pad: false};
 var controllerpad1;
 var controllerpad2;
 
@@ -33,35 +33,35 @@ self.preload = () =>
 	self.id = getParameter("id");
 	if (!self.id)
 		{
-		self.id = self.game.rnd.integerInRange(0, 1000);
+		self.id = game.rnd.integerInRange(0, 1000);
 		}
 
 	gameClient.connect(serverAddress, controllerPort, self.id, self.clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
-	self.game.load.image('background', 'assets/bg/cbg.png');
-	self.game.load.image('circlepad', 'assets/other/controller_circle.png');
+	game.load.image('background', 'assets/bg/cbg.png');
+	game.load.image('circlepad', 'assets/other/controller_circle.png');
 	};
 
 self.render = () => 
 	{
-	self.game.debug.pointer(gameController.input.mousePointer);
-	self.game.debug.pointer(gameController.input.pointer1);
-	self.game.debug.pointer(gameController.input.pointer2);
+	game.debug.pointer(gameController.input.mousePointer);
+	game.debug.pointer(gameController.input.pointer1);
+	game.debug.pointer(gameController.input.pointer2);
 	};
 
 self.create = () =>
 	{
-	self.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	self.game.stage.disableVisibilityChange = true;
-	self.background = self.game.add.sprite(0, 0, 'background');
+	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	game.stage.disableVisibilityChange = true;
+	self.background = game.add.sprite(0, 0, 'background');
 	self.background.height = h;
 	self.background.width = w;
 	self.background.smoothed = false;
-	self.game.input.onDown.add(self.pointerOnDown, this);
-	self.game.input.onUp.add(self.pointerOnUp, this);
-	controllerpad1 = self.game.add.sprite(0, 0, 'circlepad');
+	game.input.onDown.add(self.pointerOnDown, this);
+	game.input.onUp.add(self.pointerOnUp, this);
+	controllerpad1 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad1.exists = false;
-	controllerpad2 = self.game.add.sprite(0, 0, 'circlepad');
+	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
 	};
 
@@ -75,10 +75,10 @@ self.reservePointer = (stick, pointer, pad) =>
 		pad.y = pointer.position.y - 30;
 		stick.pad = pad;
 		/*
-		if(pointer === self.moveStick.pointer)
+		if(pointer === moveStick.pointer)
 			{
 			//console.log('pointer reserved to move');
-			} else if (pointer === self.shootStick.pointer)
+			} else if (pointer === shootStick.pointer)
 			{
 			//console.log('pointer reserved to shoot');
 			}
@@ -92,17 +92,17 @@ self.reservePointer = (stick, pointer, pad) =>
 
 self.releasePointer = (pointer) =>
 	{
-	if(self.moveStick.pointer === pointer)
+	if(moveStick.pointer === pointer)
 		{
-		self.moveStick.pointer = false;
-		self.moveStick.pad.exists = false;
-		self.moveStick.pad = false;
+		moveStick.pointer = false;
+		moveStick.pad.exists = false;
+		moveStick.pad = false;
 		//console.log("released movestick");
-		} else if (self.shootStick.pointer === pointer)
+		} else if (shootStick.pointer === pointer)
 		{
-		self.shootStick.pointer = false;
-		self.shootStick.pad.exists = false;
-		self.shootStick.pad = false;
+		shootStick.pointer = false;
+		shootStick.pad.exists = false;
+		shootStick.pad = false;
 		//console.log("released shootstick");
 		} else 
 		{
@@ -112,18 +112,18 @@ self.releasePointer = (pointer) =>
 
 self.matchMoveStickCoords = (pointer) =>
 	{
-	self.startMove.x = pointer.position.x;
-	self.startMove.y = pointer.position.y;
-	self.endMove.x = pointer.position.x;
-	self.endMove.y = pointer.position.y;
+	startMove.x = pointer.position.x;
+	startMove.y = pointer.position.y;
+	endMove.x = pointer.position.x;
+	endMove.y = pointer.position.y;
 	};
 
 self.matchShootStickCoords = (pointer) =>
 	{
-	self.startShoot.x = pointer.position.x;
-	self.startShoot.y = pointer.position.y;
-	self.endShoot.x = pointer.position.x;
-	self.endShoot.y = pointer.position.y;
+	startShoot.x = pointer.position.x;
+	startShoot.y = pointer.position.y;
+	endShoot.x = pointer.position.x;
+	endShoot.y = pointer.position.y;
 	};
 
 self.pointerOnDown = function()
@@ -132,11 +132,11 @@ self.pointerOnDown = function()
 	var left = pointer.position.x < w/2;
 	if(left)
 		{
-		self.reservePointer(self.moveStick, pointer, controllerpad1);
+		self.reservePointer(moveStick, pointer, controllerpad1);
 		self.matchMoveStickCoords(pointer);
 		} else 
 		{
-		self.reservePointer(self.shootStick, pointer, controllerpad2);
+		self.reservePointer(shootStick, pointer, controllerpad2);
 		self.matchShootStickCoords(pointer);
 		}
 	};
@@ -144,10 +144,10 @@ self.pointerOnDown = function()
 self.pointerOnUp = function()
 	{
 	var pointer = arguments[0];
-	if(pointer === self.moveStick.pointer)
+	if(pointer === moveStick.pointer)
 		{
 		self.matchMoveStickCoords(pointer);
-		} else if (pointer === self.shootStick.pointer)
+		} else if (pointer === shootStick.pointer)
 		{
 		self.matchShootStickCoords(pointer);
 		}
@@ -158,14 +158,14 @@ self.dragPointer = (pointer) =>
 	{
 	if(pointer.isDown)
 		{
-		if(pointer === self.moveStick.pointer)
+		if(pointer === moveStick.pointer)
 			{
-			self.endMove.x = pointer.position.x;
-			self.endMove.y = pointer.position.y;
-			} else if (pointer === self.shootStick.pointer)
+			endMove.x = pointer.position.x;
+			endMove.y = pointer.position.y;
+			} else if (pointer === shootStick.pointer)
 			{
-			self.endShoot.x = pointer.position.x;
-			self.endShoot.y = pointer.position.y;
+			endShoot.x = pointer.position.x;
+			endShoot.y = pointer.position.y;
 			} else 
 			{
 			//console.log('^^ dragging unreserved pointer ^^' );
@@ -182,12 +182,12 @@ var vectorizeInput = (start, end) =>
 	
 self.update = () =>
 	{
-	self.dragPointer(self.game.input.pointer1);
-	self.dragPointer(self.game.input.pointer2);
-	self.dragPointer(self.game.input.mousePointer);
+	self.dragPointer(game.input.pointer1);
+	self.dragPointer(game.input.pointer2);
+	self.dragPointer(game.input.mousePointer);
 	
-	var vectorMove = vectorizeInput(self.startMove, self.endMove);
-	var normalShoot = vectorizeInput(self.startShoot, self.endShoot).normalize();
+	var vectorMove = vectorizeInput(startMove, endMove);
+	var normalShoot = vectorizeInput(startShoot, endShoot).normalize();
 	
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
