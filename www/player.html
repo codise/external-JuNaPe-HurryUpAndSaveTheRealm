@@ -8,51 +8,125 @@
 body{
 	text-align: center;
 	font-size: 200%;
-	color: #cdc;
+	color: #fff;
 	background-color: #111;
+	background-image: url("assets/other/tile.png");
+	font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
 }
 
 #name {
 	font-size: 150%;
-	color: #cba;
+	color: #bbb;
 	background-color: #222;
 	text-align: center;
 }
 
 #play {
 	font-size: 200%;
-	color: #cba;
+	color: #fff;
 	background-color: #222;
+	border-radius: 50px;
+	text-shadow: 2px 2px 2px #000;
+	font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
 }
 
 img {
-	margin: 15px;
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin: 5px;
+	border-style: solid;
+	border-width: 7px;
+	border-radius: 10px;
+	border-color: #333;
+	background-color: #666;
+	padding: 5px;
 }
 
+.chosenclass {
+	border-color: #c22;
+}
+
+.label {
+	background-color: #333;
+	padding: 2px;
+	border-radius: 15px;
+	text-shadow: 2px 2px 2px #000;
+	
+}
+
+
 		</style>
+		<script>
+		
+var chosenClass = -1;
+function init ()
+{
+	var playButton = document.getElementById('play');
+	playButton.addEventListener('click', playGame);
+	var classImgs = document.getElementsByClassName('playerclass');
+	for (var i = 0; i < classImgs.length; i++)
+	{
+		classImgs[i].addEventListener('click', chooseClass);
+	}
+}
+
+function chooseClass (event)
+{
+	chosenClass = event.target.id;
+	setChosenImg();
+}
+
+function setChosenImg()
+{
+	var classImgs = document.getElementsByClassName('playerclass');
+	for (var i = 0; i < classImgs.length; i++)
+	{
+		classImgs[i].className='playerclass';
+		if(i == chosenClass)
+		{
+			classImgs[i].className += (' chosenclass');
+		}
+	}
+}
+
+function playGame()
+{
+	var name = document.getElementById('name').value;
+	//console.log('class: ' + (chosenClass > -1) + ' val: ' + chosenClass);
+	//console.log('name: ' + /^[a-z0-9]+$/i.test(name) + ' val: ' + name);
+	
+	if(chosenClass > -1 && /^[a-z0-9]+$/i.test(name))
+	{
+		window.location.href = 'controller.html' + '?n=' + name + '&c=' + chosenClass;
+	} else 
+	{
+		//TODO if nimi!= alnum värjää nimiruutu 
+		//TODO if class < 0 värjää hahmoimgien background?
+	}
+	
+}
+
+		</script>
+		
 	</head>
 
-	<body>
+	<body onload="init();">
 		<br>
-		<b>Pick a name</b>
+		<b class="label">Pick a name</b>
 		<br>
 		
 		<input id="name" type="text"/>
 		<br><br>
 		
-		<b>Pick a class</b>
+		<b class="label">Pick a class</b>
 		<br>
 		
-		<img id="knight" src="assets/player_classes/knightx.png">
-		<img id="ranger" src="assets/player_classes/elfx.png">
-		<img id="mage" src="assets/player_classes/magex.png">
+		<img class="playerclass" id="0" src="assets/player_classes/knightx.png">
+		<img class="playerclass" id="1" src="assets/player_classes/elfx.png">
+		<img class="playerclass" id="2" src="assets/player_classes/magex.png">
 		<br>
 		
-		<img id="ninja" src="assets/player_classes/ninjax.png">
-		<img id="viking" src="assets/player_classes/vikingx.png">
-		<img id="warlock" src="assets/player_classes/warlockx.png">
+		<img class="playerclass" id="3" src="assets/player_classes/vikingx.png">
+		<img class="playerclass" id="4" src="assets/player_classes/ninjax.png">
+		<img class="playerclass" id="5" src="assets/player_classes/warlockx.png">
 		<br><br>
 
 		<input id="play" type=button value="  Play  ">
