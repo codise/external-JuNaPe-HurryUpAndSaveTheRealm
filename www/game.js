@@ -10,10 +10,6 @@ var game_state = {};
 game_state.main = function ()
 {
 var self = this;
-//self.player;
-//self.enemies = {}
-//self.playerGroup;
-
 
 self.preload = () =>
   {
@@ -33,16 +29,18 @@ self.preload = () =>
 self.create = () =>
   {
   game.stage.disableVisibilityChange = true;
-  self.bg = game.add.sprite(0, 0, 'map');
+/*  self.bg = game.add.sprite(0, 0, 'map');
   self.bg.height = gameHeight;
   self.bg.width = gameWidth;
   self.bg.smoothed = false;
+*/
   self.players = {};
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  self.bulletManager = new bulletManager(game);
+/*  self.bulletManager = new bulletManager(game);
   self.enemyManager = new EnemyManager(game, self.bulletManager);
+*/
 
   //self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
   //playerGroup = game.add.group();
@@ -58,7 +56,6 @@ self.setPlayerInput = (id, input) =>
 
 self.update = () =>
   {
- // self.bulletManager.createBullet('magic', 0, {x:0.5, y:0.5}, {x:100, y:100});
   self.bulletManager.update();
   for (var id in self.players)
   {
@@ -75,20 +72,15 @@ self.render = () => {};
 
 self.onControllerConnected = (id) =>
   {
-  //self.player = new Player(game, game.world.width/2, game.world.height/2);
   self.players[id] = new Player(game, game.world.width/2, game.world.height/2, self.bulletManager, id);
-  //playerGroup.add(players[id]);
   };
 
 self.onControllerDisconnected = (id) =>
   {
-  //playerGroup.remove(players[id]);
-  //players[id].kill();
   if (self.players[id] != undefined)
   {
   self.players[id].kill();
   self.players[id] = undefined;
-  //playerGroup.remove(players[id]);
   }
   };  
 
@@ -96,7 +88,6 @@ self.onScreenConnected = (id) =>
   {
   console.log("OwnScreen::onScreenConnected() "+ id);
   console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
-  //gameClient.callServerRpc(1, "method", ["hello server"],  self, null);
   };
 
 self.onScreenDisconnected = (id) =>
