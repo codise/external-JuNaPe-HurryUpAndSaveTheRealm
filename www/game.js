@@ -1,120 +1,127 @@
 'use strict';
 
-var gameWidth = window.innerWidth * window.devicePixelRatio;
-var gameHeight = window.innerHeight * window.devicePixelRatio;
+//var gameWidth = window.innerWidth * window.devicePixelRatio;
+//var gameHeight = window.innerHeight * window.devicePixelRatio;
+var gameWidth = 1920;
+var gameHeight = 1080;
 
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
 var game_state = {};
+var serverAddress = 'localhost';
 
 
 game_state.main = function ()
 {
 var self = this;
 
+self.roundManager;
+
 self.preload = () =>
-  {
-  self.id = getParameter('id');
-  if (!self.id) self.id = 1;
+	{
+	self.id = getParameter('id');
+	if (!self.id)
+		{
+		self.id = 1;
+  	}
+	
+	gameClient.connect(serverAddress, 8082, self.id, self.clientConnected);
+	
+	game.load.image('player1', 'assets/player_classes/knightx.png');
+	game.load.image('player2', 'assets/player_classes/elfx.png');
+	game.load.image('player3', 'assets/player_classes/warlockx.png');
+	game.load.image('player4', 'assets/player_classes/ninjax.png');
+	game.load.image('player5', 'assets/player_classes/magex.png');
+	game.load.image('player6', 'assets/player_classes/vikingx.png');
+	game.load.image('magic', 'assets/projectiles/bullet.png');
+	game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
+	game.load.image('flame', 'assets/projectiles/flame.png');
+	game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
+	game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
+	game.load.image('map', 'assets/maps/castle_basic.png');
 
-  gameClient.connect("localhost", 8082, self.id, self.clientConnected);
+  self.roundManager = new RoundManager(game);
+  self.roundManager.loadRound("assets/maps/rounds/round.json");
 
-  game.load.image('player', 'assets/player_classes/knight.png');
-  game.load.image('magic', 'assets/projectiles/bullet.png');
-  game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
-  game.load.image('flame', 'assets/projectiles/flame.png');
-  game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
-  game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
-  game.load.image('map', 'assets/maps/maptile_05_bossroom_small_360.png');
-  }
+	}
 self.create = () =>
   {
-  game.stage.disableVisibilityChange = true;
-/*  self.bg = game.add.sprite(0, 0, 'map');
-  self.bg.height = gameHeight;
-  self.bg.width = gameWidth;
-  self.bg.smoothed = false;
-*/
-  self.players = {};
+	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	game.stage.disableVisibilityChange = true;
+  game.world.setBounds(0, 0, 3 * gameWidth, 3 * gameHeight);
 
-  game.physics.startSystem(Phaser.Physics.ARCADE);
 
-/*  self.bulletManager = new bulletManager(game);
+  self.roundManager.startRound();
+/*self.bg = game.add.sprite(0, 0, 'map');
+	self.bg.height = gameHeight;
+	self.bg.width = gameWidth;
+	self.bg.smoothed = false;
+  self.bulletManager = new bulletManager(game);
   self.enemyManager = new EnemyManager(game, self.bulletManager);
 */
 
-  //self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
-  //playerGroup = game.add.group();
-  }
+/*	self.players = {};
+  self.playerGroup = game.add.group();
+	self.playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
+	self.playerGroup.enableBody = true;
+*/
+
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+	}
 
 self.setPlayerInput = (id, input) =>
-  {
-  if (self.players[id] != undefined)
-  {
-    self.players[id].setInput(input);
-  }
-  };
+	{
+	self.roundManager.setPlayerInput(id, input);
+	};
 
 self.update = () =>
-  {
-  self.bulletManager.update();
-  for (var id in self.players)
-  {
-  if (self.players[id] != undefined)
-  {
-    self.players[id].update()
-  }
-  }
-  self.enemyManager.update(self.players);
-  };
+	{
+	self.roundManager.update();
+	};
 
 self.render = () => {};
 
 
 self.onControllerConnected = (id) =>
-  {
-  self.players[id] = new Player(game, game.world.width/2, game.world.height/2, self.bulletManager, id);
-  };
+	{
+		self.roundManager.newPlayer(id);
+	};
 
 self.onControllerDisconnected = (id) =>
-  {
-  if (self.players[id] != undefined)
-  {
-  self.players[id].kill();
-  self.players[id] = undefined;
-  }
-  };  
+	{
+	self.roundManager.disconnectPlayer(id);
+	};
 
 self.onScreenConnected = (id) =>
-  {
-  console.log("OwnScreen::onScreenConnected() "+ id);
-  console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
-  };
+	{
+	console.log("OwnScreen::onScreenConnected() "+ id);
+	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
+	};
 
 self.onScreenDisconnected = (id) =>
-  {
-  console.log("OwnScreen::onScreenDisconnected() "+id);
-  console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
-  };  
+	{
+	console.log("OwnScreen::onScreenDisconnected() "+id);
+	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
+	};
 
 self.clientConnected = () =>
-  {
-  console.log("DemoScreen::screenConnected()");
-
-  gameClient.setClientConnectionListener(self, self.onControllerConnected);
-  gameClient.setClientDisconnectionListener(self, self.onControllerDisconnected);
-  gameClient.setScreenConnectionListener(self, self.onScreenConnected);
-  gameClient.setScreenDisconnectionListener(self, self.onScreenDisconnected);
-
-
-  gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-
-  gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);      
-  gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
-  {
-  console.log("Stick position received: "+data);
-  });
-
-  };
+	{
+	console.log("DemoScreen::screenConnected()");
+	
+	gameClient.setClientConnectionListener(self, self.onControllerConnected);
+	gameClient.setClientDisconnectionListener(self, self.onControllerDisconnected);
+	gameClient.setScreenConnectionListener(self, self.onScreenConnected);
+	gameClient.setScreenDisconnectionListener(self, self.onScreenDisconnected);
+	
+	
+	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
+	
+	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
+	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
+		{
+		console.log("Stick position received: "+data);
+		});
+	
+	};
 };
 
 game.state.add('main', game_state.main);

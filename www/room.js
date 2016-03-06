@@ -9,15 +9,25 @@ collisionAssets is a path to tileset which has possible nonwall collidable asset
 collisionData is a path to a tilemap generated wih Tiled.
 */
 
-function Room (game, deviceDimensionData, background, collisionAssets, collisionData)
+function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed)
 {
 var self = this;
+
+var game = game;
+var background = background;
+var collisionAssets = collisionAssets;
+var collisionData = collisionData;
+
 self.map;
+
 var collisionLayer;
 var spawnLayer;
 var trapLayer;
 
 self.layerGroup = game.add.group();
+
+self.moveDirection = moveDirection;
+self.moveSpeed = moveSpeed;
 
 self.preload = () =>
 	{
@@ -30,14 +40,19 @@ self.preload = () =>
 			game.load.image(collisionAssets, collisionAssets);
 		}
 
-		game.load.tilemap(collisionData, collisionData, null, Phaser.Tilemap.TILED_JSON);
+    console.log("loading now");
+
+		game.load.tilemap("asd", "assets/maps/JSON/maptile_01.json", null, Phaser.Tilemap.TILED_JSON);
+    
+    game.load.start();
 	};
 
 self.create = () =>
 	{
-	self.map = game.add.tilemap(collisionData);
+  console.log(collisionData);
+	self.map = game.add.tilemap("asd");
 
-	self.map.addTiletImage(collisionAssets, collisionAssets);
+	self.map.addTiledImage(collisionAssets, collisionAssets);
 
 	collisionLayer = map.createLayer('collision');
 	self.layerGroup.add(collisionLayer);
@@ -49,11 +64,23 @@ self.create = () =>
 	self.layerGroup.setAll('fixedToCamera', false);
 	};
 
-self.moveTo = (position) =>
+self.moveTo = (x, y) =>
 	{
-	self.layerGroup.setAll('x', position.x);
-	self.layerGroup.setAll('y', positoin.y);
+	self.layerGroup.setAll('x', x);
+	self.layerGroup.setAll('y', y);
 	};
+
+self.moveBy = (amount) =>
+	{
+		self.layerGroup.forEach(moveLayer, this, true, amount);
+	};
+
+var moveLayer = (layer, amount) =>
+	{
+		layer.x = layer.x + amount.x;
+		layer.y = layer.y + amount.y;
+	};
+
 }
 	
 
@@ -63,4 +90,3 @@ self.moveTo = (position) =>
 		
 
 
-}
