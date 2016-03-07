@@ -9,7 +9,7 @@ collisionAssets is a path to tileset which has possible nonwall collidable asset
 collisionData is a path to a tilemap generated wih Tiled.
 */
 
-function Room (game, loader, background, collisionAssets, collisionData, moveDirection, moveSpeed)
+function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed)
 {
 var self = this;
 
@@ -17,7 +17,7 @@ var game = game;
 var background = background;
 var collisionAssets = collisionAssets;
 var collisionData = collisionData;
-var loader = loader;
+var myloader = new Phaser.Loader(game);
 
 self.map;
 
@@ -38,18 +38,21 @@ self.preload = (callback) =>
 		mycallback = callback;
 		if (!game.cache.checkImageKey(background))
 		{
-			loader.image(background, "assets/maps/backgrounds/" + background);
+			myloader.image(background, "assets/maps/backgrounds/" + background);
 		}
     if(!game.cache.checkImageKey(collisionAssets))
     {
-			loader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
+			myloader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
 		}
 
-		loader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
+		if(!game.cache.checkJSONKey(collisionData))
+		{
+			myloader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
+		}
 
-		loader.onLoadComplete.addOnce(create);
+		myloader.onLoadComplete.addOnce(create);
     
-    loader.start();
+    myloader.start();
 	};
 
 var create = () =>
@@ -59,6 +62,8 @@ var create = () =>
 	self.map.addTilesetImage(collisionAssets, collisionAssets);
 
 	backgroundLayer = game.add.sprite(0, 0, background);
+	backgroundLayer.smoothed = false;
+	backgroundLayer.scale.setTo(10, 10);
 	self.layerGroup.add(backgroundLayer);
 	collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);
@@ -76,7 +81,6 @@ self.moveTo = (x, y) =>
 	{
 	self.layerGroup.setAll('position.x', x);
 	self.layerGroup.setAll('position.y', y);
-	console.log("moved to: " + x + ", " + y);
 	};
 
 self.moveBy = (amount) =>
@@ -92,7 +96,6 @@ var moveLayer = (layer, amount) =>
 
 self.getPos = () =>
 	{
-		console.log(backgroundLayer.position);
 		return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
 

@@ -5,7 +5,15 @@
 var gameWidth = 1920;
 var gameHeight = 1080;
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
+var gameConfig = {width: gameWidth,
+									height: gameHeight,
+									renderer: Phaser.AUTO,
+									parent: 'gameDiv',
+									transparent: false,
+									antialiasing: true,
+									forceSetTimeout: false};
+									
+var game = new Phaser.Game(gameConfig);
 var game_state = {};
 var serverAddress = 'localhost';
 
@@ -44,10 +52,11 @@ self.preload = () =>
 self.create = () =>
   {
 	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	//game.stage.disableVisibilityChange = true;
+		
+	game.stage.disableVisibilityChange = true;
   game.world.setBounds(0, 0, 3 * gameWidth, 3 * gameHeight);
   self.roundManager = new RoundManager(game);
-  self.roundManager.loadRound("assets/maps/rounds/round.json", self.roundManager.instantiateRound);
+  self.roundManager.loadRound("assets/maps/rounds/round.json");
 
 
 

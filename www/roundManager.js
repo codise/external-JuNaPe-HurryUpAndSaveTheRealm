@@ -26,20 +26,17 @@ var rooms = [];
 var roomGroup = game.add.group();
 var nextRoom;
 
-var loader;
+var roundPause = 0;
 
 var speedDict = [];
 speedDict["slow"] = 1;
-speedDict["normal"] = 1;
-speedDict["fast"] = 1;
-speedDict["stop"] = 0;
+speedDict["normal"] = 2;
+speedDict["fast"] = 5;
+speedDict["stop"] = null;
 
 
-self.loadRound = (roundData, callback) =>
+self.loadRound = (roundData) =>
 	{
-		// Instantiate new phaser loader
-
-		loader = new Phaser.Loader(game);
 
 		// Set camera in the middle of the stage
 		game.camera.x = game.camera.width;
@@ -53,21 +50,19 @@ self.loadRound = (roundData, callback) =>
 		for (var i = 0; i < Math.min(2, currentRound.length); i++)
 		{
 			rooms[i + 1] = new Room(game,
-															loader,
 															currentRound[i].roomBg,
 															currentRound[i].tileset,
 															currentRound[i].roomJSON,
 															currentRound[i].moveDirection,
 															currentRound[i].moveSpeed);
-			rooms[i + 1].preload(callback);
-			//setTimeout(rooms[i + 1].create(), 1000000000);
+			rooms[i + 1].preload(instantiateRound);
 		}
 
 		nextRoom = 2;
 
 	};
 
-self.instantiateRound = () =>
+var instantiateRound = () =>
 	{
 
 		// Position the two loaded rooms correctly
@@ -76,16 +71,16 @@ self.instantiateRound = () =>
 		switch (rooms[1].moveDirection)
 		{
 			case "north":
-				rooms[2].moveTo(game.camera.x, game.camera.y - game.world.height);
+				rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
 				break;
 			case "east":
-				rooms[2].moveTo(game.camera.x + game.world.width, game.camera.y);
+				rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
 				break;
 			case "south":
-				rooms[2].moveTo(game.camera.x, game.camera.y + game.world.height);
+				rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
 				break;
 			case "west":
-				rooms[2].moveTo(game.camera.x - game.world.width, game.camera.y);
+				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
 			default:
 				rooms[2] = null;
 		}
@@ -94,7 +89,7 @@ self.instantiateRound = () =>
 
 var startRound = () =>
 	{
-		roundRunning =true;
+		roundRunning = true;
 		currentDirection = rooms[1].moveDirection;
 		currentSpeed = rooms[1].moveSpeed;
 
@@ -130,7 +125,7 @@ self.disconnectPlayer = (id) =>
 
 self.update = () =>
 	{
-		if (roundRunning)
+		if (roundRunning && roundPause < 1)
 		{
 			bulletManager.update();
 
@@ -155,6 +150,9 @@ self.update = () =>
 			}
 
 			updateRoomMovement();
+		} else
+		{
+			roundPause--;
 		}
 
 	};
@@ -163,8 +161,6 @@ var updateRoomMovement = () =>
 	{
 		if (currentSpeed != undefined)
 		{
-			//console.log("Debug game.camera");
-			//console.log(game.camera);
 			// Figure out which speed to go
 			
 			var curSpeed = speedDict[currentSpeed];
@@ -200,56 +196,57 @@ var updateRoomMovement = () =>
 
 			// Check if next room has passed the game.camera, if it has, align it with camera, load new room etc.
 
-			if (Math.abs(rooms[2].getPos().x - changeInPos.x) <= changeInPos.x && Math.abs(rooms[2].getPos().y - changeInPos.y) <= changeInPos.y)
+			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
+					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
 			{
-				rooms[0] = rooms[1];
-				rooms[1] = rooms[2];
+				rooms.shift();
+				delete rooms[0];
 
 				rooms[1].moveTo(game.camera.x, game.camera.y);
 
 				currentDirection = rooms[1].moveDirection;
 				currentSpeed = rooms[1].moveSpeed;
-				nextRoom++;
 
-				if (currentSpeed != undefined)
+				if (speedDict[currentSpeed] != undefined)
 				{
 					rooms[2] = new Room(game,
-															loader,
 															currentRound[nextRoom].roomBg,
 															currentRound[nextRoom].tileset,
 															currentRound[nextRoom].roomJSON,
 															currentRound[nextRoom].moveDirection,
 															currentRound[nextRoom].moveSpeed);
+					rooms[2].preload(instantiateNewRoom)
+					roundPause = 100;
+					nextRoom++;
 				}
 			}
 		}
 	};
 
-var loadJSON = (path, success, error) =>
+var instantiateNewRoom = () =>
 	{
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function()
-	{
-		if (xhr.readyState === XMLHttpRequest.DONE)
+		//roundRunning = false;
+		switch (rooms[1].moveDirection)
 		{
-			if (xhr.status === 200) 
-			{
-				if (success)
-				{
-					success(JSON.parse(xhr.responseText));
-				}
-			} else
-      {
-				if (error)
-        {
-				  error(xhr);
-        }
-			}
+			case "north":
+				rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
+				break;
+			case "east":
+				rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+				break;
+			case "south":
+				rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
+				break;
+			case "west":
+				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+			default:
+				rooms[2] = null;
+		}
+		for (var i = 0; i < rooms.length; i++)
+		{
 		}
 	};
-	xhr.open("GET", path, true);
-	xhr.send();
-	} 
+
 }
 
 
