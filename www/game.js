@@ -39,18 +39,18 @@ self.preload = () =>
 	game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
 
-  self.roundManager = new RoundManager(game);
-  self.roundManager.loadRound("assets/maps/rounds/round.json");
-
+  
 	}
 self.create = () =>
   {
-	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	game.stage.disableVisibilityChange = true;
+	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	//game.stage.disableVisibilityChange = true;
   game.world.setBounds(0, 0, 3 * gameWidth, 3 * gameHeight);
+  self.roundManager = new RoundManager(game);
+  self.roundManager.loadRound("assets/maps/rounds/round.json", self.roundManager.instantiateRound);
 
 
-  self.roundManager.startRound();
+
 /*self.bg = game.add.sprite(0, 0, 'map');
 	self.bg.height = gameHeight;
 	self.bg.width = gameWidth;
@@ -78,7 +78,7 @@ self.update = () =>
 	self.roundManager.update();
 	};
 
-self.render = () => {};
+self.render = () => {game.debug.cameraInfo(game.camera, 32, 32)};
 
 
 self.onControllerConnected = (id) =>
@@ -93,19 +93,19 @@ self.onControllerDisconnected = (id) =>
 
 self.onScreenConnected = (id) =>
 	{
-	console.log("OwnScreen::onScreenConnected() "+ id);
-	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
+	//console.log("OwnScreen::onScreenConnected() "+ id);
+	//console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
 	};
 
 self.onScreenDisconnected = (id) =>
 	{
-	console.log("OwnScreen::onScreenDisconnected() "+id);
-	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
+	//console.log("OwnScreen::onScreenDisconnected() "+id);
+	//console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
 	};
 
 self.clientConnected = () =>
 	{
-	console.log("DemoScreen::screenConnected()");
+	//console.log("DemoScreen::screenConnected()");
 	
 	gameClient.setClientConnectionListener(self, self.onControllerConnected);
 	gameClient.setClientDisconnectionListener(self, self.onControllerDisconnected);
@@ -118,7 +118,7 @@ self.clientConnected = () =>
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
 		{
-		console.log("Stick position received: "+data);
+		//console.log("Stick position received: "+data);
 		});
 	
 	};

@@ -9,7 +9,7 @@ collisionAssets is a path to tileset which has possible nonwall collidable asset
 collisionData is a path to a tilemap generated wih Tiled.
 */
 
-function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed)
+function Room (game, loader, background, collisionAssets, collisionData, moveDirection, moveSpeed)
 {
 var self = this;
 
@@ -17,57 +17,66 @@ var game = game;
 var background = background;
 var collisionAssets = collisionAssets;
 var collisionData = collisionData;
+var loader = loader;
 
 self.map;
 
 var collisionLayer;
 var spawnLayer;
 var trapLayer;
+var backgroundLayer;
+
+var mycallback;
 
 self.layerGroup = game.add.group();
 
 self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
-self.preload = () =>
+self.preload = (callback) =>
 	{
+		mycallback = callback;
 		if (!game.cache.checkImageKey(background))
 		{
-			game.load.image(background, background);
+			loader.image(background, "assets/maps/backgrounds/" + background);
 		}
     if(!game.cache.checkImageKey(collisionAssets))
     {
-			game.load.image(collisionAssets, collisionAssets);
+			loader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
 		}
 
-    console.log("loading now");
+		loader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
 
-		game.load.tilemap("asd", "assets/maps/JSON/maptile_01.json", null, Phaser.Tilemap.TILED_JSON);
+		loader.onLoadComplete.addOnce(create);
     
-    game.load.start();
+    loader.start();
 	};
 
-self.create = () =>
+var create = () =>
 	{
-  console.log(collisionData);
-	self.map = game.add.tilemap("asd");
+	self.map = game.add.tilemap(collisionData);
 
-	self.map.addTiledImage(collisionAssets, collisionAssets);
+	self.map.addTilesetImage(collisionAssets, collisionAssets);
 
-	collisionLayer = map.createLayer('collision');
+	backgroundLayer = game.add.sprite(0, 0, background);
+	self.layerGroup.add(backgroundLayer);
+	collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);
-	spawnLayer = map.createLayer('spawn');
-	self.layerGroup.add(createLayer);
-	trapLayer = map.createLayer('trap');
+	spawnLayer = self.map.createLayer('spawnLayer');
+	self.layerGroup.add(spawnLayer);
+	trapLayer = self.map.createLayer('trapLayer');
 	self.layerGroup.add(trapLayer);
 
 	self.layerGroup.setAll('fixedToCamera', false);
+
+	mycallback();
 	};
 
 self.moveTo = (x, y) =>
 	{
-	self.layerGroup.setAll('x', x);
-	self.layerGroup.setAll('y', y);
+	self.layerGroup.setAll('position.x', x);
+	self.layerGroup.setAll('position.y', y);
+	console.log("moved to: " + x + ", " + y);
 	};
 
 self.moveBy = (amount) =>
@@ -77,8 +86,14 @@ self.moveBy = (amount) =>
 
 var moveLayer = (layer, amount) =>
 	{
-		layer.x = layer.x + amount.x;
-		layer.y = layer.y + amount.y;
+		layer.position.x = layer.position.x + amount.x;
+		layer.position.y = layer.position.y + amount.y;
+	};
+
+self.getPos = () =>
+	{
+		console.log(backgroundLayer.position);
+		return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
 
 }
