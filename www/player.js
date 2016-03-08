@@ -20,7 +20,7 @@ self.dead = false;
 var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6']
 var randomSprite = sprites[Math.floor((Math.random() * 6))];
 
-createSprite();
+self.playerSprite = game.add.sprite(x, y, 'empty');
 
 var fireRate = 100;
 var nextFire = 0;
@@ -30,7 +30,6 @@ var movementSpeed = 200;
 var respawnTime = 100;
 var nextRespawn = 0;
 
-var pHUD = new playerHud(game,self);
 
 var cameraPadding = 20;
 
@@ -45,9 +44,11 @@ var scale = () =>
 	self.playerSprite.scale.y = scalingFactors.y;
 	};
 
-function createSprite()
+var pHUD;
+
+function createPlayer()
 	{
-	self.playerSprite = game.add.sprite(x, y, sprites[self.playerClass]);
+	self.playerSprite.loadTexture(sprites[self.playerClass]);
 	self.playerSprite.anchor.setTo(0.5, 0.5);
 	self.flipped = false;
 	//var textureWidth = self.playerSprite.width;
@@ -57,38 +58,27 @@ function createSprite()
 	self.playerSprite.body.collideWorldBounds = true;
 	
 	self.playerSprite.body.bounce = (1,1);
+
+	pHUD = new playerHud(game,self);
+	pHUD.setPlayerName(self.playerName);
 	};
 
 self.setInput = (input) =>
 	{
 	self.input = input;
 	};
-<<<<<<< HEAD:www/player.js
 
+//called by controller once it is created
+self.setClassAndName = (pClass, pName) =>
+	{
+	self.playerClass = pClass;
+	self.playerName = pName;
+	createPlayer();
+	};
+	
 self.update = () =>
 	{
-
 	scale();
-
-=======
-	
-self.setClass = (playerClass) =>
-	{
-	self.playerClass = playerClass;
-	self.playerSprite.loadTexture(sprites[self.playerClass]);
-	//class differences?
-	};
-
-self.setName = (name) =>
-	{
-	self.playerName = name;
-	};
-
-self.update = () =>
-	{
-	console.log("sprite width: " + self.playerSprite.width);
-	
->>>>>>> player object gets name and class from controller:www/Player.js
 	if (!self.dead)
 		{
 		if (self.input != undefined)

@@ -5,7 +5,6 @@
 
 var w = 16 * 37;
 var h = 9 * 30;
-var serverAddress = '192.168.11.58';
 
 var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
 
@@ -83,8 +82,7 @@ self.create = () =>
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
 	
-	gameClient.callScreenRpc(1, "setPlayerName", [self.id, playerName], self, null);
-	gameClient.callScreenRpc(1, "setPlayerClass", [self.id, playerClass], self, null);
+	gameClient.callScreenRpc(1, "setPlayerClassAndName", [self.id, playerClass, playerName], self, null);
 	};
 
 self.reservePointer = (stick, pointer, pad) =>
