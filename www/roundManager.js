@@ -24,7 +24,8 @@ var roomGroup = game.add.group();
 var nextRoom;
 
 
-var roundPause = 0;
+var lastPaused = 0;
+var pauseTime = 500;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
@@ -127,7 +128,8 @@ self.update = () =>
 		game.world.bringToTop(enemyManager.enemyGroup);
 		bulletManager.playerBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
 		bulletManager.enemyBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
-		if (roundRunning && roundPause < 1)
+
+		if (roundRunning && lastPaused < game.time.now)
 		{
 			bulletManager.update();
 
@@ -152,10 +154,7 @@ self.update = () =>
 			}
 
 			updateRoomMovement();
-		} else
-		{
-			roundPause--;
-		}
+		} 
 
 	};
 
@@ -221,7 +220,7 @@ var updateRoomMovement = () =>
 															currentRound[nextRoom].moveDirection,
 															currentRound[nextRoom].moveSpeed);
 					rooms[2].preload(instantiateNewRoom)
-					roundPause = 100;
+					lastPaused = game.time.now + pauseTime;
 					nextRoom++;
 				}
 			}
