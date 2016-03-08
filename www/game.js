@@ -20,7 +20,7 @@ var game = new Phaser.Game(gameConfig);
 
 
 var game_state = {};
-var serverAddress = 'localhost';
+var serverAddress = '192.168.11.58';
 
 
 game_state.main = function ()
@@ -71,6 +71,7 @@ self.preload = () =>
 	game.load.image('player4', 'assets/player_classes/ninjax.png');
 	game.load.image('player5', 'assets/player_classes/magex.png');
 	game.load.image('player6', 'assets/player_classes/vikingx.png');
+	game.load.image('empty', 'assets/other/empty.png');
 	game.load.image('magic', 'assets/projectiles/bullet.png');
 	game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
 	game.load.image('flame', 'assets/projectiles/flame.png');
@@ -100,6 +101,22 @@ self.create = () =>
 self.setPlayerInput = (id, input) =>
 	{
 	self.roundManager.setPlayerInput(id, input);
+	};
+	
+self.setPlayerClass = (id, playerClass) =>
+	{
+	if (self.players[id] != undefined)
+		{
+		self.players[id].setClass(playerClass);
+		}
+	};
+	
+self.setPlayerName = (id, name) =>
+	{
+	if (self.players[id] != undefined)
+		{
+		self.players[id].setName(name);
+		}
 	};
 
 self.update = () =>
@@ -143,7 +160,9 @@ self.clientConnected = () =>
 
 
 	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-
+	gameClient.exposeRpcMethod("setPlayerClass", self, self.setPlayerClass);
+	gameClient.exposeRpcMethod("setPlayerName", self, self.setPlayerName);
+	
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
 		{

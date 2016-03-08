@@ -4,10 +4,12 @@ function Player(game, x, y, bulletmanager, id)
 {
 var self = this;
 
+var sprites = ['player1', 'player2', 'player5', 'player6', 'player4', 'player3'];
 self.input;
-
+//self.playerClass = Math.floor((Math.random() * 6)); //rand 0-5
+self.playerClass = 0;
+self.playerName;
 self.id = id;
-
 
 self.score = 0;
 
@@ -15,19 +17,10 @@ self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
 self.dead = false;
 
-
-var bulletManager = bulletmanager;
-
 var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6']
 var randomSprite = sprites[Math.floor((Math.random() * 6))];
-self.playerSprite = game.add.sprite(x, y, randomSprite);
-self.playerSprite.anchor.setTo(0.5, 0.5);
-self.flipped = false;
-game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
-self.playerSprite.body.collideWorldBounds = true;
-self.playerSprite.body.bounce = (1,1);
-var textureWidth = self.playerSprite.width;
-var textureHeight = self.playerSprite.height;
+
+createSprite();
 
 var fireRate = 100;
 var nextFire = 0;
@@ -52,16 +45,50 @@ var scale = () =>
 	self.playerSprite.scale.y = scalingFactors.y;
 	};
 
+function createSprite()
+	{
+	self.playerSprite = game.add.sprite(x, y, sprites[self.playerClass]);
+	self.playerSprite.anchor.setTo(0.5, 0.5);
+	self.flipped = false;
+	//var textureWidth = self.playerSprite.width;
+	//var textureHeight = self.playerSprite.height;
+	
+	game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
+	self.playerSprite.body.collideWorldBounds = true;
+	
+	self.playerSprite.body.bounce = (1,1);
+	};
+
 self.setInput = (input) =>
 	{
 	self.input = input;
 	};
+<<<<<<< HEAD:www/player.js
 
 self.update = () =>
 	{
 
 	scale();
 
+=======
+	
+self.setClass = (playerClass) =>
+	{
+	self.playerClass = playerClass;
+	self.playerSprite.loadTexture(sprites[self.playerClass]);
+	//class differences?
+	};
+
+self.setName = (name) =>
+	{
+	self.playerName = name;
+	};
+
+self.update = () =>
+	{
+	console.log("sprite width: " + self.playerSprite.width);
+	
+>>>>>>> player object gets name and class from controller:www/Player.js
 	if (!self.dead)
 		{
 		if (self.input != undefined)
