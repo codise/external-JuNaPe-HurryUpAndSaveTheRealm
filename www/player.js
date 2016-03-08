@@ -26,8 +26,8 @@ self.playerSprite.body.bounce = (1,1);
 var fireRate = 100;
 var nextFire = 0;
 
-var maxHealth = 1000;
-self.currentHealth = maxHealth;
+self.maxHealth = 1000;
+self.currentHealth = self.maxHealth;
 var movementSpeed = 200;
 
 self.dead = false;
@@ -37,6 +37,11 @@ var nextRespawn = 0;
 var pHUD = new playerHud(game,self);
 
 var cameraPadding = 20;
+
+var headingPoint = new Phaser.Point();
+var vectorPoint = new Phaser.Point();
+vectorPoint.x = -1;
+vectorPoint.y = 0;
 
 /*
 self.healthBarOutline = game.add.graphics(0,0);
@@ -85,25 +90,21 @@ self.update = () =>
 			if ((i.sX != 0 || i.sX != 0) && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				var heading = new Phaser.Point();
-				heading.x = i.sX;
-				heading.y = i.sY;
-				bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
+				headingPoint.x = i.sX;
+				headingPoint.y = i.sY;
+				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
 				}
 			}
 
 		//We should only check for collisions when there are collidable objects on screen
 		if(bulletManager.enemyBulletCount > 0)
 			{
-			for (var i = 0; i < bulletManager.enemyBulletGroups.length; i++)
-				{
-				game.physics.arcade.overlap(bulletManager.enemyBulletGroups[i], self.playerSprite, self.playerHit, null, self);
-				}
+				game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.playerSprite, self.playerHit, null, self);
 			}
 		} else if (self.dead && nextRespawn < 0) {
 		self.playerSprite.exists = true;
 		self.dead = false;
-		self.currentHealth = maxHealth;
+		self.currentHealth = self.maxHealth;
 		} else {
 		nextRespawn--;
 		}
@@ -129,8 +130,9 @@ self.update = () =>
 
 self.playerHit = function(player, bullet)
 	{
+	bulletManager.killbullet(bullet);
 	self.takeDamage(10);
-	bullet.kill();
+	//console.log(self.currentHealth);
 	};
 
 self.takeDamage = function(damage)
@@ -150,13 +152,4 @@ self.kill = () =>
 	self.playerSprite.exists = false;
 	nextRespawn = respawnTime;
 	};
-
-var headingToAngle = (heading) =>
-	{
-	var vector = new Phaser.Point();
-	vector.x = -1;
-	vector.y = 0;
-	return (Phaser.Point.angle(heading, vector) * 360/Math.PI);
-	};
-
 }

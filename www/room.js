@@ -63,7 +63,7 @@ var create = () =>
 
 	backgroundLayer = game.add.sprite(0, 0, background);
 	backgroundLayer.smoothed = false;
-	backgroundLayer.scale.setTo(10, 10);
+//	backgroundLayer.scale.setTo(10, 10);
 	self.layerGroup.add(backgroundLayer);
 	collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);

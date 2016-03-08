@@ -36,7 +36,8 @@ self.preload = () =>
 		self.id = self.game.rnd.integerInRange(0, 1000);
 		}
 
-	gameClient.connect(serverAddress, 8081, self.id, self.clientConnected);
+	gameClient.connect(serverAddress, controllerPort, self.id, self.clientConnected);
+	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
 	self.game.load.image('background', 'assets/bg/cbg.png');
 	self.game.load.image('circlepad', 'assets/other/controller_circle.png');
 	};

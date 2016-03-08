@@ -105,8 +105,6 @@ self.setPlayerInput = (id, input) =>
 
 self.newPlayer = (id) =>
 	{
-    console.log(bulletManager);
-    console.log(enemyManager);
 		players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id);
 		playerGroup.add(players[id].playerSprite);
 	};
@@ -138,7 +136,6 @@ self.update = () =>
 				if (players[id] != undefined)
 				{
 					players[id].update();
-          console.log(players[id].playerSprite.position);
 				}
 			}
 

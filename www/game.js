@@ -35,7 +35,8 @@ self.preload = () =>
 		self.id = 1;
   	}
 	
-	gameClient.connect(serverAddress, 8082, self.id, self.clientConnected);
+  gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
+  //console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
 	
 	game.load.image('player1', 'assets/player_classes/knightx.png');
 	game.load.image('player2', 'assets/player_classes/elfx.png');
@@ -46,12 +47,10 @@ self.preload = () =>
 	game.load.image('magic', 'assets/projectiles/bullet.png');
 	game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
 	game.load.image('flame', 'assets/projectiles/flame.png');
-	game.load.image('enemy_hellbug', 'assets/enemy_classes/monster_hellbug_360.png');
-	game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
+	game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
+	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
 
-  bulletManager = new BulletManager(game);
-  enemyManager = new EnemyManager(game, bulletManager);
 
   
 	}
@@ -60,6 +59,9 @@ self.create = () =>
 	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		
 	game.stage.disableVisibilityChange = true;
+
+  bulletManager = new BulletManager(game);
+  enemyManager = new EnemyManager(game, bulletManager);
 
   //This is bad
 
