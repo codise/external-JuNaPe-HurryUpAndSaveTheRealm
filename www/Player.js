@@ -4,24 +4,16 @@ function Player(game, x, y, bulletmanager, id)
 {
 var self = this;
 
+var sprites = ['player1', 'player2', 'player5', 'player6', 'player4', 'player3'];
 self.input;
-
+//self.playerClass = Math.floor((Math.random() * 6)); //rand 0-5
+self.playerClass = 0;
+self.playerName;
 self.id = id;
 
 bulletManager = bulletmanager;
-var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6']
-var randomSprite = sprites[Math.floor((Math.random() * 6))];
-self.playerSprite = game.add.sprite(x, y, randomSprite);
-self.playerSprite.anchor.setTo(0.5, 0.5);
-self.flipped = false;
-var textureWidth = self.playerSprite.width;
-var textureHeight = self.playerSprite.height;
 
-
-game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
-self.playerSprite.body.collideWorldBounds = true;
-
-self.playerSprite.body.bounce = (1,1);
+self.playerSprite = game.add.sprite(x, y, 'empty');
 
 var fireRate = 100;
 var nextFire = 0;
@@ -34,37 +26,48 @@ self.dead = false;
 var respawnTime = 100;
 var nextRespawn = 0;
 
-var pHUD = new playerHud(game,self);
 
 var headingPoint = new Phaser.Point();
 var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
 
-/*
-self.healthBarOutline = game.add.graphics(0,0);
-self.healthBarFill = game.add.graphics(0,0);
-self.healthBarOutline.lineStyle(2,0x000000,1);
-self.healthBarOutline.drawRect(self.playerSprite.X, self.playerSprite.Y, 100, 15);
-self.healthBarFill.beginFill(0xff3300);
-self.healthBarFill.drawRect(self.playerSprite.X, self.playerSprite.Y, (self.currentHealth/maxHealth*100), 13);
-self.healthBarFill.endFill();
-self.playerSprite.addChild(self.healthBarOutline);
-self.playerSprite.addChild(self.healthBarFill);
-self.healthBarOutline.x = - textureWidth/2;
-self.healthBarFill.x = -textureWidth/2;;
-self.healthBarOutline.y = textureHeight/2;
-self.healthBarFill.y = textureHeight/2;
-*/
+var pHUD;
+
+function createPlayer()
+	{
+	self.playerSprite.loadTexture(sprites[self.playerClass]);
+	self.playerSprite.anchor.setTo(0.5, 0.5);
+	self.flipped = false;
+	//var textureWidth = self.playerSprite.width;
+	//var textureHeight = self.playerSprite.height;
+	
+	game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
+	self.playerSprite.body.collideWorldBounds = true;
+	
+	self.playerSprite.body.bounce = (1,1);
+
+	pHUD = new playerHud(game,self);
+	pHUD.setPlayerName(self.playerName);
+	};
 
 self.setInput = (input) =>
 	{
 	self.input = input;
-	}
+	};
 
+//called by controller once it is created
+self.setClassAndName = (pClass, pName) =>
+	{
+	self.playerClass = pClass;
+	self.playerName = pName;
+	createPlayer();
+	};
 
 self.update = () =>
 	{
+	console.log("sprite width: " + self.playerSprite.width);
+	
 	if (!self.dead)
 		{
 		if (self.input != undefined)
