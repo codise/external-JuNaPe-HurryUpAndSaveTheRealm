@@ -5,7 +5,7 @@
 
 var w = 16 * 37;
 var h = 9 * 30;
-var serverAddress = 'localhost';
+var serverAddress = '192.168.11.58';
 
 var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
 
@@ -13,22 +13,22 @@ var controller_state = {};
 
 //get player name and class from url parameters
 var urlstring = window.location.href;
-var name;
-var playerclass;
+var playerName;
+var playerClass;
 if (urlstring.indexOf('?') > -1)
 	{
 	var params = urlstring.split("?")[1];
 	//console.log(params);
-	var name = params.split("&")[0].split("=")[1];
-	var playerclass = params.split("&")[1].split("=")[1];
-	
-	if (name == "")
-		{
-		name = 'johndoe';
-		}
-	console.log("name = "+name);
-	console.log("class = "+playerclass);
+	var playerName = params.split("&")[0].split("=")[1];
+	var playerClass = params.split("&")[1].split("=")[1];
+	} else 
+	{
+	playerName = 'johndoe';
+	playerClass = Math.floor((Math.random() * 6)); //rand -> 0-5
 	}
+	
+	//console.log("name = "+playerName);
+	//console.log("class = "+playerClass);
 
 controller_state.main = function ()
 {
@@ -82,6 +82,9 @@ self.create = () =>
 	controllerpad1.exists = false;
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
+	
+	gameClient.callScreenRpc(1, "setPlayerName", [self.id, playerName], self, null);
+	gameClient.callScreenRpc(1, "setPlayerClass", [self.id, playerClass], self, null);
 	};
 	
 self.reservePointer = (stick, pointer, pad) =>
