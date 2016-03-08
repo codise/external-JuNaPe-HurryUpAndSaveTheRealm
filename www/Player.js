@@ -26,8 +26,8 @@ self.playerSprite.body.bounce = (1,1);
 var fireRate = 100;
 var nextFire = 0;
 
-var maxHealth = 1000;
-self.currentHealth = maxHealth;
+self.maxHealth = 1000;
+self.currentHealth = self.maxHealth;
 var movementSpeed = 200;
 
 self.dead = false;
@@ -104,7 +104,7 @@ self.update = () =>
 		} else if (self.dead && nextRespawn < 0) {
 		self.playerSprite.exists = true;
 		self.dead = false;
-		self.currentHealth = maxHealth;
+		self.currentHealth = self.maxHealth;
 		} else {
 		nextRespawn--;
 		}
