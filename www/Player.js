@@ -36,6 +36,11 @@ var nextRespawn = 0;
 
 var pHUD = new playerHud(game,self);
 
+var headingPoint = new Phaser.Point();
+var vectorPoint = new Phaser.Point();
+vectorPoint.x = -1;
+vectorPoint.y = 0;
+
 /*
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
@@ -83,10 +88,9 @@ self.update = () =>
 			if ((i.sX != 0 || i.sX != 0) && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				var heading = new Phaser.Point();
-				heading.x = i.sX;
-				heading.y = i.sY;
-				bulletManager.createBullet('magic', self.id, headingToAngle(heading), self.playerSprite.position);
+				headingPoint.x = i.sX;
+				headingPoint.y = i.sY;
+				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
 				}
 			}
 		//We should only check for collisions when there are collidable objects on screen
@@ -129,13 +133,4 @@ self.kill = () =>
 	self.playerSprite.exists = false;
 	nextRespawn = respawnTime;
 	};
-
-var headingToAngle = (heading) =>
-	{
-	var vector = Phaser.Point();
-	vector.x = -1;
-	vector.y = 0;
-	return (Phaser.Point.angle(heading, vector) * 360/Math.PI);
-	};
-
 }
