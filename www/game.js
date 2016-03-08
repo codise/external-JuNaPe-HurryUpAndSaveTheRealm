@@ -7,7 +7,6 @@ var gameHeight = 1080;
 
 var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
 var game_state = {};
-var serverAddress = '192.168.11.58';
 
 
 game_state.main = function ()
@@ -71,19 +70,11 @@ self.setPlayerInput = (id, input) =>
 		}
 	};
 	
-self.setPlayerClass = (id, playerClass) =>
+self.setPlayerClassAndName = (id, playerClass, playerName) =>
 	{
 	if (self.players[id] != undefined)
 		{
-		self.players[id].setClass(playerClass);
-		}
-	};
-	
-self.setPlayerName = (id, name) =>
-	{
-	if (self.players[id] != undefined)
-		{
-		self.players[id].setName(name);
+		self.players[id].setClassAndName(playerClass, playerName);
 		}
 	};
 
@@ -156,8 +147,7 @@ self.clientConnected = () =>
 	
 	
 	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-	gameClient.exposeRpcMethod("setPlayerClass", self, self.setPlayerClass);
-	gameClient.exposeRpcMethod("setPlayerName", self, self.setPlayerName);
+	gameClient.exposeRpcMethod("setPlayerClassAndName", self, self.setPlayerClassAndName);
 	
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)

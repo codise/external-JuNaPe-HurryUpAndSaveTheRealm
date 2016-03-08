@@ -13,7 +13,7 @@ self.id = id;
 
 bulletManager = bulletmanager;
 
-createSprite();
+self.playerSprite = game.add.sprite(x, y, 'empty');
 
 var fireRate = 100;
 var nextFire = 0;
@@ -26,32 +26,17 @@ self.dead = false;
 var respawnTime = 100;
 var nextRespawn = 0;
 
-var pHUD = new playerHud(game,self);
 
 var headingPoint = new Phaser.Point();
 var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
 
-/*
-self.healthBarOutline = game.add.graphics(0,0);
-self.healthBarFill = game.add.graphics(0,0);
-self.healthBarOutline.lineStyle(2,0x000000,1);
-self.healthBarOutline.drawRect(self.playerSprite.X, self.playerSprite.Y, 100, 15);
-self.healthBarFill.beginFill(0xff3300);
-self.healthBarFill.drawRect(self.playerSprite.X, self.playerSprite.Y, (self.currentHealth/maxHealth*100), 13);
-self.healthBarFill.endFill();
-self.playerSprite.addChild(self.healthBarOutline);
-self.playerSprite.addChild(self.healthBarFill);
-self.healthBarOutline.x = - textureWidth/2;
-self.healthBarFill.x = -textureWidth/2;;
-self.healthBarOutline.y = textureHeight/2;
-self.healthBarFill.y = textureHeight/2;
-*/
+var pHUD;
 
-function createSprite()
+function createPlayer()
 	{
-	self.playerSprite = game.add.sprite(x, y, sprites[self.playerClass]);
+	self.playerSprite.loadTexture(sprites[self.playerClass]);
 	self.playerSprite.anchor.setTo(0.5, 0.5);
 	self.flipped = false;
 	//var textureWidth = self.playerSprite.width;
@@ -61,23 +46,22 @@ function createSprite()
 	self.playerSprite.body.collideWorldBounds = true;
 	
 	self.playerSprite.body.bounce = (1,1);
+
+	pHUD = new playerHud(game,self);
+	pHUD.setPlayerName(self.playerName);
 	};
 
 self.setInput = (input) =>
 	{
 	self.input = input;
 	};
-	
-self.setClass = (playerClass) =>
-	{
-	self.playerClass = playerClass;
-	self.playerSprite.loadTexture(sprites[self.playerClass]);
-	//class differences?
-	};
 
-self.setName = (name) =>
+//called by controller once it is created
+self.setClassAndName = (pClass, pName) =>
 	{
-	self.playerName = name;
+	self.playerClass = pClass;
+	self.playerName = pName;
+	createPlayer();
 	};
 
 self.update = () =>
