@@ -1,6 +1,6 @@
 'use strict';
 
-function RoundManager (game)
+function RoundManager (game, bulletManager, enemyManager)
 {
 
 var self = this;
@@ -11,9 +11,6 @@ var players = {};
 var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 playerGroup.enableBody = true;
-
-var bulletManager = new BulletManager(game);
-var enemyManager = new EnemyManager(game, bulletManager);
 
 var roundRunning = false;
 
@@ -26,12 +23,13 @@ var rooms = [];
 var roomGroup = game.add.group();
 var nextRoom;
 
+
 var roundPause = 0;
 
 var speedDict = [];
-speedDict["slow"] = 1;
-speedDict["normal"] = 2;
-speedDict["fast"] = 5;
+speedDict["slow"] = 0.25;
+speedDict["normal"] = 0.5;
+speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 
@@ -39,8 +37,8 @@ self.loadRound = (roundData) =>
 	{
 
 		// Set camera in the middle of the stage
-		game.camera.x = game.camera.width;
-		game.camera.y = game.camera.height;
+		game.camera.x = game.world.width/2 - game.camera.width/2;
+		game.camera.y = game.world.height/2 - game.camera.height/2;
 
 		currentRound = round1;
 
@@ -107,7 +105,9 @@ self.setPlayerInput = (id, input) =>
 
 self.newPlayer = (id) =>
 	{
-		players[id] = new Player(game, (game.camera.x + game.camera.width) / 2, (game.camera.y + game.camera.height) / 2, bulletManager, id);
+    console.log(bulletManager);
+    console.log(enemyManager);
+		players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id);
 		playerGroup.add(players[id].playerSprite);
 	};
 
@@ -125,6 +125,10 @@ self.disconnectPlayer = (id) =>
 
 self.update = () =>
 	{
+		game.world.bringToTop(playerGroup);
+		game.world.bringToTop(enemyManager.enemyGroup);
+		bulletManager.playerBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
+		bulletManager.enemyBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
 		if (roundRunning && roundPause < 1)
 		{
 			bulletManager.update();
@@ -134,6 +138,7 @@ self.update = () =>
 				if (players[id] != undefined)
 				{
 					players[id].update();
+          console.log(players[id].playerSprite.position);
 				}
 			}
 
@@ -159,7 +164,7 @@ self.update = () =>
 
 var updateRoomMovement = () =>
 	{
-		if (currentSpeed != undefined)
+		if (speedDict[currentSpeed] != undefined)
 		{
 			// Figure out which speed to go
 			
@@ -171,16 +176,16 @@ var updateRoomMovement = () =>
 			switch (currentDirection)
 			{
 				case "north":
-					changeInPos = {"x": 0, "y": curSpeed};
-					break;
-				case "east":
-					changeInPos = {"x": -curSpeed, "y": 0};
-					break;
-				case "south":
 					changeInPos = {"x": 0, "y": -curSpeed};
 					break;
-				case "west":
+				case "east":
 					changeInPos = {"x": curSpeed, "y": 0};
+					break;
+				case "south":
+					changeInPos = {"x": 0, "y": curSpeed};
+					break;
+				case "west":
+					changeInPos = {"x": -curSpeed, "y": 0};
 					break;
 				default:
 					console.log("something went awry");
@@ -188,10 +193,13 @@ var updateRoomMovement = () =>
 
 			for (var i = 0; i < rooms.length; i++)
 			{
-				if (rooms[i] != undefined)
+				/*if (rooms[i] != undefined)
 				{
 					rooms[i].moveBy(changeInPos);
 				}
+        */
+       game.camera.x += changeInPos.x;
+       game.camera.y += changeInPos.y;
 			}
 
 			// Check if next room has passed the game.camera, if it has, align it with camera, load new room etc.
@@ -241,9 +249,6 @@ var instantiateNewRoom = () =>
 				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
 			default:
 				rooms[2] = null;
-		}
-		for (var i = 0; i < rooms.length; i++)
-		{
 		}
 	};
 

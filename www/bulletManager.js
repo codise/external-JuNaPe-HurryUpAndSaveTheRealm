@@ -83,9 +83,11 @@ self.createBullet = (type, playerid, angle, pos) =>
 	if (bullet != undefined)
 		{
 		bullet.anchor.setTo(0.5, 0.5);
-		bullet.outOfBoundsKill = true;
-		bullet.checkWorldBounds = true;
+//		bullet.outOfBoundsKill = true;
+//		bullet.checkWorldBounds = true;
 		bullet.reset(pos.x, pos.y);
+		// This will have to be tuned
+		bullet.lifespan = 200;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
 		}
 	};

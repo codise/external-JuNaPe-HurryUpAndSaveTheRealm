@@ -7,10 +7,10 @@ var gameHeight = 1080;
 
 var gameConfig = {width: gameWidth,
 									height: gameHeight,
-									renderer: Phaser.AUTO,
+									renderer: Phaser.CANVAS,
 									parent: 'gameDiv',
 									transparent: false,
-									antialiasing: true,
+									antialiasing: false,
 									forceSetTimeout: false};
 									
 var game = new Phaser.Game(gameConfig);
@@ -23,6 +23,9 @@ game_state.main = function ()
 var self = this;
 
 self.roundManager;
+
+var enemyManager;
+var bulletManager;
 
 self.preload = () =>
 	{
@@ -47,6 +50,9 @@ self.preload = () =>
 	game.load.image('enemy_skeleton', 'assets/enemy_classes/monster_skeleton.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
 
+  bulletManager = new BulletManager(game);
+  enemyManager = new EnemyManager(game, bulletManager);
+
   
 	}
 self.create = () =>
@@ -54,8 +60,12 @@ self.create = () =>
 	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 		
 	game.stage.disableVisibilityChange = true;
-  game.world.setBounds(0, 0, 3 * gameWidth, 3 * gameHeight);
-  self.roundManager = new RoundManager(game);
+
+  //This is bad
+
+  game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
+
+  self.roundManager = new RoundManager(game, bulletManager, enemyManager);
   self.roundManager.loadRound("assets/maps/rounds/round.json");
 
 
