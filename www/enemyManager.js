@@ -32,7 +32,7 @@ self.update = (players) =>
 		{
 		// Spawn new mobs
 		var randomPlayer = pickRandomFromDictionary(players);
-		var randomPos = {x: game.rnd.integerInRange(0, game.width), y: game.rnd.integerInRange(0, game.height)};
+		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
 	
 		if (randomPlayer != undefined)
 			{

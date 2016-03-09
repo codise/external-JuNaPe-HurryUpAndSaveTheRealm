@@ -5,7 +5,15 @@
 var gameWidth = 1920;
 var gameHeight = 1080;
 
-var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, 'gameDiv');
+var gameConfig = {width: gameWidth,
+									height: gameHeight,
+									renderer: Phaser.CANVAS,
+									parent: 'gameDiv',
+									transparent: false,
+									antialiasing: false,
+									forceSetTimeout: false};
+									
+var game = new Phaser.Game(gameConfig);
 var game_state = {};
 var serverAddress = 'localhost';
 
@@ -13,10 +21,11 @@ var serverAddress = 'localhost';
 game_state.main = function ()
 {
 var self = this;
-//self.player;
-//self.enemies = {}
-self.playerGroup;
 
+self.roundManager;
+
+var enemyManager;
+var bulletManager;
 
 self.preload = () =>
 	{
@@ -24,7 +33,7 @@ self.preload = () =>
 	if (!self.id)
 		{
 		self.id = 1;
-		}
+  	}
 	
   gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
   //console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
@@ -41,96 +50,83 @@ self.preload = () =>
 	game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
 	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
+
+
+  
 	}
 self.create = () =>
-	{
-	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+  {
+	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		
 	game.stage.disableVisibilityChange = true;
-	self.bg = game.add.sprite(0, 0, 'map');
+
+  bulletManager = new BulletManager(game);
+  enemyManager = new EnemyManager(game, bulletManager);
+
+  //This is bad
+
+  game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
+
+  self.roundManager = new RoundManager(game, bulletManager, enemyManager);
+  self.roundManager.loadRound("assets/maps/rounds/round.json");
+
+
+
+/*self.bg = game.add.sprite(0, 0, 'map');
 	self.bg.height = gameHeight;
 	self.bg.width = gameWidth;
 	self.bg.smoothed = false;
-	self.players = {};
+  self.bulletManager = new bulletManager(game);
+  self.enemyManager = new EnemyManager(game, self.bulletManager);
+*/
 
-	game.physics.startSystem(Phaser.Physics.ARCADE);
-
-	self.bulletManager = new bulletManager(game);
-	self.enemyManager = new EnemyManager(game, self.bulletManager);
-
-	//self.enemies[0] = new Enemy(game, self.bulletManager, game.world.width/3, game.world.height/3);
+/*	self.players = {};
+  self.playerGroup = game.add.group();
 	self.playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 	self.playerGroup.enableBody = true;
+*/
+
+	game.physics.startSystem(Phaser.Physics.ARCADE);
 	}
 
 self.setPlayerInput = (id, input) =>
 	{
-	if (self.players[id] != undefined)
-		{
-		self.players[id].setInput(input);
-		}
+	self.roundManager.setPlayerInput(id, input);
 	};
 
 self.update = () =>
 	{
-	// self.bulletManager.createBullet('magic', 0, {x:0.5, y:0.5}, {x:100, y:100});
-	self.bulletManager.update();
-	for (var id in self.players)
-		{
-		if (self.players[id] != undefined)
-			{
-			self.players[id].update()
-			}
-		}
-	self.enemyManager.update(self.players);
-	game.physics.arcade.collide(self.playerGroup);
-	game.physics.arcade.collide(self.enemyManager.enemyGroup);
-	game.physics.arcade.collide(self.playerGroup, self.enemyManager.enemyGroup);  
-	for (var i = 0; i < self.bulletManager.playerBulletGroups.length; i++)
-		{
-		game.physics.arcade.collide(self.bulletManager.playerBulletGroups[i], self.playerGroup);
-		game.physics.arcade.collide(self.bulletManager.playerBulletGroups[i], self.enemyManager.enemyGroup);
-		}
+	self.roundManager.update();
 	};
 
-self.render = () => {};
+self.render = () => {game.debug.cameraInfo(game.camera, 32, 32)};
 
 
 self.onControllerConnected = (id) =>
 	{
-	//self.player = new Player(game, game.world.width/2, game.world.height/2);
-	self.players[id] = new Player(game, game.world.width/2, game.world.height/2, self.bulletManager, id);
-	self.playerGroup.add(self.players[id].playerSprite);
+		self.roundManager.newPlayer(id);
 	};
 
 self.onControllerDisconnected = (id) =>
 	{
-	//playerGroup.remove(players[id]);
-	//players[id].kill();
-	if (self.players[id] != undefined)
-		{
-		self.players[id].kill();
-		self.players[id] = undefined;
-		self.playerGroup.remove(players[id].playerSprite);
-		//playerGroup.remove(players[id]);
-		}
+	self.roundManager.disconnectPlayer(id);
 	};
 
 self.onScreenConnected = (id) =>
 	{
-	console.log("OwnScreen::onScreenConnected() "+ id);
-	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
-	//gameClient.callServerRpc(1, "method", ["hello server"],  self, null);
+	//console.log("OwnScreen::onScreenConnected() "+ id);
+	//console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
 	};
 
 self.onScreenDisconnected = (id) =>
 	{
-	console.log("OwnScreen::onScreenDisconnected() "+id);
-	console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
+	//console.log("OwnScreen::onScreenDisconnected() "+id);
+	//console.log("Currently connected screens: " + gameClient.getConnectedScreenIds());
 	};
 
 self.clientConnected = () =>
 	{
-	console.log("DemoScreen::screenConnected()");
+	//console.log("DemoScreen::screenConnected()");
 	
 	gameClient.setClientConnectionListener(self, self.onControllerConnected);
 	gameClient.setClientDisconnectionListener(self, self.onControllerDisconnected);
@@ -143,7 +139,7 @@ self.clientConnected = () =>
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
 		{
-		console.log("Stick position received: "+data);
+		//console.log("Stick position received: "+data);
 		});
 	
 	};

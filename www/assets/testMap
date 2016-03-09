@@ -1,0 +1,57 @@
+{ "height":108,
+ "layers":[
+        {
+         "draworder":"topdown",
+         "height":108,
+         "name":"Object Layer 1",
+         "objects":[
+                {
+                 "height":12.1818181818182,
+                 "id":1,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":192.363636363636,
+                 "x":-0.181818181818182,
+                 "y":0
+                }, 
+                {
+                 "height":11.0909090909091,
+                 "id":3,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":192.545454545455,
+                 "x":-0.363636363636364,
+                 "y":96.5454545454545
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":192,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":4,
+ "orientation":"orthogonal",
+ "properties":
+    {
+
+    },
+ "renderorder":"right-down",
+ "tileheight":1,
+ "tilesets":[],
+ "tilewidth":1,
+ "version":1,
+ "width":192
+}
