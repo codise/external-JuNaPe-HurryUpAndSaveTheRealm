@@ -1,9 +1,12 @@
 'use strict';
 
-//var gameWidth = window.innerWidth * window.devicePixelRatio;
-//var gameHeight = window.innerHeight * window.devicePixelRatio;
-var gameWidth = 1920;
-var gameHeight = 1080;
+var gameWidth = window.innerWidth * window.devicePixelRatio;
+var gameHeight = window.innerHeight * window.devicePixelRatio;
+var wantedGameWidth = 1920;
+var wantedGameHeight = 1080;
+
+scalingFactors = { "x": gameWidth / wantedGameWidth,
+									 "y": gameHeight / wantedGameHeight};
 
 var gameConfig = {width: gameWidth,
 									height: gameHeight,
@@ -14,6 +17,8 @@ var gameConfig = {width: gameWidth,
 									forceSetTimeout: false};
 									
 var game = new Phaser.Game(gameConfig);
+
+
 var game_state = {};
 var serverAddress = 'localhost';
 
@@ -26,6 +31,28 @@ self.roundManager;
 
 var enemyManager;
 var bulletManager;
+
+var resizeGame = () =>
+	{
+	var height = window.innerHeight * window.devicePixelRatio;
+	var width = window.innerWidth * window.devicePixelRatio;
+
+	if (game != undefined)
+		{
+		game.width = width;
+		game.height = height;
+		game.stage.bounds.width = width;
+		game.stage.bounds.height = height;
+
+		if (game.renderType === 1)
+			{
+			game.renderer.resize(width, height);
+			Phaser.Canvas.setSmoothingEnabled(game.context, false);
+			}
+		}
+	};
+
+window.onresize = resizeGame;
 
 self.preload = () =>
 	{
@@ -50,8 +77,6 @@ self.preload = () =>
 	game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
 	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
-
-
   
 	}
 self.create = () =>

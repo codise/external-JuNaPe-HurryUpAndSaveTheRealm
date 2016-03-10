@@ -43,6 +43,12 @@ var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
 
+var scale = () =>
+	{
+	self.playerSprite.scale.x = scalingFactors.x;
+	self.playerSprite.scale.y = scalingFactors.y;
+	};
+
 /*
 self.healthBarOutline = game.add.graphics(0,0);
 self.healthBarFill = game.add.graphics(0,0);
@@ -67,6 +73,9 @@ self.setInput = (input) =>
 
 self.update = () =>
 	{
+
+	scale();
+
 	if (!self.dead)
 		{
 		if (self.input != undefined)

@@ -33,6 +33,11 @@ self.layerGroup = game.add.group();
 self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
+var scale = () =>
+	{
+	self.layerGroup.forEach((layer) => { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
+	};
+
 self.preload = (callback) =>
 	{
 	mycallback = callback;
@@ -85,6 +90,11 @@ self.moveTo = (x, y) =>
 self.moveBy = (amount) =>
 	{
 	self.layerGroup.forEach(moveLayer, this, true, amount);
+	};
+
+self.updateScaling = () =>
+	{
+	scale();
 	};
 
 var moveLayer = (layer, amount) =>
