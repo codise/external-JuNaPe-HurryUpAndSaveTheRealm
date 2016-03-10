@@ -39,6 +39,15 @@ var bulletSpeed = 1000;
 
 var bulletLifespan = 1000;
 
+var scale = (listOfGroups) =>
+	{
+	for (var i = 0; i < listOfGroups.length; i++)
+		{
+		listOfGroups[i].setAll('scale.x', scalingFactors.x);
+		listOfGroups[i].setAll('scale.y', scalingFactors.y);
+		}
+	};
+
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
 self.createBullet = (type, playerid, angle, pos) =>
 	{
@@ -100,6 +109,9 @@ self.killbullet = (bullet) =>
 
 self.update = () =>
 	{
+	scale(self.enemyBulletGroups);
+	scale(self.playerBulletGroups);
+
 	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
 	enemyBulletPool = 50 - self.enemyBulletCount;

@@ -46,6 +46,12 @@ var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
 
+var scale = () =>
+	{
+	self.playerSprite.scale.x = scalingFactors.x;
+	self.playerSprite.scale.y = scalingFactors.y;
+	};
+
 self.setInput = (input) =>
 	{
 	self.input = input;
@@ -53,6 +59,9 @@ self.setInput = (input) =>
 
 self.update = () =>
 	{
+
+	scale();
+
 	if (!self.dead)
 		{
 		if (self.input != undefined)

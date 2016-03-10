@@ -166,6 +166,8 @@ self.update = () =>
 
 var updateRoomMovement = () =>
 	{
+	rooms.forEach((room, index, array) => { if (room != undefined) { room.updateScaling(); } });
+
 	if (speedDict[currentSpeed] != undefined)
 		{
 		// Figure out which speed to go

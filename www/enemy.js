@@ -39,6 +39,13 @@ var currentTarget = getRndmFrom(mPlayers);
 
 var cameraPadding = 20;
 
+var scale = () =>
+	{
+	self.enemySprite.scale.x = scalingFactors.x;
+	self.enemySprite.scale.y = scalingFactors.y;
+	};
+
+
 self.update = (players) =>
 	{
 	mPlayers = players;
@@ -47,6 +54,7 @@ self.update = (players) =>
 		currentTarget = getRndmFrom(mPlayers);
 		}
 
+	scale();
 	if(game.time.now > nextMove) 
 		{
 		move();
