@@ -37,15 +37,18 @@ var resizeGame = () =>
 	var height = window.innerHeight * window.devicePixelRatio;
 	var width = window.innerWidth * window.devicePixelRatio;
 
-	game.width = width;
-	game.height = height;
-	game.stage.bounds.width = width;
-	game.stage.bounds.height = height;
-
-	if (game.renderType === 1)
+	if (game != undefined)
 		{
-		game.renderer.resize(width, height);
-		Phaser.Canvas.setSmoothingEnabled(game.context, false);
+		game.width = width;
+		game.height = height;
+		game.stage.bounds.width = width;
+		game.stage.bounds.height = height;
+
+		if (game.renderType === 1)
+			{
+			game.renderer.resize(width, height);
+			Phaser.Canvas.setSmoothingEnabled(game.context, false);
+			}
 		}
 	};
 
