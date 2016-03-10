@@ -74,6 +74,7 @@ self.createBullet = (type, playerid, angle, pos) =>
 				default:
 					var bullet = playerMagicBullets.getFirstDead();
 				}
+			bullet.playerId = playerid;
 			playerBulletPool--;
 			}
 		} else
