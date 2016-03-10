@@ -30,8 +30,16 @@ self.player = player;
 
 var cameraPadding = 20;
 
+var scale = () =>
+	{
+	self.enemySprite.scale.x = scalingFactors.x;
+	self.enemySprite.scale.y = scalingFactors.y;
+	};
+
 self.update = () =>
 	{
+  scale();
+
 	if(game.time.now > self.nextMove) 
 		{
 		move();
