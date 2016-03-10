@@ -12,6 +12,9 @@ var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 playerGroup.enableBody = true;
 
+var scoreTable = [];
+var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
+
 var roundRunning = false;
 
 // Variables related to map functioning
@@ -128,6 +131,9 @@ self.update = () =>
 	game.world.bringToTop(enemyManager.enemyGroup);
 	bulletManager.playerBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
+	scoreText.bringToTop();
+
+	updateScore();
 
 	if (roundRunning && lastPaused < game.time.now)
 		{
@@ -241,6 +247,37 @@ var instantiateNewRoom = () =>
 			rooms[2] = null;
 		}
 	};
+
+var updateScore = () =>
+	{
+	scoreTable = [];	
+	for (var i in players)
+		{
+		if (players[i] != undefined)
+			{
+			scoreTable.push({"id": players[i].id, "score": players[i].score});
+			}
+		}
+	
+	scoreText.text = scoreTableToText(scoreTable);
+	scoreText.position.x = game.camera.x + 16;
+	scoreText.position.y = game.camera.y + 16;
+	};
+
+var scoreTableToText = (scoreTable) =>
+	{
+	var arrangedScoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
+	var text = '';
+
+	for (var i in arrangedScoreTable)
+		{
+			text += 'ID: ' + arrangedScoreTable[i].id + " :: " + arrangedScoreTable[i].score + "\n";
+		};
+	return text;
+	};
+
 }
+
+
 
 

@@ -1,52 +1,67 @@
 'use strict';
 
-function Enemy(enemyInfo, game, bulletManager, player, position)
+function Enemy(enemyInfo, game, bulletManager, players, position)
 {
+
+var getRndmFrom = (dict) =>
+  {
+  var keys = Object.keys(dict);
+  var object
+  var i = 0;
+  object = dict[keys[ keys.length * Math.random() << 0]];
+  return object;
+  };
+
 var self = this;
 
-
-self.maxSpeed = enemyInfo.maxSpeed;
+var maxSpeed = enemyInfo.maxSpeed;
 
 self.enemySprite = game.add.sprite(position.x, position.y, enemyInfo.sprite);
 self.enemySprite.anchor.setTo(0.5, 0.5);
-self.flipped = false;
+var flipped = false;
 
-self.nextMove = 0;
-self.moveRate = 2500;
-self.movementScheme = enemyInfo.movementScheme;
+var nextMove = 0;
+var moveRate = 2500;
+var movementScheme = enemyInfo.movementScheme;
 
-self.xDirection = [1, -1];
+var xDirection = [1, -1];
 //self.yDirection = [1, -1];
 
-self.fireRate = 5000;
-self.nextFire = 0;
-self.shootingScheme = enemyInfo.shootingScheme;
+var fireRate = 5000;
+var nextFire = 0;
+var shootingScheme = enemyInfo.shootingScheme;
 
-self.maxHealth = 10;
-self.currentHealth = self.maxHealth;
-self.dead = false;
+var maxHealth = 10;
+var currentHealth = maxHealth;
 
-self.player = player;
+var mPlayers = players;
+var currentTarget = getRndmFrom(mPlayers);
 
 var cameraPadding = 20;
 
-self.update = () =>
+self.update = (players) =>
 	{
-	if(game.time.now > self.nextMove) 
+	mPlayers = players;
+	if (currentTarget === undefined)
+		{
+		currentTarget = getRndmFrom(mPlayers);
+		}
+
+	if(game.time.now > nextMove) 
 		{
 		move();
 		}
-	if (self.enemySprite.body.velocity.x > 0 && self.flipped)
+	if (self.enemySprite.body.velocity.x > 0 && flipped)
 		{
 		self.enemySprite.scale.x = 1;
-		self.flipped = false;
-		} else if (self.enemySprite.body.velocity.x < 0 && !self.flipped)
+		flipped = false;
+		} else if (self.enemySprite.body.velocity.x < 0 && !flipped)
 		{
 		self.enemySprite.scale.x = -1;
-		self.flipped = true;
+		flipped = true;
 		}
 
-	if (game.time.now > self.nextFire)
+	if (game.time.now > nextFire)
 		{
 		fire();
 		}
@@ -63,14 +78,16 @@ self.update = () =>
 
 self.enemyHit = function(enemy, bullet) 
 	{
+	var playerId = bullet.playerId;
 	bullet.kill();
+	mPlayers[playerId].getPoints();
 	self.enemyTakeDamage(1);
 	};
 
 self.enemyTakeDamage = function(damage) 
 	{
-	self.currentHealth = self.currentHealth-damage;
-	if(self.currentHealth <= 0)
+	currentHealth = currentHealth - damage;
+	if(currentHealth <= 0)
 		{
 		self.enemySprite.dead = true;
 		}
@@ -83,36 +100,36 @@ self.kill = () =>
 
 var move = () =>
 	{
-	switch (self.movementScheme)
+	switch (movementScheme)
 		{
 		case 'chargeSingle':
-			if(self.player != undefined)
+			if(currentTarget != undefined)
 				{
-				var angle = game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
-				game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
+				var angle = game.physics.arcade.angleBetween(self.enemySprite, currentTarget.playerSprite) * 180/Math.PI;
+				game.physics.arcade.velocityFromAngle(angle, maxSpeed, self.enemySprite.body.velocity);
 				} else {
 				console.log('tried to charge at undefined player');
 				}
 			break;
 		default:
 			var angle = Math.floor(Math.random()*181);
-			angle *= self.xDirection[Math.floor(Math.random()*2)];
-			game.physics.arcade.velocityFromAngle(angle, self.maxSpeed, self.enemySprite.body.velocity);
+			angle *= xDirection[Math.floor(Math.random()*2)];
+			game.physics.arcade.velocityFromAngle(angle, maxSpeed, self.enemySprite.body.velocity);
 		}
-	self.nextMove = game.time.now + self.moveRate;
+	nextMove = game.time.now + moveRate;
 	};
 
 var fire = () =>
 	{
-	switch (self.shootingScheme[1])
+	switch (shootingScheme[1])
 		{
 		case 'directedBurst':
-			createDirectedBurst(self.shootingScheme[0]);
+			createDirectedBurst(shootingScheme[0]);
 			break;
 		default:
-			createRadialPulse(self.shootingScheme[0]);	
+			createRadialPulse(shootingScheme[0]);	
 		}
-	self.nextFire = game.time.now + self.fireRate;
+	nextFire = game.time.now + fireRate;
 	};
 
 var createRadialPulse = (n) =>
@@ -127,9 +144,9 @@ var createRadialPulse = (n) =>
 var createDirectedBurst = (n) =>
 	{
 	// Creates n bullets directed to player
-	if(self.player != undefined)
+	if(currentTarget != undefined)
 		{	
-		var angleBetween = game.physics.arcade.angleBetween(self.enemySprite, self.player.playerSprite) * 180/Math.PI;
+		var angleBetween = game.physics.arcade.angleBetween(self.enemySprite, currentTarget.playerSprite) * 180/Math.PI;
 		} else {
 		console.log('tried to shoot at undefined player');
 		}
@@ -157,4 +174,7 @@ var checkCameraBounds = () =>
 		self.enemySprite.position.y = game.camera.y + game.camera.height - cameraPadding;
 		}
 	};
+
+
+
 }

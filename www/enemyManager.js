@@ -31,17 +31,8 @@ self.update = (players) =>
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
-		var randomPlayer = pickRandomFromDictionary(players);
 		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-
-		if (randomPlayer != undefined)
-			{
-			var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, randomPlayer, randomPos);
-			} else {
-			var newEnemy = new Enemy(enemyDictionary.hellbug, game, bulletManager, randomPlayer, randomPos);
-			console.log("did not find defined player in 500 loops, making a hellbug instead");
-			}
-
+    var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
 		self.enemyGroup.add(newEnemy.enemySprite);
 		newEnemy.enemySprite.body.collideWorldBounds = true;
 		self.enemyList.push(newEnemy);
@@ -56,7 +47,7 @@ self.update = (players) =>
 			{
 			self.enemyList[i].kill();
 			} else {
-			self.enemyList[i].update();
+			self.enemyList[i].update(players);
 			}
 		}
 
@@ -70,17 +61,7 @@ var pickRandomFromDictionary = (dict) =>
 	{
 	var keys = Object.keys(dict);
 	var object
-	var i = 0;
-	while (object === undefined)
-		{
-		object = dict[keys[ keys.length * Math.random() << 0]];
-		i++;
-		//100 attempts to give a defined object
-		if (i > 100)
-			{
-			return object;
-			}
-		}
+  object = dict[keys[ keys.length * Math.random() << 0]];
 	return object;
 	};
 }
