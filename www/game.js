@@ -33,11 +33,11 @@ self.preload = () =>
 	if (!self.id)
 		{
 		self.id = 1;
-  	}
-	
-  gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
-  //console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
-	
+		}
+
+	gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
+	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
+
 	game.load.image('player1', 'assets/player_classes/knightx.png');
 	game.load.image('player2', 'assets/player_classes/elfx.png');
 	game.load.image('player3', 'assets/player_classes/warlockx.png');
@@ -55,36 +55,19 @@ self.preload = () =>
   
 	}
 self.create = () =>
-  {
+	{
 	//game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		
 	game.stage.disableVisibilityChange = true;
 
-  bulletManager = new BulletManager(game);
-  enemyManager = new EnemyManager(game, bulletManager);
+	bulletManager = new BulletManager(game);
+	enemyManager = new EnemyManager(game, bulletManager);
 
-  //This is bad
+	//This is bad
 
-  game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
+	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-  self.roundManager = new RoundManager(game, bulletManager, enemyManager);
-  self.roundManager.loadRound("assets/maps/rounds/round.json");
-
-
-
-/*self.bg = game.add.sprite(0, 0, 'map');
-	self.bg.height = gameHeight;
-	self.bg.width = gameWidth;
-	self.bg.smoothed = false;
-  self.bulletManager = new bulletManager(game);
-  self.enemyManager = new EnemyManager(game, self.bulletManager);
-*/
-
-/*	self.players = {};
-  self.playerGroup = game.add.group();
-	self.playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
-	self.playerGroup.enableBody = true;
-*/
+	self.roundManager = new RoundManager(game, bulletManager, enemyManager);
+	self.roundManager.loadRound("assets/maps/rounds/round.json");
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	}
@@ -99,12 +82,12 @@ self.update = () =>
 	self.roundManager.update();
 	};
 
-self.render = () => {game.debug.cameraInfo(game.camera, 32, 32)};
+self.render = () => {};
 
 
 self.onControllerConnected = (id) =>
 	{
-		self.roundManager.newPlayer(id);
+	self.roundManager.newPlayer(id);
 	};
 
 self.onControllerDisconnected = (id) =>
@@ -127,21 +110,21 @@ self.onScreenDisconnected = (id) =>
 self.clientConnected = () =>
 	{
 	//console.log("DemoScreen::screenConnected()");
-	
+
 	gameClient.setClientConnectionListener(self, self.onControllerConnected);
 	gameClient.setClientDisconnectionListener(self, self.onControllerDisconnected);
 	gameClient.setScreenConnectionListener(self, self.onScreenConnected);
 	gameClient.setScreenDisconnectionListener(self, self.onScreenDisconnected);
-	
-	
+
+
 	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-	
+
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
 		{
 		//console.log("Stick position received: "+data);
 		});
-	
+
 	};
 };
 

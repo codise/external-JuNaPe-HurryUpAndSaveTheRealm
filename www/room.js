@@ -35,24 +35,24 @@ self.moveSpeed = moveSpeed;
 
 self.preload = (callback) =>
 	{
-		mycallback = callback;
-		if (!game.cache.checkImageKey(background))
+	mycallback = callback;
+	if (!game.cache.checkImageKey(background))
 		{
-			myloader.image(background, "assets/maps/backgrounds/" + background);
+		myloader.image(background, "assets/maps/backgrounds/" + background);
 		}
-    if(!game.cache.checkImageKey(collisionAssets))
-    {
-			myloader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
+	if(!game.cache.checkImageKey(collisionAssets))
+		{
+		myloader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
 		}
 
-		if(!game.cache.checkJSONKey(collisionData))
+	if(!game.cache.checkJSONKey(collisionData))
 		{
-			myloader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
+		myloader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
 		}
 
-		myloader.onLoadComplete.addOnce(create);
-    
-    myloader.start();
+	myloader.onLoadComplete.addOnce(create);
+  
+	myloader.start();
 	};
 
 var create = () =>
@@ -63,7 +63,6 @@ var create = () =>
 
 	backgroundLayer = game.add.sprite(0, 0, background);
 	backgroundLayer.smoothed = false;
-//	backgroundLayer.scale.setTo(10, 10);
 	self.layerGroup.add(backgroundLayer);
 	collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);
@@ -85,26 +84,17 @@ self.moveTo = (x, y) =>
 
 self.moveBy = (amount) =>
 	{
-		self.layerGroup.forEach(moveLayer, this, true, amount);
+	self.layerGroup.forEach(moveLayer, this, true, amount);
 	};
 
 var moveLayer = (layer, amount) =>
 	{
-		layer.position.x = layer.position.x + amount.x;
-		layer.position.y = layer.position.y + amount.y;
+	layer.position.x = layer.position.x + amount.x;
+	layer.position.y = layer.position.y + amount.y;
 	};
 
 self.getPos = () =>
 	{
-		return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
+	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
-
 }
-	
-
-
-
-
-		
-
-

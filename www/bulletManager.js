@@ -85,8 +85,6 @@ self.createBullet = (type, playerid, angle, pos) =>
 	if (bullet != undefined)
 		{
 		bullet.anchor.setTo(0.5, 0.5);
-//		bullet.outOfBoundsKill = true;
-//		bullet.checkWorldBounds = true;
 		bullet.reset(pos.x, pos.y);
 		// This will have to be tuned
 		bullet.lifespan = bulletLifespan;
@@ -101,14 +99,11 @@ self.killbullet = (bullet) =>
 
 self.update = () =>
 	{
-	//console.log(playerBulletPool);
-	//console.log(enemyBulletPool);
 	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
 	enemyBulletPool = 50 - self.enemyBulletCount;
 	playerBulletPool = 50 - self.playerBulletCount;
 	};
-
 
 var countLiveBullets = (groupList) =>
 	{
@@ -119,7 +114,6 @@ var countLiveBullets = (groupList) =>
 		}
 	return count;
 	};
-
 }
 
 

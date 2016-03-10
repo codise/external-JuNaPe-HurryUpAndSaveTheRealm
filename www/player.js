@@ -99,8 +99,9 @@ self.update = () =>
 		//We should only check for collisions when there are collidable objects on screen
 		if(bulletManager.enemyBulletCount > 0)
 			{
-				game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.playerSprite, self.playerHit, null, self);
+			game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.playerSprite, self.playerHit, null, self);
 			}
+
 		} else if (self.dead && nextRespawn < 0) {
 		self.playerSprite.exists = true;
 		self.dead = false;

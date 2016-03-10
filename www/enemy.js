@@ -31,42 +31,41 @@ self.player = player;
 var cameraPadding = 20;
 
 self.update = () =>
-  {
-    if(game.time.now > self.nextMove) 
-    {
-      move();
-    }
-    if (self.enemySprite.body.velocity.x > 0 && self.flipped)
-    {
-      self.enemySprite.scale.x = 1;
-      self.flipped = false;
-    } else if (self.enemySprite.body.velocity.x < 0 && !self.flipped)
-    {
-      self.enemySprite.scale.x = -1;
-      self.flipped = true;
-    }
+	{
+	if(game.time.now > self.nextMove) 
+		{
+		move();
+		}
+	if (self.enemySprite.body.velocity.x > 0 && self.flipped)
+		{
+		self.enemySprite.scale.x = 1;
+		self.flipped = false;
+		} else if (self.enemySprite.body.velocity.x < 0 && !self.flipped)
+		{
+		self.enemySprite.scale.x = -1;
+		self.flipped = true;
+		}
 
-    if (game.time.now > self.nextFire)
-    {
-      fire();
-    }
+	if (game.time.now > self.nextFire)
+		{
+		fire();
+		}
 
-    if(bulletManager.playerBulletCount > 0) 
-    {
-      for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
-      {
-        game.physics.arcade.overlap(bulletManager.playerBulletGroups[i], self.enemySprite, self.enemyHit, null, self); 
-      }
-    }
-    checkCameraBounds();
-  };
+	if(bulletManager.playerBulletCount > 0) 
+		{
+		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
+			{
+			game.physics.arcade.overlap(bulletManager.playerBulletGroups[i], self.enemySprite, self.enemyHit, null, self); 
+			}
+		}
+	checkCameraBounds();
+	};
 
 self.enemyHit = function(enemy, bullet) 
 	{
 	bullet.kill();
 	self.enemyTakeDamage(1);
 	};
-
 
 self.enemyTakeDamage = function(damage) 
 	{
@@ -94,7 +93,6 @@ var move = () =>
 				} else {
 				console.log('tried to charge at undefined player');
 				}
-			
 			break;
 		default:
 			var angle = Math.floor(Math.random()*181);
@@ -142,24 +140,21 @@ var createDirectedBurst = (n) =>
 	};
 
 var checkCameraBounds = () =>
-  {
-    if (self.enemySprite.position.x < game.camera.x + cameraPadding)
-    {
-      self.enemySprite.position.x = game.camera.x + cameraPadding;
-    } else if (self.enemySprite.position.x > game.camera.x + game.camera.width - cameraPadding)
-    {
-      self.enemySprite.position.x = game.camera.x + game.camera.width - cameraPadding;
-    }
+	{
+	if (self.enemySprite.position.x < game.camera.x + cameraPadding)
+		{
+		self.enemySprite.position.x = game.camera.x + cameraPadding;
+		} else if (self.enemySprite.position.x > game.camera.x + game.camera.width - cameraPadding)
+		{
+		self.enemySprite.position.x = game.camera.x + game.camera.width - cameraPadding;
+		}
 
-    if (self.enemySprite.position.y < game.camera.y + cameraPadding)
-    {
-      self.enemySprite.position.y = game.camera.y + cameraPadding;
-    } else if (self.enemySprite.position.y > game.camera.y + game.camera.height - cameraPadding)
-    {
-      self.enemySprite.position.y = game.camera.y + game.camera.height - cameraPadding;
-    }
-  };
-
-		
-
+	if (self.enemySprite.position.y < game.camera.y + cameraPadding)
+		{
+		self.enemySprite.position.y = game.camera.y + cameraPadding;
+		} else if (self.enemySprite.position.y > game.camera.y + game.camera.height - cameraPadding)
+		{
+		self.enemySprite.position.y = game.camera.y + game.camera.height - cameraPadding;
+		}
+	};
 }

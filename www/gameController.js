@@ -64,7 +64,7 @@ self.create = () =>
 	controllerpad2 = self.game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
 	};
-	
+
 self.reservePointer = (stick, pointer, pad) =>
 	{
 	if(!stick.pointer)
@@ -89,7 +89,7 @@ self.reservePointer = (stick, pointer, pad) =>
 		*/
 		}
 	};
-	
+
 self.releasePointer = (pointer) =>
 	{
 	if(self.moveStick.pointer === pointer)
@@ -109,7 +109,7 @@ self.releasePointer = (pointer) =>
 		//console.log("-- failed to release pointer --");
 		}
 	};
-	
+
 self.matchMoveStickCoords = (pointer) =>
 	{
 	self.startMove.x = pointer.position.x;
@@ -117,7 +117,7 @@ self.matchMoveStickCoords = (pointer) =>
 	self.endMove.x = pointer.position.x;
 	self.endMove.y = pointer.position.y;
 	};
-	
+
 self.matchShootStickCoords = (pointer) =>
 	{
 	self.startShoot.x = pointer.position.x;
@@ -125,7 +125,7 @@ self.matchShootStickCoords = (pointer) =>
 	self.endShoot.x = pointer.position.x;
 	self.endShoot.y = pointer.position.y;
 	};
-	
+
 self.pointerOnDown = function()
 	{
 	var pointer = arguments[0];
@@ -140,7 +140,7 @@ self.pointerOnDown = function()
 		self.matchShootStickCoords(pointer);
 		}
 	};
-	
+
 self.pointerOnUp = function()
 	{
 	var pointer = arguments[0];
@@ -153,7 +153,7 @@ self.pointerOnUp = function()
 		}
 	self.releasePointer(pointer);
 	};
-	
+
 self.dragPointer = (pointer) =>
 	{
 	if(pointer.isDown)
@@ -173,7 +173,7 @@ self.dragPointer = (pointer) =>
 			}
 		}
 	};
-	
+
 var vectorizeInput = (start, end) =>
 	{
 	var target = new Phaser.Point(end.x - start.x, end.y - start.y);

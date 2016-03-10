@@ -33,7 +33,7 @@ self.update = (players) =>
 		// Spawn new mobs
 		var randomPlayer = pickRandomFromDictionary(players);
 		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-	
+
 		if (randomPlayer != undefined)
 			{
 			var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, randomPlayer, randomPos);
@@ -41,7 +41,7 @@ self.update = (players) =>
 			var newEnemy = new Enemy(enemyDictionary.hellbug, game, bulletManager, randomPlayer, randomPos);
 			console.log("did not find defined player in 500 loops, making a hellbug instead");
 			}
-	
+
 		self.enemyGroup.add(newEnemy.enemySprite);
 		newEnemy.enemySprite.body.collideWorldBounds = true;
 		self.enemyList.push(newEnemy);
@@ -49,7 +49,7 @@ self.update = (players) =>
 		}
 
 	//Check if any enemy in enemylist has been killed and update enemies
-	
+
 	for (var i = 0; i < self.enemyList.length; i++)
 		{
 		if (self.enemyList[i].enemySprite.dead === true)
@@ -61,7 +61,7 @@ self.update = (players) =>
 		}
 
 	//Update pool
-	
+
 	self.enemyPool = 5 - self.enemyGroup.length;
 
 	};
@@ -83,7 +83,6 @@ var pickRandomFromDictionary = (dict) =>
 		}
 	return object;
 	};
-
 }
-	
+
 
