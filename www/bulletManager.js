@@ -35,9 +35,9 @@ var enemyBulletPool = 50;
 self.enemyBulletCount;
 self.playerBulletCount;
 
-var bulletSpeed = 1000;
+//var bulletSpeed = 200;
 
-var bulletLifespan = 1000;
+//var bulletLifespan = 1000;
 
 var scale = (listOfGroups) =>
 	{
@@ -49,7 +49,7 @@ var scale = (listOfGroups) =>
 	};
 
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
-self.createBullet = (type, playerid, angle, pos) =>
+self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan) =>
 	{
 	if (playerid >= 0)
 		{
@@ -100,6 +100,7 @@ self.createBullet = (type, playerid, angle, pos) =>
 		bullet.lifespan = bulletLifespan;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
 		}
+	bullet.damage = damage;
 	};
 
 self.killbullet = (bullet) =>

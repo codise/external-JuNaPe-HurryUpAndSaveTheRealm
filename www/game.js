@@ -76,6 +76,7 @@ self.preload = () =>
 	game.load.image('flame', 'assets/projectiles/flame.png');
 	game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
 	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
+	game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
   
 	}
