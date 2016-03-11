@@ -257,7 +257,7 @@ var updateScore = () =>
 		{
 		if (players[i] != undefined)
 			{
-			scoreTable.push({"id": players[i].id, "score": players[i].score});
+			scoreTable.push({"id": players[i].id, "name": players[i].playerName,  "score": players[i].score});
 			}
 		}
 	
@@ -273,7 +273,10 @@ var scoreTableToText = (scoreTable) =>
 
 	for (var i in arrangedScoreTable)
 		{
-			text += 'ID: ' + arrangedScoreTable[i].id + " :: " + arrangedScoreTable[i].score + "\n";
+      if (arrangedScoreTable[i].name != undefined)
+        {
+			  text += arrangedScoreTable[i].name + " :: " + arrangedScoreTable[i].score + "\n";
+        }
 		};
 	return text;
 	};
