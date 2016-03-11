@@ -101,14 +101,6 @@ self.setPlayerInput = (id, input) =>
 	{
 	self.roundManager.setPlayerInput(id, input);
 	};
-	
-self.setPlayerClassAndName = (id, playerClass, playerName) =>
-	{
-	if (self.players[id] != undefined)
-		{
-		self.players[id].setClassAndName(playerClass, playerName);
-		}
-	};
 
 self.update = () =>
 	{
@@ -151,7 +143,6 @@ self.clientConnected = () =>
 
 
 	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-	gameClient.exposeRpcMethod("setPlayerClassAndName", self, self.setPlayerClassAndName);
 	
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)

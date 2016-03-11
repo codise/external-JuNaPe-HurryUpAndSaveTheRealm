@@ -81,8 +81,6 @@ self.create = () =>
 	controllerpad1.exists = false;
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
-	
-	gameClient.callScreenRpc(1, "setPlayerClassAndName", [self.id, playerClass, playerName], self, null);
 	};
 
 self.reservePointer = (stick, pointer, pad) =>
@@ -212,7 +210,7 @@ self.update = () =>
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
 	
-	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y};
+	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y, pName:playerName, pClass:playerClass};
 	//console.log(input);
 
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
