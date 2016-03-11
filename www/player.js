@@ -24,6 +24,8 @@ self.playerSprite.anchor.setTo(0.5, 0.5);
 self.playerSprite.exists = false;
 var setupDone = false;
 
+var flipped = false;
+
 var fireRate = 100;
 var nextFire = 0;
 
@@ -49,14 +51,19 @@ var pHUD;
 
 var scale = () =>
 	{
-	self.playerSprite.scale.x = scalingFactors.x;
+	if (flipped)
+		{
+		self.playerSprite.scale.x = -scalingFactors.x;
+		} else
+		{
+		self.playerSprite.scale.x = scalingFactors.x;
+		}
 	self.playerSprite.scale.y = scalingFactors.y;
 	};
 
 function createPlayer ()
 	{
 	self.playerSprite.loadTexture(sprites[self.playerClass]);
-	self.flipped = false;
 	
 	game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 	self.playerSprite.body.collideWorldBounds = true;
@@ -105,13 +112,11 @@ self.update = () =>
 				}
 			var angle = input.moveAngle;
 			game.physics.arcade.velocityFromAngle(angle, movementSpeed * length, self.playerSprite.body.velocity);
-			if (self.playerSprite.body.velocity.x > 0 && self.flipped)
+			if (self.playerSprite.body.velocity.x > 0 && flipped)
 				{
-				self.playerSprite.scale.x = 1;
-				self.flipped = false;
-				} else if (self.playerSprite.body.velocity.x < 0 && !self.flipped) {
-				self.playerSprite.scale.x = -1;
-				self.flipped = true;
+				flipped = false;
+				} else if (self.playerSprite.body.velocity.x < 0 && !flipped) {
+				flipped = true;
 				}
 			if ((input.sX != 0 || input.sX != 0) && (game.time.now > nextFire))
 				{

@@ -41,7 +41,13 @@ var cameraPadding = 20;
 
 var scale = () =>
 	{
-	self.enemySprite.scale.x = scalingFactors.x;
+	if (flipped)
+		{
+		self.enemySprite.scale.x = -scalingFactors.x;
+		} else
+		{
+		self.enemySprite.scale.x = scalingFactors.x;
+		}
 	self.enemySprite.scale.y = scalingFactors.y;
 	};
 
@@ -61,11 +67,9 @@ self.update = (players) =>
 		}
 	if (self.enemySprite.body.velocity.x > 0 && flipped)
 		{
-		self.enemySprite.scale.x = 1;
 		flipped = false;
 		} else if (self.enemySprite.body.velocity.x < 0 && !flipped)
 		{
-		self.enemySprite.scale.x = -1;
 		flipped = true;
 		}
 
