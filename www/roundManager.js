@@ -106,7 +106,7 @@ self.setPlayerInput = (id, input) =>
 		players[id].setInput(input);
 		}
 	};
-
+	
 self.newPlayer = (id) =>
 	{
 	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id);

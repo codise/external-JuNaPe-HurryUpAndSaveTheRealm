@@ -1,13 +1,15 @@
 'use strict';
 
-function Player(game, x, y, bulletmanager, id)
+function Player(game, x, y, bulletManager, id)
 {
 var self = this;
 
-self.input;
-
+var sprites = ['player1', 'player2', 'player5', 'player6', 'player4', 'player3'];
+var input;
+//self.playerClass = Math.floor((Math.random() * 6)); //rand 0-5
+self.playerClass;
+self.playerName;
 self.id = id;
-
 
 self.score = 0;
 
@@ -15,19 +17,12 @@ self.maxHealth = 1000;
 self.currentHealth = self.maxHealth;
 self.dead = false;
 
-
-var bulletManager = bulletmanager;
-
-var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6']
 var randomSprite = sprites[Math.floor((Math.random() * 6))];
-self.playerSprite = game.add.sprite(x, y, randomSprite);
+
+self.playerSprite = game.add.sprite(x, y, 'empty');
 self.playerSprite.anchor.setTo(0.5, 0.5);
-self.flipped = false;
-game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
-self.playerSprite.body.collideWorldBounds = true;
-self.playerSprite.body.bounce = (1,1);
-var textureWidth = self.playerSprite.width;
-var textureHeight = self.playerSprite.height;
+self.playerSprite.exists = false;
+var setupDone = false;
 
 var fireRate = 100;
 var nextFire = 0;
@@ -37,7 +32,6 @@ var movementSpeed = 200;
 var respawnTime = 100;
 var nextRespawn = 0;
 
-var pHUD = new playerHud(game,self);
 
 var cameraPadding = 20;
 
@@ -46,33 +40,70 @@ var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
 
+var pHUD;
+
+//>>DEBUG
+//setClassAndName(0, "test");
+//createPlayer();
+//<<
+
 var scale = () =>
 	{
 	self.playerSprite.scale.x = scalingFactors.x;
 	self.playerSprite.scale.y = scalingFactors.y;
 	};
 
-self.setInput = (input) =>
+function createPlayer ()
 	{
-	self.input = input;
+	self.playerSprite.loadTexture(sprites[self.playerClass]);
+	self.flipped = false;
+	
+	game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
+	self.playerSprite.body.collideWorldBounds = true;
+	
+	self.playerSprite.body.bounce = (1,1);
+
+	pHUD = new playerHud(game,self);
+	pHUD.setPlayerName(self.playerName);
+	self.playerSprite.exists = true;
 	};
 
+self.setInput = (inputArray) =>
+	{
+	input = inputArray;
+	};
+
+//called by controller once it is created
+function setClassAndName (pClass, pName)
+	{
+	self.playerClass = pClass;
+	self.playerName = pName;
+	//console.log('pname: ' + self.playerName + ', pclass: ' + self.playerClass);
+	};
+	
 self.update = () =>
 	{
-
 	scale();
-
 	if (!self.dead)
 		{
-		if (self.input != undefined)
+		if (input != undefined)
 			{
-			var i = self.input;
-			var length = i.moveLength;
+			
+			if(!setupDone)
+				{
+					//setting the player up here is a workaround to enable play on firefox
+				//console.log('setting up player');
+				setClassAndName(input.pClass, input.pName);
+				createPlayer();
+				setupDone = true;
+				}
+			
+			var length = input.moveLength;
 			if(length > 1)
 				{
 				length = 1;
 				}
-			var angle = i.moveAngle;
+			var angle = input.moveAngle;
 			game.physics.arcade.velocityFromAngle(angle, movementSpeed * length, self.playerSprite.body.velocity);
 			if (self.playerSprite.body.velocity.x > 0 && self.flipped)
 				{
@@ -82,11 +113,11 @@ self.update = () =>
 				self.playerSprite.scale.x = -1;
 				self.flipped = true;
 				}
-			if ((i.sX != 0 || i.sX != 0) && (game.time.now > nextFire))
+			if ((input.sX != 0 || input.sX != 0) && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				headingPoint.x = i.sX;
-				headingPoint.y = i.sY;
+				headingPoint.x = input.sX;
+				headingPoint.y = input.sY;
 				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
 				}
 			}
