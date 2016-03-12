@@ -25,7 +25,8 @@ self.playerSprite.anchor.setTo(0.5, 0.5);
 self.flipped = false;
 game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
 self.playerSprite.body.collideWorldBounds = true;
-self.playerSprite.body.bounce = (1,1);
+self.playerSprite.body.bounce.x = 0.7;
+self.playerSprite.body.bounce.y = 0.7;
 var textureWidth = self.playerSprite.width;
 var textureHeight = self.playerSprite.height;
 
@@ -92,8 +93,8 @@ self.update = () =>
 				headingPoint.y = i.sY;
 				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
 				}
-			self.weaponSprite.x = self.playerSprite.position.x;
-			self.weaponSprite.y = self.playerSprite.position.y;
+			/*self.weaponSprite.x = self.playerSprite.position.x;
+			self.weaponSprite.y = self.playerSprite.position.y;*/
 			//TODO: weapon rotate
 			}
 

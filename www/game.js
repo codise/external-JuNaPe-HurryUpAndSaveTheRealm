@@ -87,13 +87,13 @@ self.create = () =>
 
 	bulletManager = new BulletManager(game);
 	enemyManager = new EnemyManager(game, bulletManager);
-	weaponManager = new WeaponManager(game);
+	//weaponManager = new WeaponManager(game);
 
 	//This is bad
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	self.roundManager = new RoundManager(game, bulletManager, enemyManager, weaponManager);
+	self.roundManager = new RoundManager(game, bulletManager, enemyManager, null);
 	self.roundManager.loadRound("assets/maps/rounds/round.json");
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
