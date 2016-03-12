@@ -15,7 +15,7 @@ self.create = () =>
   game.connectionManager.connect(serverAddress, gamePort, game.screenId);
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  game.state.start('play');
+  game.state.start('load');
 	};
 
 }

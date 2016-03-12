@@ -11,21 +11,16 @@ self.connect = (address, port, id) =>
 
 var init = () =>
 	{
-	console.log("running init");
   gameClient.setClientConnectionListener(game, game.onControllerConnected);
   gameClient.setClientDisconnectionListener(game, game.onControllerDisconnected);
-//  gameClient.setScreenConnectionListener(game. game.onScreenConnected);
- // gameClient.setScreenDisconnectionListener(game. game.onScreenDisconnected);
   gameClient.exposeRpcMethod("setPlayerInput", game, game.setPlayerInput);
 	};
 
 game.onControllerConnected = (id) =>
 	{
 	var current = game.state.current;
-	console.log("Controller connecting");
 	if (current === 'play')
 		{
-		console.log("Connecting player");
 		game.state.getCurrentState().onControllerConnected(id);
 		} else if (current  === 'waiting')
 		{
@@ -41,14 +36,13 @@ game.onControllerDisconnected = (id) =>
 		game.state.getCurrentState().onControllerDisconnected(id);
 		} else if (current  === 'waiting')
 		{
-		game.state.getCurrentSate().onControllerDisconnected(id);
+		game.state.getCurrentState().onControllerDisconnected(id);
 		}
 	};
 
 game.setPlayerInput = (id, input) =>
 	{
 	var current = game.state.current;
-	console.log("setting input");
 	if (current === 'play')
 		{
 		game.state.getCurrentState().setPlayerInput(id, input);

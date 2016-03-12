@@ -18,11 +18,12 @@ var gameConfig = {width: gameWidth,
 
 var game = new Phaser.Game(gameConfig);
 
-//game.state.add('load', loadState);
-///game.state.add('waiting', waitingState);
+
 game.state.add('boot', bootState);
+game.state.add('load', loadState);
+game.state.add('waiting', waitingState);
 game.state.add('play',  playState);
-//game.state.add('roundOver', roundOverState);
+game.state.add('roundOver', roundOverState);
 
 
 game.state.start('boot');
