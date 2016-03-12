@@ -15,7 +15,6 @@ var gameConfig = {width: gameWidth,
                   transparent: false,
                   antialiasing: false,
                   forceSetTimeout: false};
-
 var game = new Phaser.Game(gameConfig);
 
 

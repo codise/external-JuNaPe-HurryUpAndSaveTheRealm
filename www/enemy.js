@@ -4,13 +4,12 @@ function Enemy(enemyInfo, game, bulletManager, players, position)
 {
 
 var getRndmFrom = (dict) =>
-  {
-  var keys = Object.keys(dict);
-  var object
-  var i = 0;
-  object = dict[keys[ keys.length * Math.random() << 0]];
-  return object;
-  };
+	{
+	var keys = Object.keys(dict);
+	var object
+	object = dict[keys[ keys.length * Math.random() << 0]];
+	return object;
+	};
 
 var self = this;
 
@@ -21,17 +20,17 @@ self.enemySprite.anchor.setTo(0.5, 0.5);
 var flipped = false;
 
 var nextMove = 0;
-var moveRate = 2500;
+var moveRate = enemyInfo.moveRate;//2500;
 var movementScheme = enemyInfo.movementScheme;
 
 var xDirection = [1, -1];
 //self.yDirection = [1, -1];
 
-var fireRate = 5000;
+var fireRate = enemyInfo.fireRate;//5000;
 var nextFire = 0;
 var shootingScheme = enemyInfo.shootingScheme;
 
-var maxHealth = 10;
+var maxHealth = enemyInfo.maxHealth;//10;
 var currentHealth = maxHealth;
 
 var mPlayers = players;
@@ -43,10 +42,10 @@ var scale = () =>
 	{
 	if (flipped)
 		{
-		self.enemySprite.scale.x = -scalingFactors.x;
+		self.enemySprite.scale.x = scalingFactors.x;
 		} else
 		{
-		self.enemySprite.scale.x = scalingFactors.x;
+		self.enemySprite.scale.x = -scalingFactors.x;
 		}
 	self.enemySprite.scale.y = scalingFactors.y;
 	};
@@ -91,9 +90,10 @@ self.update = (players) =>
 self.enemyHit = function(enemy, bullet) 
 	{
 	var playerId = bullet.playerId;
+	var damage = bullet.damage;
 	bullet.kill();
 	mPlayers[playerId].getPoints();
-	self.enemyTakeDamage(1);
+	self.enemyTakeDamage(damage);
 	};
 
 self.enemyTakeDamage = function(damage) 
@@ -138,6 +138,9 @@ var fire = () =>
 		case 'directedBurst':
 			createDirectedBurst(shootingScheme[0]);
 			break;
+		case 'slasherShot':
+			createSlasherShot(shootingScheme[0]);
+			break;
 		default:
 			createRadialPulse(shootingScheme[0]);	
 		}
@@ -149,22 +152,45 @@ var createRadialPulse = (n) =>
 	// Creates n bullets radially from monster
 	for (var i = 0; i < n; i++)
 		{
-		bulletManager.createBullet('enemyBullet', -1, 360/n * i, self.enemySprite.position);
+		bulletManager.createBullet('enemyBullet', 10, -1, 360/n * i, self.enemySprite.position, 200, 5000);
 		}
 	};
 
 var createDirectedBurst = (n) =>
 	{
-	// Creates n bullets directed to player
+	// Creates a group of bullets shot at a player, like a shotgun
 	if(currentTarget != undefined)
 		{	
 		var angleBetween = game.physics.arcade.angleBetween(self.enemySprite, currentTarget.playerSprite) * 180/Math.PI;
 		} else {
 		console.log('tried to shoot at undefined player');
 		}
-	for (var i = 0; i < n; i++)
+	for (var i = 0 - ((n-1)/2) ; i <= 0 + ((n-1)/2); i++)
 		{
-		bulletManager.createBullet('enemyBullet', -1, angleBetween, self.enemySprite.position);
+		// 4 degrees of random offset
+		var randomOffset = Math.floor((Math.random() * 9)) - 4;
+		var angle = angleBetween + ((i )* 10) + randomOffset;
+		
+		bulletManager.createBullet('enemyBullet', 10, -1, angle, self.enemySprite.position, 200, 5000);
+		}
+	};
+
+var createSlasherShot = (n) =>
+	{
+	// Creates a group of bullets shot at a player, like a shotgun
+	if(currentTarget != undefined)
+		{	
+		var angleBetween = game.physics.arcade.angleBetween(self.enemySprite, currentTarget.playerSprite) * 180/Math.PI;
+		} else {
+		console.log('tried to shoot at undefined player');
+		}
+	for (var i = 0 - ((n-1)/2) ; i <= 0 + ((n-1)/2); i++)
+		{
+		// 4 degrees of random offset
+		var randomOffset = Math.floor((Math.random() * 9)) - 4;
+		var angle = angleBetween + ((i )* 10) + randomOffset;
+		
+		bulletManager.createBullet('enemyBullet', 10, -1, angle, self.enemySprite.position, 400, 500);
 		}
 	};
 

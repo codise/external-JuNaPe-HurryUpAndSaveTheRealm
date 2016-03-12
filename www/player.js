@@ -13,7 +13,7 @@ self.id = id;
 
 self.score = 0;
 
-self.maxHealth = 1000;
+self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
 self.dead = false;
 
@@ -26,7 +26,7 @@ var setupDone = false;
 
 var flipped = false;
 
-var fireRate = 100;
+var fireRate = 200;
 var nextFire = 0;
 
 var movementSpeed = 200;
@@ -123,7 +123,7 @@ self.update = () =>
 				nextFire = game.time.now + fireRate;
 				headingPoint.x = input.sX;
 				headingPoint.y = input.sY;
-				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
+				bulletManager.createBullet('magic', 2, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position, 1000, 1000);
 				}
 			}
 
@@ -162,8 +162,10 @@ self.update = () =>
 
 self.playerHit = function(player, bullet)
 	{
+	var damage = bullet.damage;
+	//console.log(damage);
 	bulletManager.killbullet(bullet);
-	self.takeDamage(10);
+	self.takeDamage(damage);
 	//console.log(self.currentHealth);
 	};
 

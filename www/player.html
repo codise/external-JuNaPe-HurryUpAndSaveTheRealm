@@ -45,7 +45,7 @@ img {
 	padding: 2px;
 	border-radius: 15px;
 	text-shadow: 2px 2px 2px #000;
-	
+
 }
 
 div {
@@ -61,7 +61,7 @@ div {
 
 		</style>
 		<script>
-		
+
 var chosenClass = -1;
 function init ()
 {
@@ -96,20 +96,20 @@ function setChosenImg()
 function playGame()
 {
 	var name = document.getElementById('name').value;
-	
+
 	if(chosenClass > -1 && /^[a-z0-9]+$/i.test(name))
 	{
 		window.location.href = 'controller.html' + '?n=' + name + '&c=' + chosenClass;
-	} else 
+	} else
 	{
-		//TODO if nimi!= alnum värjää nimiruutu 
+		//TODO if nimi!= alnum värjää nimiruutu
 		//TODO if class < 0 värjää hahmoimgien background?
 	}
-	
+
 }
 
 		</script>
-		
+
 	</head>
 
 	<body onload="init();">
@@ -117,23 +117,23 @@ function playGame()
 			<br>
 			<b class="label">Pick a name</b>
 			<br>
-			
+
 			<input id="name" type="text"/>
 			<br><br>
-			
+
 			<b class="label">Pick a class</b>
 			<br>
-			
-			<img class="playerclass" id="0" src="assets/player_classes/knightx.png">
-			<img class="playerclass" id="1" src="assets/player_classes/elfx.png">
-			<img class="playerclass" id="2" src="assets/player_classes/magex.png">
+
+			<img class="playerclass" id="0" src="assets/player_classes/knight_with_weapon.png">
+			<img class="playerclass" id="1" src="assets/player_classes/elf_with_weapon.png">
+			<img class="playerclass" id="2" src="assets/player_classes/mage_with_weapon.png">
 			<br>
-			
-			<img class="playerclass" id="3" src="assets/player_classes/vikingx.png">
-			<img class="playerclass" id="4" src="assets/player_classes/ninjax.png">
-			<img class="playerclass" id="5" src="assets/player_classes/warlockx.png">
+
+			<img class="playerclass" id="3" src="assets/player_classes/viking_with_weapon.png">
+			<img class="playerclass" id="4" src="assets/player_classes/ninja_with_weapon.png">
+			<img class="playerclass" id="5" src="assets/player_classes/warlock_with_weapon.png">
 			<br><br>
-	
+
 			<input id="play" type=button value="  Play  ">
 		</div>
 	</body>
