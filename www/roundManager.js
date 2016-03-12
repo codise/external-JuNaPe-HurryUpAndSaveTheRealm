@@ -119,7 +119,9 @@ self.disconnectPlayer = (id) =>
 		{
 		playerGroup.remove(players[id].playerSprite);
 		players[id].kill();
-		players[id] = undefined;
+		//players[id] = undefined;
+		delete players[id];
+		// ^ deletes also key from obj list so no key in this list points to undefined when people disconnect
 		}
 	};
 
