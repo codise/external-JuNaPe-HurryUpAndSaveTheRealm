@@ -15,7 +15,7 @@ var gameConfig = {width: gameWidth,
 									transparent: false,
 									antialiasing: false,
 									forceSetTimeout: false};
-									
+
 var game = new Phaser.Game(gameConfig);
 
 
@@ -64,12 +64,12 @@ self.preload = () =>
 	gameClient.connect(serverAddress, gamePort, self.id, self.clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+gamePort);
 
-	game.load.image('player1', 'assets/player_classes/knightx.png');
-	game.load.image('player2', 'assets/player_classes/elfx.png');
-	game.load.image('player3', 'assets/player_classes/warlockx.png');
-	game.load.image('player4', 'assets/player_classes/ninjax.png');
-	game.load.image('player5', 'assets/player_classes/magex.png');
-	game.load.image('player6', 'assets/player_classes/vikingx.png');
+	game.load.image('player1', 'assets/player_classes/knight.png');
+	game.load.image('player2', 'assets/player_classes/elf.png');
+	game.load.image('player3', 'assets/player_classes/warlock.png');
+	game.load.image('player4', 'assets/player_classes/ninja.png');
+	game.load.image('player5', 'assets/player_classes/mage.png');
+	game.load.image('player6', 'assets/player_classes/viking.png');
 	game.load.image('empty', 'assets/other/empty.png');
 	game.load.image('magic', 'assets/projectiles/bullet.png');
 	game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
@@ -78,7 +78,7 @@ self.preload = () =>
 	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 	game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
 	game.load.image('map', 'assets/maps/castle_basic.png');
-  
+
 	}
 self.create = () =>
 	{
@@ -144,7 +144,7 @@ self.clientConnected = () =>
 
 
 	gameClient.exposeRpcMethod("setPlayerInput", self, self.setPlayerInput);
-	
+
 	gameClient.callClientRpc(1, "setStickPosition", [211,100],  self, null);
 	gameClient.callClientRpc(1, "getStickPosition", [],  self, function(err, data)
 		{
