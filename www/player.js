@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletmanager, id)
+function Player(game, x, y, bulletmanager, id, weaponManager)
 {
 var self = this;
 
@@ -28,6 +28,9 @@ self.playerSprite.body.collideWorldBounds = true;
 self.playerSprite.body.bounce = (1,1);
 var textureWidth = self.playerSprite.width;
 var textureHeight = self.playerSprite.height;
+
+/*self.weapon = weaponManager.getNewWeapon(self);
+self.weaponSprite = self.weapon.weaponSprite;*/
 
 var fireRate = 100;
 var nextFire = 0;
@@ -89,6 +92,9 @@ self.update = () =>
 				headingPoint.y = i.sY;
 				bulletManager.createBullet('magic', self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position);
 				}
+			self.weaponSprite.x = self.playerSprite.position.x;
+			self.weaponSprite.y = self.playerSprite.position.y;
+			//TODO: weapon rotate
 			}
 
 		//We should only check for collisions when there are collidable objects on screen
