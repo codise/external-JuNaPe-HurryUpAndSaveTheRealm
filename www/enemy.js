@@ -7,7 +7,6 @@ var getRndmFrom = (dict) =>
 	{
 	var keys = Object.keys(dict);
 	var object
-	var i = 0;
 	object = dict[keys[ keys.length * Math.random() << 0]];
 	return object;
 	};
