@@ -240,6 +240,7 @@ var updateRoomMovement = () =>
 				nextRoom++;
 				} else
 				{
+					enemyManager.createBoss('tentacle', rooms[1].bossPos);
 					lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}

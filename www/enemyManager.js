@@ -80,11 +80,11 @@ self.update = (players) =>
 
 	};
 
-self.createBoss = (bossType) =>
+self.createBoss = (bossType, bossPos) =>
 	{
 	if (bossDictionary[bossType] != undefined)
 		{
-		var bossMonster = new BossMonster(bossDictionary[bossType], self);
+		var bossMonster = new BossMonster(bossDictionary[bossType], bossPos,  self);
 		self.enemyGroup.add(bossMonster.sprite);
 		bossMonster.sprite.body.collidWorldBounds = true;
 		self.enemyList.push(bossMonster);
