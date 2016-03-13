@@ -32,13 +32,12 @@ self.enemyGroup = game.add.group(); // Group manages sprites
 self.enemyGroup.enableBody = true;
 self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
-var spawnCooldown = 10000;
-//var spawnCooldown = 100;
+var spawnCooldown = 100;
 var nextSpawn = 0;
 
 self.enemyList = []; // List manages Enemy objects
 
-self.enemyPool = 5;
+self.enemyPool = 30;
 
 self.update = (players) =>
 	{

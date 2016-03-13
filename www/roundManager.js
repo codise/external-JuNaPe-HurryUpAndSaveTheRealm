@@ -36,6 +36,10 @@ speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
+self.roundOver = false;
+var lastRoomTimeout = 10000;
+var lastRoomTimer = 0;
+
 
 self.loadRound = (roundData) =>
 	{
@@ -137,7 +141,7 @@ self.update = () =>
 
 	updateScore();
 
-	if (roundRunning && lastPaused < game.time.now)
+	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
 		bulletManager.update();
 
@@ -162,13 +166,20 @@ self.update = () =>
 			}
 
 		updateRoomMovement();
+		if(lastRoomTimer > 0)
+			{
+			if (lastRoomTimer < game.time.now)
+				{
+				self.roundOver = true;
+				}
+			}
 		} 
 
 	};
 
 var updateRoomMovement = () =>
 	{
-	rooms.forEach((room, index, array) => { if (room != undefined) { room.updateScaling(); } });
+	rooms.forEach((room, index, array) => { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -227,6 +238,9 @@ var updateRoomMovement = () =>
 				rooms[2].preload(instantiateNewRoom)
 				lastPaused = game.time.now + pauseTime;
 				nextRoom++;
+				} else
+				{
+					lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}
 		}
@@ -262,7 +276,7 @@ var updateScore = () =>
 			scoreTable.push({"id": players[i].id, "name": players[i].playerName,  "score": players[i].score});
 			}
 		}
-	
+	scoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
 	scoreText.position.x = game.camera.x + 16;
 	scoreText.position.y = game.camera.y + 16;
@@ -270,18 +284,23 @@ var updateScore = () =>
 
 var scoreTableToText = (scoreTable) =>
 	{
-	var arrangedScoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
 	var text = '';
 
-	for (var i in arrangedScoreTable)
+	for (var i in scoreTable)
 		{
-      if (arrangedScoreTable[i].name != undefined)
+      if (scoreTable[i].name != undefined)
         {
-			  text += arrangedScoreTable[i].name + " :: " + arrangedScoreTable[i].score + "\n";
+			  text += scoreTable[i].name + " :: " + scoreTable[i].score + "\n";
         }
 		};
 	return text;
 	};
+
+self.getScoreTable = () =>
+	{
+	return scoreTable;
+	};
+	
 
 }
 
