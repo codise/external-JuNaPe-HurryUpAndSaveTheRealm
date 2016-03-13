@@ -27,10 +27,20 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	fireRate: 500,
 																	maxHealth: 5}}
 
+var bossDictionary = { tentacle: {sprite: 'cthulhu';
+																	 movementScheme: 'wobble',
+																	 attackSchemes: ['spiral', 'deflect'],
+																	 maxSpeed: '5',
+																	 moveRate: 500,
+																	 maxHealth: 10000} }
+
+
 
 self.enemyGroup = game.add.group(); // Group manages sprites
 self.enemyGroup.enableBody = true;
 self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
+self.bulletManager = bulletManager; // So that bossmonter can use bulletmanager
 
 var spawnCooldown = 100;
 var nextSpawn = 0;
@@ -68,6 +78,17 @@ self.update = (players) =>
 
 	self.enemyPool = 5 - self.enemyGroup.length;
 
+	};
+
+self.createBoss = (bossType) =>
+	{
+	if (bossDictionary[bossType] != undefined)
+		{
+		var bossMonster = new BossMonster(bossDictionary[bossType], self);
+		self.enemyGroup.add(bossMonster.sprite);
+		bossMonster.sprite.body.collidWorldBounds = true;
+		self.enemyList.push(bossMonster);
+	}
 	};
 
 var pickRandomFromDictionary = (dict) =>
