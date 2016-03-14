@@ -27,11 +27,9 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	fireRate: 500,
 																	maxHealth: 5}}
 
-var bossDictionary = { tentacle: {sprite: 'cthulhu';
-																	 movementScheme: 'wobble',
-																	 attackSchemes: ['spiral', 'deflect'],
-																	 maxSpeed: '5',
-																	 moveRate: 500,
+var bossDictionary = { tentacle: {sprite: 'cthulhu',
+																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
 																	 maxHealth: 10000} }
 
 
