@@ -8,33 +8,56 @@ var self = this;
 var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	movementScheme: 'random',
 																	shootingScheme: [5, 'radial'],
-																	maxSpeed: 150},
+																	maxSpeed: 75,
+																	moveRate: 1200,
+																	fireRate: 5000,
+																	maxHealth: 10},
 												skeleton: {sprite: 'enemy_skeleton',
-																	 movementScheme: 'chargeSingle',
-																	 shootingScheme: [3, 'directedBurst'],
-																	 maxSpeed: 50}}
+																	movementScheme: 'chargeSingle',
+																	shootingScheme: [3, 'directedBurst'],
+																	maxSpeed: 75,
+																	moveRate: 1200,
+																	fireRate: 5000,
+																	maxHealth: 10},
+												slasher: {sprite: 'enemy_slasher',
+																	movementScheme: 'chargeSingle',
+																	shootingScheme: [1, 'slasherShot'],
+																	maxSpeed: 200,
+																	moveRate: 500,
+																	fireRate: 500,
+																	maxHealth: 5}}
+
+var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
+																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
+																	 maxHealth: 500} }
+
 
 
 self.enemyGroup = game.add.group(); // Group manages sprites
 self.enemyGroup.enableBody = true;
 self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
-var spawnCooldown = 10000;
+var spawnCooldown = 2000;
 var nextSpawn = 0;
+
+var enemyScalingCoefficient = 7;
 
 self.enemyList = []; // List manages Enemy objects
 
-self.enemyPool = 5;
+self.enemyPool = enemyScalingCoefficient;
 
 self.update = (players) =>
 	{
+	self.enemyPool = enemyScalingCoefficient * Object.keys(players).length;
+	console.log(self.enemyPool);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
 		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-    var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
-		self.enemyGroup.add(newEnemy.enemySprite);
-		newEnemy.enemySprite.body.collideWorldBounds = true;
+		var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
+		self.enemyGroup.add(newEnemy.sprite);
+		newEnemy.sprite.body.collideWorldBounds = true;
 		self.enemyList.push(newEnemy);
 		nextSpawn = game.time.now + spawnCooldown;
 		}
@@ -43,7 +66,7 @@ self.update = (players) =>
 
 	for (var i = 0; i < self.enemyList.length; i++)
 		{
-		if (self.enemyList[i].enemySprite.dead === true)
+		if (self.enemyList[i].sprite.dead === true)
 			{
 			self.enemyList[i].kill();
 			} else {
@@ -53,15 +76,27 @@ self.update = (players) =>
 
 	//Update pool
 
-	self.enemyPool = 5 - self.enemyGroup.length;
+	self.enemyPool = self.enemyPool - self.enemyGroup.length;
 
+	};
+
+self.createBoss = (bossType, bossPos) =>
+	{
+	if (bossDictionary[bossType] != undefined)
+		{
+		var bossMonster = new BossMonster(bossDictionary[bossType], game, bulletManager, bossPos);
+		self.enemyGroup.add(bossMonster.sprite);
+		bossMonster.sprite.body.collideWorldBounds = true;
+		self.enemyList.push(bossMonster);
+		spawnCooldown = 100000;
+		}
 	};
 
 var pickRandomFromDictionary = (dict) =>
 	{
 	var keys = Object.keys(dict);
 	var object
-  object = dict[keys[ keys.length * Math.random() << 0]];
+	object = dict[keys[ keys.length * Math.random() << 0]];
 	return object;
 	};
 }

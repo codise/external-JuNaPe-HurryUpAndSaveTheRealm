@@ -33,6 +33,7 @@ self.layerGroup = game.add.group();
 self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
+self.onceScaled = false;
 var scale = () =>
 	{
 	self.layerGroup.forEach((layer) => { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
@@ -56,7 +57,6 @@ self.preload = (callback) =>
 		}
 
 	myloader.onLoadComplete.addOnce(create);
-  
 	myloader.start();
 	};
 

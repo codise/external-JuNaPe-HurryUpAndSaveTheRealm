@@ -36,6 +36,10 @@ speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
+self.roundOver = false;
+var lastRoomTimeout = 300000; //300s
+var lastRoomTimer = 0;
+
 
 self.loadRound = (roundData) =>
 	{
@@ -110,16 +114,18 @@ self.setPlayerInput = (id, input) =>
 self.newPlayer = (id) =>
 	{
 	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id);
-	playerGroup.add(players[id].playerSprite);
+	playerGroup.add(players[id].sprite);
 	};
 
 self.disconnectPlayer = (id) =>
 	{
 	if (players[id] != undefined)
 		{
-		playerGroup.remove(players[id].playerSprite);
+		playerGroup.remove(players[id].sprite);
 		players[id].kill();
-		players[id] = undefined;
+		//players[id] = undefined;
+		delete players[id];
+		// ^ deletes also key from obj list so no key in this list points to undefined when people disconnect
 		}
 	};
 
@@ -135,7 +141,7 @@ self.update = () =>
 
 	updateScore();
 
-	if (roundRunning && lastPaused < game.time.now)
+	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
 		bulletManager.update();
 
@@ -160,13 +166,20 @@ self.update = () =>
 			}
 
 		updateRoomMovement();
+		if(lastRoomTimer > 0)
+			{
+			if (lastRoomTimer < game.time.now)
+				{
+				self.roundOver = true;
+				}
+			}
 		} 
 
 	};
 
 var updateRoomMovement = () =>
 	{
-	rooms.forEach((room, index, array) => { if (room != undefined) { room.updateScaling(); } });
+	rooms.forEach((room, index, array) => { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -225,6 +238,15 @@ var updateRoomMovement = () =>
 				rooms[2].preload(instantiateNewRoom)
 				lastPaused = game.time.now + pauseTime;
 				nextRoom++;
+				} else
+				{
+				var bossPos = new Phaser.Point(); // TODO hae positio huoneesta, lisää huoneeseen bossin positio
+				bossPos.x = game.camera.x + game.camera.width*3/4
+				bossPos.y = game.camera.y + game.camera.height/2
+				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
+				enemyManager.createBoss('tentacle', bossPos);
+				lastRoomTimeout = 600000; //10 min
+				lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}
 		}
@@ -260,7 +282,7 @@ var updateScore = () =>
 			scoreTable.push({"id": players[i].id, "name": players[i].playerName,  "score": players[i].score});
 			}
 		}
-	
+	scoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
 	scoreText.position.x = game.camera.x + 16;
 	scoreText.position.y = game.camera.y + 16;
@@ -268,21 +290,23 @@ var updateScore = () =>
 
 var scoreTableToText = (scoreTable) =>
 	{
-	var arrangedScoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
 	var text = '';
 
-	for (var i in arrangedScoreTable)
+	for (var i in scoreTable)
 		{
-      if (arrangedScoreTable[i].name != undefined)
-        {
-			  text += arrangedScoreTable[i].name + " :: " + arrangedScoreTable[i].score + "\n";
-        }
-		};
+		if (scoreTable[i].name != undefined)
+			{
+			text += scoreTable[i].name + " :: " + scoreTable[i].score + "\n";
+			}
+		}
 	return text;
 	};
 
+self.getScoreTable = () =>
+	{
+	return scoreTable;
+	};
+	
+
 }
-
-
-
 

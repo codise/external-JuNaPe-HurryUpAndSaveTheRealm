@@ -1,3 +1,3 @@
-// Here we only define the existance of scalingFactors
+'use strict';
 
 var scalingFactors;
