@@ -27,6 +27,7 @@ var loadState = function ()
 		game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
 		game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 		game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
+		game.load.image('enemy_tentaclemonster', 'assets/enemies/enemy_06.png');
 
 		// Set loadingtext
 	
