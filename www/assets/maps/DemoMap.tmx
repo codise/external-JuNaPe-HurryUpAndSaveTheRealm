@@ -2,45 +2,48 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="23" height="15" tilewidth="80" tileheight="72" nextobjectid="1">
  <tileset firstgid="1" name="FLOORS" tilewidth="80" tileheight="72" tilecount="3" columns="0">
   <tile id="0">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/floorB1.png"/>
+   <image width="80" height="72" source="tiles/floorB1.png"/>
   </tile>
   <tile id="1">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/floorB2.png"/>
+   <image width="80" height="72" source="tiles/floorB2.png"/>
   </tile>
   <tile id="2">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/floorB3.png"/>
+   <image width="80" height="72" source="tiles/floorB3.png"/>
   </tile>
  </tileset>
  <tileset firstgid="4" name="Walls" tilewidth="80" tileheight="72" tilecount="4" columns="0">
   <tile id="0">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/wall1.png"/>
+   <image width="80" height="72" source="tiles/wall1.png"/>
   </tile>
   <tile id="1">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/wall2.png"/>
+   <image width="80" height="72" source="tiles/wall2.png"/>
   </tile>
   <tile id="2">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/wall3.png"/>
+   <image width="80" height="72" source="tiles/wall3.png"/>
   </tile>
   <tile id="3">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/wall4.png"/>
+   <image width="80" height="72" source="tiles/wall4.png"/>
   </tile>
  </tileset>
  <tileset firstgid="8" name="DECO" tilewidth="320" tileheight="216" tilecount="5" columns="0">
   <tile id="0">
-   <image width="80" height="100" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/candelabrum.png"/>
+   <image width="80" height="100" source="tiles/candelabrum.png"/>
   </tile>
   <tile id="1">
-   <image width="63" height="89" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/flag.png"/>
+   <image width="63" height="89" source="tiles/flag.png"/>
   </tile>
   <tile id="2">
-   <image width="61" height="150" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/pillar.png"/>
+   <image width="61" height="150" source="tiles/pillar.png"/>
   </tile>
   <tile id="3">
-   <image width="80" height="72" source="JuNaPe GameDev/JuNaPe--gamenamehere-/www/assets/maps/tiles/trap.png"/>
+   <image width="80" height="72" source="tiles/trap.png"/>
   </tile>
   <tile id="4">
-   <image width="320" height="216" source="Entrance.png"/>
+   <image width="320" height="216" source="tiles/Entrance.png"/>
   </tile>
+ </tileset>
+ <tileset firstgid="13" name="castletileset" tilewidth="80" tileheight="72" tilecount="32" columns="4">
+  <image source="tiles/castletileset.png" width="320" height="576"/>
  </tileset>
  <layer name="DarkFloor" width="23" height="15">
   <data encoding="csv">
@@ -80,7 +83,7 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <layer name="LightFLoors" width="23" height="15">
+ <layer name="LightFLoors" width="23" height="15" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -99,7 +102,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="Stars" width="23" height="15">
+ <layer name="Stars" width="23" height="15" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -175,7 +178,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="Stars 5 BOSS" width="23" height="15" visible="0">
+ <layer name="Stars 5 BOSS" width="23" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -213,7 +216,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="UPWALL_ Gap" width="23" height="15">
+ <layer name="UPWALL_ Gap" width="23" height="15" visible="0">
   <data encoding="csv">
 4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,
 5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,
@@ -270,7 +273,7 @@
 6,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,6
 </data>
  </layer>
- <layer name="DownWall_GAP" width="23" height="15">
+ <layer name="DownWall_GAP" width="23" height="15" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -289,7 +292,7 @@
 6,6,6,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,6,6,6,6,6
 </data>
  </layer>
- <layer name="LeftWall" width="23" height="15">
+ <layer name="LeftWall" width="23" height="15" visible="0">
   <data encoding="csv">
 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -308,7 +311,7 @@
 7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="RightWall" width="23" height="15" visible="0">
+ <layer name="RightWall" width="23" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,
@@ -327,7 +330,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7
 </data>
  </layer>
- <layer name="ROOM 1 DECO" width="23" height="15">
+ <layer name="ROOM 1 DECO" width="23" height="15" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,9,0,0,0,0,9,0,0,0,0,9,0,0,0,0,0,0,0,
@@ -362,7 +365,7 @@
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,8,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0
+6,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <layer name="ROOM 3 DECO" width="23" height="15" visible="0">
@@ -374,7 +377,7 @@
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,10,0,0,1,1,1,0,0,10,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
@@ -386,8 +389,8 @@
  </layer>
  <layer name="ROOM 4 DECO" width="23" height="15" visible="0">
   <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,5,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
-0,0,9,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,9,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,10,0,
 0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
@@ -403,7 +406,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="ROOM 5 DECO" width="23" height="15" visible="0">
+ <layer name="ROOM 5 DECO" width="23" height="15">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
