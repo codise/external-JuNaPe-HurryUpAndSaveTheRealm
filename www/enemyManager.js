@@ -43,10 +43,12 @@ var nextSpawn = 0;
 
 self.enemyList = []; // List manages Enemy objects
 
-self.enemyPool = 30;
+self.enemyPool = 7;
 
 self.update = (players) =>
 	{
+	self.enemyPool = 7 * Object.keys(players).length;
+	console.log(self.enemyPool);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
@@ -72,7 +74,7 @@ self.update = (players) =>
 
 	//Update pool
 
-	self.enemyPool = 5 - self.enemyGroup.length;
+	self.enemyPool = self.enemyPool - self.enemyGroup.length;
 
 	};
 
