@@ -245,7 +245,6 @@ var updateRoomMovement = () =>
 				bossPos.y = game.camera.y + game.camera.height/2
 				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
 				enemyManager.createBoss('tentacle', bossPos);
-				lastRoomTimeout = 600000; //10 min
 				lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}
