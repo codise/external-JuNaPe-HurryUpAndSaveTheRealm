@@ -12,10 +12,10 @@ self.create = () =>
 		game.screenId = 1;
 		}
 	game.connectionManager = new ConnectionsManager(game)
-  game.connectionManager.connect(serverAddress, gamePort, game.screenId);
+	game.connectionManager.connect(serverAddress, gamePort, game.screenId);
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-  game.state.start('load');
+	game.state.start('load');
 	};
 
 }

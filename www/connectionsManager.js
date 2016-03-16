@@ -11,9 +11,9 @@ self.connect = (address, port, id) =>
 
 var init = () =>
 	{
-  gameClient.setClientConnectionListener(game, game.onControllerConnected);
-  gameClient.setClientDisconnectionListener(game, game.onControllerDisconnected);
-  gameClient.exposeRpcMethod("setPlayerInput", game, game.setPlayerInput);
+	gameClient.setClientConnectionListener(game, game.onControllerConnected);
+	gameClient.setClientDisconnectionListener(game, game.onControllerDisconnected);
+	gameClient.exposeRpcMethod("setPlayerInput", game, game.setPlayerInput);
 	};
 
 game.onControllerConnected = (id) =>
