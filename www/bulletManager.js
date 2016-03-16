@@ -119,7 +119,7 @@ self.update = () =>
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
-	console.log(enemyBulletPool)
+	//console.log(enemyBulletPool)
 	};
 
 var countLiveBullets = (groupList) =>

@@ -52,7 +52,7 @@ self.enemyPool = enemyScalingCoefficient;
 self.update = (players) =>
 	{
 	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
-	console.log(self.enemyGroup.length);
+	//console.log(self.enemyGroup.length);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
