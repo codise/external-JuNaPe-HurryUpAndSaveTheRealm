@@ -22,8 +22,6 @@ playerMagicBullets.createMultiple(enemyBulletPool, 'magic');
 self.playerBulletGroups.push(playerArrowBullets);
 self.playerBulletGroups.push(playerMagicBullets);
 
-
-
 self.enemyBulletGroups = [];
 
 var enemyGenericBullets = game.add.group();
@@ -32,8 +30,6 @@ enemyGenericBullets.physicsBodyType = Phaser.Physics.ARCADE;
 enemyGenericBullets.createMultiple(enemyBulletPool, 'enemyBullet');
 
 self.enemyBulletGroups.push(enemyGenericBullets);
-
-
 
 self.enemyBulletCount;
 self.playerBulletCount;
