@@ -37,7 +37,7 @@ speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
-var lastRoomTimeout = 10000;
+var lastRoomTimeout = 120000; //120s
 var lastRoomTimer = 0;
 
 
@@ -114,14 +114,14 @@ self.setPlayerInput = (id, input) =>
 self.newPlayer = (id) =>
 	{
 	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id);
-	playerGroup.add(players[id].playerSprite);
+	playerGroup.add(players[id].sprite);
 	};
 
 self.disconnectPlayer = (id) =>
 	{
 	if (players[id] != undefined)
 		{
-		playerGroup.remove(players[id].playerSprite);
+		playerGroup.remove(players[id].sprite);
 		players[id].kill();
 		//players[id] = undefined;
 		delete players[id];
@@ -240,8 +240,12 @@ var updateRoomMovement = () =>
 				nextRoom++;
 				} else
 				{
-					enemyManager.createBoss('tentacle', rooms[1].bossPos);
-					lastRoomTimer = game.time.now + lastRoomTimeout;
+				var bossPos = new Phaser.Point(); // TODO hae positio huoneesta, lisää huoneeseen bossin positio
+				bossPos.x = game.camera.x + game.camera.width*3/4
+				bossPos.y = game.camera.y + game.camera.height/2
+				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
+				enemyManager.createBoss('tentacle', bossPos);
+				lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}
 		}

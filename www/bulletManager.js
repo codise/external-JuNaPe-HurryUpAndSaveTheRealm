@@ -19,7 +19,7 @@ playerMagicBullets.createMultiple(50, 'magic');
 self.playerBulletGroups.push(playerArrowBullets);
 self.playerBulletGroups.push(playerMagicBullets);
 
-var playerBulletPool = 50;
+var playerBulletPool = 200;
 
 self.enemyBulletGroups = [];
 
@@ -99,8 +99,8 @@ self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLife
 		// This will have to be tuned
 		bullet.lifespan = bulletLifespan;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
+		bullet.damage = damage;
 		}
-	bullet.damage = damage;
 	};
 
 self.killbullet = (bullet) =>

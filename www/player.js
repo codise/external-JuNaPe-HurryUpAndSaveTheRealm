@@ -16,12 +16,11 @@ self.score = 0;
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
 self.dead = false;
+//var randomSprite = sprites[Math.floor((Math.random() * 6))];
 
-var randomSprite = sprites[Math.floor((Math.random() * 6))];
-
-self.playerSprite = game.add.sprite(x, y, 'empty');
-self.playerSprite.anchor.setTo(0.5, 0.5);
-self.playerSprite.exists = false;
+self.sprite = game.add.sprite(x, y, 'empty');
+self.sprite.anchor.setTo(0.5, 0.5);
+self.sprite.exists = false;
 var setupDone = false;
 
 var flipped = false;
@@ -53,26 +52,26 @@ var scale = () =>
 	{
 	if (flipped)
 		{
-		self.playerSprite.scale.x = -scalingFactors.x;
+		self.sprite.scale.x = -scalingFactors.x;
 		} else
 		{
-		self.playerSprite.scale.x = scalingFactors.x;
+		self.sprite.scale.x = scalingFactors.x;
 		}
-	self.playerSprite.scale.y = scalingFactors.y;
+	self.sprite.scale.y = scalingFactors.y;
 	};
 
 function createPlayer ()
 	{
-	self.playerSprite.loadTexture(sprites[self.playerClass]);
+	self.sprite.loadTexture(sprites[self.playerClass]);
 	
-	game.physics.enable(self.playerSprite, Phaser.Physics.ARCADE);
-	self.playerSprite.body.collideWorldBounds = true;
+	game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
+	self.sprite.body.collideWorldBounds = true;
 	
-	self.playerSprite.body.bounce = (1,1);
+	self.sprite.body.bounce = (1,1);
 
-	pHUD = new playerHud(game,self);
-	pHUD.setPlayerName(self.playerName);
-	self.playerSprite.exists = true;
+	pHUD = new Hud(game,self);
+	pHUD.setName(self.playerName);
+	self.sprite.exists = true;
 	};
 
 self.setInput = (inputArray) =>
@@ -111,11 +110,11 @@ self.update = () =>
 				length = 1;
 				}
 			var angle = input.moveAngle;
-			game.physics.arcade.velocityFromAngle(angle, movementSpeed * length, self.playerSprite.body.velocity);
-			if (self.playerSprite.body.velocity.x > 0 && flipped)
+			game.physics.arcade.velocityFromAngle(angle, movementSpeed * length, self.sprite.body.velocity);
+			if (self.sprite.body.velocity.x > 0 && flipped)
 				{
 				flipped = false;
-				} else if (self.playerSprite.body.velocity.x < 0 && !flipped) {
+				} else if (self.sprite.body.velocity.x < 0 && !flipped) {
 				flipped = true;
 				}
 			if ((input.sX != 0 || input.sX != 0) && (game.time.now > nextFire))
@@ -123,18 +122,18 @@ self.update = () =>
 				nextFire = game.time.now + fireRate;
 				headingPoint.x = input.sX;
 				headingPoint.y = input.sY;
-				bulletManager.createBullet('magic', 2, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.playerSprite.position, 1000, 1000);
+				bulletManager.createBullet('magic', 2, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, 1000, 1000);
 				}
 			}
 
 		//We should only check for collisions when there are collidable objects on screen
 		if(bulletManager.enemyBulletCount > 0)
 			{
-			game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.playerSprite, self.playerHit, null, self);
+			game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.sprite, self.playerHit, null, self);
 			}
 
 		} else if (self.dead && nextRespawn < 0) {
-		self.playerSprite.exists = true;
+		self.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		} else {
@@ -143,20 +142,20 @@ self.update = () =>
 
 		// We always check if the player has fallen behing the camera
 
-		if (self.playerSprite.position.x < game.camera.x + cameraPadding)
+		if (self.sprite.position.x < game.camera.x + cameraPadding)
 		{
-			self.playerSprite.position.x = game.camera.x + cameraPadding;
-		} else if (self.playerSprite.position.x > game.camera.x + game.camera.width - cameraPadding)
+			self.sprite.position.x = game.camera.x + cameraPadding;
+		} else if (self.sprite.position.x > game.camera.x + game.camera.width - cameraPadding)
 		{
-			self.playerSprite.position.x = game.camera.x + game.camera.width - cameraPadding;
+			self.sprite.position.x = game.camera.x + game.camera.width - cameraPadding;
 		}
 
-		if (self.playerSprite.position.y < game.camera.y + cameraPadding)
+		if (self.sprite.position.y < game.camera.y + cameraPadding)
 		{
-			self.playerSprite.position.y = game.camera.y + cameraPadding;
-		} else if (self.playerSprite.position.y > game.camera.y + game.camera.height - cameraPadding)
+			self.sprite.position.y = game.camera.y + cameraPadding;
+		} else if (self.sprite.position.y > game.camera.y + game.camera.height - cameraPadding)
 		{
-			self.playerSprite.position.y = game.camera.y + game.camera.height - cameraPadding;
+			self.sprite.position.y = game.camera.y + game.camera.height - cameraPadding;
 		}
 	};
 
@@ -183,7 +182,7 @@ self.takeDamage = function(damage)
 
 self.kill = () =>
 	{
-	self.playerSprite.exists = false;
+	self.sprite.exists = false;
 	nextRespawn = respawnTime;
 	};
 

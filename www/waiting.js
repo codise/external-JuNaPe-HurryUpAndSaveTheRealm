@@ -39,7 +39,6 @@ self.update = () =>
 			}
 		pText.text = playersWaitingText + playerCount;
 		countDownText.text = '';
-		countDown = 10;
 		} else
 		{
 		pText.text = playersWaitingText + playerCount;
