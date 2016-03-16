@@ -1,140 +1,140 @@
 <html>
-	<head>
-		<title>
-			Player
-		</title>
-		<style>
+  <head>
+    <title>
+      Player
+    </title>
+    <style>
 
 body{
-	background-color: #000;
+  background-color: #000;
 }
 
 #name {
-	font-size: 150%;
-	color: #bbb;
-	background-color: #222;
-	text-align: center;
+  font-size: 150%;
+  color: #bbb;
+  background-color: #222;
+  text-align: center;
 }
 
 #play {
-	font-size: 200%;
-	color: #fff;
-	background-color: #222;
-	border-radius: 50px;
-	text-shadow: 2px 2px 2px #000;
-	font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+  font-size: 200%;
+  color: #fff;
+  background-color: #222;
+  border-radius: 50px;
+  text-shadow: 2px 2px 2px #000;
+  font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
 }
 
 img {
-	margin: 5px;
-	border-style: solid;
-	border-width: 7px;
-	border-radius: 10px;
-	border-color: #333;
-	background-color: #666;
-	padding: 5px;
+  margin: 5px;
+  border-style: solid;
+  border-width: 7px;
+  border-radius: 10px;
+  border-color: #333;
+  background-color: #666;
+  padding: 5px;
 }
 
 .chosenclass {
-	border-color: #c22;
-	background-color: #955;
+  border-color: #c22;
+  background-color: #955;
 }
 
 .label {
-	background-color: #333;
-	padding: 2px;
-	border-radius: 15px;
-	text-shadow: 2px 2px 2px #000;
+  background-color: #333;
+  padding: 2px;
+  border-radius: 15px;
+  text-shadow: 2px 2px 2px #000;
 
 }
 
 div {
-	text-align: center;
-	font-size: 200%;
-	color: #fff;
-	background-image: url("assets/other/tile.png");
-	font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
-	padding: 5px;
-	border-radius: 200px;
+  text-align: center;
+  font-size: 200%;
+  color: #fff;
+  background-image: url("assets/other/tile.png");
+  font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+  padding: 5px;
+  border-radius: 200px;
 }
 
 
-		</style>
-		<script>
+    </style>
+    <script>
 
 var chosenClass = -1;
 function init ()
 {
-	var playButton = document.getElementById('play');
-	playButton.addEventListener('click', playGame);
-	var classImgs = document.getElementsByClassName('playerclass');
-	for (var i = 0; i < classImgs.length; i++)
-	{
-		classImgs[i].addEventListener('click', chooseClass);
-	}
+  var playButton = document.getElementById('play');
+  playButton.addEventListener('click', playGame);
+  var classImgs = document.getElementsByClassName('playerclass');
+  for (var i = 0; i < classImgs.length; i++)
+  {
+    classImgs[i].addEventListener('click', chooseClass);
+  }
 }
 
 function chooseClass (event)
 {
-	chosenClass = event.target.id;
-	setChosenImg();
+  chosenClass = event.target.id;
+  setChosenImg();
 }
 
 function setChosenImg()
 {
-	var classImgs = document.getElementsByClassName('playerclass');
-	for (var i = 0; i < classImgs.length; i++)
-	{
-		classImgs[i].className='playerclass';
-		if(i == chosenClass)
-		{
-			classImgs[i].className += (' chosenclass');
-		}
-	}
+  var classImgs = document.getElementsByClassName('playerclass');
+  for (var i = 0; i < classImgs.length; i++)
+  {
+    classImgs[i].className='playerclass';
+    if(i == chosenClass)
+    {
+      classImgs[i].className += (' chosenclass');
+    }
+  }
 }
 
 function playGame()
 {
-	var name = document.getElementById('name').value;
+  var name = document.getElementById('name').value;
 
-	if(chosenClass > -1 && /^[a-z0-9]+$/i.test(name))
-	{
-		window.location.href = 'controller.html' + '?n=' + name + '&c=' + chosenClass;
-	} else
-	{
-		//TODO if nimi!= alnum värjää nimiruutu
-		//TODO if class < 0 värjää hahmoimgien background?
-	}
+  if(chosenClass > -1 && /^[a-z0-9]+$/i.test(name))
+  {
+    window.location.href = 'controller.html' + '?n=' + name + '&c=' + chosenClass;
+  } else
+  {
+    //TODO if nimi!= alnum värjää nimiruutu
+    //TODO if class < 0 värjää hahmoimgien background?
+  }
 
 }
 
-		</script>
+    </script>
 
-	</head>
+  </head>
 
-	<body onload="init();">
-		<div>
-			<br>
-			<b class="label">Pick a name</b>
-			<br>
+  <body onload="init();">
+    <div>
+      <br>
+      <b class="label">Pick a name</b>
+      <br>
 
-			<input id="name" type="text"/>
-			<br><br>
+      <input id="name" type="text"/>
+      <br><br>
 
-			<b class="label">Pick a class</b>
-			<br>
+      <b class="label">Pick a class</b>
+      <br>
 
-			<img class="playerclass" id="0" src="assets/player_classes/knight_with_weapon.png">
-			<img class="playerclass" id="1" src="assets/player_classes/elf_with_weapon.png">
-			<img class="playerclass" id="2" src="assets/player_classes/mage_with_weapon.png">
-			<br>
+      <img class="playerclass" id="0" src="assets/player_classes/knight_with_weapon.png">
+      <img class="playerclass" id="1" src="assets/player_classes/elf_with_weapon.png">
+      <img class="playerclass" id="2" src="assets/player_classes/mage_with_weapon.png">
+      <br>
 
-			<img class="playerclass" id="3" src="assets/player_classes/viking_with_weapon.png">
-			<img class="playerclass" id="4" src="assets/player_classes/ninja_with_weapon.png">
-			<img class="playerclass" id="5" src="assets/player_classes/warlock_with_weapon.png">
-			<br><br>
+      <img class="playerclass" id="3" src="assets/player_classes/viking_with_weapon.png">
+      <img class="playerclass" id="4" src="assets/player_classes/ninja_with_weapon.png">
+      <img class="playerclass" id="5" src="assets/player_classes/warlock_with_weapon.png">
+      <br><br>
 
-			<input id="play" type=button value="  Play  ">
-		</div>
-	</body>
+      <input id="play" type=button value="  Play  ">
+    </div>
+  </body>
 </html>

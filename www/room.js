@@ -57,7 +57,6 @@ self.preload = (callback) =>
 		}
 
 	myloader.onLoadComplete.addOnce(create);
-  
 	myloader.start();
 	};
 

@@ -37,7 +37,7 @@ speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
-var lastRoomTimeout = 120000; //120s
+var lastRoomTimeout = 300000; //300s
 var lastRoomTimer = 0;
 
 
@@ -245,6 +245,7 @@ var updateRoomMovement = () =>
 				bossPos.y = game.camera.y + game.camera.height/2
 				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
 				enemyManager.createBoss('tentacle', bossPos);
+				lastRoomTimeout = 600000; //10 min
 				lastRoomTimer = game.time.now + lastRoomTimeout;
 				}
 			}
@@ -293,11 +294,11 @@ var scoreTableToText = (scoreTable) =>
 
 	for (var i in scoreTable)
 		{
-      if (scoreTable[i].name != undefined)
-        {
-			  text += scoreTable[i].name + " :: " + scoreTable[i].score + "\n";
-        }
-		};
+		if (scoreTable[i].name != undefined)
+			{
+			text += scoreTable[i].name + " :: " + scoreTable[i].score + "\n";
+			}
+		}
 	return text;
 	};
 
@@ -308,7 +309,4 @@ self.getScoreTable = () =>
 	
 
 }
-
-
-
 
