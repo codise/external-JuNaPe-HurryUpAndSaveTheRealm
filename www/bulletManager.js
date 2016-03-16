@@ -6,18 +6,21 @@ var self = this;
 
 self.playerBulletGroups = [];
 
-var enemyBulletPool = 300;
-var playerBulletPool = 100;
+var enemyMaxBullets= 300;
+var playerMaxBullets = 100;
+
+var enemyBulletPool = enemyMaxBullets;
+var playerBulletPool = playerMaxBullets;
 
 var playerArrowBullets = game.add.group();
 playerArrowBullets.enableBody = true;
 playerArrowBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerArrowBullets.createMultiple(enemyBulletPool, 'arrow');
+playerArrowBullets.createMultiple(playerBulletPool, 'arrow');
 
 var playerMagicBullets = game.add.group();
 playerMagicBullets.enableBody = true;
 playerMagicBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerMagicBullets.createMultiple(enemyBulletPool, 'magic');
+playerMagicBullets.createMultiple(playerBulletPool, 'magic');
 
 self.playerBulletGroups.push(playerArrowBullets);
 self.playerBulletGroups.push(playerMagicBullets);
@@ -88,7 +91,7 @@ self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLife
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();
 				}
-			self.enemyBulletPool--;
+			enemyBulletPool--;
 			}
 		}
 	if (bullet != undefined)
@@ -114,8 +117,9 @@ self.update = () =>
 
 	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
-	enemyBulletPool = enemyBulletPool - self.enemyBulletCount;
-	playerBulletPool = playerBulletPool - self.playerBulletCount;
+	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
+	playerBulletPool = playerMaxBullets - self.playerBulletCount;
+	console.log(enemyBulletPool)
 	};
 
 var countLiveBullets = (groupList) =>
