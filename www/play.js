@@ -4,10 +4,10 @@ var playState = function ()
 {
 var self = this;
 
-self.roundManager;
+var roundManager;
 
-self.enemyManager;
-self.bulletManager;
+var enemyManager;
+var bulletManager;
 
 var resizeGame = () =>
 	{
@@ -35,35 +35,35 @@ self.preload = () =>
 	{
 	game.stage.disableVisibilityChange = true;
 
-	self.bulletManager = new self.bulletManager(game);
-	self.enemyManager = new self.enemyManager(game, self.bulletManager);
+	bulletManager = new BulletManager(game);
+	enemyManager = new EnemyManager(game, bulletManager);
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	self.roundManager = new self.roundManager(game, self.bulletManager, self.enemyManager);
-	self.roundManager.loadRound("assets/maps/rounds/round.json");
+	roundManager = new RoundManager(game, bulletManager, enemyManager);
+	roundManager.loadRound("assets/maps/rounds/round.json");
 	};
 	
 
 self.create = () =>
 	{
-	for (var i = 0; i < game.waitingRoomIds.length ; i++)
-		{
-		self.roundManager.newPlayer(game.waitingRoomIds[i]);
-		};
+		for (var i = 0; i < game.waitingRoomIds.length ; i++)
+			{
+			roundManager.newPlayer(game.waitingRoomIds[i]);
+			};
 	};
 
 self.setPlayerInput = (id, input) =>
 	{
-	self.roundManager.setPlayerInput(id, input);
+	roundManager.setPlayerInput(id, input);
 	};
 
 self.update = () =>
 	{
-	self.roundManager.update();
-	if (self.roundManager.roundOver)
+	roundManager.update();
+	if (roundManager.roundOver)
 		{
-		game.roundScoreTable = self.roundManager.getScoreTable();
+		game.roundScoreTable = roundManager.getScoreTable();
 		game.state.start('roundOver');
 		}
 	};
@@ -73,12 +73,12 @@ self.render = () => {};
 
 self.onControllerConnected = (id) =>
 	{
-	self.roundManager.newPlayer(id);
+	roundManager.newPlayer(id);
 	};
 
 self.onControllerDisconnected = (id) =>
 	{
-	self.roundManager.disconnectPlayer(id);
+	roundManager.disconnectPlayer(id);
 	};
 
 };
