@@ -45,12 +45,14 @@ var enemyScalingCoefficient = 7;
 
 self.enemyList = []; // List manages Enemy objects
 
+var maxEnemies;
+
 self.enemyPool = enemyScalingCoefficient;
 
 self.update = (players) =>
 	{
-	self.enemyPool = enemyScalingCoefficient * Object.keys(players).length;
-	console.log(self.enemyPool);
+	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
+	console.log(self.enemyGroup.length);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
@@ -76,7 +78,7 @@ self.update = (players) =>
 
 	//Update pool
 
-	self.enemyPool = self.enemyPool - self.enemyGroup.length;
+	self.enemyPool = maxEnemies - self.enemyGroup.length;
 
 	};
 

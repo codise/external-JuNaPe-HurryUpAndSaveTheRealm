@@ -69,12 +69,13 @@ var create = () =>
 	backgroundLayer = game.add.sprite(0, 0, background);
 	backgroundLayer.smoothed = false;
 	self.layerGroup.add(backgroundLayer);
-	collisionLayer = self.map.createLayer('collisionLayer');
+	/*collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);
 	spawnLayer = self.map.createLayer('spawnLayer');
 	self.layerGroup.add(spawnLayer);
 	trapLayer = self.map.createLayer('trapLayer');
 	self.layerGroup.add(trapLayer);
+	*/
 
 	self.layerGroup.setAll('fixedToCamera', false);
 
