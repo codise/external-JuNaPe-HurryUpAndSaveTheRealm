@@ -3,6 +3,8 @@
 //var w = window.innerWidth * window.devicePixelRatio;
 //var h = window.innerHeight * window.devicePixelRatio;
 
+var debugging = false;
+
 var w = 16 * 37;
 var h = 9 * 30;
 
@@ -56,15 +58,18 @@ self.preload = () =>
 
 	gameClient.connect(serverAddress, controllerPort, self.id, self.clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
-	game.load.image('background', 'assets/bg/cbg.png');
+	game.load.image('background', 'assets/bg/controllerBackground.png');
 	game.load.image('circlepad', 'assets/other/controller_circle.png');
 	};
 
 self.render = () => 
 	{
-	game.debug.pointer(gameController.input.mousePointer);
-	game.debug.pointer(gameController.input.pointer1);
-	game.debug.pointer(gameController.input.pointer2);
+	if(debugging)
+		{
+		game.debug.pointer(gameController.input.mousePointer);
+		game.debug.pointer(gameController.input.pointer1);
+		game.debug.pointer(gameController.input.pointer2);
+		}
 	};
 
 self.create = () =>

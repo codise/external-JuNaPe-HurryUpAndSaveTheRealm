@@ -33,6 +33,7 @@ self.layerGroup = game.add.group();
 self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
+self.onceScaled = false;
 var scale = () =>
 	{
 	self.layerGroup.forEach((layer) => { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
@@ -56,7 +57,6 @@ self.preload = (callback) =>
 		}
 
 	myloader.onLoadComplete.addOnce(create);
-  
 	myloader.start();
 	};
 
@@ -69,12 +69,13 @@ var create = () =>
 	backgroundLayer = game.add.sprite(0, 0, background);
 	backgroundLayer.smoothed = false;
 	self.layerGroup.add(backgroundLayer);
-	collisionLayer = self.map.createLayer('collisionLayer');
+	/*collisionLayer = self.map.createLayer('collisionLayer');
 	self.layerGroup.add(collisionLayer);
 	spawnLayer = self.map.createLayer('spawnLayer');
 	self.layerGroup.add(spawnLayer);
 	trapLayer = self.map.createLayer('trapLayer');
 	self.layerGroup.add(trapLayer);
+	*/
 
 	self.layerGroup.setAll('fixedToCamera', false);
 
