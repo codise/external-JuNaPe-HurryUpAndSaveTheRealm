@@ -41,12 +41,16 @@ self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
 var spawnCooldown = 2000;
 var nextSpawn = 0;
 
+var enemyScalingCoefficient = 7;
+
 self.enemyList = []; // List manages Enemy objects
 
-self.enemyPool = 30;
+self.enemyPool = enemyScalingCoefficient;
 
 self.update = (players) =>
 	{
+	self.enemyPool = enemyScalingCoefficient * Object.keys(players).length;
+	console.log(self.enemyPool);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
@@ -72,7 +76,7 @@ self.update = (players) =>
 
 	//Update pool
 
-	self.enemyPool = 5 - self.enemyGroup.length;
+	self.enemyPool = self.enemyPool - self.enemyGroup.length;
 
 	};
 

@@ -6,31 +6,30 @@ var self = this;
 
 self.playerBulletGroups = [];
 
+var enemyBulletPool = 300;
+var playerBulletPool = 100;
+
 var playerArrowBullets = game.add.group();
 playerArrowBullets.enableBody = true;
 playerArrowBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerArrowBullets.createMultiple(50, 'arrow');
+playerArrowBullets.createMultiple(enemyBulletPool, 'arrow');
 
 var playerMagicBullets = game.add.group();
 playerMagicBullets.enableBody = true;
 playerMagicBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerMagicBullets.createMultiple(50, 'magic');
+playerMagicBullets.createMultiple(enemyBulletPool, 'magic');
 
 self.playerBulletGroups.push(playerArrowBullets);
 self.playerBulletGroups.push(playerMagicBullets);
-
-var playerBulletPool = 200;
 
 self.enemyBulletGroups = [];
 
 var enemyGenericBullets = game.add.group();
 enemyGenericBullets.enableBody = true;
 enemyGenericBullets.physicsBodyType = Phaser.Physics.ARCADE;
-enemyGenericBullets.createMultiple(50, 'enemyBullet');
+enemyGenericBullets.createMultiple(enemyBulletPool, 'enemyBullet');
 
 self.enemyBulletGroups.push(enemyGenericBullets);
-
-var enemyBulletPool = 50;
 
 self.enemyBulletCount;
 self.playerBulletCount;
@@ -115,8 +114,8 @@ self.update = () =>
 
 	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
-	enemyBulletPool = 50 - self.enemyBulletCount;
-	playerBulletPool = 50 - self.playerBulletCount;
+	enemyBulletPool = enemyBulletPool - self.enemyBulletCount;
+	playerBulletPool = playerBulletPool - self.playerBulletCount;
 	};
 
 var countLiveBullets = (groupList) =>
