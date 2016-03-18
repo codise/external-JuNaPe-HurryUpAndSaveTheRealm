@@ -15,6 +15,8 @@ self.score = 0;
 
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
+var baseMaxHealth = 200;
+
 self.dead = false;
 //var randomSprite = sprites[Math.floor((Math.random() * 6))];
 
@@ -26,9 +28,12 @@ var setupDone = false;
 var flipped = false;
 
 var fireRate = 200;
+var baseFireRate = 200;
+
 var nextFire = 0;
 
 var movementSpeed = 200;
+var baseMovementSpeed = 200;
 
 var respawnTime = 100;
 var nextRespawn = 0;
@@ -40,6 +45,9 @@ var headingPoint = new Phaser.Point();
 var vectorPoint = new Phaser.Point();
 vectorPoint.x = -1;
 vectorPoint.y = 0;
+
+
+var activePowerUps = [];
 
 var pHUD;
 
@@ -132,6 +140,28 @@ self.update = () =>
 			game.physics.arcade.overlap(bulletManager.enemyBulletGroups, self.sprite, self.playerHit, null, self);
 			}
 
+		//Check for powerups only if powerups are active
+		if(activePowerUps.length > 0) {
+			for (var i = activePowerUps.length - 1; i >= 0; i--) {
+				if(activePowerUps[i] != 'undefined') {
+					if(activePowerUps[i].endTime <= game.time.now) {
+						if(activePowerUps[i].powerUpID == 'incSpeed') 
+						{
+							self.setSpeed(baseMovementSpeed);
+						}
+
+						else if (activePowerUps[i].powerUpID == 'incFireRate')
+						{
+							self.setFireRate(baseFireRate);
+						}
+
+						array.splice(i,1); //We remove the expired powerup from the array
+					}
+				
+				}
+			}
+		}
+
 		} else if (self.dead && nextRespawn < 0) {
 		self.sprite.exists = true;
 		self.dead = false;
@@ -179,6 +209,59 @@ self.takeDamage = function(damage)
 		}
 		pHUD.updateHealthBar();
 	};
+
+self.heal = function(amount) 
+{
+	if((self.currentHealth + amount) >= self.maxHealth) {
+		self.currentHealth = self.maxHealth;
+	}	else {
+		self.currentHealth += amount;
+	}
+	pHUD.updateHealthBar();
+}
+
+self.setFireRate = function(amount) 
+{
+	FireRate = amount;
+} 
+
+self.setSpeed = function(amount) 
+{
+	movementSpeed = amount;
+
+} 
+
+self.startPowerUp = function(pUpID, pUpDuration, pUpStats) 
+{
+var powerupFound = false;
+switch(pUpID) 
+{
+	case 'incSpeed':
+		self.setSpeed(movementSpeed + pUpStats);
+		break;
+
+	case 'incFireRate':
+		self.setSpeed(FireRate + pUpStats);
+		break;
+
+	default:
+		break;
+}	
+
+	//If the player picks two powerups we simply extend the duration.
+	for (var i = activePowerUps.length - 1; i >= 0; i--) {
+		if(activePowerUps[i].powerUpID == pUpID) {
+			activePowerUps[i].endTime = game.time.now + pUpDuration;
+			powerupFound = true;
+		}
+	}
+	//If this is the first isntance of a powerup we add it to the active list
+	if(!powerupFound) {
+		var newPowerUp = {powerUpID: pUpID, endTime: game.time.now + pUpDuration};
+		activePowerUps.push(newPowerUp);
+		powerupFound = false;
+	}
+}
 
 self.kill = () =>
 	{
