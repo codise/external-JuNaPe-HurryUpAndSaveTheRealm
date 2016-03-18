@@ -22,6 +22,16 @@ var loadState = function ()
 		game.load.image('magic', 'assets/projectiles/bullet.png');
 		game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
 
+		//load weapon sprites
+
+		game.load.image('player1Weapon', 'assets/player_classes/weapons/knight1.png');
+		game.load.image('player2Weapon', 'assets/player_classes/weapons/elfi1.png');
+		game.load.image('player3Weapon', 'assets/player_classes/weapons/warlock1.png');
+		game.load.image('player4Weapon', 'assets/player_classes/weapons/ninja1.png');
+		game.load.image('player5Weapon', 'assets/player_classes/weapons/mage1.png');
+		game.load.image('player6Weapon', 'assets/player_classes/weapons/viking1.png');
+
+
 		// Load enemy assets
 
 		game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');

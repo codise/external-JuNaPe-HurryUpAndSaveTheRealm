@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletManager, id)
+function Player(game, x, y, bulletManager, id, weaponManager)
 {
 var self = this;
 
@@ -69,6 +69,8 @@ function createPlayer ()
 	
 	self.sprite.body.bounce = (1,1);
 
+	self.weapon = weaponManager.createWeapon(self, sprites[self.playerClass]);
+	
 	pHUD = new Hud(game,self);
 	pHUD.setName(self.playerName);
 	self.sprite.exists = true;
