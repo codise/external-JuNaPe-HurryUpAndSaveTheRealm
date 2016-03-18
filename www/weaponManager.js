@@ -2,7 +2,7 @@
 
 function WeaponManager(game)
 {
-	self = this;
+	var self = this;
 /*var weaponDictionary = {};
 var weaponList = [];*/
 
