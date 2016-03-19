@@ -37,8 +37,8 @@ speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
-var lastRoomTimeout = 300000; //300s
-var lastRoomTimer = 0;
+self.lastRoomTimeout = 300000; //300s = 5 min
+self.lastRoomTimer = 0;
 
 
 self.loadRound = (roundData) =>
@@ -166,9 +166,9 @@ self.update = () =>
 			}
 
 		updateRoomMovement();
-		if(lastRoomTimer > 0)
+		if(self.lastRoomTimer > 0)
 			{
-			if (lastRoomTimer < game.time.now)
+			if (self.lastRoomTimer < game.time.now)
 				{
 				self.roundOver = true;
 				}
@@ -245,8 +245,7 @@ var updateRoomMovement = () =>
 				bossPos.y = game.camera.y + game.camera.height/2
 				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
 				enemyManager.createBoss('tentacle', bossPos);
-				lastRoomTimeout = 600000; //10 min
-				lastRoomTimer = game.time.now + lastRoomTimeout;
+				self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
 				}
 			}
 		}

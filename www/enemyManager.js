@@ -29,8 +29,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
-																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
-																	 maxHealth: 500} }
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream']} }
 
 
 
@@ -71,6 +70,8 @@ self.update = (players) =>
 		if (self.enemyList[i].sprite.dead === true)
 			{
 			self.enemyList[i].kill();
+			//splice dead enemy from array, prevent looping enemy.kill(); ... especially boss.kill(); where last room timeout is set.
+			self.enemyList.splice(i,1);
 			} else {
 			self.enemyList[i].update(players);
 			}
@@ -79,7 +80,7 @@ self.update = (players) =>
 	//Update pool
 
 	self.enemyPool = maxEnemies - self.enemyGroup.length;
-
+//console.log(self.enemyList);
 	};
 
 self.createBoss = (bossType, bossPos) =>
