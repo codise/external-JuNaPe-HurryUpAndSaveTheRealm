@@ -37,7 +37,7 @@ speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
-self.lastRoomTimeout = 300000; //300s
+self.lastRoomTimeout = 300000; //300s = 5 min
 self.lastRoomTimer = 0;
 
 

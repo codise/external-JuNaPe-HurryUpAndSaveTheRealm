@@ -10,7 +10,7 @@ var playersWaitingText = 'Number of currently connected players: ';
 var countDownText;
 var cdText = 'Game starting in: ';
 var playerCount = 0;
-var countDown = 2;
+var countDown = 10;
 
 var lastDroppedCD = 0;
 
