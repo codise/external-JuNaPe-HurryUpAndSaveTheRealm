@@ -39,7 +39,7 @@ var movementDirection = 0;
 // <
 var nextFire = game.time.now + fireRate;
 
-self.maxHealth = 50; //500
+self.maxHealth = 500;
 self.currentHealth = self.maxHealth;
 
 var healthBar = new Hud(game, self);
