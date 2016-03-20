@@ -4,7 +4,8 @@ function Player(game, x, y, bulletManager, id, weaponManager)
 {
 var self = this;
 
-var sprites = ['player1', 'player2', 'player5', 'player6', 'player4', 'player3'];
+var bullets = ['bullet1', 'bullet2', 'bullet3', 'bullet4', 'bullet5', 'bullet6'];
+var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
 var input;
 //self.playerClass = Math.floor((Math.random() * 6)); //rand 0-5
 self.playerClass;
@@ -33,6 +34,9 @@ var movementSpeed = 200;
 var respawnTime = 100;
 var nextRespawn = 0;
 
+var bulletDamage = 2;
+var bulletSpeed = 1000;
+var bulletLifespan = 1000;
 
 var cameraPadding = 20;
 
@@ -124,7 +128,7 @@ self.update = () =>
 				nextFire = game.time.now + fireRate;
 				headingPoint.x = input.sX;
 				headingPoint.y = input.sY;
-				bulletManager.createBullet('magic', 2, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, 1000, 1000);
+				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, bulletSpeed, bulletLifespan);
 				}
 			}
 
