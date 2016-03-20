@@ -24,31 +24,31 @@ playerMagicBullets.physicsBodyType = Phaser.Physics.ARCADE;
 playerMagicBullets.createMultiple(playerBulletPool, 'magic');
 
 
-//mage bullet
+//knight bullet
 var playerBullets1 = game.add.group();
 playerBullets1.enableBody = true;
 playerBullets1.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets1.createMultiple(playerBulletPool, 'bullet1');
 
-//viking bullet
+//elf bullet
 var playerBullets2 = game.add.group();
 playerBullets2.enableBody = true;
 playerBullets2.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets2.createMultiple(playerBulletPool, 'bullet2');
 
-//fighter bullet
+//mage bullet
 var playerBullets3 = game.add.group();
 playerBullets3.enableBody = true;
 playerBullets3.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets3.createMultiple(playerBulletPool, 'bullet3');
 
-//ranger arrow
+//viking bullet
 var playerBullets4 = game.add.group();
 playerBullets4.enableBody = true;
 playerBullets4.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets4.createMultiple(playerBulletPool, 'bullet4');
 
-//shuriken
+//ninja bullet
 var playerBullets5 = game.add.group();
 playerBullets5.enableBody = true;
 playerBullets5.physicsBodyType = Phaser.Physics.ARCADE;
