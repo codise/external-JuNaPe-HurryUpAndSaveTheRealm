@@ -51,6 +51,10 @@ var loadState = function ()
 		game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
 		game.load.image('enemy_tentaclemonster', 'assets/enemies/enemy_06.png');
 
+		// Load effects
+
+		game.load.spritesheet('explosion', 'assets/effects/explosion.png', 64, 64, 23);
+
 		// Set loadingtext
 	
 		loadingText = game.add.text(80, 150, 'Loading ...', {font: '30px Courier', fill: '#ffffff'});
