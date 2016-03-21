@@ -142,6 +142,7 @@ self.update = () =>
 		self.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
+		pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
 		}
