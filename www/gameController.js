@@ -238,13 +238,10 @@ self.setHapticFeedback = (time) =>
 		{
 		window.navigator.vibrate(time);
 		}
-	console.log(window.navigator);
-	console.log("Vibrating for: " + time + " milliseconds.");
 	};
 
 self.setDeath = (isAlive) =>
 	{
-	console.log("Setting death: " + isAlive);
 	if (isAlive)
 		{
 		deadText.text = '';
@@ -252,7 +249,6 @@ self.setDeath = (isAlive) =>
 		{
 		deadText.text = 'YOU ARE DEAD';
 		}
-	console.log(deadText.text);
 	};
 	
 

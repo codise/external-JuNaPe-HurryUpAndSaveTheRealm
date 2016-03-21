@@ -1,6 +1,6 @@
 'use strict';
 
-function Enemy(enemyInfo, game, bulletManager, players, position)
+function Enemy(enemyInfo, game, bulletManager, players, position, effectManager)
 {
 
 var getRandomFrom = (dict) =>
@@ -108,6 +108,7 @@ self.enemyTakeDamage = function(damage)
 self.kill = () =>
 	{
 	self.sprite.destroy();
+	effectManager.createDeathEffect(self);
 	};
 
 var move = () =>
