@@ -36,6 +36,7 @@ var bulletDamage = 10;
 var bulletSpeed = 250;
 var bulletLifespan = 3000;
 var movementDirection = 0;
+var bulletGraphic = 'enemyBullet5';
 // <
 var nextFire = game.time.now + fireRate;
 
@@ -96,6 +97,7 @@ self.update = (players) =>
 				bulletSpeed = 350;
 				bulletLifespan = 2000;
 				nextMove = game.time.now;
+				bulletGraphic = 'enemyBullet5';
 				}
 			break;
 		default:
@@ -219,6 +221,7 @@ var chooseNewPattern = () =>
 			bulletDamage = 10;
 			bulletSpeed = 250;
 			bulletLifespan = 3000;
+			bulletGraphic = 'enemyBullet4';
 			break;
 
 		// wobbles around, shoots bursts at random players in sets of 3
@@ -238,6 +241,7 @@ var chooseNewPattern = () =>
 			bulletDamage = 10;
 			bulletSpeed = 250;
 			bulletLifespan = 3000;
+			bulletGraphic = 'enemyBullet6';
 			break;
 		
 		//case 2:
@@ -259,6 +263,7 @@ var chooseNewPattern = () =>
 			bulletDamage = 10;
 			bulletSpeed = 250;
 			bulletLifespan = 3000;
+			bulletGraphic = 'enemyBullet6';
 			break;
 			
 		default:
@@ -299,7 +304,7 @@ var attack = (players) =>
 			for(var i = 1; i <= 5; i++)
 				{
 				var angle = 360 * i/5 + shotsFired * 15;
-				bulletManager.createBullet('enemyBullet', bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
+				bulletManager.createBullet(bulletGraphic, bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
 				}
 			break;
 			
@@ -311,7 +316,7 @@ var attack = (players) =>
 				if(target != undefined)
 					{
 					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * shotgunSpread);
-					bulletManager.createBullet('enemyBullet', bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
+					bulletManager.createBullet(bulletGraphic, bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
 					}
 				}
 			

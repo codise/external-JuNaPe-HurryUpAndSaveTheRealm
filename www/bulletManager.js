@@ -78,9 +78,52 @@ self.enemyBulletGroups = [];
 var enemyGenericBullets = game.add.group();
 enemyGenericBullets.enableBody = true;
 enemyGenericBullets.physicsBodyType = Phaser.Physics.ARCADE;
-enemyGenericBullets.createMultiple(enemyBulletPool, 'enemyBullet');
+enemyGenericBullets.createMultiple(enemyBulletPool, 'magic');
 
 self.enemyBulletGroups.push(enemyGenericBullets);
+
+//blue
+var enemyBullets1 = game.add.group();
+enemyBullets1.enableBody = true;
+enemyBullets1.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets1.createMultiple(enemyBulletPool, 'enemyBullet1');
+
+//spike
+var enemyBullets2 = game.add.group();
+enemyBullets2.enableBody = true;
+enemyBullets2.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets2.createMultiple(enemyBulletPool, 'enemyBullet2');
+
+//bone
+var enemyBullets3 = game.add.group();
+enemyBullets3.enableBody = true;
+enemyBullets3.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets3.createMultiple(enemyBulletPool, 'enemyBullet3');
+
+//yellow
+var enemyBullets4 = game.add.group();
+enemyBullets4.enableBody = true;
+enemyBullets4.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets4.createMultiple(enemyBulletPool, 'enemyBullet4');
+
+//red
+var enemyBullets5 = game.add.group();
+enemyBullets5.enableBody = true;
+enemyBullets5.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets5.createMultiple(enemyBulletPool, 'enemyBullet5');
+
+//fireball
+var enemyBullets6 = game.add.group();
+enemyBullets6.enableBody = true;
+enemyBullets6.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets6.createMultiple(enemyBulletPool, 'enemyBullet6');
+
+self.enemyBulletGroups.push(enemyBullets1);
+self.enemyBulletGroups.push(enemyBullets2);
+self.enemyBulletGroups.push(enemyBullets3);
+self.enemyBulletGroups.push(enemyBullets4);
+self.enemyBulletGroups.push(enemyBullets5);
+self.enemyBulletGroups.push(enemyBullets6);
 
 self.enemyBulletCount;
 self.playerBulletCount;
@@ -151,8 +194,23 @@ self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLife
 			{
 			switch (type)
 				{
-				case 'mosquitoBullet':
-					var bullet = enemyMosquitoBullets.getFirstDead();
+				case 'enemyBullet1':
+					var bullet = enemyBullets1.getFirstDead();
+					break;
+				case 'enemyBullet2':
+					var bullet = enemyBullets2.getFirstDead();
+					break;
+				case 'enemyBullet3':
+					var bullet = enemyBullets3.getFirstDead();
+					break;
+				case 'enemyBullet4':
+					var bullet = enemyBullets4.getFirstDead();
+					break;
+				case 'enemyBullet5':
+					var bullet = enemyBullets5.getFirstDead();
+					break;
+				case 'enemyBullet6':
+					var bullet = enemyBullets6.getFirstDead();
 					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();
