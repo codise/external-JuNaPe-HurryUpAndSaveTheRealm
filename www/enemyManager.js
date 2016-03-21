@@ -29,8 +29,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
-																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
-																	 maxHealth: 500} }
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream']}}
 
 
 
@@ -52,7 +51,6 @@ self.enemyPool = enemyScalingCoefficient;
 self.update = (players) =>
 	{
 	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
-	//console.log(self.enemyGroup.length);
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
 		{
 		// Spawn new mobs
@@ -71,6 +69,7 @@ self.update = (players) =>
 		if (self.enemyList[i].sprite.dead === true)
 			{
 			self.enemyList[i].kill();
+			self.enemyList.splice(i,1);
 			} else {
 			self.enemyList[i].update(players);
 			}

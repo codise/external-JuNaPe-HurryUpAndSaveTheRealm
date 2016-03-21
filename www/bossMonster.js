@@ -39,7 +39,7 @@ var movementDirection = 0;
 // <
 var nextFire = game.time.now + fireRate;
 
-self.maxHealth = bossInfo.maxHealth;
+self.maxHealth = 500;
 self.currentHealth = self.maxHealth;
 
 var healthBar = new Hud(game, self);
@@ -157,6 +157,8 @@ self.enemyTakeDamage = function(damage)
 
 self.kill = () =>
 	{
+	game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
+	game.state.states.play.roundManager.lastRoomTimer = game.time.now + game.state.states.play.roundManager.lastRoomTimeout;
 	self.sprite.destroy();
 	};
 
