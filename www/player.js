@@ -15,7 +15,6 @@ self.score = 0;
 
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
-var baseMaxHealth = 200;
 
 self.dead = false;
 //var randomSprite = sprites[Math.floor((Math.random() * 6))];
@@ -23,6 +22,7 @@ self.dead = false;
 self.sprite = game.add.sprite(x, y, 'empty');
 self.sprite.anchor.setTo(0.5, 0.5);
 self.sprite.exists = false;
+self.sprite.playerObj = self;  //powerups need the player object, bad solution, anythign better?
 var setupDone = false;
 
 var flipped = false;
@@ -154,10 +154,8 @@ self.update = () =>
 						{
 							self.setFireRate(baseFireRate);
 						}
-
-						array.splice(i,1); //We remove the expired powerup from the array
-					}
-				
+						activePowerUps.splice(i,1); //We remove the expired powerup from the array
+					}				
 				}
 			}
 		}
@@ -212,9 +210,9 @@ self.takeDamage = function(damage)
 
 self.heal = function(amount) 
 {
-	if((self.currentHealth + amount) >= self.maxHealth) {
+	if(self.currentHealth + amount >= self.maxHealth) {
 		self.currentHealth = self.maxHealth;
-	}	else {
+	} else {		
 		self.currentHealth += amount;
 	}
 	pHUD.updateHealthBar();
@@ -222,7 +220,7 @@ self.heal = function(amount)
 
 self.setFireRate = function(amount) 
 {
-	FireRate = amount;
+	fireRate = amount;
 } 
 
 self.setSpeed = function(amount) 
@@ -231,22 +229,16 @@ self.setSpeed = function(amount)
 
 } 
 
+
+/**
+* Starts a powerup on the player object
+* @param {string} pUpID - The ID of the powerup as displayed in pUpDictionary
+* @param {int} pUpDuration - The Duration of the powerup in milliseconds
+* @param {int} pUpStats - The value for the powerup
+*/
 self.startPowerUp = function(pUpID, pUpDuration, pUpStats) 
 {
-var powerupFound = false;
-switch(pUpID) 
-{
-	case 'incSpeed':
-		self.setSpeed(movementSpeed + pUpStats);
-		break;
-
-	case 'incFireRate':
-		self.setSpeed(FireRate + pUpStats);
-		break;
-
-	default:
-		break;
-}	
+	var powerupFound = false;
 
 	//If the player picks two powerups we simply extend the duration.
 	for (var i = activePowerUps.length - 1; i >= 0; i--) {
@@ -259,12 +251,25 @@ switch(pUpID)
 	if(!powerupFound) {
 		var newPowerUp = {powerUpID: pUpID, endTime: game.time.now + pUpDuration};
 		activePowerUps.push(newPowerUp);
-		powerupFound = false;
+		switch(pUpID) 
+		{
+			case 'incSpeed':
+				self.setSpeed(movementSpeed + pUpStats);
+				break;
+
+			case 'incFireRate':
+				self.setFireRate(fireRate - pUpStats);
+				break;
+
+			default:
+				break;
+		}
 	}
 }
 
 self.kill = () =>
 	{
+	clearAllPowerups();
 	self.sprite.exists = false;
 	nextRespawn = respawnTime;
 	};
@@ -272,5 +277,12 @@ self.kill = () =>
 self.getPoints = () =>
 	{
 	self.score += 1;
+	};
+
+var clearAllPowerups = () =>
+	{
+	self.setSpeed(baseMovementSpeed);
+	self.setFireRate(baseFireRate);
+	activePowerUps = [];
 	};
 }

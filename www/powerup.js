@@ -7,7 +7,6 @@ self.sprite = game.add.sprite(pUpPos.x, pUpPos.y, pUpInfo.sprite);
 self.sprite.anchor.setTo(0.5, 0.5);
 self.sprite.visible = true;
 
-
 var powerUpManager = powerUpManager;
 var pUpID = pUpInfo.pUpID;
 var pUpDuration = pUpInfo.pUpDuration;
@@ -15,7 +14,7 @@ var pUpStats = pUpInfo.pUpStats;
 var cameraPadding = 20;
 
 //We recolor the sprite depending on the powerup untíl we have more sprites
-
+//TODO: More Powerup sprites
 switch(pUpID) 
 {
 	case 'smallHeal':
@@ -36,7 +35,9 @@ switch(pUpID)
 
 self.update = function(players)
 {
-	game.physics.arcade.overlap(players, self.sprite, triggerpUp, null, self);	
+	scale();
+	game.physics.arcade.overlap(players, self.sprite, self.triggerpUp, null, self);	
+	checkCameraBounds();
 
 }
 
@@ -45,16 +46,22 @@ self.getpUpID = () =>
 	return pUpID;
 };
 
-self.triggerpUp = (curPop, player) =>
+self.triggerpUp = (curpUp, player) =>
 	{
+
 		var pObject = player.playerObj;
 		if(pUpID == 'smallHeal') {
-			pObject.heal(self.pUpStats);
+			pObject.heal(pUpStats);
 		} 
 		else {
 			pObject.startPowerUp(pUpID, pUpDuration, pUpStats)
 		}
-		curPop.sprite.dead = true;
+		curpUp.dead = true;
+	};
+
+self.kill = () =>
+	{
+	self.sprite.destroy();
 	};
 
 //We need to despawn powerups that go beyond the screen
@@ -65,5 +72,12 @@ var checkCameraBounds = () =>
 			self.sprite.dead = true;
 		}
 	};	
+
+var scale = () =>
+	{
+	self.sprite.scale.x = scalingFactors.x;
+	self.sprite.scale.y = scalingFactors.y;
+	};
+
 
 }

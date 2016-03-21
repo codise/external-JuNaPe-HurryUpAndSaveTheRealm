@@ -5,7 +5,7 @@ function PowerupManager(game)  //TODO:needs to get the trap layer as parameter t
 var self = this;
 
 /*
-Dictionary for traps
+Dictionary for powerups
 sprite: the sprite to be used
 pUpID: ID for the powerup
 pUpDuration: Duration in milkliseconds
@@ -27,41 +27,95 @@ var pUpDictionary = {							heal: {				sprite: 'item_book',
 																	pUpStats: 100}};
 
 var keys = Object.keys(pUpDictionary);
-//console.log(keys);
-//var t = pUpDictionary[keys[0]];
-//console.log(t);
 
+//Variables for powerup spawning
 
+var PowerupSpawnCooldown = 3000; //Cooldown between attemps to spawn a powerup
+var CurrentCooldownTime = 0; 
+var POWERUP_SPAWN_RATE = 20; //The percentage rate of sucess in powerup spawn attempts.
 
 self.pUpGroup = game.add.group(); // Group manages sprites
 var pUpList = []; // List manages powerup objects
+var MAX_PUP_SPAWNS = 5; //the amount of powerups to spawn randomly
 
-var pUpPool = 3; //the amount of powerups to spawn
+//Secondary powerup pool for enemy drops
+var pUpDropList = [];
+var MAX_PUP_DROPS = 5;
 
-//Traps need to detect collision
+//Powerups need to detect collision
 self.pUpGroup.enableBody = true;
 self.pUpGroup.physicsBodyType = Phaser.Physics.ARCADE;
 
 self.update = function(players)
 {
-	if (self.pUpPool > 0 && Object.keys(players).length > 0 && pUpList.length < 2) {
-		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-		var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), randomPos, players);
-		self.pUpGroup.add(newpUp.sprite);
-		pUpList.push(newpUp);
+	if (Object.keys(players).length > 0 && pUpList.length < MAX_PUP_SPAWNS && CurrentCooldownTime < game.time.now) {
+		if(getRandomInt(0,100) <= POWERUP_SPAWN_RATE) {		
+			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
+			var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), randomPos, players);
+			self.pUpGroup.add(newpUp.sprite);
+			pUpList.push(newpUp);
+		}
+		CurrentCooldownTime = game.time.now + PowerupSpawnCooldown;
 	}
 
 	//Update poweruplist
-	for (var i = 0; i < self.pUpList.length; i++)
+	for (var i = 0; i < pUpList.length; i++)
 	{
-	if (self.pUpList[i].sprite.dead === true)
+	if (pUpList[i].sprite.dead === true)
 		{
-		self.pUpList[i].kill();
+		pUpList[i].kill();
+		pUpList.splice(i,1);
 		} else {
-		self.pUpList[i].update(players);
+		pUpList[i].update(players);
+		}
+	}
+	//Update dropped powerups
+	for (var j = 0; j < pUpDropList.length; j++)
+	{
+	if (pUpDropList[j].sprite.dead === true)
+		{
+		pUpDropList[j].kill();
+		pUpDropList.splice(j,1);
+		} else {
+		pUpDropList[j].update(players);
 		}
 	}
 }
+
+/**
+* Spawns a specified powerup on specified coordinates
+* @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
+* @param {Int} pUp - The integer ID of the powerup to spawn
+*/
+self.spawnPowerupOn = function(point, pUp)
+{
+	//Only spawn powerups if there is room for them in the pool
+	if(pUpDropList.length < MAX_PUP_DROPS) {
+		var newpUp = new powerup(game, self, pUpDictionary[keys[i]],point, players);
+		self.pUpGroup.add(newpUp.sprite);
+		pUpDropList.push(newpUp);
+	}
+}
+
+/**
+* Spawns a random powerup on specified coordinates
+* @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
+* @param {Int} pUp - The integer ID of the powerup to spawn
+*/
+self.spawnRandomPowerupOn = function(point)
+{
+	//Only spawn powerups if there is room for them in the pool
+	if(pUpDropList.length < MAX_PUP_DROPS) {
+		var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary),point, players);
+		self.pUpGroup.add(newpUp.sprite);
+		pUpDropList.push(newpUp);
+	}
+}
+
+var getRandomInt = (min, max) =>
+	{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
 
 var pickRandomFromDictionary = (dict) =>
 	{
@@ -70,4 +124,4 @@ var pickRandomFromDictionary = (dict) =>
 	object = dict[keys[ keys.length * Math.random() << 0]];
 	return object;
 	};	
-}
+}3

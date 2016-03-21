@@ -8,6 +8,7 @@ var roundManager;
 
 var enemyManager;
 var bulletManager;
+var powerupManager;
 
 var resizeGame = () =>
 	{
@@ -37,10 +38,11 @@ self.preload = () =>
 
 	bulletManager = new BulletManager(game);
 	enemyManager = new EnemyManager(game, bulletManager);
+	powerupManager = new PowerupManager(game);
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	roundManager = new RoundManager(game, bulletManager, enemyManager);
+	roundManager = new RoundManager(game, bulletManager, enemyManager, powerupManager);
 	roundManager.loadRound("assets/maps/rounds/round.json");
 	};
 	
