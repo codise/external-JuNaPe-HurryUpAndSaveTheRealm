@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletManager, id, weaponManager)
+function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
 {
 var self = this;
 
@@ -273,6 +273,7 @@ self.kill = () =>
 	{
 	clearAllPowerups();
 	self.sprite.exists = false;
+	effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
 	};
 
