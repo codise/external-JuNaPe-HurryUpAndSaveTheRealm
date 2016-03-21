@@ -9,6 +9,7 @@ self.roundManager;
 var weaponManager;
 self.enemyManager;
 self.bulletManager;
+var powerupManager;
 
 var resizeGame = () =>
 	{
@@ -35,14 +36,15 @@ window.onresize = resizeGame;
 self.preload = () =>
 	{
 	game.stage.disableVisibilityChange = true;
-
+	
 	self.bulletManager = new BulletManager(game);
 	self.enemyManager = new EnemyManager(game, self.bulletManager);
 	weaponManager = new WeaponManager(game);
+	powerupManager = new PowerupManager(game);
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager);
+	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager, powerupManager);
 	self.roundManager.loadRound("assets/maps/rounds/round.json");
 	};
 	
