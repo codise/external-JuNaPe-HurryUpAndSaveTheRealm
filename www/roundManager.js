@@ -1,6 +1,7 @@
 'use strict';
 
-function RoundManager(game, bulletManager, enemyManager, weaponManager)
+function RoundManager(game, bulletManager, enemyManager, weaponManager, powerupManager)
+
 {
 
 var self = this;
@@ -135,6 +136,7 @@ self.update = () =>
 	{
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
+	game.world.bringToTop(powerupManager.pUpGroup);
 	bulletManager.playerBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
@@ -154,6 +156,7 @@ self.update = () =>
 			}
 
 		enemyManager.update(players);
+		powerupManager.update(playerGroup);
 
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
