@@ -38,8 +38,9 @@ self.preload = () =>
 	game.stage.disableVisibilityChange = true;
 
 	self.bulletManager = new BulletManager(game);
-	self.enemyManager = new EnemyManager(game, self.bulletManager);
 	effectManager = new EffectManager(game);
+	self.enemyManager = new EnemyManager(game, self.bulletManager, effectManager);
+	
 	weaponManager = new WeaponManager(game);
 	
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);

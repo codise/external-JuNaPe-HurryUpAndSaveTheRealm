@@ -53,7 +53,7 @@ var loadState = function ()
 
 		// Load effects
 
-		game.load.spritesheet('explosion', 'assets/effects/explosion.png', 64, 64, 23);
+		game.load.spritesheet('explosion', 'assets/effects/placeholder_explosion.png', 64, 64, 23);
 
 		// Set loadingtext
 	
