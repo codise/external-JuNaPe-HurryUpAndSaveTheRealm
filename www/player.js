@@ -47,11 +47,6 @@ vectorPoint.y = 0;
 
 var pHUD;
 
-//>>DEBUG
-//setClassAndName(0, "test");
-//createPlayer();
-//<<
-
 var scale = () =>
 	{
 	if (flipped)
@@ -62,6 +57,7 @@ var scale = () =>
 		self.sprite.scale.x = scalingFactors.x;
 		}
 	self.sprite.scale.y = scalingFactors.y;
+	self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 	};
 
 function createPlayer ()
@@ -70,7 +66,6 @@ function createPlayer ()
 	
 	game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
 	self.sprite.body.collideWorldBounds = true;
-	
 	self.sprite.body.bounce = (1,1);
 
 	self.weapon = weaponManager.createWeapon(self, sprites[self.playerClass]);
