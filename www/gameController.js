@@ -48,6 +48,8 @@ var shootStick = {pointer: false, pad: false};
 var controllerpad1;
 var controllerpad2;
 
+var deadText; 
+
 self.preload = () =>
 	{
 	self.id = getParameter("id");
@@ -56,10 +58,11 @@ self.preload = () =>
 		self.id = game.rnd.integerInRange(0, 1000);
 		}
 
-	gameClient.connect(serverAddress, controllerPort, self.id, self.clientConnected);
+	gameClient.connect(serverAddress, controllerPort, self.id, clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
 	game.load.image('background', 'assets/bg/controllerBackground.png');
 	game.load.image('circlepad', 'assets/other/controller_circle.png');
+	deadText = game.add.text(0, game.height/2, '', {font: '50px Courier', fill: '#ffffff'});
 	};
 
 self.render = () => 
@@ -86,6 +89,8 @@ self.create = () =>
 	controllerpad1.exists = false;
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
+	
+	deadText.bringToTop();
 	};
 
 self.reservePointer = (stick, pointer, pad) =>
@@ -221,21 +226,35 @@ self.update = () =>
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
 
-self.clientConnected = () =>
+var clientConnected = () =>
 	{
-	gameClient.exposeRpcMethod("setStickPosition", self, self.setStickPosition);
-	gameClient.exposeRpcMethod("getStickPosition", self, self.getStickPosition);
+	gameClient.exposeRpcMethod("setDeath", self, self.setDeath);
+	gameClient.exposeRpcMethod("setHapticFeedback", self, self.setHapticFeedback);
 	};
 
-self.setStickPosition = function(position)
+self.setHapticFeedback = (time) =>
 	{
-	console.log("DemoController::setStickPosition() "+position);
+	if ('vibrate' in window.navigator)
+		{
+		window.navigator.vibrate(time);
+		}
+	console.log(window.navigator);
+	console.log("Vibrating for: " + time + " milliseconds.");
 	};
 
-self.getStickPosition = function(connectionId, callback)
+self.setDeath = (isAlive) =>
 	{
-	callback(null, [666,667]);
+	console.log("Setting death: " + isAlive);
+	if (isAlive)
+		{
+		deadText.text = '';
+		} else
+		{
+		deadText.text = 'YOU ARE DEAD';
+		}
+	console.log(deadText.text);
 	};
+	
 
 }
 

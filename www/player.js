@@ -31,7 +31,7 @@ var nextFire = 0;
 
 var movementSpeed = 200;
 
-var respawnTime = 100;
+var respawnTime = 1000;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -137,6 +137,7 @@ self.update = () =>
 		self.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
+    gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
 		} else {
 		nextRespawn--;
 		}
@@ -163,10 +164,9 @@ self.update = () =>
 self.playerHit = function(player, bullet)
 	{
 	var damage = bullet.damage;
-	//console.log(damage);
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
-	//console.log(self.currentHealth);
+  gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
 self.takeDamage = function(damage)
@@ -184,6 +184,8 @@ self.takeDamage = function(damage)
 self.kill = () =>
 	{
 	self.sprite.exists = false;
+  gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
+  gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	nextRespawn = respawnTime;
 	};
 
