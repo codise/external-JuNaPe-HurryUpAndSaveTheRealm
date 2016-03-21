@@ -29,8 +29,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
-																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
-																	 maxHealth: 500} }
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream']}}
 
 
 
@@ -70,6 +69,7 @@ self.update = (players) =>
 		if (self.enemyList[i].sprite.dead === true)
 			{
 			self.enemyList[i].kill();
+			self.enemyList.splice(i,1);
 			} else {
 			self.enemyList[i].update(players);
 			}
