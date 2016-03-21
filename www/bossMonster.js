@@ -158,6 +158,8 @@ self.enemyTakeDamage = function(damage)
 self.kill = () =>
 	{
 	self.sprite.destroy();
+	game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
+	game.state.states.play.roundManager.lastRoomTimer = 0;
 	};
 
 var chooseNewPattern = () =>
