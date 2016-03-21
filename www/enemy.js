@@ -133,30 +133,30 @@ var move = () =>
 
 var fire = () =>
 	{
-	switch (shootingScheme[1])
+	switch (shootingScheme[0])
 		{
 		case 'directedBurst':
-			createDirectedBurst(shootingScheme[0]);
+			createDirectedBurst(shootingScheme[1], shootingScheme[2]);
 			break;
 		case 'slasherShot':
-			createSlasherShot(shootingScheme[0]);
+			createSlasherShot(shootingScheme[1], shootingScheme[2]);
 			break;
 		default:
-			createRadialPulse(shootingScheme[0]);	
+			createRadialPulse(shootingScheme[1], shootingScheme[2]);	
 		}
 	nextFire = game.time.now + fireRate;
 	};
 
-var createRadialPulse = (n) =>
+var createRadialPulse = (n, bulletGraphic) =>
 	{
 	// Creates n bullets radially from monster
 	for (var i = 0; i < n; i++)
 		{
-		bulletManager.createBullet('enemyBullet', 10, -1, 360/n * i, self.sprite.position, 200, 5000);
+		bulletManager.createBullet(bulletGraphic, 10, -1, 360/n * i, self.sprite.position, 200, 5000);
 		}
 	};
 
-var createDirectedBurst = (n) =>
+var createDirectedBurst = (n, bulletGraphic) =>
 	{
 	// Creates a group of bullets shot at a player, like a shotgun
 	if(currentTarget != undefined)
@@ -171,11 +171,11 @@ var createDirectedBurst = (n) =>
 		var randomOffset = Math.floor((Math.random() * 9)) - 4;
 		var angle = angleBetween + ((i )* 10) + randomOffset;
 		
-		bulletManager.createBullet('enemyBullet', 10, -1, angle, self.sprite.position, 200, 5000);
+		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
 		}
 	};
 
-var createSlasherShot = (n) =>
+var createSlasherShot = (n, bulletGraphic) =>
 	{
 	// Creates a group of bullets shot at a player, like a shotgun
 	if(currentTarget != undefined)
@@ -190,7 +190,7 @@ var createSlasherShot = (n) =>
 		var randomOffset = Math.floor((Math.random() * 9)) - 4;
 		var angle = angleBetween + ((i )* 10) + randomOffset;
 		
-		bulletManager.createBullet('enemyBullet', 10, -1, angle, self.sprite.position, 400, 500);
+		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 400, 500);
 		}
 	};
 

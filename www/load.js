@@ -20,14 +20,19 @@ var loadState = function ()
 		// Load bullet sprites
 
 		game.load.image('magic', 'assets/projectiles/bullet.png');
-		game.load.image('enemyBullet', 'assets/projectiles/enemyBullet.png');
 		game.load.image('bullet1', 'assets/projectiles/bullet1.png');
 		game.load.image('bullet2', 'assets/projectiles/bullet2.png');
 		game.load.image('bullet3', 'assets/projectiles/bullet3.png');
 		game.load.image('bullet4', 'assets/projectiles/bullet4.png');
 		game.load.image('bullet5', 'assets/projectiles/bullet5.png');
 		game.load.image('bullet6', 'assets/projectiles/bullet6.png');
-		
+
+		game.load.image('enemyBullet1', 'assets/projectiles/enemyBullet.png');
+		game.load.image('enemyBullet2', 'assets/projectiles/enemyBullet_spike.png');
+		game.load.image('enemyBullet3', 'assets/projectiles/enemyBullet_bone.png');
+		game.load.image('enemyBullet4', 'assets/projectiles/enemyBullet_YellowStar.png');
+		game.load.image('enemyBullet5', 'assets/projectiles/enemyBullet_RED.png');
+		game.load.image('enemyBullet6', 'assets/projectiles/Fireball.png');
 
 		//load weapon sprites
 
