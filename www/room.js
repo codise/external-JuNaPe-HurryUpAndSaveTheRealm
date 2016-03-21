@@ -104,8 +104,15 @@ var moveLayer = (layer, amount) =>
 	layer.position.y = layer.position.y + amount.y;
 	};
 
+var reloadBG = () =>
+	{
+	console.log("Failed to load the background initially!");
+	create();
+	};
+
 self.getPos = () =>
 	{
+	if(backgroundLayer == undefined) reloadBG();
 	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
 }
