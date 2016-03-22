@@ -7,6 +7,7 @@ var self = this;
 
 var healthBarOutline = game.add.graphics(0,0);
 var healthBarFill = game.add.graphics(0,0);
+var healthBarSprite = game.add.sprite(0, 0);
 var textureWidth = target.sprite.width;
 var textureHeight = target.sprite.height;
 
@@ -16,8 +17,14 @@ healthBarFill.beginFill(0xff3300);
 healthBarFill.drawRect(target.sprite.X, target.sprite.Y, (target.currentHealth/target.maxHealth*100), 13);
 healthBarFill.endFill();
 
-target.sprite.addChild(healthBarOutline);
-target.sprite.addChild(healthBarFill);
+healthBarSprite.addChild(healthBarOutline)
+healthBarSprite.addChild(healthBarFill);
+
+// This prevets flippingu
+
+healthBarSprite.setScaleMinMax(1);;
+
+target.sprite.addChild(healthBarSprite);
 
 healthBarOutline.x = (-textureWidth/2)-25;
 healthBarFill.x = (-textureWidth/2)-25;
@@ -40,5 +47,18 @@ self.setName = function(name)
 		target.sprite.addChild(nameText);
 		nameText.x = (-textureWidth/2);
 		nameText.y = (textureWidth/2) - 100;
+		scale();
 	};
+
+var scale = () =>
+	{
+	healthBarSprite.setScaleMinMax(scalingFactors.x, scalingFactors.y);
+
+	if (nameText != undefined)
+		{
+		nameText.setScaleMinMax(scalingFactors.x, scalingFactors.y);
+		}
+	};
+
+
 }
