@@ -129,7 +129,7 @@ self.connect = function (host, port, id, callback)
 	if (id)
 		opts.id = id;
 
-	serverConnection.connect(opts, () =>
+	serverConnection.connect(opts, function ()
 		{
 		self.exposeRpcMethod("onClientConnected", self, self.onClientConnected);	
 		self.exposeRpcMethod("onClientDisconnected", self, self.onClientDisconnected);	

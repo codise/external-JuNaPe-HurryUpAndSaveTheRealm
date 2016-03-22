@@ -136,8 +136,8 @@ self.update = function ()
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
 	game.world.bringToTop(powerupManager.pUpGroup);
-	bulletManager.playerBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
-	bulletManager.enemyBulletGroups.forEach((whatToBring) => { game.world.bringToTop(whatToBring) }, this);
+	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
+	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
 
 	updateScore();
@@ -181,7 +181,7 @@ self.update = function ()
 
 var updateRoomMovement = function ()
 	{
-	rooms.forEach((room, index, array) => { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+	rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -283,7 +283,7 @@ var updateScore = function ()
 			scoreTable.push({"id": players[i].id, "name": players[i].playerName,  "score": players[i].score});
 			}
 		}
-	scoreTable = scoreTable.sort((scoreEntryA, scoreEntryB) => { return scoreEntryB.score - scoreEntryA.score; })
+	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
 	scoreText.position.x = game.camera.x + 16;
 	scoreText.position.y = game.camera.y + 16;

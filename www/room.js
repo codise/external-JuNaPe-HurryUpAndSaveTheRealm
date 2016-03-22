@@ -36,7 +36,7 @@ self.moveSpeed = moveSpeed;
 self.onceScaled = false;
 var scale = function ()
 	{
-	self.layerGroup.forEach((layer) => { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
+	self.layerGroup.forEach(function (layer) { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
 	};
 
 self.preload = function (callback)
