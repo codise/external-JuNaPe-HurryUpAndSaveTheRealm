@@ -41,7 +41,7 @@ self.lastRoomTimeout = 300000; //300s
 self.lastRoomTimer = 0;
 
 
-self.loadRound = (roundData) =>
+self.loadRound = function (roundData)
 	{
 
 	// Set camera in the middle of the stage
@@ -68,7 +68,7 @@ self.loadRound = (roundData) =>
 
 	};
 
-var instantiateRound = () =>
+var instantiateRound = function ()
 	{
 
 	// Position the two loaded rooms correctly
@@ -93,7 +93,7 @@ var instantiateRound = () =>
 	startRound();
 	};
 
-var startRound = () =>
+var startRound = function ()
 	{
 	roundRunning = true;
 	currentDirection = rooms[1].moveDirection;
@@ -103,7 +103,7 @@ var startRound = () =>
 
 // Client data parsing
 
-self.setPlayerInput = (id, input) =>
+self.setPlayerInput = function (id, input)
 	{
 	if (players[id] != undefined)
 		{
@@ -111,13 +111,13 @@ self.setPlayerInput = (id, input) =>
 		}
 	};
 	
-self.newPlayer = (id) =>
+self.newPlayer = function (id)
 	{
 	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id, weaponManager, effectManager);
 	playerGroup.add(players[id].sprite);
 	};
 
-self.disconnectPlayer = (id) =>
+self.disconnectPlayer = function (id)
 	{
 	if (players[id] != undefined)
 		{
@@ -131,7 +131,7 @@ self.disconnectPlayer = (id) =>
 
 // Functions that manage game mechanics
 
-self.update = () =>
+self.update = function ()
 	{
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
@@ -179,7 +179,7 @@ self.update = () =>
 
 	};
 
-var updateRoomMovement = () =>
+var updateRoomMovement = function ()
 	{
 	rooms.forEach((room, index, array) => { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
 
@@ -253,7 +253,7 @@ var updateRoomMovement = () =>
 		}
 	};
 
-var instantiateNewRoom = () =>
+var instantiateNewRoom = function ()
 	{
 	switch (rooms[1].moveDirection)
 		{
@@ -273,7 +273,7 @@ var instantiateNewRoom = () =>
 		}
 	};
 
-var updateScore = () =>
+var updateScore = function ()
 	{
 	scoreTable = [];	
 	for (var i in players)
@@ -289,7 +289,7 @@ var updateScore = () =>
 	scoreText.position.y = game.camera.y + 16;
 	};
 
-var scoreTableToText = (scoreTable) =>
+var scoreTableToText = function (scoreTable)
 	{
 	var text = '';
 
@@ -303,7 +303,7 @@ var scoreTableToText = (scoreTable) =>
 	return text;
 	};
 
-self.getScoreTable = () =>
+self.getScoreTable = function ()
 	{
 	return scoreTable;
 	};
