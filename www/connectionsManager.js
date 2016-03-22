@@ -4,19 +4,19 @@ function ConnectionsManager(game)
 {
 var self = this;
 
-self.connect = (address, port, id) =>
+self.connect = function (address, port, id)
 	{
 	gameClient.connect(address, port, id, init);
 	};
 
-var init = () =>
+var init = function ()
 	{
 	gameClient.setClientConnectionListener(game, game.onControllerConnected);
 	gameClient.setClientDisconnectionListener(game, game.onControllerDisconnected);
 	gameClient.exposeRpcMethod("setPlayerInput", game, game.setPlayerInput);
 	};
 
-game.onControllerConnected = (id) =>
+game.onControllerConnected = function (id)
 	{
 	var current = game.state.current;
 	if (current === 'play')
@@ -28,7 +28,7 @@ game.onControllerConnected = (id) =>
 		}
 	};
 
-game.onControllerDisconnected = (id) =>
+game.onControllerDisconnected = function (id)
 	{
 	var current = game.state.current;
 	if (current === 'play')
@@ -40,7 +40,7 @@ game.onControllerDisconnected = (id) =>
 		}
 	};
 
-game.setPlayerInput = (id, input) =>
+game.setPlayerInput = function (id, input)
 	{
 	var current = game.state.current;
 	if (current === 'play')

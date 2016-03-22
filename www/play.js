@@ -12,7 +12,7 @@ self.bulletManager;
 var effectManager;
 var powerupManager;
 
-var resizeGame = () =>
+var resizeGame = function ()
 	{
 	var height = window.innerHeight * window.devicePixelRatio;
 	var width = window.innerWidth * window.devicePixelRatio;
@@ -34,7 +34,7 @@ var resizeGame = () =>
 
 window.onresize = resizeGame;
 
-self.preload = () =>
+self.preload = function ()
 	{
 	game.stage.disableVisibilityChange = true;
 	
@@ -52,7 +52,7 @@ self.preload = () =>
 	};
 	
 
-self.create = () =>
+self.create = function ()
 	{
 	for (var i = 0; i < game.waitingRoomIds.length ; i++)
 		{
@@ -60,12 +60,12 @@ self.create = () =>
 		};
 	};
 
-self.setPlayerInput = (id, input) =>
+self.setPlayerInput = function (id, input)
 	{
 	self.roundManager.setPlayerInput(id, input);
 	};
 
-self.update = () =>
+self.update = function ()
 	{
 	self.roundManager.update();
 	if (self.roundManager.roundOver)
@@ -75,15 +75,15 @@ self.update = () =>
 		}
 	};
 
-self.render = () => {};
+self.render = function () {};
 
 
-self.onControllerConnected = (id) =>
+self.onControllerConnected = function (id)
 	{
 	self.roundManager.newPlayer(id);
 	};
 
-self.onControllerDisconnected = (id) =>
+self.onControllerDisconnected = function (id)
 	{
 	self.roundManager.disconnectPlayer(id);
 	};

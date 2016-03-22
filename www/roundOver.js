@@ -7,13 +7,13 @@ var finalScores;
 
 var scoreText;
 
-self.preload = () =>
+self.preload = function ()
 	{
 	finalScores = game.roundScoreTable;
 	scoreText = game.add.text(100, 100, genScore(finalScores), {font: "20px Calibri",  fill: "#ffffff"});
 	};
 
-var genScore = (table) =>
+var genScore = function (table)
 	{
 	var text = 'Final scores: \n';
 

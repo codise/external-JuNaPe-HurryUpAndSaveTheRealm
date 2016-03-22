@@ -48,7 +48,7 @@ var maxEnemies;
 
 self.enemyPool = enemyScalingCoefficient;
 
-self.update = (players) =>
+self.update = function (players)
 	{
 	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
@@ -81,7 +81,7 @@ self.update = (players) =>
 
 	};
 
-self.createBoss = (bossType, bossPos) =>
+self.createBoss = function (bossType, bossPos)
 	{
 	if (bossDictionary[bossType] != undefined)
 		{
@@ -93,7 +93,7 @@ self.createBoss = (bossType, bossPos) =>
 		}
 	};
 
-var pickRandomFromDictionary = (dict) =>
+var pickRandomFromDictionary = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object
