@@ -92,10 +92,10 @@ self.update = function (players)
 				movementDirection = 0;
 				fireRate = 350;
 				moveRate = 200;
-				maxSpeed = 20;
+				maxSpeed = 30;
 				bulletDamage = 8;
 				bulletSpeed = 350;
-				bulletLifespan = 2000;
+				bulletLifespan = 3000;
 				nextMove = game.time.now;
 				bulletGraphic = 'enemyBullet5';
 				}
@@ -217,12 +217,12 @@ var chooseNewPattern = function ()
 			currentAttackScheme = attackSchemes[0]; //tentaclemonster: spiral
 			fireRate = 700;
 			moveRate = 500;
-			maxSpeed = 5;
+			maxSpeed = 15;
 			cooldownRate = 10000;
 			shotsPerCooldown = 1000;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet4';
 			break;
 
@@ -235,14 +235,14 @@ var chooseNewPattern = function ()
 			shotgunSpread = 30; // angle between two bullets in the burst
 			fireRate = 900;
 			moveRate = 500;
-			maxSpeed = 5;
+			maxSpeed = 15;
 			cooldownRate = 2500;
 			//shoots bullets at normal fire rate until bullet limit (shotsPerCooldown) is reached by shotsFired
 			//once cooldown period has ended, shotsFired is set back to 0 allowing new shots to be fired at normal fire rate
 			shotsPerCooldown = 3;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet6';
 			break;
 		
@@ -264,7 +264,7 @@ var chooseNewPattern = function ()
 			shotsPerCooldown = 1000;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet6';
 			break;
 			

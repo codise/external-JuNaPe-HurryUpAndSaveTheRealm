@@ -42,6 +42,8 @@ var endMove = new Phaser.Point(0, 0);
 var startShoot = new Phaser.Point(0, 0);
 var endShoot = new Phaser.Point(0, 0);
 var anglePoint = new Phaser.Point(-1, 0);
+var vectorMove = new Phaser.Point(0, 0);
+var normalShoot = new Phaser.Point(0, 0);
 
 var moveStick = {pointer: false, pad: false};
 var shootStick = {pointer: false, pad: false};
@@ -199,8 +201,7 @@ self.dragPointer = function (pointer)
 
 var vectorizeInput = function (start, end)
 	{
-	var target = new Phaser.Point(end.x - start.x, end.y - start.y);
-	return target;//.normalize();
+	return [end.x - start.x, end.y - start.y];
 	}
 	
 self.update = function ()
@@ -209,8 +210,12 @@ self.update = function ()
 	self.dragPointer(game.input.pointer2);
 	self.dragPointer(game.input.mousePointer);
 	
-	var vectorMove = vectorizeInput(startMove, endMove);
-	var normalShoot = vectorizeInput(startShoot, endShoot).normalize();
+	var m = vectorizeInput(startMove, endMove);
+	vectorMove.setTo(m[0], m[1]);
+
+	var s = vectorizeInput(startShoot, endShoot);
+	normalShoot.setTo(s[0], s[1]);
+	normalShoot.normalize();
 	
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
