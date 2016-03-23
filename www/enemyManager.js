@@ -11,6 +11,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	maxSpeed: 75,
 																	moveRate: 1200,
 																	fireRate: 5000,
+																	hitColor: 0xCC0000,
 																	maxHealth: 10},
 												skeleton: {sprite: 'enemy_skeleton',
 																	movementScheme: 'chargeSingle',
@@ -18,6 +19,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	maxSpeed: 75,
 																	moveRate: 1200,
 																	fireRate: 5000,
+																	hitColor: 0xCC0000,
 																	maxHealth: 10},
 												slasher: {sprite: 'enemy_slasher',
 																	movementScheme: 'chargeSingle',
@@ -25,11 +27,13 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	maxSpeed: 200,
 																	moveRate: 500,
 																	fireRate: 500,
+																	hitColor: 0xCC0000,
 																	maxHealth: 5}}
 
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
-																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream']}}
+																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
+																	 hitColor: 0xCC0000}}
 
 
 
