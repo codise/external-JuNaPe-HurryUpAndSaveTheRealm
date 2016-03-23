@@ -162,9 +162,11 @@ var fire = function ()
 var createRadialPulse = function (n, bulletGraphic)
 	{
 	// Creates n bullets radially from monster
+	var randomOffset = Math.floor((Math.random() * 360));
 	for (var i = 0; i < n; i++)
 		{
-		bulletManager.createBullet(bulletGraphic, 10, -1, 360/n * i, self.sprite.position, 200, 5000);
+		var angle = 360/n * i + randomOffset;
+		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
 		}
 	};
 
