@@ -3,7 +3,7 @@
 function Enemy(enemyInfo, game, bulletManager, players, position, effectManager)
 {
 
-var getRandomFrom = (dict) =>
+var getRandomFrom = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object
@@ -38,7 +38,7 @@ var currentTarget = getRandomFrom(mPlayers);
 
 var cameraPadding = 20;
 
-var scale = () =>
+var scale = function ()
 	{
 	if (flipped)
 		{
@@ -51,7 +51,7 @@ var scale = () =>
 	};
 
 
-self.update = (players) =>
+self.update = function (players)
 	{
 	mPlayers = players;
 	if (currentTarget === undefined)
@@ -105,13 +105,13 @@ self.enemyTakeDamage = function(damage)
 		}
 	};
 
-self.kill = () =>
+self.kill = function ()
 	{
 	self.sprite.destroy();
 	effectManager.createDeathEffect(self);
 	};
 
-var move = () =>
+var move = function ()
 	{
 	switch (movementScheme)
 		{
@@ -132,7 +132,7 @@ var move = () =>
 	nextMove = game.time.now + moveRate;
 	};
 
-var fire = () =>
+var fire = function ()
 	{
 	switch (shootingScheme[0])
 		{
@@ -148,16 +148,18 @@ var fire = () =>
 	nextFire = game.time.now + fireRate;
 	};
 
-var createRadialPulse = (n, bulletGraphic) =>
+var createRadialPulse = function (n, bulletGraphic)
 	{
 	// Creates n bullets radially from monster
+	var randomOffset = Math.floor((Math.random() * 360));
 	for (var i = 0; i < n; i++)
 		{
-		bulletManager.createBullet(bulletGraphic, 10, -1, 360/n * i, self.sprite.position, 200, 5000);
+		var angle = 360/n * i + randomOffset;
+		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
 		}
 	};
 
-var createDirectedBurst = (n, bulletGraphic) =>
+var createDirectedBurst = function (n, bulletGraphic)
 	{
 	// Creates a group of bullets shot at a player, like a shotgun
 	if(currentTarget != undefined)
@@ -176,7 +178,7 @@ var createDirectedBurst = (n, bulletGraphic) =>
 		}
 	};
 
-var createSlasherShot = (n, bulletGraphic) =>
+var createSlasherShot = function (n, bulletGraphic)
 	{
 	// Creates a group of bullets shot at a player, like a shotgun
 	if(currentTarget != undefined)
@@ -195,7 +197,7 @@ var createSlasherShot = (n, bulletGraphic) =>
 		}
 	};
 
-var checkCameraBounds = () =>
+var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding)
 		{

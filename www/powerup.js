@@ -41,12 +41,12 @@ self.update = function(players)
 
 }
 
-self.getpUpID = () =>
+self.getpUpID = function ()
 {
 	return pUpID;
 };
 
-self.triggerpUp = (curpUp, player) =>
+self.triggerpUp = function (curpUp, player)
 	{
 
 		var pObject = player.playerObj;
@@ -59,13 +59,13 @@ self.triggerpUp = (curpUp, player) =>
 		curpUp.dead = true;
 	};
 
-self.kill = () =>
+self.kill = function ()
 	{
 	self.sprite.destroy();
 	};
 
 //We need to despawn powerups that go beyond the screen
-var checkCameraBounds = () =>
+var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding || self.sprite.position.x > game.camera.x + game.camera.width - cameraPadding || self.sprite.position.y < game.camera.y + cameraPadding || self.sprite.position.y > game.camera.y + game.camera.height - cameraPadding)
 		{
@@ -73,7 +73,7 @@ var checkCameraBounds = () =>
 		}
 	};	
 
-var scale = () =>
+var scale = function ()
 	{
 	self.sprite.scale.x = scalingFactors.x;
 	self.sprite.scale.y = scalingFactors.y;

@@ -4,13 +4,13 @@ function EffectManager(game)
 {
 var self = this;
 
-var scale = (sprite) =>
+var scale = function (sprite)
 	{
 	sprite.scale.x = scalingFactors.x;
 	sprite.scale.y = scalingFactors.y;
 	};
 
-self.createDeathEffect = (target) =>
+self.createDeathEffect = function (target)
 	{
 	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'explosion');
 	scale(effect);

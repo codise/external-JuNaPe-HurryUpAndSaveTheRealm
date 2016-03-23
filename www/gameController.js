@@ -42,15 +42,16 @@ var endMove = new Phaser.Point(0, 0);
 var startShoot = new Phaser.Point(0, 0);
 var endShoot = new Phaser.Point(0, 0);
 var anglePoint = new Phaser.Point(-1, 0);
+var vectorMove = new Phaser.Point(0, 0);
+var normalShoot = new Phaser.Point(0, 0);
 
 var moveStick = {pointer: false, pad: false};
 var shootStick = {pointer: false, pad: false};
 var controllerpad1;
 var controllerpad2;
 
-var deadText; 
-
-self.preload = () =>
+var deadText;
+self.preload = function ()
 	{
 	self.id = getParameter("id");
 	if (!self.id)
@@ -65,7 +66,7 @@ self.preload = () =>
 	deadText = game.add.text(0, game.height/2, '', {font: '50px Courier', fill: '#ffffff'});
 	};
 
-self.render = () => 
+self.render = function ()
 	{
 	if(debugging)
 		{
@@ -75,7 +76,7 @@ self.render = () =>
 		}
 	};
 
-self.create = () =>
+self.create = function ()
 	{
 	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	game.stage.disableVisibilityChange = true;
@@ -93,7 +94,7 @@ self.create = () =>
 	deadText.bringToTop();
 	};
 
-self.reservePointer = (stick, pointer, pad) =>
+self.reservePointer = function (stick, pointer, pad)
 	{
 	if(!stick.pointer)
 		{
@@ -118,7 +119,7 @@ self.reservePointer = (stick, pointer, pad) =>
 		}
 	};
 
-self.releasePointer = (pointer) =>
+self.releasePointer = function (pointer)
 	{
 	if(moveStick.pointer === pointer)
 		{
@@ -138,7 +139,7 @@ self.releasePointer = (pointer) =>
 		}
 	};
 
-self.matchMoveStickCoords = (pointer) =>
+self.matchMoveStickCoords = function (pointer)
 	{
 	startMove.x = pointer.position.x;
 	startMove.y = pointer.position.y;
@@ -146,7 +147,7 @@ self.matchMoveStickCoords = (pointer) =>
 	endMove.y = pointer.position.y;
 	};
 
-self.matchShootStickCoords = (pointer) =>
+self.matchShootStickCoords = function (pointer)
 	{
 	startShoot.x = pointer.position.x;
 	startShoot.y = pointer.position.y;
@@ -182,7 +183,7 @@ self.pointerOnUp = function()
 	self.releasePointer(pointer);
 	};
 
-self.dragPointer = (pointer) =>
+self.dragPointer = function (pointer)
 	{
 	if(pointer.isDown)
 		{
@@ -202,20 +203,23 @@ self.dragPointer = (pointer) =>
 		}
 	};
 
-var vectorizeInput = (start, end) =>
+var vectorizeInput = function (start, end)
 	{
-	var target = new Phaser.Point(end.x - start.x, end.y - start.y);
-	return target;//.normalize();
+	return [end.x - start.x, end.y - start.y];
 	}
 	
-self.update = () =>
+self.update = function ()
 	{
 	self.dragPointer(game.input.pointer1);
 	self.dragPointer(game.input.pointer2);
 	self.dragPointer(game.input.mousePointer);
 	
-	var vectorMove = vectorizeInput(startMove, endMove);
-	var normalShoot = vectorizeInput(startShoot, endShoot).normalize();
+	var m = vectorizeInput(startMove, endMove);
+	vectorMove.setTo(m[0], m[1]);
+
+	var s = vectorizeInput(startShoot, endShoot);
+	normalShoot.setTo(s[0], s[1]);
+	normalShoot.normalize();
 	
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
@@ -226,13 +230,13 @@ self.update = () =>
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
 
-var clientConnected = () =>
+var clientConnected = function ()
 	{
 	gameClient.exposeRpcMethod("setDeath", self, self.setDeath);
 	gameClient.exposeRpcMethod("setHapticFeedback", self, self.setHapticFeedback);
 	};
 
-self.setHapticFeedback = (time) =>
+self.setHapticFeedback = function(time)
 	{
 	if ('vibrate' in window.navigator)
 		{
@@ -240,7 +244,7 @@ self.setHapticFeedback = (time) =>
 		}
 	};
 
-self.setDeath = (isAlive) =>
+self.setDeath = function(isAlive)
 	{
 	if (isAlive)
 		{

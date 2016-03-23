@@ -6,7 +6,7 @@ function WeaponManager(game)
 /*var weaponDictionary = {};
 var weaponList = [];*/
 
-self.createWeapon = (player, spriteName) =>
+self.createWeapon = function (player, spriteName)
 	{
 
 	var weaponName = spriteName + "Weapon";

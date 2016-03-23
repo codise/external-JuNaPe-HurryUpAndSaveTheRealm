@@ -36,7 +36,7 @@ var nextFire = 0;
 var movementSpeed = 200;
 var baseMovementSpeed = 200;
 
-var respawnTime = 1000;
+var respawnTime = 2500;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -55,7 +55,7 @@ var activePowerUps = [];
 
 var pHUD;
 
-var scale = () =>
+var scale = function ()
 	{
 	if (flipped)
 		{
@@ -83,7 +83,7 @@ function createPlayer ()
 	self.sprite.exists = true;
 	};
 
-self.setInput = (inputArray) =>
+self.setInput = function (inputArray)
 	{
 	input = inputArray;
 	};
@@ -96,7 +96,7 @@ function setClassAndName (pClass, pName)
 	//console.log('pname: ' + self.playerName + ', pclass: ' + self.playerClass);
 	};
 	
-self.update = () =>
+self.update = function ()
 	{
 	scale();
 	if (!self.dead)
@@ -269,7 +269,7 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 	}
 }
 
-self.kill = () =>
+self.kill = function ()
 	{
 	clearAllPowerups();
 	self.sprite.exists = false;
@@ -279,12 +279,12 @@ self.kill = () =>
 	nextRespawn = respawnTime;
 	};
 
-self.getPoints = () =>
+self.getPoints = function ()
 	{
 	self.score += 1;
 	};
 
-var clearAllPowerups = () =>
+var clearAllPowerups = function ()
 	{
 	self.setSpeed(baseMovementSpeed);
 	self.setFireRate(baseFireRate);

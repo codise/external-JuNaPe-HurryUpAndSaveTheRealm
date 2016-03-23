@@ -5,7 +5,7 @@ var loadState = function ()
 	var self = this;
 	var loadingText;
 
-	self.preload = () =>
+	self.preload = function ()
 		{
 		// Load player sprites
 
@@ -64,7 +64,7 @@ var loadState = function ()
 
 		};
 
-self.create = () =>
+self.create = function ()
 	{
 	game.state.start('waiting');
 	};
