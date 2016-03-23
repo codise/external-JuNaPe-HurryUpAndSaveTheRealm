@@ -8,21 +8,21 @@ var self = this;
 var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	movementScheme: 'random',
 																	shootingScheme: ['radial', 5, 'enemyBullet1'],
-																	maxSpeed: 75,
+																	maxSpeed: 90,
 																	moveRate: 1200,
-																	fireRate: 5000,
+																	fireRate: 4000,
 																	maxHealth: 10},
 												skeleton: {sprite: 'enemy_skeleton',
 																	movementScheme: 'chargeSingle',
 																	shootingScheme: ['directedBurst', 3, 'enemyBullet3'],
-																	maxSpeed: 75,
-																	moveRate: 1200,
-																	fireRate: 5000,
+																	maxSpeed: 60,
+																	moveRate: 800,
+																	fireRate: 4500,
 																	maxHealth: 10},
 												slasher: {sprite: 'enemy_slasher',
 																	movementScheme: 'chargeSingle',
 																	shootingScheme: ['slasherShot', 1, 'enemyBullet2'],
-																	maxSpeed: 200,
+																	maxSpeed: 180,
 																	moveRate: 500,
 																	fireRate: 500,
 																	maxHealth: 5}}
@@ -48,7 +48,7 @@ var maxEnemies;
 
 self.enemyPool = enemyScalingCoefficient;
 
-self.update = (players) =>
+self.update = function (players)
 	{
 	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
 	if (self.enemyPool > 0 && Object.keys(players).length > 0 && game.time.now > nextSpawn)
@@ -81,7 +81,7 @@ self.update = (players) =>
 
 	};
 
-self.createBoss = (bossType, bossPos) =>
+self.createBoss = function (bossType, bossPos)
 	{
 	if (bossDictionary[bossType] != undefined)
 		{
@@ -93,7 +93,7 @@ self.createBoss = (bossType, bossPos) =>
 		}
 	};
 
-var pickRandomFromDictionary = (dict) =>
+var pickRandomFromDictionary = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object

@@ -28,47 +28,47 @@ var screenDisconnectionListener = null;
 
 var serverConnection = new WebSocketRpcConnection();
 
-self.callScreenRpc = (screenId, method, params, object, callback) =>
+self.callScreenRpc = function (screenId, method, params, object, callback)
 	{
 	serverConnection.getCommunicator().callRpc("callScreenRpc", [screenId, method, params], object, callback);
 	}
 
-self.callClientRpc = (clientId, method, params, object, callback) =>
+self.callClientRpc = function (clientId, method, params, object, callback)
 	{
 	serverConnection.getCommunicator().callRpc("callClientRpc", [clientId, method, params], object, callback);
 	}
 
-self.exposeRpcMethod = (name, object, method) =>
+self.exposeRpcMethod = function (name, object, method)
 	{
 	serverConnection.getCommunicator().exposeRpcMethod(name, object, method);
 	}
 
-self.getConnectedClientIds = () =>
+self.getConnectedClientIds = function ()
 	{
 	return Object.keys(clients);
 	}
 
-self.getConnectedScreenIds = () =>
+self.getConnectedScreenIds = function ()
 	{
 	return Object.keys(screens);
 	}
 
-self.setClientConnectionListener = (object_, listener_) =>
+self.setClientConnectionListener = function (object_, listener_)
 	{
 	clientConnectionListener = {object: object_, listener: listener_}; 
 	};
 
-self.setClientDisconnectionListener = (object_, listener_) =>
+self.setClientDisconnectionListener = function (object_, listener_)
 	{
 	clientDisconnectionListener = {object: object_, listener: listener_};
 	};
 
-self.setScreenConnectionListener = (object_, listener_) =>
+self.setScreenConnectionListener = function (object_, listener_)
 	{
 	screenConnectionListener = {object: object_, listener: listener_}; 
 	};
 
-self.setScreenDisconnectionListener = (object_, listener_) =>
+self.setScreenDisconnectionListener = function (object_, listener_)
 	{
 	screenDisconnectionListener = {object: object_, listener: listener_};
 	};
@@ -76,7 +76,7 @@ self.setScreenDisconnectionListener = (object_, listener_) =>
 
 //Events from the game server
 
-self.onClientConnected = (id) =>
+self.onClientConnected = function (id)
 	{
 	console.log("GameClient::onClientConnected() "+id);
 	clients[id] = true;
@@ -87,7 +87,7 @@ self.onClientConnected = (id) =>
 		}
 	};
 
-self.onClientDisconnected = (id) =>
+self.onClientDisconnected = function (id)
 	{
 	console.log("GameClient::onClientDisconnected() "+id);
 	if (clients[id])
@@ -99,7 +99,7 @@ self.onClientDisconnected = (id) =>
 		}
 	};
 
-self.onScreenConnected = (id) =>
+self.onScreenConnected = function (id) 
 	{
 	console.log("GameClient::onScreenConnected() "+id);
 	screens[id] = true;
@@ -109,7 +109,7 @@ self.onScreenConnected = (id) =>
 		}
 	};
 
-self.onScreenDisconnected = (id) =>
+self.onScreenDisconnected = function (id)
 	{
 	console.log("GameClient::onScreenDisconnected() "+id);
 	if (screens[id])
@@ -121,7 +121,7 @@ self.onScreenDisconnected = (id) =>
 		}
 	};
 
-self.connect = (host, port, id, callback) =>
+self.connect = function (host, port, id, callback)
 	{
 	var opts = {};
 	opts.host = host;
@@ -129,7 +129,7 @@ self.connect = (host, port, id, callback) =>
 	if (id)
 		opts.id = id;
 
-	serverConnection.connect(opts, () =>
+	serverConnection.connect(opts, function ()
 		{
 		self.exposeRpcMethod("onClientConnected", self, self.onClientConnected);	
 		self.exposeRpcMethod("onClientDisconnected", self, self.onClientDisconnected);	

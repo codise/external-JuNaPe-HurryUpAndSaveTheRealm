@@ -42,13 +42,15 @@ var endMove = new Phaser.Point(0, 0);
 var startShoot = new Phaser.Point(0, 0);
 var endShoot = new Phaser.Point(0, 0);
 var anglePoint = new Phaser.Point(-1, 0);
+var vectorMove = new Phaser.Point(0, 0);
+var normalShoot = new Phaser.Point(0, 0);
 
 var moveStick = {pointer: false, pad: false};
 var shootStick = {pointer: false, pad: false};
 var controllerpad1;
 var controllerpad2;
 
-self.preload = () =>
+self.preload = function ()
 	{
 	self.id = getParameter("id");
 	if (!self.id)
@@ -62,7 +64,7 @@ self.preload = () =>
 	game.load.image('circlepad', 'assets/other/controller_circle.png');
 	};
 
-self.render = () => 
+self.render = function ()
 	{
 	if(debugging)
 		{
@@ -72,7 +74,7 @@ self.render = () =>
 		}
 	};
 
-self.create = () =>
+self.create = function ()
 	{
 	game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 	game.stage.disableVisibilityChange = true;
@@ -88,7 +90,7 @@ self.create = () =>
 	controllerpad2.exists = false;
 	};
 
-self.reservePointer = (stick, pointer, pad) =>
+self.reservePointer = function (stick, pointer, pad)
 	{
 	if(!stick.pointer)
 		{
@@ -113,7 +115,7 @@ self.reservePointer = (stick, pointer, pad) =>
 		}
 	};
 
-self.releasePointer = (pointer) =>
+self.releasePointer = function (pointer)
 	{
 	if(moveStick.pointer === pointer)
 		{
@@ -133,7 +135,7 @@ self.releasePointer = (pointer) =>
 		}
 	};
 
-self.matchMoveStickCoords = (pointer) =>
+self.matchMoveStickCoords = function (pointer)
 	{
 	startMove.x = pointer.position.x;
 	startMove.y = pointer.position.y;
@@ -141,7 +143,7 @@ self.matchMoveStickCoords = (pointer) =>
 	endMove.y = pointer.position.y;
 	};
 
-self.matchShootStickCoords = (pointer) =>
+self.matchShootStickCoords = function (pointer)
 	{
 	startShoot.x = pointer.position.x;
 	startShoot.y = pointer.position.y;
@@ -177,7 +179,7 @@ self.pointerOnUp = function()
 	self.releasePointer(pointer);
 	};
 
-self.dragPointer = (pointer) =>
+self.dragPointer = function (pointer)
 	{
 	if(pointer.isDown)
 		{
@@ -197,20 +199,23 @@ self.dragPointer = (pointer) =>
 		}
 	};
 
-var vectorizeInput = (start, end) =>
+var vectorizeInput = function (start, end)
 	{
-	var target = new Phaser.Point(end.x - start.x, end.y - start.y);
-	return target;//.normalize();
+	return [end.x - start.x, end.y - start.y];
 	}
 	
-self.update = () =>
+self.update = function ()
 	{
 	self.dragPointer(game.input.pointer1);
 	self.dragPointer(game.input.pointer2);
 	self.dragPointer(game.input.mousePointer);
 	
-	var vectorMove = vectorizeInput(startMove, endMove);
-	var normalShoot = vectorizeInput(startShoot, endShoot).normalize();
+	var m = vectorizeInput(startMove, endMove);
+	vectorMove.setTo(m[0], m[1]);
+
+	var s = vectorizeInput(startShoot, endShoot);
+	normalShoot.setTo(s[0], s[1]);
+	normalShoot.normalize();
 	
 	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
@@ -221,7 +226,7 @@ self.update = () =>
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};
 
-self.clientConnected = () =>
+self.clientConnected = function ()
 	{
 	gameClient.exposeRpcMethod("setStickPosition", self, self.setStickPosition);
 	gameClient.exposeRpcMethod("getStickPosition", self, self.getStickPosition);

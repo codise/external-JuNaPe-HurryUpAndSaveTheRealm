@@ -47,7 +47,7 @@ var healthBar = new Hud(game, self);
 
 var mPlayers;
 
-var getRandomFrom = (dict) =>
+var getRandomFrom = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object
@@ -55,7 +55,7 @@ var getRandomFrom = (dict) =>
 	return object;
 	};
 
-var scale = () =>
+var scale = function ()
 	{
 	if (flipped)
 		{
@@ -67,7 +67,7 @@ var scale = () =>
 	self.sprite.scale.y = scalingFactors.y * 2;
 	};
 
-self.update = (players) =>
+self.update = function (players)
 	{
 	mPlayers = players;
 	scale();
@@ -92,10 +92,10 @@ self.update = (players) =>
 				movementDirection = 0;
 				fireRate = 350;
 				moveRate = 200;
-				maxSpeed = 20;
+				maxSpeed = 30;
 				bulletDamage = 8;
 				bulletSpeed = 350;
-				bulletLifespan = 2000;
+				bulletLifespan = 3000;
 				nextMove = game.time.now;
 				bulletGraphic = 'enemyBullet5';
 				}
@@ -157,14 +157,14 @@ self.enemyTakeDamage = function(damage)
 		}
 	};
 
-self.kill = () =>
+self.kill = function ()
 	{
 	game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
 	game.state.states.play.roundManager.lastRoomTimer = game.time.now + game.state.states.play.roundManager.lastRoomTimeout;
 	self.sprite.destroy();
 	};
 
-var chooseNewPattern = () =>
+var chooseNewPattern = function ()
 	{
 	if(self.currentHealth < self.maxHealth / 3)
 		{
@@ -217,12 +217,12 @@ var chooseNewPattern = () =>
 			currentAttackScheme = attackSchemes[0]; //tentaclemonster: spiral
 			fireRate = 700;
 			moveRate = 500;
-			maxSpeed = 5;
+			maxSpeed = 15;
 			cooldownRate = 10000;
 			shotsPerCooldown = 1000;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet4';
 			break;
 
@@ -235,14 +235,14 @@ var chooseNewPattern = () =>
 			shotgunSpread = 30; // angle between two bullets in the burst
 			fireRate = 900;
 			moveRate = 500;
-			maxSpeed = 5;
+			maxSpeed = 15;
 			cooldownRate = 2500;
 			//shoots bullets at normal fire rate until bullet limit (shotsPerCooldown) is reached by shotsFired
 			//once cooldown period has ended, shotsFired is set back to 0 allowing new shots to be fired at normal fire rate
 			shotsPerCooldown = 3;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet6';
 			break;
 		
@@ -264,7 +264,7 @@ var chooseNewPattern = () =>
 			shotsPerCooldown = 1000;
 			bulletDamage = 10;
 			bulletSpeed = 250;
-			bulletLifespan = 3000;
+			bulletLifespan = 4500;
 			bulletGraphic = 'enemyBullet6';
 			break;
 			
@@ -278,7 +278,7 @@ var chooseNewPattern = () =>
 
 //sets movement direction based on pattern
 //movement speed and turn rate (how often a new direction is taken) are pattern specific
-var move = () =>
+var move = function ()
 	{
 	switch (currentMovementScheme)
 		{
@@ -297,7 +297,7 @@ var move = () =>
 		nextMove = game.time.now + moveRate;
 	};
 
-var attack = (players) =>
+var attack = function (players)
 	{
 	switch (currentAttackScheme)
 		{
@@ -339,7 +339,7 @@ var attack = (players) =>
 	};
 	
 	
-var checkCameraBounds = () =>
+var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding)
 		{
