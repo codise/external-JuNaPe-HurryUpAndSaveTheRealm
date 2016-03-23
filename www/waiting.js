@@ -16,7 +16,7 @@ var lastDroppedCD = 0;
 
 
 
-self.preload = () =>
+self.preload = function ()
 	{
 	waitingText = game.add.text(80, 150, baseWText, {font: '30px Courier', fill: '#ffffff'});
 	pText = game.add.text(80, 200, playersWaitingText + playerCount, {font: '30px Courier', fill: '#ffffff'});
@@ -25,7 +25,7 @@ self.preload = () =>
 	game.waitingRoomIds = [];
 	};
 
-self.update = () =>
+self.update = function ()
 	{
 
 	if (playerCount < 1)
@@ -56,13 +56,13 @@ self.update = () =>
 		}
 	};
 	
-self.onControllerConnected = (id) =>
+self.onControllerConnected = function (id)
 	{
 	game.waitingRoomIds.push(id);
 	playerCount++;
 	};
 
-self.onControllerDisconnected = (id) =>
+self.onControllerDisconnected = function (id)
 	{
 	var index = game.waitingRoomIds.indexOf(id);
 	if (index > -1)

@@ -47,7 +47,7 @@ var healthBar = new Hud(game, self);
 
 var mPlayers;
 
-var getRandomFrom = (dict) =>
+var getRandomFrom = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object
@@ -55,7 +55,7 @@ var getRandomFrom = (dict) =>
 	return object;
 	};
 
-var scale = () =>
+var scale = function ()
 	{
 	if (flipped)
 		{
@@ -67,7 +67,7 @@ var scale = () =>
 	self.sprite.scale.y = scalingFactors.y * 2;
 	};
 
-self.update = (players) =>
+self.update = function (players)
 	{
 	mPlayers = players;
 	scale();
@@ -157,14 +157,14 @@ self.enemyTakeDamage = function(damage)
 		}
 	};
 
-self.kill = () =>
+self.kill = function ()
 	{
 	game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
 	game.state.states.play.roundManager.lastRoomTimer = game.time.now + game.state.states.play.roundManager.lastRoomTimeout;
 	self.sprite.destroy();
 	};
 
-var chooseNewPattern = () =>
+var chooseNewPattern = function ()
 	{
 	if(self.currentHealth < self.maxHealth / 3)
 		{
@@ -278,7 +278,7 @@ var chooseNewPattern = () =>
 
 //sets movement direction based on pattern
 //movement speed and turn rate (how often a new direction is taken) are pattern specific
-var move = () =>
+var move = function ()
 	{
 	switch (currentMovementScheme)
 		{
@@ -297,7 +297,7 @@ var move = () =>
 		nextMove = game.time.now + moveRate;
 	};
 
-var attack = (players) =>
+var attack = function (players)
 	{
 	switch (currentAttackScheme)
 		{
@@ -339,7 +339,7 @@ var attack = (players) =>
 	};
 	
 	
-var checkCameraBounds = () =>
+var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding)
 		{

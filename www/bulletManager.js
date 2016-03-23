@@ -132,7 +132,7 @@ self.playerBulletCount;
 
 //var bulletLifespan = 1000;
 
-var scale = (listOfGroups) =>
+var scale = function (listOfGroups)
 	{
 	for (var i = 0; i < listOfGroups.length; i++)
 		{
@@ -142,7 +142,7 @@ var scale = (listOfGroups) =>
 	};
 
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
-self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan) =>
+self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan)
 	{
 	if (playerid >= 0)
 		{
@@ -230,12 +230,12 @@ self.createBullet = (type, damage, playerid, angle, pos, bulletSpeed, bulletLife
 		}
 	};
 
-self.killbullet = (bullet) =>
+self.killbullet = function (bullet)
 	{
 	bullet.kill()
 	};
 
-self.update = () =>
+self.update = function ()
 	{
 	scale(self.enemyBulletGroups);
 	scale(self.playerBulletGroups);
@@ -247,7 +247,7 @@ self.update = () =>
 	//console.log(enemyBulletPool)
 	};
 
-var countLiveBullets = (groupList) =>
+var countLiveBullets = function (groupList)
 	{
 	var count = 0;
 	for (var i = 0; i < groupList.length; i++)

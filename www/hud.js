@@ -50,7 +50,7 @@ self.setName = function(name)
 		scale();
 	};
 
-var scale = () =>
+var scale = function ()
 	{
 	healthBarSprite.setScaleMinMax(scalingFactors.x, scalingFactors.y);
 

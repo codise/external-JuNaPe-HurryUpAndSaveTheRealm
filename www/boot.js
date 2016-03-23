@@ -4,7 +4,7 @@ var bootState = function ()
 {
 var self = this;
 
-self.create = () =>
+self.create = function ()
 	{
 	game.screenId = getParameter('id');
 	if (!game.screenId)

@@ -34,12 +34,12 @@ self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
 self.onceScaled = false;
-var scale = () =>
+var scale = function ()
 	{
-	self.layerGroup.forEach((layer) => { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
+	self.layerGroup.forEach(function (layer) { layer.scale.x = scalingFactors.x; layer.scale.y = scalingFactors.y; });
 	};
 
-self.preload = (callback) =>
+self.preload = function (callback)
 	{
 	mycallback = callback;
 	if (!game.cache.checkImageKey(background))
@@ -60,7 +60,7 @@ self.preload = (callback) =>
 	myloader.start();
 	};
 
-var create = () =>
+var create = function ()
 	{
 	self.map = game.add.tilemap(collisionData);
 
@@ -82,35 +82,35 @@ var create = () =>
 	mycallback();
 	};
 
-self.moveTo = (x, y) =>
+self.moveTo = function (x, y)
 	{
 	self.layerGroup.setAll('position.x', x);
 	self.layerGroup.setAll('position.y', y);
 	};
 
-self.moveBy = (amount) =>
+self.moveBy = function (amount)
 	{
 	self.layerGroup.forEach(moveLayer, this, true, amount);
 	};
 
-self.updateScaling = () =>
+self.updateScaling = function ()
 	{
 	scale();
 	};
 
-var moveLayer = (layer, amount) =>
+var moveLayer = function (layer, amount)
 	{
 	layer.position.x = layer.position.x + amount.x;
 	layer.position.y = layer.position.y + amount.y;
 	};
 
-var reloadBG = () =>
+var reloadBG = function ()
 	{
 	console.log("Failed to load the background initially!");
 	create();
 	};
 
-self.getPos = () =>
+self.getPos = function ()
 	{
 	if(backgroundLayer == undefined) reloadBG();
 	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};

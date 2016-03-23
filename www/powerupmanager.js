@@ -112,12 +112,12 @@ self.spawnRandomPowerupOn = function(point)
 	}
 }
 
-var getRandomInt = (min, max) =>
+var getRandomInt = function (min, max)
 	{
     return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
 
-var pickRandomFromDictionary = (dict) =>
+var pickRandomFromDictionary = function (dict)
 	{
 	var keys = Object.keys(dict);
 	var object
