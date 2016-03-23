@@ -284,6 +284,12 @@ self.getPoints = function ()
 	self.score += 1;
 	};
 
+
+self.getMultiplePoints = function(amount) 
+{
+	self.score += amount;
+}
+
 var clearAllPowerups = function ()
 	{
 	self.setSpeed(baseMovementSpeed);

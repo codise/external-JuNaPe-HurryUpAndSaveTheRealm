@@ -13,26 +13,6 @@ var pUpDuration = pUpInfo.pUpDuration;
 var pUpStats = pUpInfo.pUpStats;
 var cameraPadding = 20;
 
-//We recolor the sprite depending on the powerup untíl we have more sprites
-//TODO: More Powerup sprites
-switch(pUpID) 
-{
-	case 'smallHeal':
-		self.sprite.tint = 0xCC0000; //RED
-		break;
-
-	case 'incSpeed':
-		self.sprite.tint = 0x3333FF; //BLUE
-		break;
-
-	case 'incFireRate':
-		self.sprite.tint = 0x00CC00; //GREEN
-		break;
-
-	default:
-		break;
-}
-
 self.update = function(players)
 {
 	scale();
@@ -50,9 +30,14 @@ self.triggerpUp = function (curpUp, player)
 	{
 
 		var pObject = player.playerObj;
-		if(pUpID == 'smallHeal') {
+		if(pUpID == 'smallHeal') 
+		{
 			pObject.heal(pUpStats);
 		} 
+		else if (pUpID == 'pointChest') 
+		{
+			pObject.getMultiplePoints(pUpStats);
+		}
 		else {
 			pObject.startPowerUp(pUpID, pUpDuration, pUpStats)
 		}
