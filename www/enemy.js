@@ -19,6 +19,10 @@ self.sprite = game.add.sprite(position.x, position.y, enemyInfo.sprite);
 self.sprite.anchor.setTo(0.5, 0.5);
 var flipped = false;
 
+var hitColorTime = 50;
+var hitColorEndTime = 0;
+var hitColor = enemyInfo.hitColor;
+
 var nextMove = 0;
 var moveRate = enemyInfo.moveRate;//2500;
 var movementScheme = enemyInfo.movementScheme;
@@ -64,6 +68,10 @@ self.update = function (players)
 		{
 		move();
 		}
+	if(game.time.now > hitColorEndTime)
+		{
+		self.sprite.tint = 0xFFFFFF; //original color
+		}
 	if (self.sprite.body.velocity.x > 0 && flipped)
 		{
 		flipped = false;
@@ -89,6 +97,9 @@ self.update = function (players)
 
 self.enemyHit = function(enemy, bullet) 
 	{
+
+	hitColorEndTime = game.time.now + hitColorTime;
+	self.sprite.tint = hitColor;
 	var playerId = bullet.playerId;
 	var damage = bullet.damage;
 	bullet.kill();
