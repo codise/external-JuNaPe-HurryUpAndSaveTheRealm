@@ -280,7 +280,7 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 self.kill = function ()
 	{
 	clearAllPowerups();
-	//scoreText();
+	scoreText();
 	self.sprite.exists = false;
   	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
   	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
@@ -291,14 +291,15 @@ self.kill = function ()
 var scoreText = function()
 	{
 	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "13px Arial", fill: "#FFFFFF"});
-	text.anchor.setTo(0.5, 0.5);
-	text.rotateSpeed= -0.3;
 	game.physics.arcade.enable(text);
 	text.body.collideWorldBounds = true;
 	text.body.bounce.set(1);
-	var factor = Math.floor((Math.random() * 10))
-	text.body.velocity.setTo(factor*10, factor*10);
-	game.time.events.add(2000, function() {text.destroy();});
+	var dir = [-1, 1];
+	var angle = Math.floor(Math.random()*181);
+	angle *= dir[Math.floor(Math.random()*2)];
+	game.physics.arcade.velocityFromAngle(angle, 23, text.body.velocity);
+	text.body.angularVelocity = 6 * dir[Math.floor((Math.random()*2))];
+	game.time.events.add(2500, function() {text.destroy();});
 	};
 
 self.getPoints = function ()
