@@ -280,11 +280,25 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 self.kill = function ()
 	{
 	clearAllPowerups();
+	//scoreText();
 	self.sprite.exists = false;
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
-  gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
+  	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
+  	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	};
+
+var scoreText = function()
+	{
+	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "13px Arial", fill: "#FFFFFF"});
+	text.anchor.setTo(0.5, 0.5);
+	text.rotateSpeed= -0.3;
+	game.physics.arcade.enable(text);
+	text.body.collideWorldBounds = true;
+	text.body.bounce.set(1);
+	var factor = Math.floor((Math.random() * 10))
+	text.body.velocity.setTo(factor*10, factor*10);
+	game.time.events.add(2000, function() {text.destroy();});
 	};
 
 self.getPoints = function ()
