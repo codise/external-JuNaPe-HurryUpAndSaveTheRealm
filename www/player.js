@@ -15,7 +15,6 @@ self.id = id;
 self.score = 0;
 
 var hitColorTime = 50;
-var hitColorEndTime = 0;
 
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
@@ -39,7 +38,7 @@ var nextFire = 0;
 var movementSpeed = 200;
 var baseMovementSpeed = 200;
 
-var respawnTime = 2500;
+var respawnTime = 250;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -114,10 +113,6 @@ self.update = function ()
 				setClassAndName(input.pClass, input.pName);
 				createPlayer();
 				setupDone = true;
-				}
-			if(game.time.now > hitColorEndTime)
-				{
-				self.sprite.tint = 0xFFFFFF; //original color
 				}
 			var length = input.moveLength;
 			if(length > 1)
@@ -198,8 +193,8 @@ self.update = function ()
 
 self.playerHit = function(player, bullet)
 	{
-	hitColorEndTime = game.time.now + hitColorTime;
 	self.sprite.tint = 0xCC0000;
+	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
@@ -290,10 +285,12 @@ self.kill = function ()
 
 var scoreText = function()
 	{
-	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "13px Arial", fill: "#FFFFFF"});
+	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "20px Arial", fill: "#FFFFFF"});
 	game.physics.arcade.enable(text);
 	text.body.collideWorldBounds = true;
 	text.body.bounce.set(1);
+	text.scale.x = scalingFactors.x;
+	text.scale.y = scalingFactors.y;
 	var dir = [-1, 1];
 	var angle = Math.floor(Math.random()*181);
 	angle *= dir[Math.floor(Math.random()*2)];
