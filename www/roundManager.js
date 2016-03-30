@@ -48,7 +48,7 @@ self.loadRound = function (roundData)
 	game.camera.x = game.world.width/2 - game.camera.width/2;
 	game.camera.y = game.world.height/2 - game.camera.height/2;
 
-	currentRound = round2;
+	currentRound = round3;
 
 	rooms[0] = null;
 
