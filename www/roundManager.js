@@ -278,7 +278,7 @@ var updateScore = function ()
 	scoreTable = [];	
 	for (var i in players)
 		{
-		if (players[i] != undefined)
+		if (players[i] != undefined && game.playerList[players[i].id] != undefined)
 			{
 			scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
 			}
