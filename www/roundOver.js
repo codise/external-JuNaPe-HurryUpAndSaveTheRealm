@@ -6,14 +6,17 @@ var self = this;
 var roundScores;
 
 var scoreText;
+var countDownText;
 
 var loopTimeout;
+var cdText = 'Time remaining until next round: ';
 
 self.preload = function ()
 	{
 	roundScores = game.roundScoreTable;
 	scoreText = game.add.text(100, 100, genScore(roundScores), {font: "30px Calibri",  fill: "#ffffff"});
-	loopTimeout = game.time.now + 3000;
+	loopTimeout = game.time.now + 5000;
+	countDownText = game.add.text(10, 10, "", {font: "20px Calibri",  fill: "#ffffff"});
 	};
 
 var genScore = function (table)
@@ -32,6 +35,7 @@ var genScore = function (table)
 
 self.update = function ()
 	{
+	countDownText.text = cdText + (loopTimeout - game.time.now);
 	if(game.time.now > loopTimeout)
 		{
 		game.state.start('waiting');
