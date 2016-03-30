@@ -4,6 +4,11 @@ function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
 {
 var self = this;
 
+if(!game.playerList[id].totalScore)
+	{
+	game.playerList[id].totalScore = 0;
+	}
+
 var bullets = ['bullet1', 'bullet2', 'bullet3', 'bullet4', 'bullet5', 'bullet6'];
 var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
 var input;
@@ -36,7 +41,7 @@ var nextFire = 0;
 var movementSpeed = 200;
 var baseMovementSpeed = 200;
 
-var respawnTime = 2500;
+var respawnTime = 250;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -60,12 +65,13 @@ var scale = function ()
 	if (flipped)
 		{
 		self.sprite.scale.x = -scalingFactors.x;
+		self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
 		} else
 		{
 		self.sprite.scale.x = scalingFactors.x;
+		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 		}
 	self.sprite.scale.y = scalingFactors.y;
-	self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 	};
 
 function createPlayer ()
@@ -93,6 +99,8 @@ function setClassAndName (pClass, pName)
 	{
 	self.playerClass = pClass;
 	self.playerName = pName;
+	game.playerList[id].name = pName;
+	game.playerList[id].class = pClass;
 	//console.log('pname: ' + self.playerName + ', pclass: ' + self.playerClass);
 	};
 	
@@ -273,16 +281,24 @@ self.kill = function ()
 	{
 	clearAllPowerups();
 	self.sprite.exists = false;
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
-  gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
+	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
+	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	self.losePoints();
 	};
 
 self.getPoints = function ()
 	{
 	self.score += 1;
+	game.playerList[id].totalScore += 1;
 	};
+
+self.losePoints = function()
+	{
+	self.score -= 100;
+	game.playerList[id].totalScore -= 100;
+	}
 
 var clearAllPowerups = function ()
 	{

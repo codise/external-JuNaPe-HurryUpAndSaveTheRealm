@@ -54,9 +54,10 @@ self.preload = function ()
 
 self.create = function ()
 	{
-	for (var i = 0; i < game.waitingRoomIds.length ; i++)
+	var playerIds = Object.keys(game.playerList);
+	for (var i = 0; i < playerIds.length ; i++)
 		{
-		self.roundManager.newPlayer(game.waitingRoomIds[i]);
+		self.roundManager.newPlayer(playerIds[i]);
 		};
 	};
 
@@ -80,11 +81,13 @@ self.render = function () {};
 
 self.onControllerConnected = function (id)
 	{
+	game.playerList[id] = {};
 	self.roundManager.newPlayer(id);
 	};
 
 self.onControllerDisconnected = function (id)
 	{
+	delete game.playerList[id];
 	self.roundManager.disconnectPlayer(id);
 	};
 

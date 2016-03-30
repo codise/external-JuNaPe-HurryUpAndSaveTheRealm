@@ -40,7 +40,7 @@ var bulletGraphic = 'enemyBullet5';
 // <
 var nextFire = game.time.now + fireRate;
 
-self.maxHealth = 500;
+self.maxHealth = 200 * Object.keys(game.playerList).length;
 self.currentHealth = self.maxHealth;
 
 var healthBar = new Hud(game, self);
