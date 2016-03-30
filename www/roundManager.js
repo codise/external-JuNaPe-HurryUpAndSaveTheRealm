@@ -278,9 +278,9 @@ var updateScore = function ()
 	scoreTable = [];	
 	for (var i in players)
 		{
-		if (players[i] != undefined)
+		if (players[i] != undefined && game.playerList[players[i].id] != undefined)
 			{
-			scoreTable.push({"id": players[i].id, "name": players[i].playerName,  "score": players[i].score});
+			scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
 			}
 		}
 	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
@@ -297,7 +297,7 @@ var scoreTableToText = function (scoreTable)
 		{
 		if (scoreTable[i].name != undefined)
 			{
-			text += scoreTable[i].name + " :: " + scoreTable[i].score + "\n";
+			text += scoreTable[i].name + " :: " + scoreTable[i].score + " / " + scoreTable[i].totalScore + "\n";
 			}
 		}
 	return text;
