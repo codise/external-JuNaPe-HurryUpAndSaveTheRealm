@@ -14,6 +14,8 @@ self.id = id;
 
 self.score = 0;
 
+var hitColorTime = 50;
+
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
 
@@ -36,7 +38,7 @@ var nextFire = 0;
 var movementSpeed = 200;
 var baseMovementSpeed = 200;
 
-var respawnTime = 2500;
+var respawnTime = 250;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -112,7 +114,6 @@ self.update = function ()
 				createPlayer();
 				setupDone = true;
 				}
-			
 			var length = input.moveLength;
 			if(length > 1)
 				{
@@ -192,10 +193,12 @@ self.update = function ()
 
 self.playerHit = function(player, bullet)
 	{
+	self.sprite.tint = 0xCC0000;
+	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
+  	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
 self.takeDamage = function(damage)
@@ -272,11 +275,28 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 self.kill = function ()
 	{
 	clearAllPowerups();
+	scoreText();
 	self.sprite.exists = false;
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
-  gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
+  	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
+  	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	};
+
+var scoreText = function()
+	{
+	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "20px Arial", fill: "#FFFFFF"});
+	game.physics.arcade.enable(text);
+	text.body.collideWorldBounds = true;
+	text.body.bounce.set(1);
+	text.scale.x = scalingFactors.x;
+	text.scale.y = scalingFactors.y;
+	var dir = [-1, 1];
+	var angle = Math.floor(Math.random()*181);
+	angle *= dir[Math.floor(Math.random()*2)];
+	game.physics.arcade.velocityFromAngle(angle, 23, text.body.velocity);
+	text.body.angularVelocity = 6 * dir[Math.floor((Math.random()*2))];
+	game.time.events.add(2500, function() {text.destroy();});
 	};
 
 self.getPoints = function ()
