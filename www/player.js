@@ -4,6 +4,14 @@ function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
 {
 var self = this;
 
+//just in case
+if(game.playerList[id] == undefined)
+	{
+	console.log("~~ player " + id + " was not set in game.playerList yet !?");
+	game.playerList[id] = {};
+	game.playerList[id].totalScore = 0;
+	}
+
 if(!game.playerList[id].totalScore)
 	{
 	game.playerList[id].totalScore = 0;
@@ -311,7 +319,12 @@ var scoreText = function()
 self.getPoints = function ()
 	{
 	self.score += 1;
-	game.playerList[id].totalScore += 1;
+	// not having this test would crash the game if a player's bullet would hit an enemy after the player had disconnected
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore += 1;
+		}
+	
 	};
 
 self.losePoints = function()
