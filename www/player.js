@@ -174,7 +174,7 @@ self.update = function ()
 		self.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
-    gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
+		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
 		pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
@@ -311,8 +311,20 @@ var scoreText = function()
 self.getPoints = function ()
 	{
 	self.score += 1;
-	game.playerList[id].totalScore += 1;
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore += 1;
+		}
 	};
+
+self.getMultiplePoints = function(amount) 
+	{
+	self.score += amount;
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore += amount;
+		}
+	}
 
 self.losePoints = function()
 	{

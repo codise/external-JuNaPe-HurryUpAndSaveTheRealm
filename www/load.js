@@ -57,6 +57,12 @@ var loadState = function ()
 
 		//Load powerup sprites
 		game.load.image('item_book', 'assets/decorations/Book.png');
+		game.load.image('item_ATK_Bonus', 'assets/decorations/PickUp_AttackBonus.png');
+		game.load.image('item_SPD_Bonus', 'assets/decorations/PickUp_SpeedBonus.png');
+		game.load.image('item_Heal', 'assets/decorations/PickUp_HealthBonus.png');
+		game.load.image('item_Chest', 'assets/decorations/Chest.png');
+
+
 
 		// Set loadingtext
 	
