@@ -4,6 +4,11 @@ function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
 {
 var self = this;
 
+if(!game.playerList[id].totalScore)
+	{
+	game.playerList[id].totalScore = 0;
+	}
+
 var bullets = ['bullet1', 'bullet2', 'bullet3', 'bullet4', 'bullet5', 'bullet6'];
 var sprites = ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'];
 var input;
@@ -13,6 +18,8 @@ self.playerName;
 self.id = id;
 
 self.score = 0;
+
+var hitColorTime = 50;
 
 self.maxHealth = 200;
 self.currentHealth = self.maxHealth;
@@ -36,7 +43,7 @@ var nextFire = 0;
 var movementSpeed = 200;
 var baseMovementSpeed = 200;
 
-var respawnTime = 2500;
+var respawnTime = 250;
 var nextRespawn = 0;
 
 var bulletDamage = 2;
@@ -60,12 +67,13 @@ var scale = function ()
 	if (flipped)
 		{
 		self.sprite.scale.x = -scalingFactors.x;
+		self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
 		} else
 		{
 		self.sprite.scale.x = scalingFactors.x;
+		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 		}
 	self.sprite.scale.y = scalingFactors.y;
-	self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 	};
 
 function createPlayer ()
@@ -93,6 +101,8 @@ function setClassAndName (pClass, pName)
 	{
 	self.playerClass = pClass;
 	self.playerName = pName;
+	game.playerList[id].name = pName;
+	game.playerList[id].class = pClass;
 	//console.log('pname: ' + self.playerName + ', pclass: ' + self.playerClass);
 	};
 	
@@ -112,7 +122,6 @@ self.update = function ()
 				createPlayer();
 				setupDone = true;
 				}
-			
 			var length = input.moveLength;
 			if(length > 1)
 				{
@@ -165,7 +174,7 @@ self.update = function ()
 		self.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
-    gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
+		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
 		pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
@@ -192,10 +201,12 @@ self.update = function ()
 
 self.playerHit = function(player, bullet)
 	{
+	self.sprite.tint = 0xCC0000;
+	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
+  	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
 self.takeDamage = function(damage)
@@ -272,23 +283,54 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 self.kill = function ()
 	{
 	clearAllPowerups();
+	scoreText();
 	self.sprite.exists = false;
-  gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
-  gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
+	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
+	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	self.losePoints();
+	};
+
+var scoreText = function()
+	{
+	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "20px Arial", fill: "#FFFFFF"});
+	game.physics.arcade.enable(text);
+	text.body.collideWorldBounds = true;
+	text.body.bounce.set(1);
+	text.scale.x = scalingFactors.x;
+	text.scale.y = scalingFactors.y;
+	var dir = [-1, 1];
+	var angle = Math.floor(Math.random()*181);
+	angle *= dir[Math.floor(Math.random()*2)];
+	game.physics.arcade.velocityFromAngle(angle, 23, text.body.velocity);
+	text.body.angularVelocity = 6 * dir[Math.floor((Math.random()*2))];
+	game.time.events.add(2500, function() {text.destroy();});
 	};
 
 self.getPoints = function ()
 	{
 	self.score += 1;
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore += 1;
+		}
 	};
 
-
 self.getMultiplePoints = function(amount) 
-{
+	{
 	self.score += amount;
-}
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore += amount;
+		}
+	}
+
+self.losePoints = function()
+	{
+	self.score -= 100;
+	game.playerList[id].totalScore -= 100;
+	}
 
 var clearAllPowerups = function ()
 	{
