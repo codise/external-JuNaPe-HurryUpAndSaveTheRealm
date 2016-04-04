@@ -46,7 +46,14 @@ self.preload = function ()
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
 	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager, powerupManager);
-	self.roundManager.loadRound(round2);
+	if (game.currentRound == undefined || game.currentRound + 1 >= rounds.length)
+		{
+		game.currentRound = 0;
+		} else
+		{
+		game.currentRound += 1;
+		}
+	self.roundManager.loadRound(rounds[game.currentRound]);
 	};
 	
 

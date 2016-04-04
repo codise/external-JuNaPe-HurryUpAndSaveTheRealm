@@ -5,8 +5,6 @@ function RoundManager(game, bulletManager, enemyManager, weaponManager, powerupM
 
 var self = this;
 
-var rounds = [round1, round2, round3];
-
 // Variables related to managing game mechanics
 
 var players = {};
