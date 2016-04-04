@@ -163,7 +163,7 @@ self.update = function ()
 
 		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
 			{
-			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
+			//game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
 			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], enemyManager.enemyGroup);
 			}
 
