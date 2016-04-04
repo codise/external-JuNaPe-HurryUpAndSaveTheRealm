@@ -51,6 +51,7 @@ self.loadRound = function (roundData)
 	game.camera.x = game.world.width/2 - game.camera.width/2;
 	game.camera.y = game.world.height/2 - game.camera.height/2;
 
+  /*
 	if(game.currentRound == undefined || game.currentRound +1 >= rounds.length)
 		{
 		game.currentRound = 0;
@@ -59,6 +60,8 @@ self.loadRound = function (roundData)
 		game.currentRound += 1;
 		}
 	currentRound = rounds[game.currentRound];
+  */
+	currentRound = roundData;
 
 	rooms[0] = null;
 

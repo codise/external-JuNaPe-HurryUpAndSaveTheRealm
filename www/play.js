@@ -45,8 +45,8 @@ self.preload = function ()
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager, powerupManager);
-	self.roundManager.loadRound("assets/maps/rounds/round.json");
+	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager, effectManager, powerupManager);
+	self.roundManager.loadRound(round2);
 	};
 	
 
