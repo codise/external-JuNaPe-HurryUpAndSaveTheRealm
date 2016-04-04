@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
+function Player(game, x, y, bulletManager, id, weaponManager)
 {
 var self = this;
 
@@ -291,41 +291,18 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 self.kill = function ()
 	{
 	clearAllPowerups();
-	scoreText();
+	game.effectManager.popupScoreText('-100',self.sprite);
 	self.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
-	effectManager.createDeathEffect(self);
+	game.effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
-	self.losePoints();
+	self.losePoints(100);
 	};
 
-var scoreText = function()
-	{
-	var text = game.add.text(self.sprite.position.x, self.sprite.position.y, '-100', { font: "20px Arial", fill: "#FFFFFF"});
-	game.physics.arcade.enable(text);
-	text.body.collideWorldBounds = true;
-	text.body.bounce.set(1);
-	text.scale.x = scalingFactors.x;
-	text.scale.y = scalingFactors.y;
-	var dir = [-1, 1];
-	var angle = Math.floor(Math.random()*181);
-	angle *= dir[Math.floor(Math.random()*2)];
-	game.physics.arcade.velocityFromAngle(angle, 23, text.body.velocity);
-	text.body.angularVelocity = 6 * dir[Math.floor((Math.random()*2))];
-	game.time.events.add(2500, function() {text.destroy();});
-	};
 
-self.getPoints = function ()
-	{
-	self.score += 1;
-	if(game.playerList[id] != undefined)
-		{
-		game.playerList[id].totalScore += 1;
-		}
-	};
 
-self.getMultiplePoints = function(amount) 
+self.getPoints =  function(amount) 
 	{
 	self.score += amount;
 	if(game.playerList[id] != undefined)
@@ -334,10 +311,13 @@ self.getMultiplePoints = function(amount)
 		}
 	}
 
-self.losePoints = function()
+self.losePoints = function(amount)
 	{
-	self.score -= 100;
-	game.playerList[id].totalScore -= 100;
+	self.score -= amount;
+	if(game.playerList[id] != undefined)
+		{
+		game.playerList[id].totalScore -= amount;
+		}
 	}
 
 var clearAllPowerups = function ()

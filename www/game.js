@@ -17,6 +17,7 @@ var gameConfig = {width: gameWidth,
                   antialiasing: false,
                   forceSetTimeout: false};
 var game = new Phaser.Game(gameConfig);
+game.effectManager = new EffectManager(game);
 
 game.playerList = {};
 
@@ -25,6 +26,5 @@ game.state.add('load', loadState);
 game.state.add('waiting', waitingState);
 game.state.add('play',  playState);
 game.state.add('roundOver', roundOverState);
-
 
 game.state.start('boot');
