@@ -87,8 +87,8 @@ self.onControllerConnected = function (id)
 
 self.onControllerDisconnected = function (id)
 	{
-	delete game.playerList[id];
 	self.roundManager.disconnectPlayer(id);
+	delete game.playerList[id];
 	};
 
 };
