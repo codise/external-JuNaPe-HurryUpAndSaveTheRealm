@@ -220,6 +220,9 @@ var updateRoomMovement = function ()
 				console.log("something went awry");
 			}
 
+
+		console.log(changeInPos);
+
 		for (var i = 0; i < rooms.length; i++)
 			{
 			game.camera.x += changeInPos.x;
