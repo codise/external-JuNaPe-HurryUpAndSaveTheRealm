@@ -99,7 +99,7 @@ self.spawnPowerupOn = function(point, pUp)
 {
 	//Only spawn powerups if there is room for them in the pool
 	if(pUpDropList.length < MAX_PUP_DROPS) {
-		var newpUp = new powerup(game, self, pUpDictionary[keys[i]],point, players);
+		var newpUp = new powerup(game, self, pUpDictionary[keys[pUp]],point, players);
 		self.pUpGroup.add(newpUp.sprite);
 		pUpDropList.push(newpUp);
 	}
