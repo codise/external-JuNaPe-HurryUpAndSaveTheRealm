@@ -47,6 +47,9 @@ self.setName = function(name)
 		target.sprite.addChild(nameText);
 		nameText.x = (-textureWidth/2);
 		nameText.y = (textureWidth/2) - 100;
+		nameText.stroke = '#000000';
+		nameText.strokeThickness = 4;
+		nameText.fill = '#ffffff';
 		scale();
 	};
 

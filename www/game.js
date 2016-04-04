@@ -6,7 +6,7 @@ var wantedGameWidth = 1920;
 var wantedGameHeight = 1080;
 
 
-scalingFactors = { "x": gameWidth / wantedGameWidth,
+var scalingFactors = { "x": gameWidth / wantedGameWidth,
                    "y": gameHeight / wantedGameHeight};
 
 var gameConfig = {width: gameWidth,

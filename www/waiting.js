@@ -20,7 +20,7 @@ self.preload = function ()
 	waitingText = game.add.text(80, 150, baseWText, {font: '30px Courier', fill: '#ffffff'});
 	pText = game.add.text(80, 200, playersWaitingText + playerCount, {font: '30px Courier', fill: '#ffffff'});
 	countDownText = game.add.text(80, 250, '', {font: '30px Courier', fill: '#ffffff'});
-	countDown = 10;
+	countDown = 8;
 	game.waitingRoomIds = [];
 	};
 
