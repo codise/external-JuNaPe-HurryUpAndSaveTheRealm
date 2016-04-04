@@ -34,17 +34,6 @@ self.onScreenDisconnected = (id) =>
 
 self.start = () =>
 	{
-
-	//Parsing command line arguments for server configuration
-	if(process.argv[2]) { //Server IP
-		serverConfig.serverAddress = process.argv[2];
-	}
-	if(process.argv[3]) { //Controller port
-		serverConfig.controllerPort = process.argv[3];
-	}
-	if(process.argv[4]) { //Game port
-		serverConfig.gamePort = process.argv[4];
-	}
 	console.log("Game IP: "+serverConfig.serverAddress);
 	console.log("Controller Port: "+serverConfig.controllerPort);
 	console.log("Game Port: "+serverConfig.gamePort);
