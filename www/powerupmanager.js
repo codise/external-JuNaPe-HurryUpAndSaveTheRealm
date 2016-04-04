@@ -11,17 +11,25 @@ pUpID: ID for the powerup
 pUpDuration: Duration in milkliseconds
 pUpStats: ANy information for the powerup to use, e.g duration, amount to heal, etc.
 */
-var pUpDictionary = {							heal: {				sprite: 'item_book',
+var pUpDictionary = {							
+
+												pointChest: {		sprite: 'item_Chest',
+																	pUpID: 'pointChest', 
+																	pUpDuration: 0,
+																	pUpStats: 100},
+
+
+												heal: {				sprite: 'item_Heal',
 																	pUpID: 'smallHeal', 
 																	pUpDuration: 0,
-																	pUpStats: 20},
+																	pUpStats: 70},
 
-												incSpeed: {			sprite: 'item_book',
+												incSpeed: {			sprite: 'item_SPD_Bonus',
 																	pUpID: 'incSpeed', 
 																	pUpDuration: 7000,
 																	pUpStats: 100},
 
-												incFireRate: {		sprite: 'item_book',
+												incFireRate: {		sprite: 'item_ATK_Bonus',
 																	pUpID: 'incFireRate', 
 																	pUpDuration: 5000,
 																	pUpStats: 100}};
