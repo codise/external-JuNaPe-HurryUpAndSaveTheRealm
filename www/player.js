@@ -4,6 +4,14 @@ function Player(game, x, y, bulletManager, id, weaponManager, effectManager)
 {
 var self = this;
 
+//just in case
+if(game.playerList[id] == undefined)
+	{
+	console.log("~~ player " + id + " was not set in game.playerList yet !?");
+	game.playerList[id] = {};
+	game.playerList[id].totalScore = 0;
+	}
+
 if(!game.playerList[id].totalScore)
 	{
 	game.playerList[id].totalScore = 0;
