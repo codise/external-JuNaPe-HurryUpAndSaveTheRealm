@@ -1,6 +1,6 @@
 'use strict';
 
-function RoundManager(game, bulletManager, enemyManager, weaponManager, effectManager, powerupManager)
+function RoundManager(game, bulletManager, enemyManager, weaponManager, powerupManager)
 {
 
 var self = this;
@@ -123,7 +123,7 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id, weaponManager, effectManager);
+	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
 	};
 

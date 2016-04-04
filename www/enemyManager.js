@@ -2,7 +2,7 @@
 
 
 
-function EnemyManager(game, bulletManager, effectManager)
+function EnemyManager(game, bulletManager)
 {
 var self = this;
 var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
@@ -60,7 +60,7 @@ self.update = function (players)
 		{
 		// Spawn new mobs
 		var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-		var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos, effectManager);
+		var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
 		self.enemyGroup.add(newEnemy.sprite);
 		newEnemy.sprite.body.collideWorldBounds = true;
 		self.enemyList.push(newEnemy);

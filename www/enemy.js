@@ -1,8 +1,7 @@
 'use strict';
 
-function Enemy(enemyInfo, game, bulletManager, players, position, effectManager)
+function Enemy(enemyInfo, game, bulletManager, players, position)
 {
-
 var getRandomFrom = function (dict)
 	{
 	var keys = Object.keys(dict);
@@ -97,8 +96,9 @@ self.enemyHit = function(enemy, bullet)
 	var playerId = bullet.playerId;
 	var damage = bullet.damage;
 	bullet.kill();
-	mPlayers[playerId].getPoints();
+	mPlayers[playerId].getPoints(1);
 	self.enemyTakeDamage(damage);
+	if(self.sprite.dead) mPlayers[playerId].getPoints(20);
 	};
 
 self.enemyTakeDamage = function(damage) 
@@ -113,7 +113,7 @@ self.enemyTakeDamage = function(damage)
 self.kill = function ()
 	{
 	self.sprite.destroy();
-	effectManager.createDeathEffect(self);
+	game.effectManager.createDeathEffect(self);
 	};
 
 var move = function ()
@@ -220,7 +220,4 @@ var checkCameraBounds = function ()
 		self.sprite.position.y = game.camera.y + game.camera.height - cameraPadding;
 		}
 	};
-
-
-
 }

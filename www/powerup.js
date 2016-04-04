@@ -29,17 +29,19 @@ self.getpUpID = function ()
 self.triggerpUp = function (curpUp, player)
 	{
 
-		var pObject = player.playerObj;
+		var playerObject = player.playerObj;
 		if(pUpID == 'smallHeal') 
 		{
-			pObject.heal(pUpStats);
+			playerObject.heal(pUpStats);
+
 		} 
 		else if (pUpID == 'pointChest') 
 		{
-			pObject.getMultiplePoints(pUpStats);
+			playerObject.getPoints(pUpStats);
+			game.effectManager.popupScoreText("+"+pUpStats,self.sprite);
 		}
 		else {
-			pObject.startPowerUp(pUpID, pUpDuration, pUpStats)
+			playerObject.startPowerUp(pUpID, pUpDuration, pUpStats)
 		}
 		curpUp.dead = true;
 	};
