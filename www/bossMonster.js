@@ -11,6 +11,9 @@ game.physics.enable(self.sprite, Phaser.Physics.ARCADE); //en tiiä miks enemyt 
 var movementSchemes = bossInfo.movementSchemes;
 var attackSchemes = bossInfo.attackSchemes;
 
+var hitColorTime = 50;
+var hitColor = bossInfo.hitColor;
+
 var currentPattern = -1;
 //used to compare to pattern's shotsPerCooldown value when needed
 var shotsFired = 0;
@@ -141,6 +144,8 @@ self.update = function (players)
 	
 self.enemyHit = function(enemy, bullet) 
 	{
+	self.sprite.tint = hitColor;
+	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var playerId = bullet.playerId;
 	var damage = bullet.damage;
 	bullet.kill();
