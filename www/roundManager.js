@@ -5,8 +5,6 @@ function RoundManager(game, bulletManager, enemyManager, weaponManager, powerupM
 
 var self = this;
 
-var rounds = [round1, round2, round3];
-
 // Variables related to managing game mechanics
 
 var players = {};
@@ -51,6 +49,7 @@ self.loadRound = function (roundData)
 	game.camera.x = game.world.width/2 - game.camera.width/2;
 	game.camera.y = game.world.height/2 - game.camera.height/2;
 
+  /*
 	if(game.currentRound == undefined || game.currentRound +1 >= rounds.length)
 		{
 		game.currentRound = 0;
@@ -59,6 +58,8 @@ self.loadRound = function (roundData)
 		game.currentRound += 1;
 		}
 	currentRound = rounds[game.currentRound];
+  */
+	currentRound = roundData;
 
 	rooms[0] = null;
 
@@ -97,6 +98,7 @@ var instantiateRound = function ()
 			break;
 		case "west":
 			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+			break;
 		default:
 			rooms[2] = null;
 		}
@@ -220,6 +222,7 @@ var updateRoomMovement = function ()
 				console.log("something went awry");
 			}
 
+
 		for (var i = 0; i < rooms.length; i++)
 			{
 			game.camera.x += changeInPos.x;
@@ -227,37 +230,39 @@ var updateRoomMovement = function ()
 			}
 
 		// Check if next room has passed the game.camera, if it has, align it with camera, load new room etc.
-
-		if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
-				Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
+		if (rooms[2] != undefined)
 			{
-			rooms.shift();
-			delete rooms[0];
-
-			rooms[1].moveTo(game.camera.x, game.camera.y);
-
-			currentDirection = rooms[1].moveDirection;
-			currentSpeed = rooms[1].moveSpeed;
-
-			if (speedDict[currentSpeed] != undefined)
+			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
+					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
 				{
-				rooms[2] = new Room(game,
-														currentRound[nextRoom].roomBg,
-														currentRound[nextRoom].tileset,
-														currentRound[nextRoom].roomJSON,
-														currentRound[nextRoom].moveDirection,
-														currentRound[nextRoom].moveSpeed);
-				rooms[2].preload(instantiateNewRoom)
-				lastPaused = game.time.now + pauseTime;
-				nextRoom++;
-				} else
-				{
-				var bossPos = new Phaser.Point(); // TODO hae positio huoneesta, lisää huoneeseen bossin positio
-				bossPos.x = game.camera.x + game.camera.width*3/4
-				bossPos.y = game.camera.y + game.camera.height/2
-				//enemyManager.createBoss('tentacle', rooms[1].bossPos);
-				enemyManager.createBoss('tentacle', bossPos);
-				self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
+				rooms.shift();
+				delete rooms[0];
+
+				rooms[1].moveTo(game.camera.x, game.camera.y);
+
+				currentDirection = rooms[1].moveDirection;
+				currentSpeed = rooms[1].moveSpeed;
+
+				if (speedDict[currentSpeed] != undefined)
+					{
+					rooms[2] = new Room(game,
+															currentRound[nextRoom].roomBg,
+															currentRound[nextRoom].tileset,
+															currentRound[nextRoom].roomJSON,
+															currentRound[nextRoom].moveDirection,
+															currentRound[nextRoom].moveSpeed);
+					rooms[2].preload(instantiateNewRoom)
+					lastPaused = game.time.now + pauseTime;
+					nextRoom++;
+					} else
+					{
+					var bossPos = new Phaser.Point(); // TODO hae positio huoneesta, lisää huoneeseen bossin positio
+					bossPos.x = game.camera.x + game.camera.width*3/4
+					bossPos.y = game.camera.y + game.camera.height/2
+					//enemyManager.createBoss('tentacle', rooms[1].bossPos);
+					enemyManager.createBoss('tentacle', bossPos);
+					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
+					}
 				}
 			}
 		}
@@ -278,6 +283,7 @@ var instantiateNewRoom = function ()
 			break;
 		case "west":
 			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+			break;
 		default:
 			rooms[2] = null;
 		}
