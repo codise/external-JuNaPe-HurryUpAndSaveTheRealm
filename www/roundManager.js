@@ -256,9 +256,38 @@ var updateRoomMovement = function ()
 					nextRoom++;
 					} else
 					{
-					var bossPos = new Phaser.Point(); // TODO hae positio huoneesta, lisää huoneeseen bossin positio
-					bossPos.x = game.camera.x + game.camera.width*3/4
-					bossPos.y = game.camera.y + game.camera.height/2
+
+					//currentRound
+					var lastMovedDirection = 'null';
+					if(currentRound[currentRound.length-2] != undefined)
+						{
+						lastMovedDirection = currentRound[currentRound.length-2].moveDirection;
+						console.log(lastMovedDirection);
+						}
+
+					var bossPos = new Phaser.Point();
+					switch (lastMovedDirection)
+						{
+						case "north":
+							bossPos.x = game.camera.x + game.camera.width/2
+							bossPos.y = game.camera.y + game.camera.height*1/4
+							break;
+						case "east":
+							bossPos.x = game.camera.x + game.camera.width*3/4
+							bossPos.y = game.camera.y + game.camera.height/2
+							break;
+						case "west":
+							bossPos.x = game.camera.x + game.camera.width*1/4
+							bossPos.y = game.camera.y + game.camera.height/2
+							break;
+						case "south":
+							bossPos.x = game.camera.x + game.camera.width/2
+							bossPos.y = game.camera.y + game.camera.height*3/4
+							break;
+						default:
+							bossPos.x = game.camera.x + game.camera.width/2
+							bossPos.y = game.camera.y + game.camera.height/2
+						}
 					//enemyManager.createBoss('tentacle', rooms[1].bossPos);
 					enemyManager.createBoss('tentacle', bossPos);
 					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
