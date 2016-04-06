@@ -47,6 +47,7 @@ var spawnCooldown = 2000;
 var nextSpawn = 0;
 var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
+var SPAWNING = true;
 
 var enemyScalingCoefficient = 8;
 
@@ -62,7 +63,7 @@ self.update = function (players)
 	{
 	maxEnemies = enemyScalingCoefficient * Object.keys(players).length;
 	playerAmount = Object.keys(players).length;
-	if (self.enemyPool > 0 && playerAmount > 0 && game.time.now > nextSpawn)
+	if (self.enemyPool > 0 && playerAmount > 0 && game.time.now > nextSpawn && SPAWNING == true)
 		{
 		// Determine how many mobs to spawn
 		MaxEnemiesToSpawn = Math.round(playerAmount/2);
@@ -107,7 +108,7 @@ self.createBoss = function (bossType, bossPos)
 		self.enemyGroup.add(bossMonster.sprite);
 		bossMonster.sprite.body.collideWorldBounds = true;
 		self.enemyList.push(bossMonster);
-		spawnCooldown = 100000;
+		SPAWNING = false;
 		}
 	};
 
