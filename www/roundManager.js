@@ -261,7 +261,6 @@ var updateRoomMovement = function ()
 					if(currentRound[currentRound.length-2] != undefined)
 						{
 						lastMovedDirection = currentRound[currentRound.length-2].moveDirection;
-						console.log(lastMovedDirection);
 						}
 
 					var bossPos = new Phaser.Point();
