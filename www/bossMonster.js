@@ -144,7 +144,7 @@ self.enemyHit = function(enemy, bullet)
 	var playerId = bullet.playerId;
 	var damage = bullet.damage;
 	bullet.kill();
-	mPlayers[playerId].getPoints();
+	mPlayers[playerId].getPoints(1);
 	self.enemyTakeDamage(damage);
 	};
 	
