@@ -257,7 +257,6 @@ var updateRoomMovement = function ()
 					} else
 					{
 
-					//currentRound
 					var lastMovedDirection = 'null';
 					if(currentRound[currentRound.length-2] != undefined)
 						{
