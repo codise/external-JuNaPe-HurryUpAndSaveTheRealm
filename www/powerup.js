@@ -65,7 +65,7 @@ function createEmitter()
     emitter.makeParticles('particle_blue');
     emitter.setRotation(0, 0);
     emitter.setAlpha(0.3, 0.8);
-    emitter.setScale(1, 4, 1, 4, 100);
+    emitter.setScale(4*scalingFactors.x, scalingFactors.x, 4*scalingFactors.y, scalingFactors.y, 1000);
     emitter.gravity = -100;
     emitter.start(false, 500, 100);
 	};
