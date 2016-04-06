@@ -62,7 +62,9 @@ var loadState = function ()
 		game.load.image('item_Heal', 'assets/decorations/PickUp_HealthBonus.png');
 		game.load.image('item_Chest', 'assets/decorations/Chest_Gold.png');
 
-
+		//Load particles
+		game.load.image('particle_blue','assets/particles/SmallBlingBlue.png');
+		game.load.image('particle_red','assets/particles/SmallBlingRed.png');
 
 		// Set loadingtext
 	

@@ -13,6 +13,9 @@ var pUpDuration = pUpInfo.pUpDuration;
 var pUpStats = pUpInfo.pUpStats;
 var cameraPadding = 20;
 
+var emitter;
+createEmitter(); //Particle emitter for the powerup
+
 self.update = function(players)
 {
 	scale();
@@ -49,6 +52,22 @@ self.triggerpUp = function (curpUp, player)
 self.kill = function ()
 	{
 	self.sprite.destroy();
+	emitter.destroy();
+	};
+
+
+/**
+* Create particle emitter on the powerup
+*/
+function createEmitter()
+	{
+    emitter = game.add.emitter(pUpPos.x, pUpPos.y, 20);
+    emitter.makeParticles('particle_blue');
+    emitter.setRotation(0, 0);
+    emitter.setAlpha(0.3, 0.8);
+    emitter.setScale(1, 4, 1, 4, 100);
+    emitter.gravity = -100;
+    emitter.start(false, 500, 100);
 	};
 
 //We need to despawn powerups that go beyond the screen
