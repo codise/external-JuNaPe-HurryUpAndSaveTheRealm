@@ -34,7 +34,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
 																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
-																	 hitColor: 0xCC0000}}
+																	 hitColor: 0x808000}}
 
 
 
