@@ -10,6 +10,17 @@ var scale = function (sprite)
 	sprite.scale.y = scalingFactors.y;
 	};
 
+self.createSpawnEffect = function (position)
+	{
+	var effect = game.add.sprite(position.x, position.y, 'spawn');
+	scale(effect);
+  effect.anchor.setTo(0.5, 0.5);
+	effect.animations.add('splurt');
+	effect.animations.play('splurt', 10, false, true);
+	effect.scale.x *= 1/2;
+	effect.scale.y *= 1/2;
+	}
+
 self.createDeathEffect = function (target)
 	{
 	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'explosion');

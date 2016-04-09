@@ -97,6 +97,7 @@ function createPlayer ()
 	pHUD = new Hud(game,self);
 	pHUD.setName(self.playerName);
 	self.sprite.exists = true;
+
 	};
 
 self.setInput = function (inputArray)
