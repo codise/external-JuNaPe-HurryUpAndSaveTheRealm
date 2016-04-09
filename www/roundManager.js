@@ -12,6 +12,8 @@ var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 playerGroup.enableBody = true;
 
+var minPlayerSpawnDistance = 10;
+
 var scoreTable = [];
 var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
 
@@ -125,8 +127,48 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id, weaponManager);
+	var spawnPosition = getSpawnPos(players);
+	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
+	};
+
+var getSpawnPos = function (players)
+	{
+	var acceptablePos = false;
+
+	while (!acceptablePos)
+		{
+		var randomPos = {};
+		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
+		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
+
+		if (dClosestPlayer(players, randomPos) >= minPlayerSpawnDistance)
+			{
+			acceptablePos = true;
+			}
+		}
+	return randomPos;
+	};
+
+var dClosestPlayer = function (players, pos)
+	{
+	var currentMin = 9999999;
+
+	for (var id in players)
+		{
+		var player = players[id];
+		if (player != undefined && !player.dead)
+			{
+			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - pos.x), 2 ) +
+																Math.pow( (player.sprite.position.y - pos.y), 2 ) );
+
+			if (distance < currentMin)
+				{
+				currentMin = distance;
+				}
+			}
+		}
+	return currentMin;
 	};
 
 self.disconnectPlayer = function (id)

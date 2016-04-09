@@ -220,7 +220,7 @@ self.playerHit = function(player, bullet)
 self.takeDamage = function(damage)
 	{
 	self.currentHealth = self.currentHealth-damage;
-	if(self.currentHealth <= 0) 
+	if(self.currentHealth <= 0 && !self.dead) 
 		{
 		self.dead = true;
 		self.kill();
