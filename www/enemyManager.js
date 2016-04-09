@@ -49,6 +49,8 @@ var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
 var SPAWNING = true;
 
+var spawningDistance = 50; // The minimum distance of spawned creature to closest player. BEWARE! if too big the game performance will suffer while trying to spawn creatures.
+
 var enemyScalingCoefficient = 8;
 
 self.enemyList = []; // List manages Enemy objects
@@ -70,13 +72,18 @@ self.update = function (players)
 		enemiesToSpawn = game.rnd.integerInRange(1, MaxEnemiesToSpawn);
 
 		// Spawn new mobs
-		for (var i = enemiesToSpawn- 1; i >= 0; i--) {
-			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-			var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
-			self.enemyGroup.add(newEnemy.sprite);
-			newEnemy.sprite.body.collideWorldBounds = true;
-			self.enemyList.push(newEnemy);
-		}
+		for (var i = enemiesToSpawn- 1; i >= 0; i--)
+			{
+			var spawnPosition = getSpawnPos(players);
+			console.log(dClosestPlayer(players, spawnPosition));
+			if (spawnPosition != null)
+				{
+				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, getSpawnPos(players));
+				self.enemyGroup.add(newEnemy.sprite);
+				newEnemy.sprite.body.collideWorldBounds = true;
+				self.enemyList.push(newEnemy);
+				}
+			}
 		spawnCooldown = MAX_SPAWNCOOLDOWN-(playerAmount*200);
 		if(spawnCooldown < 1000) spawnCooldown = 1000;
 		nextSpawn = game.time.now + spawnCooldown;
@@ -111,6 +118,53 @@ self.createBoss = function (bossType, bossPos)
 		SPAWNING = false;
 		}
 	};
+
+var getSpawnPos = function (players)
+	{
+	// To avoid possible infinite loop
+	var maxTryCount = 100;
+	var tryCount = 0;
+
+	var acceptablePosition = false
+	while (!acceptablePosition || tryCount < maxTryCount)
+		{
+		var randomPos = {};
+		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width); 
+		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
+		if (dClosestPlayer(players, randomPos) >= spawningDistance)
+			{
+			acceptablePosition = true;
+			}
+		tryCount++;
+		}
+	if (randomPos != undefined)
+		{
+		return randomPos;
+		} else
+		{
+		return null;
+		}
+	};
+
+var dClosestPlayer = function (players, position)
+	{
+	var currentMin = 9999999; // Arbitrarily large number
+	for (var id in players)
+		{
+		var player = players[id];
+		if (player != undefined && !player.dead)
+			{
+			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - position.x), 2 ) + 
+																Math.pow( (player.sprite.position.y - position.y), 2) );
+			if (distance <= currentMin)
+				{
+				currentMin = distance;
+				}
+			}
+		}
+	return currentMin;
+	}
+
 
 var pickRandomFromDictionary = function (dict)
 	{
