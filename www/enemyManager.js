@@ -75,7 +75,7 @@ self.update = function (players)
 		for (var i = enemiesToSpawn- 1; i >= 0; i--)
 			{
 			var spawnPosition = getSpawnPos(players);
-			console.log(dClosestPlayer(players, spawnPosition));
+			//console.log(dClosestPlayer(players, spawnPosition));
 			if (spawnPosition != null)
 				{
 				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, getSpawnPos(players));
