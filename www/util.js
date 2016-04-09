@@ -58,5 +58,24 @@ var pickRandomFromDictionary = function (dict)
   return object;
   };
 
+var resizeGame = function ()
+  {
+  var height = window.innerHeight * window.devicePixelRatio;
+  var width = window.innerWidth * window.devicePixelRatio;
+
+  if (game != undefined)
+    {
+    game.width = width;
+    game.height = height;
+    game.stage.bounds.width = width;
+    game.stage.bounds.height = height;
+
+    if (game.renderType === 1)
+      {
+      game.renderer.resize(width, height);
+      Phaser.Canvas.setSmoothingEnabled(game.context, false);
+      }
+    }
+  };
 
 

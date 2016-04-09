@@ -127,48 +127,9 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	var spawnPosition = getSpawnPos(players);
+	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
-	};
-
-var getSpawnPos = function (players)
-	{
-	var acceptablePos = false;
-
-	while (!acceptablePos)
-		{
-		var randomPos = {};
-		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
-		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
-
-		if (dClosestPlayer(players, randomPos) >= minPlayerSpawnDistance)
-			{
-			acceptablePos = true;
-			}
-		}
-	return randomPos;
-	};
-
-var dClosestPlayer = function (players, pos)
-	{
-	var currentMin = 9999999;
-
-	for (var id in players)
-		{
-		var player = players[id];
-		if (player != undefined && !player.dead)
-			{
-			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - pos.x), 2 ) +
-																Math.pow( (player.sprite.position.y - pos.y), 2 ) );
-
-			if (distance < currentMin)
-				{
-				currentMin = distance;
-				}
-			}
-		}
-	return currentMin;
 	};
 
 self.disconnectPlayer = function (id)
