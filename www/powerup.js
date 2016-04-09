@@ -81,8 +81,8 @@ var checkCameraBounds = function ()
 
 var scale = function ()
 	{
-	self.sprite.scale.x = scalingFactors.x;
-	self.sprite.scale.y = scalingFactors.y;
+	self.sprite.scale.x = 2 * scalingFactors.x;
+	self.sprite.scale.y = 2 * scalingFactors.y;
 	};
 
 
