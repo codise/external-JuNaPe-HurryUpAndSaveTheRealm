@@ -74,11 +74,11 @@ self.update = function (players)
 		// Spawn new mobs
 		for (var i = enemiesToSpawn- 1; i >= 0; i--)
 			{
-			var spawnPosition = getSpawnPos(players);
+			var spawnPosition = getPosMinDPlayers(game, players, spawningDistance, 100);
 			//console.log(dClosestPlayer(players, spawnPosition));
 			if (spawnPosition != null)
 				{
-				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, getSpawnPos(players));
+				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, spawnPosition);
 				self.enemyGroup.add(newEnemy.sprite);
 				newEnemy.sprite.body.collideWorldBounds = true;
 				self.enemyList.push(newEnemy);
@@ -117,61 +117,6 @@ self.createBoss = function (bossType, bossPos)
 		self.enemyList.push(bossMonster);
 		SPAWNING = false;
 		}
-	};
-
-var getSpawnPos = function (players)
-	{
-	// To avoid possible infinite loop
-	var maxTryCount = 100;
-	var tryCount = 0;
-
-	var acceptablePosition = false
-	while (!acceptablePosition || tryCount < maxTryCount)
-		{
-		var randomPos = {};
-		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width); 
-		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
-		if (dClosestPlayer(players, randomPos) >= spawningDistance)
-			{
-			acceptablePosition = true;
-			}
-		tryCount++;
-		}
-	if (randomPos != undefined)
-		{
-		return randomPos;
-		} else
-		{
-		return null;
-		}
-	};
-
-var dClosestPlayer = function (players, position)
-	{
-	var currentMin = 9999999; // Arbitrarily large number
-	for (var id in players)
-		{
-		var player = players[id];
-		if (player != undefined && !player.dead)
-			{
-			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - position.x), 2 ) + 
-																Math.pow( (player.sprite.position.y - position.y), 2) );
-			if (distance <= currentMin)
-				{
-				currentMin = distance;
-				}
-			}
-		}
-	return currentMin;
-	}
-
-
-var pickRandomFromDictionary = function (dict)
-	{
-	var keys = Object.keys(dict);
-	var object
-	object = dict[keys[ keys.length * Math.random() << 0]];
-	return object;
 	};
 }
 

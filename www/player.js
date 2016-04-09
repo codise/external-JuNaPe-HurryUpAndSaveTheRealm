@@ -84,7 +84,7 @@ var scale = function ()
 	self.sprite.scale.y = scalingFactors.y;
 	};
 
-function createPlayer ()
+var createPlayer = function ()
 	{
 	self.sprite.loadTexture(sprites[self.playerClass]);
 	
@@ -105,7 +105,7 @@ self.setInput = function (inputArray)
 	};
 
 //called by controller once it is created
-function setClassAndName (pClass, pName)
+var setClassAndName = function (pClass, pName)
 	{
 	self.playerClass = pClass;
 	self.playerName = pName;

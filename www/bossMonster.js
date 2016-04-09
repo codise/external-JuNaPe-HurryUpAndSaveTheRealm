@@ -50,14 +50,6 @@ var healthBar = new Hud(game, self);
 
 var mPlayers;
 
-var getRandomFrom = function (dict)
-	{
-	var keys = Object.keys(dict);
-	var object
-	object = dict[keys[ keys.length * Math.random() << 0]];
-	return object;
-	};
-
 var scale = function ()
 	{
 	if (flipped)
@@ -319,7 +311,7 @@ var attack = function (players)
 		case 'shotgun':
 			for(var i = 0 - ((shotgunBulletAmount-1)/2) ; i <= 0 + ((shotgunBulletAmount-1)/2); i++)
 				{
-				var target = getRandomFrom(players)
+				var target = pickRandomFromDictionary(players);
 				if(target != undefined)
 					{
 					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * shotgunSpread);
