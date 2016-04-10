@@ -13,12 +13,15 @@ var pUpDuration = pUpInfo.pUpDuration;
 var pUpStats = pUpInfo.pUpStats;
 var cameraPadding = 20;
 
-var emitter;
-createEmitter(); //Particle emitter for the powerup
+var emitter = null;
 
 self.update = function(players)
 {
 	scale();
+  if (emitter === null)
+    {
+    createEmitter();
+    }
 	game.physics.arcade.overlap(players, self.sprite, self.triggerpUp, null, self);	
 	checkCameraBounds();
 
@@ -59,7 +62,7 @@ self.kill = function ()
 /**
 * Create particle emitter on the powerup
 */
-function createEmitter()
+var createEmitter = function ()
 	{
     emitter = game.add.emitter(pUpPos.x, pUpPos.y, 20);
     emitter.makeParticles('particle_blue');
