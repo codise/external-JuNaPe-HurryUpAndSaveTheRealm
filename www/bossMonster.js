@@ -29,6 +29,7 @@ self.maxHealth = 200 * Object.keys(game.playerList).length;
 self.currentHealth = self.maxHealth;
 
 var healthBar = new Hud(game, self);
+var lowHealth = false;
 
 var mPlayers;
 
@@ -60,8 +61,9 @@ self.update = function (players)
 		{
 		nextPattern();
 		}
-	if(self.currentHealth < self.maxHealth / 3)
+	if(self.currentHealth < self.maxHealth / 3 && lowHealth == false)
 		{
+		lowHealth = true;
 		currentPatterns = bossInfo.ragePatterns;
 		currentPatternIndex = -1;
 		nextPattern();
@@ -162,15 +164,15 @@ var attack = function (players)
 			for(var i = 1; i <= currentPattern.shotDirectionAmount; i++)
 				{
 				//gives a random offset between -shotAngleVariance and shotAngleVariance
-				var randomOffset
+				var randomAngleOffset
 				if(currentPattern.shotAngleVariance)
 					{
-					randomOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+					randomAngleOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
 					} else {
-					randomOffset = 0;
+					randomAngleOffset = 0;
 					}
 				
-				var angle = 360 * i/currentPattern.shotDirectionAmount + shotsFired * currentPattern.shotRotation + randomOffset;
+				var angle = 360 * i/currentPattern.shotDirectionAmount + shotsFired * currentPattern.shotRotation + randomAngleOffset;
 				bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
 				}
 			break;
@@ -182,15 +184,25 @@ var attack = function (players)
 				if(target != undefined)
 					{
 					//gives a random offset between -shotAngleVariance and shotAngleVariance
-					var randomOffset
+					var randomAngleOffset
 					if(currentPattern.shotAngleVariance)
 						{
-						randomOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+						randomAngleOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
 						} else {
-						randomOffset = 0;
+						randomAngleOffset = 0;
 						}
-					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * currentPattern.burstSpreadAngle) + randomOffset;
-					bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
+					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * currentPattern.burstSpreadAngle) + randomAngleOffset;
+					
+					//amount from negative bulletSpeedVariance to positive bulletSpeedVariance
+					var randomSpeedOffset
+					if(currentPattern.bulletSpeedVariance)
+						{
+						randomSpeedOffset = Math.floor((Math.random() * 2 * currentPattern.bulletSpeedVariance + 1)) - currentPattern.bulletSpeedVariance;
+						} else {
+						randomSpeedOffset = 0;
+						}
+					var bulletSpeed = currentPattern.bulletSpeed + randomSpeedOffset;
+					bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
 					}
 				}
 			break;

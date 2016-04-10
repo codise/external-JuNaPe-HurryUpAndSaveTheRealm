@@ -33,7 +33,7 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 
 var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
 																	 normalPatterns: [bossPatterns.spiral1, bossPatterns.spiral1Reverse, bossPatterns.spiral2, bossPatterns.burst1],
-																	 ragePatterns: [bossPatterns.burst2],
+																	 ragePatterns: [bossPatterns.burst3, bossPatterns.burst2],
 																	 hitColor: 0x808000}}
 
 
