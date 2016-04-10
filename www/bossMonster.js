@@ -6,42 +6,24 @@ var self = this;
 self.sprite = game.add.sprite(position.x, position.y, bossInfo.sprite);
 self.sprite.anchor.setTo(0.5, 0.5);
 var flipped = false;
-game.physics.enable(self.sprite, Phaser.Physics.ARCADE); //en tiiä miks enemyt toimii ilman tätä riviä ja tää ei
-
-var movementSchemes = bossInfo.movementSchemes;
-var attackSchemes = bossInfo.attackSchemes;
-
+game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
 var hitColorTime = 50;
 var hitColor = bossInfo.hitColor;
 
-var currentPattern = -1;
-//used to compare to pattern's shotsPerCooldown value when needed
-var shotsFired = 0;
+var patternTimeout;
+var currentPatterns = bossInfo.normalPatterns;
+var currentPatternIndex = -1;
+var currentPattern;
+nextPattern();
 
-var nextPattern = 0;
-var nextCooldown = 0;
 var nextMove = 0;
 
-var cameraPadding = 20; //?
-var lowHealth = false;
-// > values that will be replaced by patterns, set for safety
-var patternRate = 0;
-var fireRate = 2000;
-var cooldownRate = 0;
-var shotsPerCooldown = 1000;
-var moveRate = 1000;
-var maxSpeed = 1;
-var currentAttackScheme = attackSchemes[0];
-var currentMovementScheme = movementSchemes[0];
-var shotgunBulletAmount = 5;
-var shotgunSpread = 20;
-var bulletDamage = 10;
-var bulletSpeed = 250;
-var bulletLifespan = 3000;
+var shotsFired = 0;
 var movementDirection = 0;
-var bulletGraphic = 'enemyBullet5';
-// <
-var nextFire = game.time.now + fireRate;
+
+var cameraPadding = 20;
+
+var nextFire = game.time.now + currentPattern.fireRate;
 
 self.maxHealth = 200 * Object.keys(game.playerList).length;
 self.currentHealth = self.maxHealth;
@@ -74,36 +56,15 @@ self.update = function (players)
 	{
 	mPlayers = players;
 	scale();
-	if (game.time.now >= nextPattern) 
+	if (game.time.now >= patternTimeout) 
 		{
-		chooseNewPattern();
+		nextPattern();
 		}
-	if(self.currentHealth < self.maxHealth / 3 && !lowHealth)
+	if(self.currentHealth < self.maxHealth / 3)
 		{
-		lowHealth = true;
-		chooseNewPattern();
-		}
-		
-	// this is where patterns may alter their attack and movement schemes and values mid pattern
-	switch (currentPattern)
-		{
-		//pattern 0 changes once 3/4 of pattern time has passed
-		case 0:
-			if(currentMovementScheme === movementSchemes[0] && nextPattern - game.time.now < 2500)
-				{
-				currentMovementScheme = movementSchemes[1]; //shake
-				movementDirection = 0;
-				fireRate = 350;
-				moveRate = 200;
-				maxSpeed = 30;
-				bulletDamage = 8;
-				bulletSpeed = 350;
-				bulletLifespan = 3000;
-				nextMove = game.time.now;
-				bulletGraphic = 'enemyBullet5';
-				}
-			break;
-		default:
+		currentPatterns = bossInfo.ragePatterns;
+		currentPatternIndex = -1;
+		nextPattern();
 		}
 	
 	if (game.time.now > nextMove)
@@ -119,13 +80,7 @@ self.update = function (players)
 		flipped = true;
 		}
 		
-	if (game.time.now > nextCooldown) 
-		{
-		nextCooldown = game.time.now + cooldownRate;
-		shotsFired = 0;
-		}
-		
-	if (game.time.now > nextFire && shotsFired < shotsPerCooldown)
+	if (game.time.now > nextFire)
 		{
 		attack(players);
 		}
@@ -169,123 +124,23 @@ self.kill = function ()
 	self.sprite.destroy();
 	};
 
-var chooseNewPattern = function ()
+function nextPattern()
 	{
-	if(self.currentHealth < self.maxHealth / 3)
-		{
-		//low health patterns, triggered when under 1/3 health left
-			/*
-			
-			currently the shot pattern in a timeline should look like this:
-			
-			ssssssssssssssssSSSS***__***__ssssssssssssssssSSSS***__***__
-			
-			s = spiral shots
-			S = intense spiral shots
-			* = bursts
-			_ = no shots
-			
-			*/
-		switch(currentPattern)
-			{
-			case 3:
-				//TODO more enrage patterns, currently loops only one pattern
-				currentPattern = 3;
-				break;
-			case 4:
-			default:
-				currentPattern = 3;
-				break;
-			}
-		} else {
-		//high health patterns, currently loops between 2 pattern states
-		switch(currentPattern)
-			{
-			case 0:
-				currentPattern = 1;
-				break;
-			case 1:
-				currentPattern = 0;
-				break;
-			default:
-				currentPattern = 0;
-			}
-		}
-		
-	//set pattern specific values
-	switch (currentPattern)
-		{
-		// wobbles around, spiral shots, intensifies into a violent shake near end
-		case 0:
-			patternRate = 10000;
-			currentMovementScheme = movementSchemes[0]; //tentaclemonster: wobble
-			currentAttackScheme = attackSchemes[0]; //tentaclemonster: spiral
-			fireRate = 700;
-			moveRate = 500;
-			maxSpeed = 15;
-			cooldownRate = 10000;
-			shotsPerCooldown = 1000;
-			bulletDamage = 10;
-			bulletSpeed = 250;
-			bulletLifespan = 4500;
-			bulletGraphic = 'enemyBullet4';
-			break;
-
-		// wobbles around, shoots bursts at random players in sets of 3
-		case 1:
-			patternRate = 5000;
-			currentMovementScheme = movementSchemes[0]; //tentaclemonster: wobble
-			currentAttackScheme = attackSchemes[2]; //tentaclemonster: shotgun
-			shotgunBulletAmount = 5;
-			shotgunSpread = 30; // angle between two bullets in the burst
-			fireRate = 900;
-			moveRate = 500;
-			maxSpeed = 15;
-			cooldownRate = 2500;
-			//shoots bullets at normal fire rate until bullet limit (shotsPerCooldown) is reached by shotsFired
-			//once cooldown period has ended, shotsFired is set back to 0 allowing new shots to be fired at normal fire rate
-			shotsPerCooldown = 3;
-			bulletDamage = 10;
-			bulletSpeed = 250;
-			bulletLifespan = 4500;
-			bulletGraphic = 'enemyBullet6';
-			break;
-		
-		//case 2:
-		
-		//low health / enrage patterns
-		
-		//rapid wobble, nonstop wide bursts (FUN)
-		case 3:
-			patternRate = 5000;
-			currentMovementScheme = movementSchemes[0]; //tentaclemonster: wobble
-			currentAttackScheme = attackSchemes[2]; //tentaclemonster: shotgun
-			shotgunBulletAmount = 7;
-			shotgunSpread = 25;
-			fireRate = 800;
-			moveRate = 200;
-			maxSpeed = 60;
-			cooldownRate = 0;
-			shotsPerCooldown = 1000;
-			bulletDamage = 10;
-			bulletSpeed = 250;
-			bulletLifespan = 4500;
-			bulletGraphic = 'enemyBullet6';
-			break;
-			
-		default:
-		}
-	nextCooldown = game.time.now;
-	nextPattern = game.time.now + patternRate;
-	nextMove = game.time.now;
 	shotsFired = 0;
+	currentPatternIndex++;
+	if(currentPatternIndex >= currentPatterns.length)
+		{
+		currentPatternIndex = 0;
+		}
+	currentPattern = currentPatterns[currentPatternIndex];
+	patternTimeout = game.time.now + currentPattern.patternRate;
 	};
 
 //sets movement direction based on pattern
 //movement speed and turn rate (how often a new direction is taken) are pattern specific
 var move = function ()
 	{
-	switch (currentMovementScheme)
+	switch (currentPattern.movementScheme)
 		{
 		case 'wobble':
 			movementDirection = Math.floor(Math.random()*361);
@@ -293,54 +148,56 @@ var move = function ()
 		case 'shake':
 			movementDirection += 180;
 			break;
-		case 'chargeDirection':
-			//TODO
-			break;
 		default:
 		}
-		game.physics.arcade.velocityFromAngle(movementDirection, maxSpeed, self.sprite.body.velocity);
-		nextMove = game.time.now + moveRate;
+		game.physics.arcade.velocityFromAngle(movementDirection, currentPattern.maxSpeed, self.sprite.body.velocity);
+		nextMove = game.time.now + currentPattern.moveRate;
 	};
 
 var attack = function (players)
 	{
-	switch (currentAttackScheme)
+	switch (currentPattern.attackScheme)
 		{
-		// shots in 5 directions evenly around the boss
 		case 'spiral':
-			for(var i = 1; i <= 5; i++)
+			for(var i = 1; i <= currentPattern.shotDirectionAmount; i++)
 				{
-				var angle = 360 * i/5 + shotsFired * 15;
-				bulletManager.createBullet(bulletGraphic, bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
+				//gives a random offset between -shotAngleVariance and shotAngleVariance
+				var randomOffset
+				if(currentPattern.shotAngleVariance)
+					{
+					randomOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+					} else {
+					randomOffset = 0;
+					}
+				
+				var angle = 360 * i/currentPattern.shotDirectionAmount + shotsFired * currentPattern.shotRotation + randomOffset;
+				bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
 				}
 			break;
 			
-		//shotgunBulletAmount shots burst towards a random target, no random spread
-		case 'shotgun':
-			for(var i = 0 - ((shotgunBulletAmount-1)/2) ; i <= 0 + ((shotgunBulletAmount-1)/2); i++)
+		case 'burst':
+			var target = getRandomFrom(players)
+			for(var i = 0 - ((currentPattern.burstBulletAmount-1)/2) ; i <= 0 + ((currentPattern.burstBulletAmount-1)/2); i++)
 				{
-				var target = getRandomFrom(players)
 				if(target != undefined)
 					{
-					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * shotgunSpread);
-					bulletManager.createBullet(bulletGraphic, bulletDamage, -1, angle, self.sprite.position, bulletSpeed, bulletLifespan);
+					//gives a random offset between -shotAngleVariance and shotAngleVariance
+					var randomOffset
+					if(currentPattern.shotAngleVariance)
+						{
+						randomOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+						} else {
+						randomOffset = 0;
+						}
+					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * currentPattern.burstSpreadAngle) + randomOffset;
+					bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
 					}
 				}
-			
-			
-			break;
-		case 'deflect':
-			//TODO
-			//idk lol
-			break;
-		case 'stream':
-			//TODO
-			//note: a directed stream of bullets towards chosen target(s), does not change target until X shots fired
 			break;
 		default:
 		}
 	shotsFired ++;
-	nextFire = game.time.now + fireRate;
+	nextFire = game.time.now + currentPattern.fireRate;
 	};
 	
 	
