@@ -3,14 +3,13 @@
 function WeaponManager(game)
 {
 	var self = this;
-/*var weaponDictionary = {};
-var weaponList = [];*/
+	self.weaponGroup = game.add.group();
 
 self.createWeapon = function (player, spriteName)
 	{
-
 	var weaponName = spriteName + "Weapon";
 	var weapon = new Weapon(game, player, weaponName);
+	self.weaponGroup.add(weapon.sprite);
 	return weapon;
 	};
 

@@ -81,6 +81,10 @@ var scale = function ()
 		self.sprite.scale.x = scalingFactors.x;
 		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 		}
+	if(self.weapon != undefined)
+		{
+		self.weapon.update();
+		}
 	self.sprite.scale.y = scalingFactors.y;
 	};
 
@@ -140,15 +144,35 @@ self.update = function ()
 			if (self.sprite.body.velocity.x > 0 && flipped)
 				{
 				flipped = false;
-				} else if (self.sprite.body.velocity.x < 0 && !flipped) {
+				} 
+			else if (self.sprite.body.velocity.x < 0 && !flipped) 
+				{
 				flipped = true;
 				}
-			if ((input.sX != 0 || input.sX != 0) && (game.time.now > nextFire))
+			if(input.sX < 0 && !flipped)
+				{
+				flipped = true;
+				}
+			else if(input.sX > 0 && flipped)
+				{
+				flipped = false;
+				}
+			if ((input.sX != 0 || input.sY != 0) && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
 				headingPoint.x = input.sX;
 				headingPoint.y = input.sY;
 				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, bulletSpeed, bulletLifespan);
+				}
+			if(input.sX == 0 && input.sY == 0)
+				{
+				self.weapon.sprite.angle = 0;
+				self.weapon.flip(flipped);
+				}
+			else
+				{
+				self.weapon.flip(false);
+				self.weapon.sprite.angle = Phaser.Point.angle(headingPoint, new Phaser.Point(-1, 0)) * 360/Math.PI;
 				}
 			}
 
@@ -180,6 +204,7 @@ self.update = function ()
 
 		} else if (self.dead && nextRespawn < 0) {
 		self.sprite.exists = true;
+		self.weapon.sprite.exists = true;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
@@ -293,6 +318,7 @@ self.kill = function ()
 	clearAllPowerups();
 	game.effectManager.popupScoreText('-100',self.sprite);
 	self.sprite.exists = false;
+	self.weapon.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);
