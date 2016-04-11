@@ -2,13 +2,17 @@ Suoraan tekemisjärjestyksessä
 
 
 01	Skeleton	Basic enemy
+  b	Now orange Armored straight away! Needs arms still..
 02	Skeleton Armored
 03	Green Mass "Shoggoth"
 04	Ghost
 05	Hellbug
+  b	Slightly orangeish
 06	Cthulhoid tentacle Beast, Boss number 1
+  b	Orange Variant
 07	FlamingBrazier	Shooty enemy?
 08	Slasher
 09	Slime Blob.	Easily recolourable, started as bloodmass but slime is better!
 10	Evil King, Boss number 2
-
+10_2	No Sword variant for different state
+10_3	Wounded State
