@@ -33,6 +33,25 @@ var lowHealth = false;
 
 var mPlayers;
 
+var getAliveFromDict = function()
+	{
+	var alivePlayers = [];
+	var keys = Object.keys(mPlayers);
+	for(var i = 0; i < Object.keys(mPlayers).length; i++)
+		{
+		if(!mPlayers[keys[i]].dead)
+			{
+			alivePlayers.push(mPlayers[keys[i]]);
+			}
+		}
+	var random = Math.floor(Math.random() * alivePlayers.length);
+	if(alivePlayers.length > 0)
+		{
+		return alivePlayers[random];
+		}
+	return null;
+	};
+
 var scale = function ()
 	{
 	if (flipped)
@@ -52,6 +71,13 @@ self.update = function (players)
 	if (game.time.now >= patternTimeout) 
 		{
 		nextPattern();
+		}
+	if (currentPattern.target)
+		{
+		if(currentPattern.target.dead)
+			{
+			nextPattern();
+			}
 		}
 	if(self.currentHealth < self.maxHealth / 3 && lowHealth == false)
 		{
@@ -154,6 +180,7 @@ var move = function ()
 			if(!currentPattern.target)
 				{
 				target = pickRandomFromDictionary(mPlayers);
+				getAliveFromDict();
 				currentPattern.target = target;
 				} else {
 				target = currentPattern.target;
