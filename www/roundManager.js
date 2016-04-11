@@ -19,15 +19,10 @@ var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { font
 
 var roundRunning = false;
 
-//var qrLocAdd = {x: 0, y: 0};
-qr.position.x = game.camera.x + game.camera.width;
-qr.position.y = game.camera.y + game.camera.height;
-
 var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
 qr.anchor.setTo(1,1);
-console.log("QR: " + qr.position.x + ", " + qr.position.y);
 
 
 // Variables related to map functioning
@@ -173,10 +168,7 @@ self.update = function ()
 	updateScore();
 
 	qr.bringToTop();
-	console.log("QR: " + qr.position.x + ", " + qr.position.y);
-	console.log("camera: (" + game.camera.x + ", " + game.camera.y + ")");
-	qr.position.x = game.camera.x + game.camera.width;
-	qr.position.y = game.camera.y + game.camera.height;
+	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
