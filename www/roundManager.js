@@ -12,6 +12,8 @@ var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 playerGroup.enableBody = true;
 
+var minPlayerSpawnDistance = 10;
+
 var scoreTable = [];
 var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
 
@@ -114,7 +116,8 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	players[id] = new Player(game, game.camera.x + game.camera.width/2, game.camera.y + game.camera.height/2, bulletManager, id, weaponManager);
+	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
 	};
 

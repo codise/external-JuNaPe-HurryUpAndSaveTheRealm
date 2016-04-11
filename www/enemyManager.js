@@ -53,6 +53,8 @@ var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
 var SPAWNING = true;
 
+var spawningDistance = 50; // The minimum distance of spawned creature to closest player. BEWARE! if too big the game performance will suffer while trying to spawn creatures.
+
 var enemyScalingCoefficient = 8;
 
 self.enemyList = []; // List manages Enemy objects
@@ -74,13 +76,18 @@ self.update = function (players)
 		enemiesToSpawn = game.rnd.integerInRange(1, MaxEnemiesToSpawn);
 
 		// Spawn new mobs
-		for (var i = enemiesToSpawn- 1; i >= 0; i--) {
-			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-			var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
-			self.enemyGroup.add(newEnemy.sprite);
-			newEnemy.sprite.body.collideWorldBounds = true;
-			self.enemyList.push(newEnemy);
-		}
+		for (var i = enemiesToSpawn- 1; i >= 0; i--)
+			{
+			var spawnPosition = getPosMinDPlayers(game, players, spawningDistance, 100);
+			//console.log(dClosestPlayer(players, spawnPosition));
+			if (spawnPosition != null)
+				{
+				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, spawnPosition);
+				self.enemyGroup.add(newEnemy.sprite);
+				newEnemy.sprite.body.collideWorldBounds = true;
+				self.enemyList.push(newEnemy);
+				}
+			}
 		spawnCooldown = MAX_SPAWNCOOLDOWN-(playerAmount*200);
 		if(spawnCooldown < 1000) spawnCooldown = 1000;
 		nextSpawn = game.time.now + spawnCooldown;
@@ -114,14 +121,6 @@ self.createBoss = function (bossType, bossPos)
 		self.enemyList.push(bossMonster);
 		SPAWNING = false;
 		}
-	};
-
-var pickRandomFromDictionary = function (dict)
-	{
-	var keys = Object.keys(dict);
-	var object
-	object = dict[keys[ keys.length * Math.random() << 0]];
-	return object;
 	};
 }
 

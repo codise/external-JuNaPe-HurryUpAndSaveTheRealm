@@ -33,14 +33,6 @@ var lowHealth = false;
 
 var mPlayers;
 
-var getRandomFrom = function (dict)
-	{
-	var keys = Object.keys(dict);
-	var object
-	object = dict[keys[ keys.length * Math.random() << 0]];
-	return object;
-	};
-
 var scale = function ()
 	{
 	if (flipped)
@@ -161,7 +153,7 @@ var move = function ()
 			var target
 			if(!currentPattern.target)
 				{
-				target = getRandomFrom(mPlayers);
+				target = pickRandomFromDictionary(mPlayers);
 				currentPattern.target = target;
 				} else {
 				target = currentPattern.target;
@@ -204,13 +196,13 @@ var attack = function (players)
 			var target
 			if(currentPattern.stickToTarget && !currentPattern.target)
 				{
-				target = getRandomFrom(players);
+				target = pickRandomFromDictionary(players);
 				currentPattern.target = target;
 				} else if (currentPattern.stickToTarget && currentPattern.target)
 				{
 				target = currentPattern.target;
 				} else {
-				target = getRandomFrom(players);
+				target = pickRandomFromDictionary(players);
 				}
 			
 			for(var i = 0 - ((currentPattern.burstBulletAmount-1)/2) ; i <= 0 + ((currentPattern.burstBulletAmount-1)/2); i++)
