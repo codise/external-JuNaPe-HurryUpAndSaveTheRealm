@@ -6,7 +6,9 @@ Suoraan tekemisjärjestyksessä
 03	Green Mass "Shoggoth"
 04	Ghost
 05	Hellbug
-06	Cthulhoidblock
+06	Cthulhoid tentacle Beast, Boss number 1
 07	FlamingBrazier	Shooty enemy?
 08	Slasher
 09	Slime Blob.	Easily recolourable, started as bloodmass but slime is better!
+10	Evil King, Boss number 2
+
