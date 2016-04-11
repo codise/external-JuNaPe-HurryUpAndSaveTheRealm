@@ -84,6 +84,11 @@ var scale = function ()
 	self.sprite.scale.y = scalingFactors.y;
 	};
 
+
+/*
+* Creates the player object
+* Sets the sprite and weapon, along with creating a healthbar and setting the player name
+*/
 var createPlayer = function ()
 	{
 	self.sprite.loadTexture(sprites[self.playerClass]);
@@ -124,7 +129,7 @@ self.update = function ()
 			
 			if(!setupDone)
 				{
-					//setting the player up here is a workaround to enable play on firefox
+				//setting the player up here is a workaround to enable play on firefox
 				//console.log('setting up player');
 				setClassAndName(input.pClass, input.pName);
 				createPlayer();
@@ -207,6 +212,13 @@ self.update = function ()
 		}
 	};
 
+/*
+* Triggers when the player is hit
+* Changes player color and applies damage
+* @param {player} player - The player object which is hit
+* @param {bullet} bullet - The bullet object which hits the player
+*/
+
 self.playerHit = function(player, bullet)
 	{
 	self.sprite.tint = 0xCC0000;
@@ -217,6 +229,12 @@ self.playerHit = function(player, bullet)
   	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
+
+/*
+* Triggers when the player takes damage
+* Decreases health and updates the healthbar, also kills the payer if necessery
+* @param {Number} damage - The amount of damage to deal
+*/
 self.takeDamage = function(damage)
 	{
 	self.currentHealth = self.currentHealth-damage;
@@ -229,6 +247,10 @@ self.takeDamage = function(damage)
 		pHUD.updateHealthBar();
 	};
 
+/*
+* Heals the player for specified amount
+* @param {Number} amount - The amount of health to restore
+*/
 self.heal = function(amount) 
 {
 	if(self.currentHealth + amount >= self.maxHealth) {
@@ -254,8 +276,8 @@ self.setSpeed = function(amount)
 /**
 * Starts a powerup on the player object
 * @param {string} pUpID - The ID of the powerup as displayed in pUpDictionary
-* @param {int} pUpDuration - The Duration of the powerup in milliseconds
-* @param {int} pUpStats - The value for the powerup
+* @param {Number} pUpDuration - The Duration of the powerup in milliseconds
+* @param {Number} pUpStats - The value for the powerup
 */
 self.startPowerUp = function(pUpID, pUpDuration, pUpStats) 
 {
@@ -268,7 +290,7 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 			powerupFound = true;
 		}
 	}
-	//If this is the first isntance of a powerup we add it to the active list
+	//If this is the first instance of a powerup we add it to the active list
 	if(!powerupFound) {
 		var newPowerUp = {powerUpID: pUpID, endTime: game.time.now + pUpDuration};
 		activePowerUps.push(newPowerUp);
@@ -288,6 +310,9 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 	}
 }
 
+/*
+* Kills the player object
+*/
 self.kill = function ()
 	{
 	clearAllPowerups();
@@ -301,7 +326,10 @@ self.kill = function ()
 	};
 
 
-
+/*
+* Adds a specified amount of points to the player
+* @param {Number} amount - The amount of points to add
+*/
 self.getPoints =  function(amount) 
 	{
 	self.score += amount;
@@ -311,6 +339,10 @@ self.getPoints =  function(amount)
 		}
 	}
 
+/*
+* Removes a specified amount of points to the player
+* @param {Number} amount - The amount of points to remove
+*/
 self.losePoints = function(amount)
 	{
 	self.score -= amount;

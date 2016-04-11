@@ -17,7 +17,7 @@ var gameConfig = {width: gameWidth,
                   antialiasing: false,
                   forceSetTimeout: false};
 var game = new Phaser.Game(gameConfig);
-game.effectManager = new EffectManager(game);
+game.effectManager = new EffectManager(game); //Effectmanager is an object accessible from anywhere i nthe game
 
 game.playerList = {};
 

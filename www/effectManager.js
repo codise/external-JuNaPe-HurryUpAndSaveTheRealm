@@ -4,12 +4,21 @@ function EffectManager(game)
 {
 var self = this;
 
+/*
+* Scales a sprite to the proper size 
+* @param {sprite} sprite - The sprite to scale
+*/
+
 var scale = function (sprite)
 	{
 	sprite.scale.x = scalingFactors.x;
 	sprite.scale.y = scalingFactors.y;
 	};
 
+/*
+* Creates the death effect on the specified target
+* @param {player|enemy} target - The target object on which's position we create the effect at
+*/
 self.createDeathEffect = function (target)
 	{
 	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'explosion');
@@ -19,6 +28,12 @@ self.createDeathEffect = function (target)
 	effect.animations.play('kaboom', 30, false, true);
 	};
 
+
+/*
+* Displays a floating score text on the specified target
+* @param {Number} amount - The score to display 
+* @param {player|enemy|powerup} target - The target object to display the scores on
+*/
 self.popupScoreText = function(amount,target)
 	{
 	var text = game.add.text(target.position.x, target.position.y, amount, { font: "20px Arial", fill: "#FFFFFF"});
