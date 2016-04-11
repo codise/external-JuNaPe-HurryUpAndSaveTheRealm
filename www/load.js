@@ -70,6 +70,10 @@ var loadState = function ()
 	
 		loadingText = game.add.text(80, 150, 'Loading ...', {font: '30px Courier', fill: '#ffffff'});
 
+		// Load QR
+		game.load.image('qr_niko', 'assets/QR/niko.jpg');
+		game.load.image('qr_janika', 'assets/QR/janika.jpg');
+		
 		};
 
 self.create = function ()

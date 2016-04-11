@@ -19,6 +19,14 @@ var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { font
 
 var roundRunning = false;
 
+var qrLocAdd = {x: 0, y: 0};
+
+var qr = game.add.sprite(game.camera.x + qrLocAdd.x, game.camera.y + qrLocAdd.y, 'qr_niko'); //or: 'qr_janika' (1775, 935)
+qr.scale.x = 0.5*scalingFactors.x;
+qr.scale.y = 0.5*scalingFactors.y;
+console.log("QR: " + qr.position.x + ", " + qr.position.y);
+
+
 // Variables related to map functioning
 
 var currentRound;
@@ -160,6 +168,13 @@ self.update = function ()
 		popUpList[i].bringToTop();
 		}
 	updateScore();
+
+	qr.bringToTop();
+	console.log("QR: " + qr.position.x + ", " + qr.position.y);
+	console.log("camera: (" + game.camera.x + ", " + game.camera.y + ")");
+	qr.position.x = game.camera.x + qrLocAdd.x;
+	qr.position.y = game.camera.y + qrLocAdd.y;
+
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
 		bulletManager.update();
