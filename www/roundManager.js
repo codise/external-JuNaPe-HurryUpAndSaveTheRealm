@@ -19,11 +19,14 @@ var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { font
 
 var roundRunning = false;
 
-var qrLocAdd = {x: 0, y: 0};
+//var qrLocAdd = {x: 0, y: 0};
+qr.position.x = game.camera.x + game.camera.width;
+qr.position.y = game.camera.y + game.camera.height;
 
-var qr = game.add.sprite(game.camera.x + qrLocAdd.x, game.camera.y + qrLocAdd.y, 'qr_niko'); //or: 'qr_janika' (1775, 935)
+var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
+qr.anchor.setTo(1,1);
 console.log("QR: " + qr.position.x + ", " + qr.position.y);
 
 
@@ -172,8 +175,8 @@ self.update = function ()
 	qr.bringToTop();
 	console.log("QR: " + qr.position.x + ", " + qr.position.y);
 	console.log("camera: (" + game.camera.x + ", " + game.camera.y + ")");
-	qr.position.x = game.camera.x + qrLocAdd.x;
-	qr.position.y = game.camera.y + qrLocAdd.y;
+	qr.position.x = game.camera.x + game.camera.width;
+	qr.position.y = game.camera.y + game.camera.height;
 
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
@@ -349,8 +352,8 @@ var updateScore = function ()
 		}
 	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.position.x = game.camera.x + 16;
-	scoreText.position.y = game.camera.y + 16;
+	scoreText.x = game.camera.x + 16;
+	scoreText.y = game.camera.y + 16;
 	};
 
 var scoreTableToText = function (scoreTable)
