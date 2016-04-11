@@ -223,7 +223,7 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		bullet.anchor.setTo(0.5, 0.5);
 		bullet.reset(pos.x, pos.y);
 		bullet.lifespan = bulletLifespan;
-		bullet.body.setSize(bullet.width, bullet.width); //26x26 box
+		bullet.body.setSize(bullet.width, bullet.width); //26x26 box pelaajalle
 		bullet.angle = angle + 90;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
 		bullet.damage = damage;

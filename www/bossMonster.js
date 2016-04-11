@@ -128,6 +128,13 @@ self.kill = function ()
 
 function nextPattern()
 	{
+	if(currentPattern)
+		{
+		if(currentPattern.target)
+			{
+			currentPattern.target = undefined;
+			}
+		}
 	shotsFired = 0;
 	currentPatternIndex++;
 	if(currentPatternIndex >= currentPatterns.length)
@@ -142,13 +149,29 @@ function nextPattern()
 //movement speed and turn rate (how often a new direction is taken) are pattern specific
 var move = function ()
 	{
-	switch (currentPattern.movementScheme)
+	switch (currentPattern.movementScheme[0])
 		{
-		case 'wobble':
-			movementDirection = Math.floor(Math.random()*361);
+		case 'random':
+			movementDirection = Math.floor(Math.random()*360);
 			break;
 		case 'shake':
 			movementDirection += 180;
+			break;
+		case 'charge':
+			var target
+			if(!currentPattern.target)
+				{
+				target = getRandomFrom(mPlayers);
+				currentPattern.target = target;
+				} else {
+				target = currentPattern.target;
+				}
+			if(target != undefined)
+				{
+				movementDirection = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI
+				} else {
+				movementDirection = Math.floor(Math.random()*360);
+				}
 			break;
 		default:
 		}
@@ -178,7 +201,18 @@ var attack = function (players)
 			break;
 			
 		case 'burst':
-			var target = getRandomFrom(players)
+			var target
+			if(currentPattern.stickToTarget && !currentPattern.target)
+				{
+				target = getRandomFrom(players);
+				currentPattern.target = target;
+				} else if (currentPattern.stickToTarget && currentPattern.target)
+				{
+				target = currentPattern.target;
+				} else {
+				target = getRandomFrom(players);
+				}
+			
 			for(var i = 0 - ((currentPattern.burstBulletAmount-1)/2) ; i <= 0 + ((currentPattern.burstBulletAmount-1)/2); i++)
 				{
 				if(target != undefined)

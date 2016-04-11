@@ -6,7 +6,7 @@ var bossPatterns = {};
 
 bossPatterns.spiral1 = {
 	patternRate: 4000,
-	movementScheme: 'wobble',
+	movementScheme: ['random'],
 	attackScheme: 'spiral',
 	fireRate: 500,
 	moveRate: 500,
@@ -22,7 +22,7 @@ bossPatterns.spiral1 = {
 
 bossPatterns.spiral1Reverse = {
 	patternRate: 4000,
-	movementScheme: 'wobble',
+	movementScheme: ['random'],
 	attackScheme: 'spiral',
 	fireRate: 500,
 	moveRate: 500,
@@ -38,7 +38,7 @@ bossPatterns.spiral1Reverse = {
 
 bossPatterns.spiral2 = {
 	patternRate: 3000,
-	movementScheme: 'shake',
+	movementScheme: ['shake'],
 	attackScheme: 'spiral',
 	fireRate: 350,
 	moveRate: 200,
@@ -56,7 +56,7 @@ bossPatterns.spiral2 = {
 
 bossPatterns.burst1 = {
 	patternRate: 5000,
-	movementScheme: 'wobble',
+	movementScheme: ['random'],
 	attackScheme: 'burst',
 	burstBulletAmount: 5,
 	burstSpreadAngle: 25,
@@ -73,13 +73,13 @@ bossPatterns.burst1 = {
 
 bossPatterns.burst2 = {
 	patternRate: 3500,
-	movementScheme: 'wobble',
+	movementScheme: ['random'],
 	attackScheme: 'burst',
 	burstBulletAmount: 7,
 	burstSpreadAngle: 20,
 	shotAngleVariance: 0,
 	fireRate: 700,
-	moveRate: 200,
+	moveRate: 400,
 	maxSpeed: 60,
 	bulletDamage: 10,
 	bulletSpeed: 250,
@@ -90,30 +90,64 @@ bossPatterns.burst2 = {
 
 //haulikkomainen ellei jopa liekinheittimen kaltainen ampumispatterni
 bossPatterns.burst3 = {
-	patternRate: 2000,
-	movementScheme: 'wobble',
+	patternRate: 2400,
+	movementScheme: ['random'],
 	attackScheme: 'burst',
 	burstBulletAmount: 5,
 	burstSpreadAngle: 4,
 	shotAngleVariance: 10,
-	fireRate: 500,
-	moveRate: 700,
-	maxSpeed: 45,
+	fireRate: 600,
+	moveRate: 400,
+	maxSpeed: 60,
 	bulletDamage: 10,
 	bulletSpeed: 250,
 	bulletSpeedVariance: 50,
 	bulletLifespan: 4500,
-	bulletGraphic: 'enemyBullet6',
+	bulletGraphic: 'enemyBullet5',
 };
 
 
 
 
 
+bossPatterns.burst4 = {
+	patternRate: 6000,
+	movementScheme: ['charge'], //moves at one player for the duration of the pattern
+	attackScheme: 'burst',
+	stickToTarget: true,	//move and shoot at the same target(only with charge movement atm)
+												//false would allow for moving at one target and shooting at other targets randomly
+	burstBulletAmount: 7,
+	burstSpreadAngle: 5,
+	shotAngleVariance: 10,
+	fireRate: 1200,
+	moveRate: 600,
+	maxSpeed: 100,
+	bulletDamage: 10,
+	bulletSpeed: 280,
+	bulletSpeedVariance: 60,
+	bulletLifespan: 4500,
+	bulletGraphic: 'enemyBullet1',
+};
 
 
-
-
+bossPatterns.burst5 = {
+	patternRate: 6000,
+	movementScheme: ['charge'], //moves at one player for the duration of the pattern
+	attackScheme: 'burst',
+	stickToTarget: false,	//move and shoot at the same target(only with charge movement atm)
+												//false would allow for moving at one target and shooting at other targets randomly
+	burstBulletAmount: 7,
+	burstSpreadAngle: 5,
+	shotAngleVariance: 10,
+	fireRate: 1200,
+	moveRate: 600,
+	maxSpeed: 100,
+	bulletDamage: 10,
+	bulletSpeed: 280,
+	bulletSpeedVariance: 60,
+	bulletLifespan: 4500,
+	bulletGraphic: 'enemyBullet3',
+};
 
 
 

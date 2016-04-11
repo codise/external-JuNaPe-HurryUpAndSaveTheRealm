@@ -1,4 +1,4 @@
 'use strict';
 
-var rounds = [round4, round1, round2, round3];
+var rounds = [roundtest, round4, round1, round2, round3];
 
