@@ -5,6 +5,14 @@
 |     Here you'll find useful functions    |
 ==========================================*/
 
+/**
+* Get a point a minimum distance away from all players
+* @param {game} game - The game object
+* @param {playerList} List - The list containing all player objects
+* @param {minimumDistance} Int - The minimum distance from players to spawn from
+* @param {maxTryCount} Int - The maximum amount of attempts until returning null
+* @return {Point} A Point at least minimumDistance away from all players or null in which case no monster is spawned
+*/
 var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount)
 	{
 	var tryCount = 0;
@@ -31,6 +39,12 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 		}
 	};
 
+/*
+* Return the distance between the provided position and the closes player
+* @param {players} List - List of all players
+* @param {position} Point - The position to which compare
+* @return {Int} The distance in pixels from position to the closest player
+*/
 var dClosestPlayer = function (players, position)
   {
   var currentMin = 9999999; // Arbitrarily large number
@@ -50,6 +64,12 @@ var dClosestPlayer = function (players, position)
   return currentMin;
   };
 
+/*
+* Picks a random entry from a dictionary
+* @param {dict} Array - The dictionary from which we pick an object
+* @return {Object} A random object from the array
+*/
+
 var pickRandomFromDictionary = function (dict)
   {
   var keys = Object.keys(dict);
@@ -58,6 +78,9 @@ var pickRandomFromDictionary = function (dict)
   return object;
   };
 
+/*
+* Resizes the game to fit new window dimensions
+*/
 var resizeGame = function ()
   {
   var height = window.innerHeight * window.devicePixelRatio;
