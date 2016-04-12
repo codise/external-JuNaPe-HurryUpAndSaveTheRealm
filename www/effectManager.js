@@ -6,6 +6,8 @@ var self = this;
 
 var spawnDuration;
 
+self.popUpList= [];
+
 var scale = function (sprite)
 	{
 	sprite.scale.x = scalingFactors.x;
@@ -49,9 +51,10 @@ self.createDeathEffect = function (target)
 	effect.animations.play('kaboom', 30, false, true);
 	};
 
-self.popupScoreText = function(amount,target)
+self.popupScoreText = function(popUpText, target)
 	{
-	var text = game.add.text(target.position.x, target.position.y, amount, { font: "20px Arial", fill: "#FFFFFF"});
+	var text = game.add.text(target.position.x, target.position.y, popUpText, { font: "20px Arial", fill: "#FFFFFF"});
+	self.popUpList.push(text);
 	game.physics.arcade.enable(text);
 	text.body.collideWorldBounds = true;
 	text.body.bounce.set(1);

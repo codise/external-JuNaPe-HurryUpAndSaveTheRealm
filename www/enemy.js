@@ -2,14 +2,6 @@
 
 function Enemy(enemyInfo, game, bulletManager, players, position)
 {
-var getRandomFrom = function (dict)
-	{
-	var keys = Object.keys(dict);
-	var object
-	object = dict[keys[ keys.length * Math.random() << 0]];
-	return object;
-	};
-
 var self = this;
 
 var maxSpeed = enemyInfo.maxSpeed;
@@ -36,7 +28,7 @@ var maxHealth = enemyInfo.maxHealth;//10;
 var currentHealth = maxHealth;
 
 var mPlayers = players;
-var currentTarget = getRandomFrom(mPlayers);
+var currentTarget = pickRandomFromDictionary(mPlayers);
 
 var cameraPadding = 20;
 
@@ -67,7 +59,7 @@ self.update = function (players)
 	mPlayers = players;
 	if (currentTarget === undefined)
 		{
-		currentTarget = getRandomFrom(mPlayers);
+		currentTarget = pickRandomFromDictionary(mPlayers);
 		}
 
 	scale();

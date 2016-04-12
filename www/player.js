@@ -89,7 +89,7 @@ var scale = function ()
 	self.sprite.scale.y = scalingFactors.y;
 	};
 
-function createPlayer ()
+var createPlayer = function ()
 	{
 	self.sprite.loadTexture(sprites[self.playerClass]);
 	
@@ -111,7 +111,7 @@ self.setInput = function (inputArray)
 	};
 
 //called by controller once it is created
-function setClassAndName (pClass, pName)
+var setClassAndName = function (pClass, pName)
 	{
 	self.playerClass = pClass;
 	self.playerName = pName;
@@ -230,7 +230,7 @@ self.playerHit = function(player, bullet)
 self.takeDamage = function(damage)
 	{
 	self.currentHealth = self.currentHealth-damage;
-	if(self.currentHealth <= 0) 
+	if(self.currentHealth <= 0 && !self.dead) 
 		{
 		self.dead = true;
 		self.kill();

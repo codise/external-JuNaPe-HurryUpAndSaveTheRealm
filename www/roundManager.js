@@ -12,6 +12,8 @@ var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 playerGroup.enableBody = true;
 
+var minPlayerSpawnDistance = 10;
+
 var scoreTable = [];
 var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
 
@@ -125,11 +127,9 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	var position = {};
-	position.x = game.camera.x + game.camera.width/2;
-	position.y = game.camera.y + game.camera.height/2;
-	game.effectManager.createSpawnEffect(position);
-	players[id] = new Player(game, position.x, position.y, bulletManager, id, weaponManager);
+	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	game.effectManager.createSpawnEffect(spawnPosition);
+	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
 	};
 
@@ -155,9 +155,12 @@ self.update = function ()
 	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
-
+	var popUpList = game.effectManager.popUpList;
+	for(var i = 0; i < popUpList.length; i++)
+		{
+		popUpList[i].bringToTop();
+		}
 	updateScore();
-
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
 		bulletManager.update();
