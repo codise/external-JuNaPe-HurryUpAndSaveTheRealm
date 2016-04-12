@@ -47,7 +47,7 @@ var spawnCooldown = 2000;
 var nextSpawn = 0;
 var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
-var SPAWNING = false;
+var SPAWNING = true;
 
 var spawningDistance = 50; // The minimum distance of spawned creature to closest player. BEWARE! if too big the game performance will suffer while trying to spawn creatures.
 
