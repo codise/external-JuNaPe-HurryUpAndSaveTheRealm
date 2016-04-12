@@ -9,25 +9,28 @@ function Weapon(game, player, weaponName)
 	self.sprite.scale.x = scalingFactors.x;
 	self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 	self.sprite.scale.y = scalingFactors.y;
-	//player.sprite.addChild(self.sprite);
 
-	self.update = function()
+	self.update = function(flipped, input)
 		{
 		self.sprite.position = player.sprite.position;
-
-		};
-
-	self.flip = function(flipped)
-		{
 		if(flipped)
 			{
-			self.sprite.scale.x = -scalingFactors.x;
-			self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
+			self.sprite.scale.x = scalingFactors.x;
+			self.sprite.scale.y = -scalingFactors.y;
 			}
 		else
 			{
 			self.sprite.scale.x = scalingFactors.x;
-			self.sprite.body.setSize(self.sprite.width, self.sprite.height);
+			self.sprite.scale.y = scalingFactors.y;
 			}
+		if(input.sX == 0 && input.sY == 0)
+			{
+			self.sprite.angle = 0;
+			if(flipped)
+				{
+				self.sprite.scale.x = -scalingFactors.x;
+				self.sprite.scale.y = scalingFactors.y;
+				}
+			}	
 		};
 }

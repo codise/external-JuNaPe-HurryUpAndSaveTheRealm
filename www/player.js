@@ -76,14 +76,11 @@ var scale = function ()
 		{
 		self.sprite.scale.x = -scalingFactors.x;
 		self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
-		} else
+		} 
+	else
 		{
 		self.sprite.scale.x = scalingFactors.x;
 		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
-		}
-	if(self.weapon != undefined)
-		{
-		self.weapon.update();
 		}
 	self.sprite.scale.y = scalingFactors.y;
 	};
@@ -125,7 +122,7 @@ self.update = function ()
 		{
 		if (input != undefined)
 			{
-			
+			console.log("input: " + input)
 			if(!setupDone)
 				{
 					//setting the player up here is a workaround to enable play on firefox
@@ -164,16 +161,8 @@ self.update = function ()
 				headingPoint.y = input.sY;
 				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, bulletSpeed, bulletLifespan);
 				}
-			if(input.sX == 0 && input.sY == 0)
-				{
-				self.weapon.sprite.angle = 0;
-				self.weapon.flip(flipped);
-				}
-			else
-				{
-				self.weapon.flip(false);
-				self.weapon.sprite.angle = Phaser.Point.angle(headingPoint, new Phaser.Point(-1, 0)) * 360/Math.PI;
-				}
+			self.weapon.sprite.angle = Phaser.Point.angle(headingPoint, new Phaser.Point(-1, 0)) * 360/Math.PI;
+			self.weapon.update(flipped, input);		
 			}
 
 		//We should only check for collisions when there are collidable objects on screen

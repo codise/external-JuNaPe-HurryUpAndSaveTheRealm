@@ -49,7 +49,7 @@ var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
 var SPAWNING = true;
 
-var enemyScalingCoefficient = 8;
+var enemyScalingCoefficient = 0; //8
 
 self.enemyList = []; // List manages Enemy objects
 
