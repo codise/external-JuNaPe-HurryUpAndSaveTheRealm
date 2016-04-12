@@ -219,13 +219,14 @@ self.update = function ()
 
 	var s = vectorizeInput(startShoot, endShoot);
 	normalShoot.setTo(s[0], s[1]);
-	normalShoot.normalize();
+	//normalShoot.normalize();
 	
-	var angle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
+	var moveAngle = Phaser.Point.angle(vectorMove, anglePoint) * 180/Math.PI;
 	var length = vectorMove.getMagnitude() / 30;
+
+	var shootAngle = Phaser.Point.angle(normalShoot, anglePoint) * 180/Math.PI;
 	
-	var input = {moveAngle:angle, moveLength:length, sX:normalShoot.x, sY:normalShoot.y, pName:playerName, pClass:playerClass};
-	//console.log(input);
+	var input = {moveAngle:moveAngle, moveLength:length, shootAngle: shootAngle, pName:playerName, pClass:playerClass};
 
 	gameClient.callScreenRpc(1, "setPlayerInput", [self.id, input], self, null);
 	};

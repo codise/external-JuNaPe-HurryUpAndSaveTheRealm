@@ -47,7 +47,7 @@ var spawnCooldown = 2000;
 var nextSpawn = 0;
 var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
-var SPAWNING = true;
+var SPAWNING = false;
 
 var enemyScalingCoefficient = 8;
 

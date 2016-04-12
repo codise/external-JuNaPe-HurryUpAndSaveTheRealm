@@ -23,7 +23,7 @@ function Weapon(game, player, weaponName)
 			self.sprite.scale.x = scalingFactors.x;
 			self.sprite.scale.y = scalingFactors.y;
 			}
-		if(input.sX == 0 && input.sY == 0)
+		if(input.shootAngle == 0)
 			{
 			self.sprite.angle = 0;
 			if(flipped)
