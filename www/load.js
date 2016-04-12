@@ -33,6 +33,8 @@ var loadState = function ()
 		game.load.image('enemyBullet4', 'assets/projectiles/enemyBullet_YellowStar.png');
 		game.load.image('enemyBullet5', 'assets/projectiles/enemyBullet_RED.png');
 		game.load.image('enemyBullet6', 'assets/projectiles/Fireball.png');
+		game.load.image('enemyBullet7', 'assets/projectiles/EnemyBullet_Sword_rt.png');
+		
 
 		//load weapon sprites
 
@@ -50,7 +52,7 @@ var loadState = function ()
 		game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
 		game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
 		game.load.image('boss_tentaclemonster', 'assets/enemies/enemy_06.png');
-		game.load.image('boss_king', 'assets/enemies/enemy_04.png');
+		game.load.image('boss_king', 'assets/enemies/enemy_10.png');
 
 		// Load effects
 

@@ -118,12 +118,19 @@ enemyBullets6.enableBody = true;
 enemyBullets6.physicsBodyType = Phaser.Physics.ARCADE;
 enemyBullets6.createMultiple(enemyBulletPool, 'enemyBullet6');
 
+//sword
+var enemyBullets7 = game.add.group();
+enemyBullets7.enableBody = true;
+enemyBullets7.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets7.createMultiple(enemyBulletPool, 'enemyBullet7');
+
 self.enemyBulletGroups.push(enemyBullets1);
 self.enemyBulletGroups.push(enemyBullets2);
 self.enemyBulletGroups.push(enemyBullets3);
 self.enemyBulletGroups.push(enemyBullets4);
 self.enemyBulletGroups.push(enemyBullets5);
 self.enemyBulletGroups.push(enemyBullets6);
+self.enemyBulletGroups.push(enemyBullets7);
 
 self.enemyBulletCount;
 self.playerBulletCount;
@@ -211,6 +218,9 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 					break;
 				case 'enemyBullet6':
 					var bullet = enemyBullets6.getFirstDead();
+					break;
+				case 'enemyBullet7':
+					var bullet = enemyBullets7.getFirstDead();
 					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();

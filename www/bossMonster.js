@@ -161,6 +161,14 @@ function nextPattern()
 		}
 	currentPattern = currentPatterns[currentPatternIndex];
 	patternTimeout = game.time.now + currentPattern.patternRate;
+	nextFire = game.time.now + 10;
+	nextMove = game.time.now;
+	if(currentPattern.onlyOnce && currentPattern.done)
+		{
+		nextPattern();
+		} else if (!currentPattern.done) {
+		currentPattern.done = true;
+		}
 	};
 
 //sets movement direction based on pattern
@@ -203,7 +211,7 @@ var attack = function (players)
 	switch (currentPattern.attackScheme)
 		{
 		case 'spiral':
-			for(var i = 1; i <= currentPattern.shotDirectionAmount; i++)
+			for(var i = 1; i <= currentPattern.bulletAmount; i++)
 				{
 				//gives a random offset between -shotAngleVariance and shotAngleVariance
 				var randomAngleOffset
@@ -214,7 +222,7 @@ var attack = function (players)
 					randomAngleOffset = 0;
 					}
 				
-				var angle = 360 * i/currentPattern.shotDirectionAmount + shotsFired * currentPattern.shotRotation + randomAngleOffset;
+				var angle = 360 * i/currentPattern.bulletAmount + shotsFired * currentPattern.shotRotation + randomAngleOffset;
 				bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
 				}
 			break;
@@ -232,9 +240,9 @@ var attack = function (players)
 				target = pickRandomFromDictionary(players);
 				}
 			
-			for(var i = 0 - ((currentPattern.burstBulletAmount-1)/2) ; i <= 0 + ((currentPattern.burstBulletAmount-1)/2); i++)
+			for(var i = 0 - ((currentPattern.bulletAmount-1)/2) ; i <= 0 + ((currentPattern.bulletAmount-1)/2); i++)
 				{
-				if(target != undefined)
+				if(target != undefined && !target.dead)
 					{
 					//gives a random offset between -shotAngleVariance and shotAngleVariance
 					var randomAngleOffset
@@ -259,6 +267,38 @@ var attack = function (players)
 					}
 				}
 			break;
+		case 'line':
+			//>> this needs to be a separate function
+			var target
+			if(currentPattern.stickToTarget && !currentPattern.target)
+				{
+				target = pickRandomFromDictionary(players);
+				currentPattern.target = target;
+				} else if (currentPattern.stickToTarget && currentPattern.target)
+				{
+				target = currentPattern.target;
+				} else {
+				target = pickRandomFromDictionary(players);
+				}
+			//<<
+			
+			if(target != undefined && !target.dead)
+				{
+				var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI;
+				var bulletSpeed = currentPattern.bulletSpeed;
+				for(var i = 1; i <= currentPattern.bulletAmount; i++)
+					{
+					if(i === currentPattern.bulletAmount)
+						{
+							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+						} else {
+							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+						}
+					bulletSpeed = bulletSpeed + currentPattern.bulletSpeedVariance;
+					}
+				}
+			
+			
 		default:
 		}
 	shotsFired ++;

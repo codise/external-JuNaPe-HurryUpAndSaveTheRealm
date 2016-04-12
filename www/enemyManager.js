@@ -36,8 +36,8 @@ var bossDictionary = { tentacle: {sprite: 'boss_tentaclemonster',
 																	ragePatterns: [bossPatterns.burst3, bossPatterns.burst2],
 																	hitColor: 0x808000},
 												king: {sprite: 'boss_king',
-																	normalPatterns: [bossPatterns.burst4, bossPatterns.burst5, bossPatterns.spiral2],
-																	ragePatterns: [bossPatterns.burst3, bossPatterns.burst2],
+																	normalPatterns: [bossPatterns.burst4, bossPatterns.line1, bossPatterns.spiral3],
+																	ragePatterns: [bossPatterns.spiralNova1, bossPatterns.burst3, bossPatterns.burst2],
 																	hitColor: 0xCC0000}}
 
 

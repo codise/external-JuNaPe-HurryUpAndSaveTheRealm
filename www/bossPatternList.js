@@ -14,7 +14,7 @@ bossPatterns.spiral1 = {
 	bulletDamage: 10,
 	bulletSpeed: 250,
 	bulletLifespan: 4500,
-	shotDirectionAmount: 5,
+	bulletAmount: 5,
 	shotRotation: 15,
 	shotAngleVariance: 0,
 	bulletGraphic: 'enemyBullet4',
@@ -30,7 +30,7 @@ bossPatterns.spiral1Reverse = {
 	bulletDamage: 10,
 	bulletSpeed: 250,
 	bulletLifespan: 4500,
-	shotDirectionAmount: 5,
+	bulletAmount: 5,
 	shotRotation: -15,
 	shotAngleVariance: 5,
 	bulletGraphic: 'enemyBullet4',
@@ -43,14 +43,48 @@ bossPatterns.spiral2 = {
 	fireRate: 350,
 	moveRate: 200,
 	maxSpeed: 30,
-	bulletDamage: 8,
+	bulletDamage: 10,
 	bulletSpeed: 350,
 	bulletLifespan: 3000,
-	shotDirectionAmount: 5,
+	bulletAmount: 5,
 	shotRotation: 25,
 	shotAngleVariance: 0,
 	bulletGraphic: 'enemyBullet5',
 };
+
+bossPatterns.spiral3 = {
+	patternRate: 3000,
+	movementScheme: ['shake'],
+	attackScheme: 'spiral',
+	fireRate: 350,
+	moveRate: 800,
+	maxSpeed: 30,
+	bulletDamage: 10,
+	bulletSpeed: 350,
+	bulletLifespan: 3000,
+	bulletAmount: 5,
+	shotRotation: 25,
+	shotAngleVariance: 0,
+	bulletGraphic: 'enemyBullet5',
+};
+
+bossPatterns.spiralNova1 = {
+	patternRate: 1000,
+	movementScheme: ['random'],
+	attackScheme: 'spiral',
+	fireRate: 10000,
+	moveRate: 500,
+	maxSpeed: 10,
+	bulletDamage: 10,
+	bulletSpeed: 500,
+	bulletLifespan: 3000,
+	bulletAmount: 30,
+	shotRotation: 0,
+	shotAngleVariance: 0,
+	bulletGraphic: 'enemyBullet1',
+	onlyOnce: true,
+};
+
 
 //burst shot patterns
 
@@ -58,7 +92,7 @@ bossPatterns.burst1 = {
 	patternRate: 5000,
 	movementScheme: ['random'],
 	attackScheme: 'burst',
-	burstBulletAmount: 5,
+	bulletAmount: 5,
 	burstSpreadAngle: 25,
 	shotAngleVariance: 2,
 	fireRate: 800,
@@ -75,7 +109,7 @@ bossPatterns.burst2 = {
 	patternRate: 3500,
 	movementScheme: ['random'],
 	attackScheme: 'burst',
-	burstBulletAmount: 7,
+	bulletAmount: 7,
 	burstSpreadAngle: 20,
 	shotAngleVariance: 0,
 	fireRate: 700,
@@ -93,7 +127,7 @@ bossPatterns.burst3 = {
 	patternRate: 2400,
 	movementScheme: ['random'],
 	attackScheme: 'burst',
-	burstBulletAmount: 5,
+	bulletAmount: 5,
 	burstSpreadAngle: 4,
 	shotAngleVariance: 10,
 	fireRate: 600,
@@ -116,7 +150,7 @@ bossPatterns.burst4 = {
 	attackScheme: 'burst',
 	stickToTarget: true,	//move and shoot at the same target(only with charge movement atm)
 												//false would allow for moving at one target and shooting at other targets randomly
-	burstBulletAmount: 7,
+	bulletAmount: 7,
 	burstSpreadAngle: 5,
 	shotAngleVariance: 10,
 	fireRate: 1200,
@@ -126,7 +160,7 @@ bossPatterns.burst4 = {
 	bulletSpeed: 280,
 	bulletSpeedVariance: 60,
 	bulletLifespan: 4500,
-	bulletGraphic: 'enemyBullet1',
+	bulletGraphic: 'enemyBullet4',
 };
 
 
@@ -136,7 +170,7 @@ bossPatterns.burst5 = {
 	attackScheme: 'burst',
 	stickToTarget: false,	//move and shoot at the same target(only with charge movement atm)
 												//false would allow for moving at one target and shooting at other targets randomly
-	burstBulletAmount: 7,
+	bulletAmount: 7,
 	burstSpreadAngle: 5,
 	shotAngleVariance: 10,
 	fireRate: 1200,
@@ -150,7 +184,28 @@ bossPatterns.burst5 = {
 };
 
 
+//line shooting patterns
 
+bossPatterns.line1 = {
+	patternRate: 1000,
+	movementScheme: ['charge'],
+	attackScheme: 'line',
+	bulletAmount: 13,
+	
+	fireRate: 10000,
+	moveRate: 400,
+	maxSpeed: 10,
+	
+	bulletSpeed: 100,
+	bulletSpeedVariance: 30,
+	bulletLifespan: 4500,
+	
+	bulletGraphic: 'enemyBullet7',
+	bulletDamage: 50,
+	
+	lineBulletGraphic: 'enemyBullet5',
+	lineBulletDamage: 10,
+};
 
 
 
