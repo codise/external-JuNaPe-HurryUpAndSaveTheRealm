@@ -70,6 +70,11 @@ var activePowerUps = [];
 
 var pHUD;
 
+// Spawn timeout stuff, will maybe become obsolete when spawning part of sprite spritesheet
+
+var spawnDelay = game.effectManager.getSpawnDuration();
+var spawnTimer = game.time.now;
+
 var scale = function ()
 	{
 	if (flipped)
@@ -117,6 +122,9 @@ function setClassAndName (pClass, pName)
 	
 self.update = function ()
 	{
+
+	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now || self.dead);
+
 	scale();
 	if (!self.dead)
 		{
@@ -180,7 +188,8 @@ self.update = function ()
 		}
 
 		} else if (self.dead && nextRespawn < 0) {
-		self.sprite.exists = true;
+		game.effectManager.createSpawnEffect(self.sprite.position);
+		spawnTimer = game.time.now;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);

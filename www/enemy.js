@@ -62,14 +62,8 @@ var scale = function ()
 
 self.update = function (players)
 	{
-	if (spawnTimer + spawnDelay > game.time.now)
-		{
-		self.sprite.exists = false;
-		} else
-		{
-		self.sprite.exists = true;
-		}
-	
+	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now);
+
 	mPlayers = players;
 	if (currentTarget === undefined)
 		{
