@@ -45,9 +45,9 @@ self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
 var MAX_SPAWNCOOLDOWN = 2200;
 var spawnCooldown = 2000;
 var nextSpawn = 0;
-var MaxEnemiesToSpawn = 0;
+var MaxEnemiesToSpawn = 20;
 var enemiesToSpawn = 1;
-var SPAWNING = false;
+var SPAWNING = true;
 
 var enemyScalingCoefficient = 8;
 
@@ -72,6 +72,7 @@ self.update = function (players)
 		// Spawn new mobs
 		for (var i = enemiesToSpawn- 1; i >= 0; i--) {
 			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
+			game.effectManager.createSpawnEffect(randomPos);
 			var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, randomPos);
 			self.enemyGroup.add(newEnemy.sprite);
 			newEnemy.sprite.body.collideWorldBounds = true;

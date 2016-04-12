@@ -40,6 +40,13 @@ var currentTarget = getRandomFrom(mPlayers);
 
 var cameraPadding = 20;
 
+// Small delay before enemy really spawns, this will be obsolete when spawn effects are part of spritesheet
+
+var spawnDelay = game.effectManager.getSpawnDuration(); // in ms
+var spawnTimer = game.time.now;
+
+
+
 var scale = function ()
 	{
 	if (flipped)
@@ -55,6 +62,14 @@ var scale = function ()
 
 self.update = function (players)
 	{
+	if (spawnTimer + spawnDelay > game.time.now)
+		{
+		self.sprite.exists = false;
+		} else
+		{
+		self.sprite.exists = true;
+		}
+	
 	mPlayers = players;
 	if (currentTarget === undefined)
 		{
@@ -139,18 +154,21 @@ var move = function ()
 
 var fire = function ()
 	{
-	switch (shootingScheme[0])
+	if (self.sprite.exists)
 		{
-		case 'directedBurst':
-			createDirectedBurst(shootingScheme[1], shootingScheme[2]);
-			break;
-		case 'slasherShot':
-			createSlasherShot(shootingScheme[1], shootingScheme[2]);
-			break;
-		default:
-			createRadialPulse(shootingScheme[1], shootingScheme[2]);	
+		switch (shootingScheme[0])
+			{
+			case 'directedBurst':
+				createDirectedBurst(shootingScheme[1], shootingScheme[2]);
+				break;
+			case 'slasherShot':
+				createSlasherShot(shootingScheme[1], shootingScheme[2]);
+				break;
+			default:
+				createRadialPulse(shootingScheme[1], shootingScheme[2]);	
+			}
+		nextFire = game.time.now + fireRate;
 		}
-	nextFire = game.time.now + fireRate;
 	};
 
 var createRadialPulse = function (n, bulletGraphic)

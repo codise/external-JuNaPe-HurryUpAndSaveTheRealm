@@ -4,6 +4,8 @@ function EffectManager(game)
 {
 var self = this;
 
+var spawnDuration;
+
 var scale = function (sprite)
 	{
 	sprite.scale.x = scalingFactors.x;
@@ -12,14 +14,31 @@ var scale = function (sprite)
 
 self.createSpawnEffect = function (position)
 	{
+	// Spritesheet spesific vars
+	
+	var numberOfFrames = 6;
+	var fps = 10;
+
+	// creating the effect
 	var effect = game.add.sprite(position.x, position.y, 'spawn');
 	scale(effect);
   effect.anchor.setTo(0.5, 0.5);
 	effect.animations.add('splurt');
-	effect.animations.play('splurt', 10, false, true);
+	effect.animations.play('splurt', fps, false, true);
 	effect.scale.x *= 1/2;
 	effect.scale.y *= 1/2;
+
+	// Set delay
+	
+	spawnDuration = numberOfFrames * 1/fps * 1000; // 1000 to get to ms
 	}
+
+self.getSpawnDuration = function ()
+	{
+	return spawnDuration;
+	};
+
+
 
 self.createDeathEffect = function (target)
 	{
