@@ -344,8 +344,8 @@ var updateScore = function ()
 		}
 	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.x = game.camera.x + 16;
-	scoreText.y = game.camera.y + 16;
+	scoreText.position.x = game.camera.x + 16;
+	scoreText.position.y = game.camera.y + 16;
 	};
 
 var scoreTableToText = function (scoreTable)
