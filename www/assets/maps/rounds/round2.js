@@ -9,4 +9,4 @@ round2.rooms = [
 	{"roomBg": "Demo2Map-4_StairsUp_west.png", "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "west", "moveSpeed": "normal"},
 	{"roomBg": "Demo2Map-5_Finale_west.png", "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "null", "moveSpeed": "stop"}
 	];
-round2.boss = 'tentacle';
+round2.boss = 'king';
