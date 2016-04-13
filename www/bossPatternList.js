@@ -239,6 +239,7 @@ bossPatterns.line1 = {
 	attackScheme: 'line',
 	bulletAmount: 13,
 	
+	stickToTarget: true,
 	fireRate: 10000,
 	moveRate: 400,
 	maxSpeed: 10,
@@ -263,7 +264,7 @@ bossPatterns.line2 = {
 	attackScheme: 'line',
 	bulletAmount: 13,
 	
-	stickToTarget: true,
+	stickToTarget: false,
 	fireRate: 900,
 	moveRate: 400,
 	maxSpeed: 60,
