@@ -45,7 +45,7 @@ self.enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
 var MAX_SPAWNCOOLDOWN = 2200;
 var spawnCooldown = 2000;
 var nextSpawn = 0;
-var MaxEnemiesToSpawn = 20;
+var MaxEnemiesToSpawn = 0;
 var enemiesToSpawn = 1;
 var SPAWNING = true;
 

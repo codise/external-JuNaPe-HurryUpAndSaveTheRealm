@@ -241,7 +241,7 @@ self.playerHit = function(player, bullet)
 	var damage = bullet.damage;
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
-  	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
+	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
 self.takeDamage = function(damage)

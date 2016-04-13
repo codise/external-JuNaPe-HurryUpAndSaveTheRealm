@@ -24,7 +24,7 @@ self.createSpawnEffect = function (position)
 	// creating the effect
 	var effect = game.add.sprite(position.x, position.y, 'spawn');
 	scale(effect);
-  effect.anchor.setTo(0.5, 0.5);
+	effect.anchor.setTo(0.5, 0.5);
 	effect.animations.add('splurt');
 	effect.animations.play('splurt', fps, false, true);
 	effect.scale.x *= 1/2;
