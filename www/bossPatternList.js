@@ -86,7 +86,7 @@ bossPatterns.spiral4 = {
 	bulletAmount: 8,
 	shotRotation: 25,
 	shotAngleVariance: 0,
-	bulletGraphic: 'enemyBullet10',
+	bulletGraphic: 'enemyBullet8',
 };
 
 //boss2
@@ -103,7 +103,7 @@ bossPatterns.spiralNova1 = {
 	bulletAmount: 30,
 	shotRotation: 0,
 	shotAngleVariance: 0,
-	bulletGraphic: 'enemyBullet11',
+	bulletGraphic: 'enemyBullet8',
 	onlyOnce: true,
 	texture: 2,
 };
