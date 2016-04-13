@@ -140,12 +140,16 @@ self.update = function ()
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
 	game.world.bringToTop(powerupManager.pUpGroup);
+	game.world.bringToTop(weaponManager.weaponGroup);
 	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
-
+	var popUpList = game.effectManager.popUpList;
+	for(var i = 0; i < popUpList.length; i++)
+		{
+		popUpList[i].bringToTop();
+		}
 	updateScore();
-
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
 		bulletManager.update();

@@ -56,6 +56,7 @@ self.update = function ()
 	self.roundManager.update();
 	if (self.roundManager.roundOver)
 		{
+		game.effectManager.popUpList = [];
 		game.roundScoreTable = self.roundManager.getScoreTable();
 		game.state.start('roundOver');
 		}
