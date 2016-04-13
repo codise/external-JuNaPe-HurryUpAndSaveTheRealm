@@ -22,7 +22,7 @@ self.preload = function ()
 	qr.scale.x = 1.5*scalingFactors.x;
 	qr.scale.y = 1.5*scalingFactors.y;
 	qr.anchor.setTo(1,1);
-	qrText = game.add.text(0, 0, 'Join here ---> ', {font: '25px Courier', fill: '#ffffff'});
+	qrText = game.add.text(0, 0, 'Join JuNaPe WLAN and scan here ---> ', {font: '25px Courier', fill: '#ffffff'});
 	qrText.anchor.setTo(1,1);
 	qrText.position.setTo(qr.position.x - qr.width, qr.position.y);
 	waitingText = game.add.text(80, 150, baseWText, {font: '30px Courier', fill: '#ffffff'});
