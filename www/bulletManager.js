@@ -124,6 +124,36 @@ enemyBullets7.enableBody = true;
 enemyBullets7.physicsBodyType = Phaser.Physics.ARCADE;
 enemyBullets7.createMultiple(enemyBulletPool, 'enemyBullet7');
 
+//boss 2 sparky
+var enemyBullets8 = game.add.group();
+enemyBullets8.enableBody = true;
+enemyBullets8.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets8.createMultiple(enemyBulletPool, 'enemyBullet8');
+
+//sparky line
+var enemyBullets9 = game.add.group();
+enemyBullets9.enableBody = true;
+enemyBullets9.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets9.createMultiple(enemyBulletPool, 'enemyBullet9');
+
+//fork
+var enemyBullets10 = game.add.group();
+enemyBullets10.enableBody = true;
+enemyBullets10.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets10.createMultiple(enemyBulletPool, 'enemyBullet10');
+
+//wave
+var enemyBullets11 = game.add.group();
+enemyBullets11.enableBody = true;
+enemyBullets11.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets11.createMultiple(enemyBulletPool, 'enemyBullet11');
+
+//slash?
+var enemyBullets12 = game.add.group();
+enemyBullets12.enableBody = true;
+enemyBullets12.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets12.createMultiple(enemyBulletPool, 'enemyBullet12');
+
 self.enemyBulletGroups.push(enemyBullets1);
 self.enemyBulletGroups.push(enemyBullets2);
 self.enemyBulletGroups.push(enemyBullets3);
@@ -131,6 +161,11 @@ self.enemyBulletGroups.push(enemyBullets4);
 self.enemyBulletGroups.push(enemyBullets5);
 self.enemyBulletGroups.push(enemyBullets6);
 self.enemyBulletGroups.push(enemyBullets7);
+self.enemyBulletGroups.push(enemyBullets8);
+self.enemyBulletGroups.push(enemyBullets9);
+self.enemyBulletGroups.push(enemyBullets10);
+self.enemyBulletGroups.push(enemyBullets11);
+self.enemyBulletGroups.push(enemyBullets12);
 
 self.enemyBulletCount;
 self.playerBulletCount;
@@ -221,6 +256,21 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 					break;
 				case 'enemyBullet7':
 					var bullet = enemyBullets7.getFirstDead();
+					break;
+				case 'enemyBullet8':
+					var bullet = enemyBullets8.getFirstDead();
+					break;
+				case 'enemyBullet9':
+					var bullet = enemyBullets9.getFirstDead();
+					break;
+				case 'enemyBullet10':
+					var bullet = enemyBullets10.getFirstDead();
+					break;
+				case 'enemyBullet11':
+					var bullet = enemyBullets11.getFirstDead();
+					break;
+				case 'enemyBullet12':
+					var bullet = enemyBullets12.getFirstDead();
 					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();

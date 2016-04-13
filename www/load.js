@@ -34,6 +34,11 @@ var loadState = function ()
 		game.load.image('enemyBullet5', 'assets/projectiles/enemyBullet_RED.png');
 		game.load.image('enemyBullet6', 'assets/projectiles/Fireball.png');
 		game.load.image('enemyBullet7', 'assets/projectiles/EnemyBullet_Sword_rt.png');
+		game.load.image('enemyBullet8', 'assets/projectiles/enemyBullet_boss2.png');
+		game.load.image('enemyBullet9', 'assets/projectiles/enemyBullet_boss2_Line.png');
+		game.load.image('enemyBullet10', 'assets/projectiles/enemyBullet_fork.png');
+		game.load.image('enemyBullet11', 'assets/projectiles/enemyBullet_Wave.png');
+		game.load.image('enemyBullet12', 'assets/projectiles/enemyBullet_Slash.png');
 		
 
 		//load weapon sprites
@@ -48,11 +53,13 @@ var loadState = function ()
 
 		// Load enemy assets
 
-		game.load.image('enemy_hellbug', 'assets/enemies/enemy_05.png');
-		game.load.image('enemy_skeleton', 'assets/enemies/enemy_01.png');
-		game.load.image('enemy_slasher', 'assets/enemies/enemy_08.png');
-		game.load.image('boss_tentaclemonster', 'assets/enemies/enemy_06.png');
-		game.load.image('boss_king', 'assets/enemies/enemy_10.png');
+		game.load.image('enemy_hellbug', 'assets/enemies/enemy_05b.png');
+		game.load.image('enemy_skeleton', 'assets/enemies/enemy_01b.png');
+		game.load.image('enemy_slasher', 'assets/enemies/enemy_08b.png');
+		game.load.image('boss_tentaclemonster', 'assets/enemies/enemy_06b.png');
+		game.load.image('boss_king1', 'assets/enemies/enemy_10.png');
+		game.load.image('boss_king2', 'assets/enemies/enemy_10_2.png');
+		game.load.image('boss_king3', 'assets/enemies/enemy_10_3.png');
 
 		// Load effects
 

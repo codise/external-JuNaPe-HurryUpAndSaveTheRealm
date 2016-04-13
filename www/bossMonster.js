@@ -3,7 +3,7 @@
 function BossMonster (bossInfo, game, bulletManager, position)
 {
 var self = this;
-self.sprite = game.add.sprite(position.x, position.y, bossInfo.sprite);
+self.sprite = game.add.sprite(position.x, position.y, bossInfo.sprites[0]);
 self.sprite.anchor.setTo(0.5, 0.5);
 var flipped = false;
 game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
@@ -166,8 +166,21 @@ function nextPattern()
 	if(currentPattern.onlyOnce && currentPattern.done)
 		{
 		nextPattern();
+		return;
 		} else if (!currentPattern.done) {
 		currentPattern.done = true;
+		}
+	if(currentPattern.texture != undefined)
+		{
+		loadTexture(currentPattern.texture);
+		}
+	};
+
+function loadTexture(textureIndex)
+	{
+	if(textureIndex < bossInfo.sprites.length && textureIndex > -1)
+		{
+		self.sprite.loadTexture(bossInfo.sprites[textureIndex]);
 		}
 	};
 
