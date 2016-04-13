@@ -128,6 +128,7 @@ self.setPlayerInput = function (id, input)
 self.newPlayer = function (id)
 	{
 	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	game.effectManager.createSpawnEffect(spawnPosition);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
 	playerGroup.add(players[id].sprite);
 	};

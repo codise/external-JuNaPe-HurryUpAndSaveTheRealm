@@ -78,6 +78,7 @@ self.update = function (players)
 			//console.log(dClosestPlayer(players, spawnPosition));
 			if (spawnPosition != null)
 				{
+				game.effectManager.createSpawnEffect(spawnPosition);
 				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, spawnPosition);
 				self.enemyGroup.add(newEnemy.sprite);
 				newEnemy.sprite.body.collideWorldBounds = true;
