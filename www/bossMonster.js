@@ -33,15 +33,15 @@ var lowHealth = false;
 
 var mPlayers;
 
-var getAliveFromDict = function()
+var getAliveFromDict = function(players)
 	{
 	var alivePlayers = [];
-	var keys = Object.keys(mPlayers);
-	for(var i = 0; i < Object.keys(mPlayers).length; i++)
+	var keys = Object.keys(players);
+	for(var i = 0; i < Object.keys(players).length; i++)
 		{
-		if(!mPlayers[keys[i]].dead)
+		if(!players[keys[i]].dead)
 			{
-			alivePlayers.push(mPlayers[keys[i]]);
+			alivePlayers.push(players[keys[i]]);
 			}
 		}
 	var random = Math.floor(Math.random() * alivePlayers.length);
@@ -49,7 +49,7 @@ var getAliveFromDict = function()
 		{
 		return alivePlayers[random];
 		}
-	return null;
+	return;
 	};
 
 var scale = function ()
@@ -200,8 +200,7 @@ var move = function ()
 			var target
 			if(!currentPattern.target)
 				{
-				target = pickRandomFromDictionary(mPlayers);
-				getAliveFromDict();
+				target = getAliveFromDict(mPlayers);
 				currentPattern.target = target;
 				} else {
 				target = currentPattern.target;
@@ -244,13 +243,13 @@ var attack = function (players)
 			var target
 			if(currentPattern.stickToTarget && !currentPattern.target)
 				{
-				target = pickRandomFromDictionary(players);
+				target = getAliveFromDict(players);
 				currentPattern.target = target;
 				} else if (currentPattern.stickToTarget && currentPattern.target)
 				{
 				target = currentPattern.target;
 				} else {
-				target = pickRandomFromDictionary(players);
+				target = getAliveFromDict(players);
 				}
 			
 			for(var i = 0 - ((currentPattern.bulletAmount-1)/2) ; i <= 0 + ((currentPattern.bulletAmount-1)/2); i++)
@@ -277,6 +276,9 @@ var attack = function (players)
 						}
 					var bulletSpeed = currentPattern.bulletSpeed + randomSpeedOffset;
 					bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+					} else 
+					{
+					nextPattern();
 					}
 				}
 			break;
@@ -285,13 +287,13 @@ var attack = function (players)
 			var target
 			if(currentPattern.stickToTarget && !currentPattern.target)
 				{
-				target = pickRandomFromDictionary(players);
+				target = getAliveFromDict(players);
 				currentPattern.target = target;
 				} else if (currentPattern.stickToTarget && currentPattern.target)
 				{
 				target = currentPattern.target;
 				} else {
-				target = pickRandomFromDictionary(players);
+				target = getAliveFromDict(players);
 				}
 			//<<
 			
@@ -309,6 +311,9 @@ var attack = function (players)
 						}
 					bulletSpeed = bulletSpeed + currentPattern.bulletSpeedVariance;
 					}
+				} else 
+				{
+				nextPattern();
 				}
 			
 			
