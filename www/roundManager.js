@@ -39,7 +39,7 @@ speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
-self.lastRoomTimeout = 300000; //300s
+self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
 
@@ -50,30 +50,19 @@ self.loadRound = function (roundData)
 	// Set camera in the middle of the stage
 	game.camera.x = game.world.width/2 - game.camera.width/2;
 	game.camera.y = game.world.height/2 - game.camera.height/2;
-
-  /*
-	if(game.currentRound == undefined || game.currentRound +1 >= rounds.length)
-		{
-		game.currentRound = 0;
-		} else 
-		{
-		game.currentRound += 1;
-		}
-	currentRound = rounds[game.currentRound];
-  */
 	currentRound = roundData;
 
 	rooms[0] = null;
 
 	// Load first two rooms;
-	for (var i = 0; i < Math.min(2, currentRound.length); i++)
+	for (var i = 0; i < Math.min(2, currentRound.rooms.length); i++)
 		{
 		rooms[i + 1] = new Room(game,
-														currentRound[i].roomBg,
-														currentRound[i].tileset,
-														currentRound[i].roomJSON,
-														currentRound[i].moveDirection,
-														currentRound[i].moveSpeed);
+														currentRound.rooms[i].roomBg,
+														currentRound.rooms[i].tileset,
+														currentRound.rooms[i].roomJSON,
+														currentRound.rooms[i].moveDirection,
+														currentRound.rooms[i].moveSpeed);
 		rooms[i + 1].preload(instantiateRound);
 		}
 
@@ -254,11 +243,11 @@ var updateRoomMovement = function ()
 				if (speedDict[currentSpeed] != undefined)
 					{
 					rooms[2] = new Room(game,
-															currentRound[nextRoom].roomBg,
-															currentRound[nextRoom].tileset,
-															currentRound[nextRoom].roomJSON,
-															currentRound[nextRoom].moveDirection,
-															currentRound[nextRoom].moveSpeed);
+															currentRound.rooms[nextRoom].roomBg,
+															currentRound.rooms[nextRoom].tileset,
+															currentRound.rooms[nextRoom].roomJSON,
+															currentRound.rooms[nextRoom].moveDirection,
+															currentRound.rooms[nextRoom].moveSpeed);
 					rooms[2].preload(instantiateNewRoom)
 					lastPaused = game.time.now + pauseTime;
 					nextRoom++;
@@ -266,9 +255,9 @@ var updateRoomMovement = function ()
 					{
 
 					var lastMovedDirection = 'null';
-					if(currentRound[currentRound.length-2] != undefined)
+					if(currentRound.rooms[currentRound.rooms.length-2] != undefined)
 						{
-						lastMovedDirection = currentRound[currentRound.length-2].moveDirection;
+						lastMovedDirection = currentRound.rooms[currentRound.rooms.length-2].moveDirection;
 						}
 
 					var bossPos = new Phaser.Point();
@@ -294,8 +283,8 @@ var updateRoomMovement = function ()
 							bossPos.x = game.camera.x + game.camera.width/2
 							bossPos.y = game.camera.y + game.camera.height/2
 						}
-					//enemyManager.createBoss('tentacle', rooms[1].bossPos);
-					enemyManager.createBoss('tentacle', bossPos);
+					//enemyManager.createBoss('tentacle', bossPos);
+					enemyManager.createBoss(currentRound.boss, bossPos);
 					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
 					}
 				}

@@ -31,10 +31,14 @@ var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
 																	hitColor: 0xCC0000,
 																	maxHealth: 5}}
 
-var bossDictionary = { tentacle: {sprite: 'enemy_tentaclemonster',
-																	 movementSchemes: ['wobble', 'shake', 'chargeDirection'],
-																	 attackSchemes: ['spiral', 'deflect', 'shotgun', 'stream'],
-																	 hitColor: 0x808000}}
+var bossDictionary = { tentacle: {sprites: ['boss_tentaclemonster'],
+																	normalPatterns: [bossPatterns.spiral1, bossPatterns.spiral1Reverse, bossPatterns.spiral2, bossPatterns.burst1],
+																	ragePatterns: [bossPatterns.burst3, bossPatterns.burst2],
+																	hitColor: 0x808000},
+												king: {sprites: ['boss_king1', 'boss_king2', 'boss_king3'],
+																	normalPatterns: [bossPatterns.burstSlash1, bossPatterns.line1, bossPatterns.spiral3],
+																	ragePatterns: [bossPatterns.spiralNova1, bossPatterns.burst4, bossPatterns.spiral4, bossPatterns.line2],
+																	hitColor: 0xCC0000}}
 
 
 
