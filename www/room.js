@@ -17,9 +17,8 @@ var game = game;
 var background = background;
 var myloader = new Phaser.Loader(game);
 
-self.map;
 
-var backgroundLayer;
+self.backgroundLayer;
 
 var mycallback;
 
@@ -47,17 +46,17 @@ self.preload = function (callback)
 
 var create = function ()
 	{
-	backgroundLayer = game.add.sprite(0, 0, background);
-	backgroundLayer.smoothed = false;
-	self.layerGroup.add(backgroundLayer);
+	self.backgroundLayer = game.add.sprite(0, 0, background);
+	self.backgroundLayer.exists = false;
+	self.backgroundLayer.smoothed = false;
+	self.layerGroup.add(self.backgroundLayer);
 	self.layerGroup.setAll('fixedToCamera', false);
 	mycallback();
 	};
 
 self.moveTo = function (x, y)
 	{
-	self.layerGroup.setAll('position.x', x);
-	self.layerGroup.setAll('position.y', y);
+	self.layerGroup.forEach(function (layer) { layer.reset(x, y) });
 	};
 
 self.moveBy = function (amount)
@@ -92,7 +91,7 @@ var reloadBG = function ()
 */
 self.getPos = function ()
 	{
-	if(backgroundLayer == undefined) reloadBG(); //If the background failed to load, we forcibly relaod it
-	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
+	if(self.backgroundLayer == undefined) reloadBG(); //If the background failed to load, we forcibly relaod it
+	return {"x": self.backgroundLayer.position.x, "y": self.backgroundLayer.position.y};
 	};
 }
