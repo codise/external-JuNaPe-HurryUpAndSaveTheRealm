@@ -15,15 +15,10 @@ var self = this;
 
 var game = game;
 var background = background;
-var collisionAssets = collisionAssets;
-var collisionData = collisionData;
 var myloader = new Phaser.Loader(game);
 
 self.map;
 
-var collisionLayer;
-var spawnLayer;
-var trapLayer;
 var backgroundLayer;
 
 var mycallback;
@@ -46,39 +41,16 @@ self.preload = function (callback)
 		{
 		myloader.image(background, "assets/maps/backgrounds/" + background);
 		}
-	if(!game.cache.checkImageKey(collisionAssets))
-		{
-		myloader.image(collisionAssets, "assets/maps/tiles/" + collisionAssets);
-		}
-
-	if(!game.cache.checkJSONKey(collisionData))
-		{
-		myloader.tilemap(collisionData, "assets/maps/JSON/" + collisionData, null, Phaser.Tilemap.TILED_JSON);
-		}
-
 	myloader.onLoadComplete.addOnce(create);
 	myloader.start();
 	};
 
 var create = function ()
 	{
-	self.map = game.add.tilemap(collisionData);
-
-	self.map.addTilesetImage(collisionAssets, collisionAssets);
-
 	backgroundLayer = game.add.sprite(0, 0, background);
 	backgroundLayer.smoothed = false;
 	self.layerGroup.add(backgroundLayer);
-	/*collisionLayer = self.map.createLayer('collisionLayer');
-	self.layerGroup.add(collisionLayer);
-	spawnLayer = self.map.createLayer('spawnLayer');
-	self.layerGroup.add(spawnLayer);
-	trapLayer = self.map.createLayer('trapLayer');
-	self.layerGroup.add(trapLayer);
-	*/
-
 	self.layerGroup.setAll('fixedToCamera', false);
-
 	mycallback();
 	};
 
@@ -96,6 +68,7 @@ self.moveBy = function (amount)
 self.updateScaling = function ()
 	{
 	scale();
+	self.onceScaled = true;
 	};
 
 var moveLayer = function (layer, amount)

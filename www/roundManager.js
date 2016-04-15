@@ -73,33 +73,34 @@ self.loadRound = function (roundData)
 		}
 
 	nextRoom = 2;
-
 	};
 
 var instantiateRound = function ()
 	{
 
 	// Position the two loaded rooms correctly
-
-	rooms[1].moveTo(game.camera.x, game.camera.y);
-	switch (rooms[1].moveDirection)
+	if (rooms[2] != undefined)
 		{
-		case "north":
-			rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-			break;
-		case "east":
-			rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-			break;
-		case "south":
-			rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
-			break;
-		case "west":
-			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-			break;
-		default:
-			rooms[2] = null;
+		rooms[1].moveTo(game.camera.x, game.camera.y);
+		switch (rooms[1].moveDirection)
+			{
+			case "north":
+				rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
+				break;
+			case "east":
+				rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+				break;
+			case "south":
+				rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
+				break;
+			case "west":
+				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+				break;
+			default:
+				rooms[2] = null;
+			}
+		startRound();
 		}
-	startRound();
 	};
 
 var startRound = function ()
@@ -144,6 +145,7 @@ self.disconnectPlayer = function (id)
 
 self.update = function ()
 	{
+
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
 	game.world.bringToTop(powerupManager.pUpGroup);
@@ -151,6 +153,7 @@ self.update = function ()
 	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
+
 	var popUpList = game.effectManager.popUpList;
 	for(var i = 0; i < popUpList.length; i++)
 		{
