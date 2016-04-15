@@ -5,31 +5,46 @@
 function EnemyManager(game, bulletManager)
 {
 var self = this;
-var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
+var enemyDictionary = { 						hellbug: {sprite: 'enemy_hellbug',
 																	movementScheme: 'random',
 																	shootingScheme: ['radial', 5, 'enemyBullet1'],
+																	
 																	maxSpeed: 90,
 																	moveRate: 1200,
-																	fireRate: 4000,
+																	fireRate: 10000,
 																	hitColor: 0xCC0000,
 																	maxHealth: 10},
+																	
 												skeleton: {sprite: 'enemy_skeleton',
 																	movementScheme: 'chargeSingle',
 																	shootingScheme: ['directedBurst', 3, 'enemyBullet3'],
 
 																	maxSpeed: 60,
 																	moveRate: 800,
-																	fireRate: 4500,
+																	fireRate: 6000,
 																	hitColor: 0xCC0000,
 																	maxHealth: 10},
+																	
 												slasher: {sprite: 'enemy_slasher',
 																	movementScheme: 'chargeSingle',
 																	shootingScheme: ['slasherShot', 1, 'enemyBullet2'],
+																	
 																	maxSpeed: 180,
 																	moveRate: 500,
-																	fireRate: 500,
+																	fireRate: 1000,
 																	hitColor: 0xCC0000,
-																	maxHealth: 5}}
+																	maxHealth: 5},
+																	
+												reaper: {sprite: 'enemy_ghost',
+																	movementScheme: 'random',
+																	shootingScheme: ['snipershot', 1, 'enemyBullet8'], //Bullet8 is placeholder untin new art
+																	
+																	maxSpeed: 200,
+																	moveRate: 500,
+																	fireRate: 6000,
+																	hitColor: 0xCC0000,
+																	maxHealth: 20}
+}
 
 var bossDictionary = { tentacle: {sprites: ['boss_tentaclemonster'],
 																	normalPatterns: [bossPatterns.spiral1, bossPatterns.spiral1Reverse, bossPatterns.spiral2, bossPatterns.burst1],

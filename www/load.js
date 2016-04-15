@@ -56,6 +56,7 @@ var loadState = function ()
 		game.load.image('enemy_hellbug', 'assets/enemies/enemy_05b.png');
 		game.load.image('enemy_skeleton', 'assets/enemies/enemy_01b.png');
 		game.load.image('enemy_slasher', 'assets/enemies/enemy_08b.png');
+		game.load.image('enemy_ghost', 'assets/enemies/enemy_04b.png');
 		game.load.image('boss_tentaclemonster', 'assets/enemies/enemy_06b.png');
 		game.load.image('boss_king1', 'assets/enemies/enemy_10.png');
 		game.load.image('boss_king2', 'assets/enemies/enemy_10_2.png');
