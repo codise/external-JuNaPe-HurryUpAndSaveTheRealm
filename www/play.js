@@ -81,5 +81,4 @@ self.onControllerDisconnected = function (id)
 	self.roundManager.disconnectPlayer(id);
 	delete game.playerList[id];
 	};
-
 };

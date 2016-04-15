@@ -8,7 +8,7 @@ var spawnDuration;
 
 self.popUpList= [];
 
-/*
+/**
 * Scales a sprite to the proper size 
 * @param {sprite} sprite - The sprite to scale
 */
@@ -45,7 +45,7 @@ self.getSpawnDuration = function ()
 	return spawnDuration;
 	};
 
-/*
+/**
 * Creates the death effect on the specified target
 * @param {player|enemy} target - The target object on which's position we create the effect at
 */
@@ -59,7 +59,7 @@ self.createDeathEffect = function (target)
 	effect.animations.play('kaboom', 30, false, true);
 	};
 
-/*
+/**
 * Displays a floating score text on the specified target
 * @param {String} popUpText - The score to display 
 * @param {player|enemy|powerup} target - The target object to display the scores on

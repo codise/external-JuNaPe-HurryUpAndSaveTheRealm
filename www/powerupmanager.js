@@ -119,14 +119,4 @@ self.spawnRandomPowerupOn = function(point)
 		pUpDropList.push(newpUp);
 	}
 }
-
-/*
-* Return a random integer between min and max
-* @param {Number} min - the lowest possible number to return
-* @param {Number} min - the highest possible number to return
-*/
-var getRandomInt = function (min, max)
-	{
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-	};
 }

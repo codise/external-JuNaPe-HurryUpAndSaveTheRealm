@@ -91,7 +91,7 @@ var scale = function ()
 	};
 
 
-/*
+/**
 * Creates the player object
 * Sets the sprite and weapon, along with creating a healthbar and setting the player name
 */
@@ -239,7 +239,7 @@ self.update = function ()
 		}
 	};
 
-/*
+/**
 * Triggers when the player is hit
 * Changes player color and applies damage
 * @param {player} player - The player object which is hit
@@ -257,7 +257,7 @@ self.playerHit = function(player, bullet)
 	};
 
 
-/*
+/**
 * Triggers when the player takes damage
 * Decreases health and updates the healthbar, also kills the payer if necessery
 * @param {Number} damage - The amount of damage to deal
@@ -274,7 +274,7 @@ self.takeDamage = function(damage)
 		pHUD.updateHealthBar();
 	};
 
-/*
+/**
 * Heals the player for specified amount
 * @param {Number} amount - The amount of health to restore
 */
@@ -337,7 +337,7 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 	}
 }
 
-/*
+/**
 * Kills the player object
 */
 self.kill = function ()
@@ -354,7 +354,7 @@ self.kill = function ()
 	};
 
 
-/*
+/**
 * Adds a specified amount of points to the player
 * @param {Number} amount - The amount of points to add
 */
@@ -367,7 +367,7 @@ self.getPoints =  function(amount)
 		}
 	}
 
-/*
+/**
 * Removes a specified amount of points to the player
 * @param {Number} amount - The amount of points to remove
 */
