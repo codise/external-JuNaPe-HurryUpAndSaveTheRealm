@@ -6,7 +6,7 @@ function EnemyManager(game, bulletManager)
 {
 var self = this;
 
-/*
+/**
 * The dictionary which contains the enemy definitions
 */
 var enemyDictionary = { hellbug: {sprite: 'enemy_hellbug',
@@ -128,7 +128,7 @@ self.update = function (players)
 	self.enemyPool = maxEnemies - self.enemyGroup.length;
 	};
 
-/*
+/**
 * Spawn a bossmonster and disable normal monster spawning
 * @param {String} bossType - The identifier for the type of boss to spawn
 * @param {Point} bossPos - The position on which we spawn the boss

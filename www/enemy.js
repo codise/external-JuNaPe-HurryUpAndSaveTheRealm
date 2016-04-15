@@ -92,7 +92,7 @@ self.update = function (players)
 	checkCameraBounds();
 	};
 
-/*
+/**
 * Function that triggers when an enemy object is hit by a player bullet
 * Colors the sprite red, destroys the bullet and applies damage to the enemy
 * @param {enemy} enemy - The enemy object that is hit
@@ -111,7 +111,7 @@ self.enemyHit = function(enemy, bullet)
 	};
 
 
-/*
+/**
 * Decreases the enemys health by the specified amount and sets the target enemy as dead if health is < 0
 * @param {Number} damage - The amount of health to decrease
 */
@@ -125,7 +125,7 @@ self.enemyTakeDamage = function(damage)
 	};
 
 
-/*
+/**
 * Responsible for destroying the enemy sprite
 */
 self.kill = function ()
@@ -224,7 +224,7 @@ var createSlasherShot = function (n, bulletGraphic)
 	};
 
 
-/*
+/**
 * Checks if any enemy sprites would go offscreen, if they would, change the position so that no enemy can ever go offscreen
 */
 var checkCameraBounds = function ()

@@ -32,7 +32,7 @@ self.getpUpID = function ()
 	return pUpID;
 	};
 
-/*
+/**
 * Starts the specified powerup
 * @param {powerup} curpUp - The current powerup sprite
 * @param {player} player - The player sprite which triggered the powerup
