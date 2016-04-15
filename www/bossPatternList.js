@@ -12,7 +12,7 @@ bossPatterns.spiral1 = {
 	fireRate: 500,
 	moveRate: 500,
 	maxSpeed: 25,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 250,
 	bulletLifespan: 4500,
 	bulletAmount: 5,
@@ -29,7 +29,7 @@ bossPatterns.spiral1Reverse = {
 	fireRate: 500,
 	moveRate: 500,
 	maxSpeed: 25,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 250,
 	bulletLifespan: 4500,
 	bulletAmount: 5,
@@ -46,7 +46,7 @@ bossPatterns.spiral2 = {
 	fireRate: 350,
 	moveRate: 200,
 	maxSpeed: 30,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 350,
 	bulletLifespan: 3000,
 	bulletAmount: 5,
@@ -63,7 +63,7 @@ bossPatterns.spiral3 = {
 	fireRate: 350,
 	moveRate: 800,
 	maxSpeed: 30,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 350,
 	bulletLifespan: 3000,
 	bulletAmount: 5,
@@ -80,7 +80,7 @@ bossPatterns.spiral4 = {
 	fireRate: 600,
 	moveRate: 800,
 	maxSpeed: 30,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 350,
 	bulletLifespan: 3000,
 	bulletAmount: 8,
@@ -97,7 +97,7 @@ bossPatterns.spiralNova1 = {
 	fireRate: 10000,
 	moveRate: 500,
 	maxSpeed: 10,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 500,
 	bulletLifespan: 3000,
 	bulletAmount: 30,
@@ -122,7 +122,7 @@ bossPatterns.burst1 = {
 	fireRate: 800,
 	moveRate: 700,
 	maxSpeed: 45,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 250,
 	bulletSpeedVariance: 0,
 	bulletLifespan: 4500,
@@ -140,7 +140,7 @@ bossPatterns.burst2 = {
 	fireRate: 700,
 	moveRate: 400,
 	maxSpeed: 60,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 250,
 	bulletSpeedVariance: 0,
 	bulletLifespan: 4500,
@@ -159,7 +159,7 @@ bossPatterns.burst3 = {
 	fireRate: 600,
 	moveRate: 400,
 	maxSpeed: 60,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 250,
 	bulletSpeedVariance: 50,
 	bulletLifespan: 4500,
@@ -181,7 +181,7 @@ bossPatterns.burst4 = {
 	fireRate: 1200,
 	moveRate: 600,
 	maxSpeed: 100,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 280,
 	bulletSpeedVariance: 60,
 	bulletLifespan: 4500,
@@ -201,7 +201,7 @@ bossPatterns.burstSlash1 = {
 	fireRate: 1200,
 	moveRate: 600,
 	maxSpeed: 120,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 350,
 	bulletSpeedVariance: 0,
 	bulletLifespan: 1000,
@@ -222,7 +222,7 @@ bossPatterns.burst5 = {
 	fireRate: 1200,
 	moveRate: 600,
 	maxSpeed: 100,
-	bulletDamage: 10,
+	bulletDamage: 20,
 	bulletSpeed: 280,
 	bulletSpeedVariance: 60,
 	bulletLifespan: 4500,
@@ -233,11 +233,12 @@ bossPatterns.burst5 = {
 //line shooting patterns
 
 //boss2
+//The Sword Throw
 bossPatterns.line1 = {
 	patternRate: 1000,
 	movementScheme: ['charge'],
 	attackScheme: 'line',
-	bulletAmount: 13,
+	bulletAmount: 9,
 	
 	stickToTarget: true,
 	fireRate: 10000,
@@ -249,20 +250,21 @@ bossPatterns.line1 = {
 	bulletLifespan: 4500,
 	
 	bulletGraphic: 'enemyBullet7',
-	bulletDamage: 50,
+	bulletDamage: 60,
 	
 	lineBulletGraphic: 'enemyBullet9',
-	lineBulletDamage: 10,
+	lineBulletDamage: 15,
 
 	texture: 1,
 };
 
-//boss2 																						TODO
+//boss2 
+//Line Without Sword
 bossPatterns.line2 = {
 	patternRate: 3000,
 	movementScheme: ['charge'],
 	attackScheme: 'line',
-	bulletAmount: 13,
+	bulletAmount: 9,
 	
 	stickToTarget: false,
 	fireRate: 900,
@@ -274,10 +276,10 @@ bossPatterns.line2 = {
 	bulletLifespan: 4500,
 	
 	bulletGraphic: 'enemyBullet8',
-	bulletDamage: 20,
+	bulletDamage: 40,
 	
 	lineBulletGraphic: 'enemyBullet9',
-	lineBulletDamage: 10,
+	lineBulletDamage: 15,
 
 };
 

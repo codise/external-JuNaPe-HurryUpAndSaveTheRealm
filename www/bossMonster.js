@@ -33,25 +33,6 @@ var lowHealth = false;
 
 var mPlayers;
 
-var getAliveFromDict = function(players)
-	{
-	var alivePlayers = [];
-	var keys = Object.keys(players);
-	for(var i = 0; i < Object.keys(players).length; i++)
-		{
-		if(!players[keys[i]].dead)
-			{
-			alivePlayers.push(players[keys[i]]);
-			}
-		}
-	var random = Math.floor(Math.random() * alivePlayers.length);
-	if(alivePlayers.length > 0)
-		{
-		return alivePlayers[random];
-		}
-	return;
-	};
-
 var flip = function ()
 	{
 	if (flipped)
@@ -199,7 +180,7 @@ var move = function ()
 			var target
 			if(!currentPattern.target)
 				{
-				target = getAliveFromDict(mPlayers);
+				target = getAliveFromObject(mPlayers);
 				currentPattern.target = target;
 				} else {
 				target = currentPattern.target;
@@ -242,13 +223,13 @@ var attack = function (players)
 			var target
 			if(currentPattern.stickToTarget && !currentPattern.target)
 				{
-				target = getAliveFromDict(players);
+				target = getAliveFromObject(players);
 				currentPattern.target = target;
 				} else if (currentPattern.stickToTarget && currentPattern.target)
 				{
 				target = currentPattern.target;
 				} else {
-				target = getAliveFromDict(players);
+				target = getAliveFromObject(players);
 				}
 			
 			for(var i = 0 - ((currentPattern.bulletAmount-1)/2) ; i <= 0 + ((currentPattern.bulletAmount-1)/2); i++)
@@ -286,13 +267,13 @@ var attack = function (players)
 			var target
 			if(currentPattern.stickToTarget && !currentPattern.target)
 				{
-				target = getAliveFromDict(players);
+				target = getAliveFromObject(players);
 				currentPattern.target = target;
 				} else if (currentPattern.stickToTarget && currentPattern.target)
 				{
 				target = currentPattern.target;
 				} else {
-				target = getAliveFromDict(players);
+				target = getAliveFromObject(players);
 				}
 			//<<
 			
