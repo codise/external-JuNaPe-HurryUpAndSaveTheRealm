@@ -126,6 +126,8 @@ self.newPlayer = function (id)
 	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
 	game.effectManager.createSpawnEffect(spawnPosition);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
+	players[id].sprite.scale.x = scalingFactors.x;
+	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
 	};
 

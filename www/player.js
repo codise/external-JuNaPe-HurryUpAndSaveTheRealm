@@ -75,19 +75,18 @@ var pHUD;
 var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
 
-var scale = function ()
+var flip = function ()
 	{
 	if (flipped)
 		{
-		self.sprite.scale.x = -scalingFactors.x;
+		self.sprite.scale.x = -1 * Math.abs(self.sprite.scale.x);
 		self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
 		} 
 	else
 		{
-		self.sprite.scale.x = scalingFactors.x;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x);
 		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
 		}
-	self.sprite.scale.y = scalingFactors.y;
 	};
 
 
@@ -132,7 +131,7 @@ self.update = function ()
 	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now || self.dead);
 	if (self.weapon != undefined) self.weapon.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now || self.dead);
 
-	scale();
+	flip();
 	if (!self.dead)
 		{
 		if (input != undefined)
