@@ -38,9 +38,9 @@ var keys = Object.keys(pUpDictionary);
 
 //Variables for powerup spawning
 
-var PowerupSpawnCooldown = 3000; //Cooldown between attemps to spawn a powerup
+var PowerupSpawnCooldown = 10; //Cooldown between attemps to spawn a powerup
 var CurrentCooldownTime = 0; 
-var POWERUP_SPAWN_RATE = 20; //The percentage rate of sucess in powerup spawn attempts.
+var POWERUP_SPAWN_RATE = 90; //The percentage rate of sucess in powerup spawn attempts.
 
 self.pUpGroup = game.add.group(); // Group manages sprites
 var pUpList = []; // List manages powerup objects
@@ -60,6 +60,8 @@ self.update = function(players)
 		if(getRandomInt(0,100) <= POWERUP_SPAWN_RATE) {		
 			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
 			var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), randomPos, players);
+      newpUp.sprite.scale.x = 2 * scalingFactors.x;
+      newpUp.sprite.scale.y = 2 * scalingFactors.y;
 			self.pUpGroup.add(newpUp.sprite);
 			pUpList.push(newpUp);
 		}

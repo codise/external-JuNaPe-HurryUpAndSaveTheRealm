@@ -98,6 +98,8 @@ self.update = function (players)
 				{
 				game.effectManager.createSpawnEffect(spawnPosition);
 				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, spawnPosition);
+				newEnemy.sprite.scale.x = scalingFactors.x;
+				newEnemy.sprite.scale.y = scalingFactors.y;
 				self.enemyGroup.add(newEnemy.sprite);
 				newEnemy.sprite.body.collideWorldBounds = true;
 				self.enemyList.push(newEnemy);
