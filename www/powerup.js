@@ -12,16 +12,17 @@ var pUpID = pUpInfo.pUpID;
 var pUpDuration = pUpInfo.pUpDuration;
 var pUpStats = pUpInfo.pUpStats;
 var cameraPadding = 20;
+var pUpParticle = 'particle_blue';
 
 var emitter = null;
 
 self.update = function(players)
 {
 	scale();
-  if (emitter === null)
-    {
-    createEmitter();
-    }
+	if (emitter === null)
+		{
+		emitter = game.effectManager.createPowerUpEmitter(pUpPos, pUpParticle);
+		}
 	game.physics.arcade.overlap(players, self.sprite, self.triggerpUp, null, self);	
 	checkCameraBounds();
 
@@ -64,19 +65,6 @@ self.kill = function ()
 	};
 
 
-/**
-* Create particle emitter on the powerup
-*/
-var createEmitter = function ()
-	{
-    emitter = game.add.emitter(pUpPos.x, pUpPos.y, 20);
-    emitter.makeParticles('particle_blue');
-    emitter.setRotation(0, 0);
-    emitter.setAlpha(0.3, 0.8);
-    emitter.setScale(4*scalingFactors.x, scalingFactors.x, 4*scalingFactors.y, scalingFactors.y, 1000);
-    emitter.gravity = -100;
-    emitter.start(false, 500, 100);
-	};
 
 //We need to despawn powerups that go beyond the screen
 var checkCameraBounds = function ()

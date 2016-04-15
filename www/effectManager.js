@@ -80,4 +80,21 @@ self.popupScoreText = function(popUpText, target)
 	text.body.angularVelocity = 6 * dir[Math.floor((Math.random()*2))];
 	game.time.events.add(2500, function() {text.destroy();});
 	};
+
+
+/**
+* Create particle emitter on the powerup
+*/
+self.createPowerUpEmitter = function (position, sprite)
+	{
+		var emitter = game.add.emitter(position.x, position.y, 20);
+		emitter.makeParticles(sprite);
+		emitter.setRotation(0, 0);
+		emitter.setAlpha(0.3, 0.8);
+		emitter.setScale(4*scalingFactors.x, scalingFactors.x, 4*scalingFactors.y, scalingFactors.y, 1000);
+		emitter.gravity = -100;
+		emitter.start(false, 500, 100);
+		return emitter;
+	};
 }
+
