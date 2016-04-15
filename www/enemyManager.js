@@ -141,6 +141,9 @@ self.createBoss = function (bossType, bossPos)
 	if (bossDictionary[bossType] != undefined)
 		{
 		var bossMonster = new BossMonster(bossDictionary[bossType], game, bulletManager, bossPos);
+    bossMonster.sprite.smoothed = false;
+    bossMonster.sprite.scale.x = 2 * scalingFactors.x;
+    bossMonster.sprite.scale.y = 2 * scalingFactors.y;
 		self.enemyGroup.add(bossMonster.sprite);
 		bossMonster.sprite.body.collideWorldBounds = true;
 		self.enemyList.push(bossMonster);

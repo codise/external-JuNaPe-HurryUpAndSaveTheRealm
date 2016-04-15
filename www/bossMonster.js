@@ -52,22 +52,21 @@ var getAliveFromDict = function(players)
 	return;
 	};
 
-var scale = function ()
+var flip = function ()
 	{
 	if (flipped)
 		{
-		self.sprite.scale.x = scalingFactors.x * 2;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x);
 		} else
 		{
-		self.sprite.scale.x = -scalingFactors.x * 2;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x) * -1;
 		}
-	self.sprite.scale.y = scalingFactors.y * 2;
 	};
 
 self.update = function (players)
 	{
 	mPlayers = players;
-	scale();
+	flip();
 	if (game.time.now >= patternTimeout) 
 		{
 		nextPattern();
