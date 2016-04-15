@@ -116,12 +116,12 @@ var getPlayersAroundPoint = function (players,point,sizeX,sizeY)
 	//Bottom left
 	var squarePointsA = {}	
 	squarePointsA.x = point.x-sizeX;
-	squarePointsA.y = point.x-sizeY;
+	squarePointsA.y = point.y-sizeY;
 
 	//Top right
 	var squarePointsB = {}
 	squarePointsB.x = point.x+sizeX;
-	squarePointsB.y = point.x+sizeY;
+	squarePointsB.y = point.y+sizeY;
 
 	return getPlayersInArea(players,squarePointsA,squarePointsB);
 
