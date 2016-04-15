@@ -154,6 +154,12 @@ enemyBullets12.enableBody = true;
 enemyBullets12.physicsBodyType = Phaser.Physics.ARCADE;
 enemyBullets12.createMultiple(enemyBulletPool, 'enemyBullet12');
 
+//Reaper Skull
+var enemyBullets13 = game.add.group();
+enemyBullets13.enableBody = true;
+enemyBullets13.physicsBodyType = Phaser.Physics.ARCADE;
+enemyBullets13.createMultiple(enemyBulletPool, 'enemyBullet13');
+
 self.enemyBulletGroups.push(enemyBullets1);
 self.enemyBulletGroups.push(enemyBullets2);
 self.enemyBulletGroups.push(enemyBullets3);
@@ -166,6 +172,7 @@ self.enemyBulletGroups.push(enemyBullets9);
 self.enemyBulletGroups.push(enemyBullets10);
 self.enemyBulletGroups.push(enemyBullets11);
 self.enemyBulletGroups.push(enemyBullets12);
+self.enemyBulletGroups.push(enemyBullets13);
 
 self.enemyBulletCount;
 self.playerBulletCount;
@@ -271,6 +278,9 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 					break;
 				case 'enemyBullet12':
 					var bullet = enemyBullets12.getFirstDead();
+					break;
+				case 'enemyBullet13':
+					var bullet = enemyBullets13.getFirstDead();
 					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();

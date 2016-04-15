@@ -22,7 +22,7 @@ var pUpDictionary = {
 												heal: {				sprite: 'item_Heal',
 																	pUpID: 'smallHeal', 
 																	pUpDuration: 0,
-																	pUpStats: 70},
+																	pUpStats: 200},	//Heals to max HP instantly
 
 												incSpeed: {			sprite: 'item_SPD_Bonus',
 																	pUpID: 'incSpeed', 
