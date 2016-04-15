@@ -100,7 +100,7 @@ var createPlayer = function ()
 
 	self.weapon = weaponManager.createWeapon(self, sprites[self.playerClass]);
 	
-	pHUD = new Hud(game,self);
+	pHUD = new Hud(game, self);
 	pHUD.setName(self.playerName);
 	self.sprite.exists = true;
 
