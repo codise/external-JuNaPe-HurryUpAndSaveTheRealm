@@ -39,13 +39,18 @@ var nameText;
 self.updateHealthBar = function()
 	{
 	healthBarFill.clear();
-	healthBarFill.beginFill(0xFF3300);
-	healthBarFill.drawRect(drawPositionX,drawPositionY,(target.currentHealth/target.maxHealth*100),13);
-	healthBarFill.endFill();
+	if(target != undefined)
+		{
+		healthBarFill.beginFill(0xFF3300);
+		healthBarFill.drawRect(drawPositionX,drawPositionY,(target.currentHealth/target.maxHealth*100),13);
+		healthBarFill.endFill();
+		}
 	};
 
 self.setName = function(name)
 	{
+	if (target != undefined)
+		{
 		nameText = game.add.text(target.sprite.X, target.sprite.Y, name, {align: "center"});
 		target.sprite.addChild(nameText);
 		//nameText.x = (-textureWidth/2);
@@ -55,6 +60,7 @@ self.setName = function(name)
 		nameText.fill = '#ffffff';
 		nameText.anchor.setTo(0.5,0.5);
 		scale();
+		}
 	};
 
 var scale = function ()
