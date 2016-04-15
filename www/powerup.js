@@ -17,7 +17,7 @@ var pUpParticle = 'particle_blue';
 var emitter = null;
 
 self.update = function(players)
-{
+	{
 	scale();
 	if (emitter === null)
 		{
@@ -25,13 +25,12 @@ self.update = function(players)
 		}
 	game.physics.arcade.overlap(players, self.sprite, self.triggerpUp, null, self);	
 	checkCameraBounds();
-
-}
+	}
 
 self.getpUpID = function ()
-{
+	{
 	return pUpID;
-};
+	};
 
 /*
 * Starts the specified powerup
@@ -40,22 +39,20 @@ self.getpUpID = function ()
 */
 self.triggerpUp = function (curpUp, player)
 	{
-
-		var playerObject = player.playerObj;
-		if(pUpID == 'smallHeal') 
+	var playerObject = player.playerObj;
+	if(pUpID == 'smallHeal') 
 		{
-			playerObject.heal(pUpStats);
-
+		playerObject.heal(pUpStats);
 		} 
 		else if (pUpID == 'pointChest') 
 		{
-			playerObject.getPoints(pUpStats);
-			game.effectManager.popupScoreText("+"+pUpStats,self.sprite);
+		playerObject.getPoints(pUpStats);
+		game.effectManager.popupScoreText("+"+pUpStats,self.sprite);
 		}
 		else {
-			playerObject.startPowerUp(pUpID, pUpDuration, pUpStats)
+		playerObject.startPowerUp(pUpID, pUpDuration, pUpStats)
 		}
-		curpUp.dead = true;
+	curpUp.dead = true;
 	};
 
 self.kill = function ()
@@ -65,15 +62,14 @@ self.kill = function ()
 	};
 
 
-
 //We need to despawn powerups that go beyond the screen
 var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding || self.sprite.position.x > game.camera.x + game.camera.width - cameraPadding || self.sprite.position.y < game.camera.y + cameraPadding || self.sprite.position.y > game.camera.y + game.camera.height - cameraPadding)
 		{
-			self.sprite.dead = true;
+		self.sprite.dead = true;
 		}
-	};	
+	};
 
 var scale = function ()
 	{
