@@ -37,7 +37,7 @@ var enemyDictionary = { 						hellbug: {sprite: 'enemy_hellbug',
 																	
 												reaper: {sprite: 'enemy_ghost',
 																	movementScheme: 'random',
-																	shootingScheme: ['snipershot', 1, 'enemyBullet8'], //Bullet8 is placeholder untin new art
+																	shootingScheme: ['snipershot', 1, 'enemyBullet13'],
 																	
 																	maxSpeed: 200,
 																	moveRate: 500,

@@ -39,6 +39,7 @@ var loadState = function ()
 		game.load.image('enemyBullet10', 'assets/projectiles/enemyBullet_fork.png');
 		game.load.image('enemyBullet11', 'assets/projectiles/enemyBullet_Wave.png');
 		game.load.image('enemyBullet12', 'assets/projectiles/enemyBullet_Slash.png');
+		game.load.image('enemyBullet13', 'assets/projectiles/enemyBullet_Reaper.png');
 		
 
 		//load weapon sprites
