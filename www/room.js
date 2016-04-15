@@ -104,15 +104,22 @@ var moveLayer = function (layer, amount)
 	layer.position.y = layer.position.y + amount.y;
 	};
 
+/*
+* This fixes the errors caused by asynchonous reloading of assets in javascript
+*/
 var reloadBG = function ()
 	{
 	console.log("Failed to load the background initially!");
 	create();
 	};
 
+/*
+* Gets the current position of the backgroundlayer
+* @return {object} The current location of the layer
+*/
 self.getPos = function ()
 	{
-	if(backgroundLayer == undefined) reloadBG();
+	if(backgroundLayer == undefined) reloadBG(); //If the background failed to load, we forcibly relaod it
 	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
 }
