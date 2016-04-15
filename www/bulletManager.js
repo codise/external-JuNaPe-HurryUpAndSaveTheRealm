@@ -279,6 +279,9 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 				case 'enemyBullet12':
 					var bullet = enemyBullets12.getFirstDead();
 					break;
+				case 'enemyBullet13':
+					var bullet = enemyBullets13.getFirstDead();
+					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();
 				}
