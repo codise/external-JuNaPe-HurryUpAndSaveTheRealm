@@ -11,8 +11,18 @@ var countDownText;
 var loopTimeout;
 var cdText = 'Time remaining until next round: ';
 
+var qr;
+var qrText;
+
 self.preload = function ()
 	{
+	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
+	qr.scale.x = 1.5*scalingFactors.x;
+	qr.scale.y = 1.5*scalingFactors.y;
+	qr.anchor.setTo(1,1);
+	qrText = game.add.text(0, 0, 'Join JuNaPe WLAN and scan here ---> ', {font: '25px Courier', fill: '#ffffff'});
+	qrText.anchor.setTo(1,1);
+	qrText.position.setTo(qr.position.x - qr.width, qr.position.y);
 	roundScores = game.roundScoreTable;
 	scoreText = game.add.text(100, 100, genScore(roundScores), {font: "30px Calibri",  fill: "#ffffff"});
 	loopTimeout = game.time.now + 5000;
@@ -35,6 +45,8 @@ var genScore = function (table)
 
 self.update = function ()
 	{
+	qr.bringToTop();
+	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 	countDownText.text = cdText + (loopTimeout - game.time.now);
 	if(game.time.now > loopTimeout)
 		{

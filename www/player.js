@@ -70,13 +70,19 @@ var activePowerUps = [];
 
 var pHUD;
 
+// Spawn timeout stuff, will maybe become obsolete when spawning part of sprite spritesheet
+
+var spawnDelay = game.effectManager.getSpawnDuration();
+var spawnTimer = game.time.now;
+
 var scale = function ()
 	{
 	if (flipped)
 		{
 		self.sprite.scale.x = -scalingFactors.x;
 		self.sprite.body.setSize(-self.sprite.width, self.sprite.height);
-		} else
+		} 
+	else
 		{
 		self.sprite.scale.x = scalingFactors.x;
 		self.sprite.body.setSize(self.sprite.width, self.sprite.height);
@@ -102,6 +108,7 @@ var createPlayer = function ()
 	pHUD = new Hud(game,self);
 	pHUD.setName(self.playerName);
 	self.sprite.exists = true;
+
 	};
 
 self.setInput = function (inputArray)
@@ -121,12 +128,15 @@ var setClassAndName = function (pClass, pName)
 	
 self.update = function ()
 	{
+
+	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now || self.dead);
+	if (self.weapon != undefined) self.weapon.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now || self.dead);
+
 	scale();
 	if (!self.dead)
 		{
 		if (input != undefined)
 			{
-			
 			if(!setupDone)
 				{
 				//setting the player up here is a workaround to enable play on firefox
@@ -140,21 +150,37 @@ self.update = function ()
 				{
 				length = 1;
 				}
-			var angle = input.moveAngle;
-			game.physics.arcade.velocityFromAngle(angle, movementSpeed * length, self.sprite.body.velocity);
-			if (self.sprite.body.velocity.x > 0 && flipped)
+			var moveAngle = input.moveAngle;
+			game.physics.arcade.velocityFromAngle(moveAngle, movementSpeed * length, self.sprite.body.velocity);
+
+			var shooting = input.shootAngle != 0;
+			
+			if(Math.abs(input.shootAngle) > 180/2 && !flipped)
 				{
-				flipped = false;
-				} else if (self.sprite.body.velocity.x < 0 && !flipped) {
 				flipped = true;
 				}
-			if ((input.sX != 0 || input.sX != 0) && (game.time.now > nextFire))
+			else if(Math.abs(input.shootAngle) < 180/2 && flipped)
+				{
+				flipped = false;
+				}
+
+			if (self.sprite.body.velocity.x > 0 && flipped && !shooting)
+				{
+				flipped = false;
+				} 
+				else if (self.sprite.body.velocity.x < 0 && !flipped && !shooting) 
+				{
+				flipped = true;
+				}
+
+				
+			if (shooting && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				headingPoint.x = input.sX;
-				headingPoint.y = input.sY;
-				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, (Phaser.Point.angle(headingPoint, vectorPoint) * 360/Math.PI), self.sprite.position, bulletSpeed, bulletLifespan);
+				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan);
 				}
+			self.weapon.sprite.angle = input.shootAngle;
+			self.weapon.update(flipped, input);		
 			}
 
 		//We should only check for collisions when there are collidable objects on screen
@@ -184,7 +210,8 @@ self.update = function ()
 		}
 
 		} else if (self.dead && nextRespawn < 0) {
-		self.sprite.exists = true;
+		game.effectManager.createSpawnEffect(self.sprite.position);
+		spawnTimer = game.time.now;
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
@@ -226,7 +253,7 @@ self.playerHit = function(player, bullet)
 	var damage = bullet.damage;
 	bulletManager.killbullet(bullet);
 	self.takeDamage(damage);
-  	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
+	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
 
 
@@ -318,6 +345,7 @@ self.kill = function ()
 	clearAllPowerups();
 	game.effectManager.popupScoreText('-100',self.sprite);
 	self.sprite.exists = false;
+	self.weapon.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);

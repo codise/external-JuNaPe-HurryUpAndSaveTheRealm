@@ -15,6 +15,7 @@ window.onresize = resizeGame;
 
 self.preload = function ()
 	{
+	game.time.advancedTiming = true;
 	game.stage.disableVisibilityChange = true;
 	
 	self.bulletManager = new BulletManager(game);
@@ -56,12 +57,17 @@ self.update = function ()
 	self.roundManager.update();
 	if (self.roundManager.roundOver)
 		{
+		game.effectManager.popUpList = [];
 		game.roundScoreTable = self.roundManager.getScoreTable();
 		game.state.start('roundOver');
 		}
 	};
 
-self.render = function () {};
+self.render = function ()
+	{
+	game.debug.text('FPS: ' + (game.time.fps || '--') , 2, game.camera.height - 8, "#ff0000");
+
+	};
 
 
 self.onControllerConnected = function (id)
