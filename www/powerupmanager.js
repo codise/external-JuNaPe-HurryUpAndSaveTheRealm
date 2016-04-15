@@ -93,7 +93,7 @@ self.update = function(players)
 /**
 * Spawns a specified powerup on specified coordinates
 * @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
-* @param {Int} pUp - The integer ID of the powerup to spawn
+* @param {Number} pUp - The integer ID of the powerup to spawn
 */
 self.spawnPowerupOn = function(point, pUp)
 {
@@ -108,7 +108,7 @@ self.spawnPowerupOn = function(point, pUp)
 /**
 * Spawns a random powerup on specified coordinates
 * @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
-* @param {Int} pUp - The integer ID of the powerup to spawn
+* @param {Number} pUp - The integer ID of the powerup to spawn
 */
 self.spawnRandomPowerupOn = function(point)
 {
@@ -119,9 +119,4 @@ self.spawnRandomPowerupOn = function(point)
 		pUpDropList.push(newpUp);
 	}
 }
-
-var getRandomInt = function (min, max)
-	{
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-	};
 }

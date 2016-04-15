@@ -1,12 +1,12 @@
 'use strict';
 
-/* Room object
+/** Room object
 This object contains the information about a room in the game.
 
-deviceDimensionData is the dimension of the screen viewing device as a object.
-background is the path to the rooms backround png.
-collisionAssets is a path to tileset which has possible nonwall collidable assets, which are present in the room.
-collisionData is a path to a tilemap generated wih Tiled.
+@param deviceDimensionData is the dimension of the screen viewing device as a object.
+@param {Image} - background - is the path to the rooms backround png.
+@param {Image} - collisionAssets is a path to tileset which has possible nonwall collidable assets, which are present in the room.
+@param {Tilemap} - collisionData is a path to a tilemap generated wih Tiled.
 */
 
 function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed)
@@ -104,15 +104,22 @@ var moveLayer = function (layer, amount)
 	layer.position.y = layer.position.y + amount.y;
 	};
 
+/**
+* This fixes the errors caused by asynchonous reloading of assets in javascript
+*/
 var reloadBG = function ()
 	{
 	console.log("Failed to load the background initially!");
 	create();
 	};
 
+/**
+* Gets the current position of the backgroundlayer
+* @return {object} The current location of the layer
+*/
 self.getPos = function ()
 	{
-	if(backgroundLayer == undefined) reloadBG();
+	if(backgroundLayer == undefined) reloadBG(); //If the background failed to load, we forcibly relaod it
 	return {"x": backgroundLayer.position.x, "y": backgroundLayer.position.y};
 	};
 }

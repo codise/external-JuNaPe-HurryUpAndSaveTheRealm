@@ -57,6 +57,8 @@ self.update = function (players)
 	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now);
 
 	mPlayers = players;
+
+	//If the enemy does not have a target, we a pick random play as a target
 	if (currentTarget === undefined)
 		{
 		currentTarget = pickRandomFromDictionary(mPlayers);
@@ -90,6 +92,12 @@ self.update = function (players)
 	checkCameraBounds();
 	};
 
+/**
+* Function that triggers when an enemy object is hit by a player bullet
+* Colors the sprite red, destroys the bullet and applies damage to the enemy
+* @param {enemy} enemy - The enemy object that is hit
+* @param {bullet} bullet - The bullet object that hits the enemy
+*/
 self.enemyHit = function(enemy, bullet) 
 	{
 	self.sprite.tint = hitColor;
@@ -102,6 +110,11 @@ self.enemyHit = function(enemy, bullet)
 	if(self.sprite.dead) mPlayers[playerId].getPoints(20);
 	};
 
+
+/**
+* Decreases the enemys health by the specified amount and sets the target enemy as dead if health is < 0
+* @param {Number} damage - The amount of health to decrease
+*/
 self.enemyTakeDamage = function(damage) 
 	{
 	currentHealth = currentHealth - damage;
@@ -111,6 +124,10 @@ self.enemyTakeDamage = function(damage)
 		}
 	};
 
+
+/**
+* Responsible for destroying the enemy sprite
+*/
 self.kill = function ()
 	{
 	self.sprite.destroy();
@@ -221,6 +238,10 @@ var createSniperShot = function (n, bulletGraphic)
 		bulletManager.createBullet(bulletGraphic, 50, -1, angle, self.sprite.position, 500, 5000);
 	
 	};
+
+/**
+* Checks if any enemy sprites would go offscreen, if they would, change the position so that no enemy can ever go offscreen
+*/
 var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding)

@@ -317,6 +317,12 @@ self.update = function ()
 	//console.log(enemyBulletPool)
 	};
 
+/*
+* Calculates the number of bullets currently alive on the screen
+* @param {Array} groupList - The group containing all the bullets
+* @returns {Number} The number of bullets alive on the screen
+*/
+
 var countLiveBullets = function (groupList)
 	{
 	var count = 0;
