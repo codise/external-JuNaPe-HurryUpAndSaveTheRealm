@@ -74,6 +74,7 @@ var pHUD;
 
 var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
+var deathRelativePos = {x: 0, y: 0};
 
 var scale = function ()
 	{
@@ -210,6 +211,8 @@ self.update = function ()
 		}
 
 		} else if (self.dead && nextRespawn < 0) {
+		self.sprite.position.x = game.camera.x + deathRelativePos.x;
+		self.sprite.position.y = game.camera.y + deathRelativePos.y;
 		game.effectManager.createSpawnEffect(self.sprite.position);
 		spawnTimer = game.time.now;
 		self.dead = false;
@@ -350,6 +353,8 @@ self.kill = function ()
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	deathRelativePos.x = self.sprite.position.x - game.camera.x;
+	deathRelativePos.y = self.sprite.position.y - game.camera.y;
 	self.losePoints(100);
 	};
 
