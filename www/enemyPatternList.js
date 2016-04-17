@@ -1,6 +1,64 @@
 'use strict';
 
 var bossPatterns = {};
+var enemyPatterns = {};
+
+//on burst shot patterns, if burstSpreadAngle is not defined, default value = 10
+
+enemyPatterns.hellbug = {
+	movementScheme: ['random'],
+	attackScheme: 'radial',
+	bulletDamage: 30,
+	maxSpeed: 90,
+	moveRate: 1200,
+	fireRate: 10000,
+	bulletSpeed: 200,
+	bulletLifespan: 5000,
+	bulletAmount: 5,
+	bulletGraphic: 'enemyBullet1',
+};
+
+enemyPatterns.skeleton = {
+	movementScheme: ['charge'],
+	attackScheme: 'burst',
+	bulletDamage: 20,
+	maxSpeed: 60,
+	moveRate: 800,
+	fireRate: 6000,
+	bulletSpeed: 200,
+	bulletLifespan: 5000,
+	bulletAmount: 3,
+	bulletGraphic: 'enemyBullet3',
+	
+};
+
+enemyPatterns.slasher = {
+	movementScheme: ['charge'],
+	attackScheme: 'burst',
+	bulletDamage: 30,
+	maxSpeed: 180,
+	moveRate: 500,
+	fireRate: 1000,
+	bulletSpeed: 400,
+	bulletLifespan: 500,
+	bulletAmount: 1,
+	bulletGraphic: 'enemyBullet2',
+};
+
+enemyPatterns.reaper = {
+	movementScheme: ['random'],
+	attackScheme: 'burst',
+	bulletDamage: 30,
+	maxSpeed: 200,
+	moveRate: 500,
+	fireRate: 6000,
+	bulletSpeed: 500,
+	bulletLifespan: 5000,
+	bulletAmount: 1,
+	bulletGraphic: 'enemyBullet13',
+};
+
+
 
 //spiral shot patterns
 
