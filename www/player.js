@@ -394,7 +394,7 @@ var checkSpawnPosition = function()
 	while(distance < enemyFreeSpawnRadius)
 		{
 		findNewSpawnPostion();
-		distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); //no need to update aliveEnemies?
+		distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); 
 		}
 	};
 
