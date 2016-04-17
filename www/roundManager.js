@@ -19,7 +19,7 @@ var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { font
 
 var roundRunning = false;
 
-var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_mpi'); //or: 'qr_janika'
+var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
 qr.anchor.setTo(1,1);
