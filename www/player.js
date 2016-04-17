@@ -75,7 +75,7 @@ var pHUD;
 var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
 var deathRelativePos = {x: 0, y: 0};
-var enemyFreeSpawnRadius = game.width/10;
+var enemyFreeSpawnRadius = game.width/15;
 var spawnBorder = game.width/15;
 
 var scale = function ()
