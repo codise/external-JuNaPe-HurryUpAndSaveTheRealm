@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletManager, id, weaponManager)
+function Player(game, x, y, bulletManager, id, weaponManager, enemyManager)
 {
 var self = this;
 
@@ -390,12 +390,11 @@ self.losePoints = function(amount)
 
 var checkSpawnPosition = function()
 	{
-	var aliveEnemies = getAliveFromObject("enemyList");
-	var distance = dClosestEnemy(aliveEnemies, self.sprite.position);
+	var distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); //why doesn't work getAllLivingFromObject('enemyList')?
 	while(distance < enemyFreeSpawnRadius)
 		{
 		findNewSpawnPostion();
-		distance = dClosestEnemy(aliveEnemies, self.sprite.position); //no need to update aliveEnemies?
+		distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); //no need to update aliveEnemies?
 		}
 	};
 

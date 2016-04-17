@@ -73,8 +73,9 @@ var dClosestPlayer = function (players, position)
 var dClosestEnemy = function (enemies, position)
 	{
 	var currentMin = 9999999; // Arbitrarily large number
-	for (var enemy in enemies)
+	for (var i = 0; i < enemies.length; i++)
 		{
+		var enemy = enemies[i];
 		if (!enemy.sprite.dead)
 			{
 			var distance = Math.sqrt( Math.pow( (enemy.sprite.position.x - position.x), 2 ) + 
