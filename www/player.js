@@ -76,6 +76,7 @@ var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
 var deathRelativePos = {x: 0, y: 0};
 var enemyFreeSpawnRadius = game.width/20;
+var spawnBorder = game.width/15;
 
 var scale = function ()
 	{
@@ -387,10 +388,22 @@ self.losePoints = function(amount)
 		}
 	}
 
-
 var checkSpawnPosition = function()
 	{
+	var aliveEnemies = getAliveFromObject("enemyList");
+	var distance = dClosestEnemy(aliveEnemies, self.sprite.position);
+	while(distance < enemyFreeSpawnRadius)
+		{
+		findNewSpawnPostion();
+		distance = dClosestEnemy(aliveEnemies, self.sprite.position); //no need to update aliveEnemies?
+		}
+	};
 
+var findNewSpawnPostion = function()
+	{
+	var newPosition = getRandomPosition(spawnBorder);
+	self.sprite.position.x = newPosition.x;
+	self.sprite.position.y = newPosition.y;
 	};
 
 

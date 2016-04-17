@@ -65,6 +65,30 @@ var dClosestPlayer = function (players, position)
 	};
 
 /**
+* Return the distance between the provided position and the closest enemy
+* @param {Array} enemies - List of all enemies
+* @param {Point} position - The position to which compare
+* @return {Number} The distance in pixels from position to the closest enemy
+*/
+var dClosestEnemy = function (enemies, position)
+	{
+	var currentMin = 9999999; // Arbitrarily large number
+	for (var enemy in enemies)
+		{
+		if (!enemy.sprite.dead)
+			{
+			var distance = Math.sqrt( Math.pow( (enemy.sprite.position.x - position.x), 2 ) + 
+																Math.pow( (enemy.sprite.position.y - position.y), 2) );
+			if (distance <= currentMin)
+				{
+				currentMin = distance;
+				}
+			}
+		}
+	return currentMin;
+	};
+
+/**
 * Picks a random entry from a dictionary
 * @param {Array} dict - The dictionary from which we pick an object
 * @return {Object} A random object from the array
@@ -163,6 +187,14 @@ var getAllLivingFromObject = function(dict)
 var getRandomInt = function (min, max)
 	{
 		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+
+
+var getRandomPosition = function(border)
+	{
+	var position = {x: getRandomInt(game.camera.x + border, game.camera.x + game.width - border), 
+					y: getRandomInt(game.camera.y + border, game.camera.y + game.height - border)};
+	return position;
 	};
 
 /**
