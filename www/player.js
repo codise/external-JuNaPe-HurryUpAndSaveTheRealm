@@ -270,7 +270,11 @@ self.takeDamage = function(damage)
 		self.kill();
 		self.currentHealth = 0;
 		}
-		pHUD.updateHealthBar();
+		if(pHUD != undefined)
+			{
+			pHUD.updateHealthBar();
+			}
+		
 	};
 
 /**
@@ -284,7 +288,10 @@ self.heal = function(amount)
 	} else {		
 		self.currentHealth += amount;
 	}
-	pHUD.updateHealthBar();
+	if(pHUD != undefined)
+		{
+		pHUD.updateHealthBar();
+		}
 }
 
 self.setFireRate = function(amount) 
