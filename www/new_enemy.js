@@ -13,19 +13,16 @@ var hitColorTime = 50;
 var hitColor = enemyInfo.hitColor;
 
 var patternTimeout;
-var enemyScale;
 var currentPatterns;
 self.maxHealth = enemyInfo.maxHealth
 if(isBoss)
 	{
 	currentPatterns = enemyInfo.normalPatterns;
 	var healthBar = new Hud(game, self);
-	enemyScale = 2;
 	self.maxHealth *= Object.keys(game.playerList).length;
 	} else 
 	{
 	currentPatterns = enemyInfo.patterns;
-	enemyScale = 1;
 	}
 	
 self.currentHealth = self.maxHealth;
@@ -46,22 +43,21 @@ var cameraPadding = 20;
 var players;
 var targetPlayer;
 
-var scale = function ()
+var flip = function ()
 	{
 	if (flipped)
 		{
-		self.sprite.scale.x = scalingFactors.x * enemyScale;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x);
 		} else
 		{
-		self.sprite.scale.x = -scalingFactors.x * enemyScale;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x) * -1;
 		}
-	self.sprite.scale.y = scalingFactors.y * enemyScale;
 	};
 
 self.update = function (playersObj)
 	{
 	players = playersObj;
-	scale();
+	flip();
 	if (patternTimeout != undefined)
 		{
 		if (game.time.now >= patternTimeout) 
