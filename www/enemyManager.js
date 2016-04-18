@@ -113,6 +113,8 @@ self.update = function (players)
 				{
 				game.effectManager.createSpawnEffect(spawnPosition);
 				var newEnemy = new Enemy(pickRandomFromDictionary(enemyDictionary), game, bulletManager, players, spawnPosition);
+				newEnemy.sprite.scale.x = scalingFactors.x;
+				newEnemy.sprite.scale.y = scalingFactors.y;
 				self.enemyGroup.add(newEnemy.sprite);
 				newEnemy.sprite.body.collideWorldBounds = true;
 				self.enemyList.push(newEnemy);
@@ -154,6 +156,9 @@ self.createBoss = function (bossType, bossPos)
 	if (bossDictionary[bossType] != undefined)
 		{
 		var bossMonster = new BossMonster(bossDictionary[bossType], game, bulletManager, bossPos);
+    bossMonster.sprite.smoothed = false;
+    bossMonster.sprite.scale.x = 2 * scalingFactors.x;
+    bossMonster.sprite.scale.y = 2 * scalingFactors.y;
 		self.enemyGroup.add(bossMonster.sprite);
 		bossMonster.sprite.body.collideWorldBounds = true;
 		self.enemyList.push(bossMonster);

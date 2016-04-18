@@ -18,7 +18,6 @@ var emitter = null;
 
 self.update = function(players)
 	{
-	scale();
 	if (emitter === null)
 		{
 		emitter = game.effectManager.createPowerUpEmitter(pUpPos, pUpParticle);
@@ -69,13 +68,5 @@ var checkCameraBounds = function ()
 		{
 		self.sprite.dead = true;
 		}
-	};
-
-var scale = function ()
-	{
-	self.sprite.scale.x = 2 * scalingFactors.x;
-	self.sprite.scale.y = 2 * scalingFactors.y;
-	};
-
-
+	};	
 }

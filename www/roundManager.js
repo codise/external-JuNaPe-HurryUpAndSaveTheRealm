@@ -73,33 +73,34 @@ self.loadRound = function (roundData)
 		}
 
 	nextRoom = 2;
-
 	};
 
 var instantiateRound = function ()
 	{
 
 	// Position the two loaded rooms correctly
-
-	rooms[1].moveTo(game.camera.x, game.camera.y);
-	switch (rooms[1].moveDirection)
+	if (rooms[2] != undefined)
 		{
-		case "north":
-			rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-			break;
-		case "east":
-			rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-			break;
-		case "south":
-			rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
-			break;
-		case "west":
-			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-			break;
-		default:
-			rooms[2] = null;
+		rooms[1].moveTo(game.camera.x, game.camera.y);
+		switch (rooms[1].moveDirection)
+			{
+			case "north":
+				rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y, - game.camera.height);
+				break;
+			case "east":
+				rooms[2].moveTo(rooms[1].backgroundLayer.position.x + game.camera.width, rooms[1].backgroundLayer.position.y);
+				break;
+			case "south":
+				rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y + game.camera.height);
+				break;
+			case "west":
+				rooms[2].moveTo(rooms[1].backgroundLayer.position.x - game.camera.width, rooms[1].backgroundLayer.position.y);
+				break;
+			default:
+				rooms[2] = null;
+			}
+		startRound();
 		}
-	startRound();
 	};
 
 var startRound = function ()
@@ -125,6 +126,8 @@ self.newPlayer = function (id)
 	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
 	game.effectManager.createSpawnEffect(spawnPosition);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
+	players[id].sprite.scale.x = scalingFactors.x;
+	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
 	};
 
@@ -144,6 +147,7 @@ self.disconnectPlayer = function (id)
 
 self.update = function ()
 	{
+
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
 	game.world.bringToTop(powerupManager.pUpGroup);
@@ -151,6 +155,7 @@ self.update = function ()
 	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
 	scoreText.bringToTop();
+
 	var popUpList = game.effectManager.popUpList;
 	for(var i = 0; i < popUpList.length; i++)
 		{
@@ -305,22 +310,22 @@ var updateRoomMovement = function ()
 var instantiateNewRoom = function ()
 	{
 	switch (rooms[1].moveDirection)
-		{
-		case "north":
-			rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-			break;
-		case "east":
-			rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-			break;
-		case "south":
-			rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
-			break;
-		case "west":
-			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-			break;
-		default:
-			rooms[2] = null;
-		}
+    {
+    case "north":
+      rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y, - game.camera.height);
+      break;
+    case "east":
+      rooms[2].moveTo(rooms[1].backgroundLayer.position.x + game.camera.width, rooms[1].backgroundLayer.position.y);
+      break;
+    case "south":
+      rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y + game.camera.height);
+      break;
+    case "west":
+      rooms[2].moveTo(rooms[1].backgroundLayer.position.x - game.camera.width, rooms[1].backgroundLayer.position.y);
+      break;
+    default:
+      rooms[2] = null;
+    }
 	};
 
 var updateScore = function ()

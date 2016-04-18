@@ -65,8 +65,6 @@ self.update = function ()
 
 self.render = function ()
 	{
-	game.debug.text('FPS: ' + (game.time.fps || '--') , 2, game.camera.height - 8, "#ff0000");
-
 	};
 
 
