@@ -44,7 +44,7 @@ var lowHealth = false;
 
 var cameraPadding = 20;
 var players;
-
+var targetPlayer;
 
 var scale = function ()
 	{
@@ -69,13 +69,18 @@ self.update = function (playersObj)
 			nextPattern();
 			}
 		}
-	if (currentPattern.target)
+	if (targetPlayer)
 		{
-		if(currentPattern.target.dead && currentPatterns.length > 1)
+		if(targetPlayer.dead)
 			{
-				//check here if we can get another alive target and switch to it instead
-				//go to next pattern if no one is alive
-			nextPattern();
+			var newTarget = getAliveFromObject(players);
+			if (newTarget != undefined)
+				{
+				targetPlayer = newTarget;
+				} else if(currentPatterns.length > 1)
+				{
+				nextPattern();
+				}
 			}
 		}
 	if(isBoss && self.currentHealth < self.maxHealth / 3 && lowHealth == false)
@@ -151,12 +156,9 @@ self.kill = function ()
 
 function nextPattern()
 	{
-	if(currentPattern)
+	if(targetPlayer)
 		{
-		if(currentPattern.target)
-			{
-			currentPattern.target = undefined;
-			}
+		targetPlayer = undefined;
 		}
 	shotsFired = 0;
 	currentPatternIndex++;
@@ -202,13 +204,13 @@ var move = function ()
 			movementDirection += 180;
 			break;
 		case 'charge':
-			var target
-			if(!currentPattern.target)
+			var target;
+			if(!targetPlayer)
 				{
 				target = getAliveFromObject(players);
-				currentPattern.target = target;
+				targetPlayer = target;
 				} else {
-				target = currentPattern.target;
+				target = targetPlayer;
 				}
 			if(target != undefined)
 				{
@@ -261,19 +263,7 @@ var attack = function ()
 			break;
 		
 		case 'burst':
-			//>> this needs to be a separate function
-			var target
-			if(currentPattern.stickToTarget && !currentPattern.target)
-				{
-				target = getAliveFromObject(players);
-				currentPattern.target = target;
-				} else if (currentPattern.stickToTarget && currentPattern.target)
-				{
-				target = currentPattern.target;
-				} else {
-				target = getAliveFromObject(players);
-				}
-			//<<
+			var target = checkShootTarget();
 			
 			for(var i = 0 - ((currentPattern.bulletAmount-1)/2) ; i <= 0 + ((currentPattern.bulletAmount-1)/2); i++)
 				{
@@ -314,19 +304,7 @@ var attack = function ()
 				}
 			break;
 		case 'line':
-			//>> this needs to be a separate function
-			var target
-			if(currentPattern.stickToTarget && !currentPattern.target)
-				{
-				target = getAliveFromObject(players);
-				currentPattern.target = target;
-				} else if (currentPattern.stickToTarget && currentPattern.target)
-				{
-				target = currentPattern.target;
-				} else {
-				target = getAliveFromObject(players);
-				}
-			//<<
+			var target = checkShootTarget();
 			
 			if(target != undefined && !target.dead)
 				{
@@ -354,6 +332,19 @@ var attack = function ()
 	nextFire = game.time.now + currentPattern.fireRate;
 	};
 	
+var checkShootTarget = function ()
+	{
+	if(currentPattern.stickToTarget && !targetPlayer)
+		{
+		targetPlayer = getAliveFromObject(players);
+		return targetPlayer;
+		} else if (currentPattern.stickToTarget && targetPlayer)
+		{
+		return targetPlayer;
+		} else {
+		return getAliveFromObject(players);
+		}
+	};
 	
 var checkCameraBounds = function ()
 	{
