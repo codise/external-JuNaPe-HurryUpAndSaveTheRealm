@@ -227,13 +227,14 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
 
-		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
+		/*for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
 			{
 			//game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
 			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], enemyManager.enemyGroup);
 			}
-		
+		*/
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
 			{

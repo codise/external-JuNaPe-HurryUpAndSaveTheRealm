@@ -107,9 +107,9 @@ self.update = function (playersObj)
 	
 	if(bulletManager.playerBulletCount > 0) 
 		{
-		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
+		for (var i = 0; i < bulletManager.playerBulletGroup.children.length; i++) 
 			{
-			game.physics.arcade.overlap(bulletManager.playerBulletGroups[i], self.sprite, self.enemyHit, null, self); 
+			game.physics.arcade.overlap(bulletManager.playerBulletGroup.children[i], self.sprite, self.enemyHit, null, self); 
 			}
 		}
 	

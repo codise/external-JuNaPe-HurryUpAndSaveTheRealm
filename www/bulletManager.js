@@ -4,8 +4,6 @@ function BulletManager(game)
 {
 var self = this;
 
-self.playerBulletGroups = [];
-
 var enemyMaxBullets= 300;
 var playerMaxBullets = 200;
 
@@ -63,15 +61,6 @@ playerBullets6.enableBody = true;
 playerBullets6.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets6.createMultiple(playerBulletPool, 'bullet6');
 
-
-
-self.playerBulletGroups.push(playerBullets1);
-self.playerBulletGroups.push(playerBullets2);
-self.playerBulletGroups.push(playerBullets3);
-self.playerBulletGroups.push(playerBullets4);
-self.playerBulletGroups.push(playerBullets5);
-self.playerBulletGroups.push(playerBullets6);
-
 self.playerBulletGroup.add(playerBullets1);
 self.playerBulletGroup.add(playerBullets2);
 self.playerBulletGroup.add(playerBullets3);
@@ -79,19 +68,11 @@ self.playerBulletGroup.add(playerBullets4);
 self.playerBulletGroup.add(playerBullets5);
 self.playerBulletGroup.add(playerBullets6);
 
-/*
-self.playerBulletGroups.push(playerArrowBullets);
-self.playerBulletGroups.push(playerMagicBullets);
-*/
-
-self.enemyBulletGroups = [];
 
 var enemyGenericBullets = game.add.group();
 enemyGenericBullets.enableBody = true;
 enemyGenericBullets.physicsBodyType = Phaser.Physics.ARCADE;
 enemyGenericBullets.createMultiple(enemyBulletPool, 'magic');
-
-self.enemyBulletGroups.push(enemyGenericBullets);
 
 //blue
 var enemyBullets1 = game.add.group();
@@ -170,21 +151,6 @@ var enemyBullets13 = game.add.group();
 enemyBullets13.enableBody = true;
 enemyBullets13.physicsBodyType = Phaser.Physics.ARCADE;
 enemyBullets13.createMultiple(enemyBulletPool, 'enemyBullet13');
-
-self.enemyBulletGroups.push(enemyBullets1);
-self.enemyBulletGroups.push(enemyBullets2);
-self.enemyBulletGroups.push(enemyBullets3);
-self.enemyBulletGroups.push(enemyBullets4);
-self.enemyBulletGroups.push(enemyBullets5);
-self.enemyBulletGroups.push(enemyBullets6);
-self.enemyBulletGroups.push(enemyBullets7);
-self.enemyBulletGroups.push(enemyBullets8);
-self.enemyBulletGroups.push(enemyBullets9);
-self.enemyBulletGroups.push(enemyBullets10);
-self.enemyBulletGroups.push(enemyBullets11);
-self.enemyBulletGroups.push(enemyBullets12);
-self.enemyBulletGroups.push(enemyBullets13);
-
 
 self.enemyBulletGroup.add(enemyBullets1);
 self.enemyBulletGroup.add(enemyBullets2);
@@ -326,8 +292,8 @@ self.killbullet = function (bullet)
 
 self.update = function ()
 	{
-	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
-	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
+	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroup);
+	self.playerBulletCount = countLiveBullets(self.playerBulletGroup);
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
 	//console.log(enemyBulletPool)
@@ -342,11 +308,12 @@ self.update = function ()
 var countLiveBullets = function (groupList)
 	{
 	var count = 0;
-	for (var i = 0; i < groupList.length; i++)
+	for (var i = 0; i < groupList.children.length; i++) 
 		{
-		count += groupList[i].countLiving();
+		count += groupList.children[i].countLiving();
 		}
 	return count;
+
 	};
 }
 
