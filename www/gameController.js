@@ -53,6 +53,7 @@ var controllerpad2;
 var deadText;
 self.preload = function ()
 	{
+	game.time.desiredFps = 30;
 	self.id = getParameter("id");
 	if (!self.id)
 		{
