@@ -92,7 +92,7 @@ self.update = function (players)
 	checkCameraBounds();
 	};
 
-/*
+/**
 * Function that triggers when an enemy object is hit by a player bullet
 * Colors the sprite red, destroys the bullet and applies damage to the enemy
 * @param {enemy} enemy - The enemy object that is hit
@@ -111,7 +111,7 @@ self.enemyHit = function(enemy, bullet)
 	};
 
 
-/*
+/**
 * Decreases the enemys health by the specified amount and sets the target enemy as dead if health is < 0
 * @param {Number} damage - The amount of health to decrease
 */
@@ -125,7 +125,7 @@ self.enemyTakeDamage = function(damage)
 	};
 
 
-/*
+/**
 * Responsible for destroying the enemy sprite
 */
 self.kill = function ()
@@ -181,7 +181,7 @@ var createRadialPulse = function (n, bulletGraphic)
 	for (var i = 0; i < n; i++)
 		{
 		var angle = 360/n * i + randomOffset;
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
+		bulletManager.createBullet(bulletGraphic, 30, -1, angle, self.sprite.position, 200, 5000);
 		}
 	};
 
@@ -200,7 +200,7 @@ var createDirectedBurst = function (n, bulletGraphic)
 		var randomOffset = Math.floor((Math.random() * 9)) - 4;
 		var angle = angleBetween + ((i )* 10) + randomOffset;
 		
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
+		bulletManager.createBullet(bulletGraphic, 20, -1, angle, self.sprite.position, 200, 5000);
 		}
 	};
 
@@ -219,12 +219,27 @@ var createSlasherShot = function (n, bulletGraphic)
 		var randomOffset = Math.floor((Math.random() * 9)) - 4;
 		var angle = angleBetween + ((i )* 10) + randomOffset;
 		
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 400, 500);
+		bulletManager.createBullet(bulletGraphic, 20, -1, angle, self.sprite.position, 400, 500);
 		}
 	};
 
+var createSniperShot = function (n, bulletGraphic)
+	{
+	// One bullet towards target
+	if(currentTarget != undefined)
+		{	
+		var angleBetween = game.physics.arcade.angleBetween(self.sprite, currentTarget.sprite) * 180/Math.PI;
+		} else {
+		console.log('tried to shoot at undefined player');
+		}
+		
+		var angle = angleBetween;
+		
+		bulletManager.createBullet(bulletGraphic, 50, -1, angle, self.sprite.position, 500, 5000);
+	
+	};
 
-/*
+/**
 * Checks if any enemy sprites would go offscreen, if they would, change the position so that no enemy can ever go offscreen
 */
 var checkCameraBounds = function ()

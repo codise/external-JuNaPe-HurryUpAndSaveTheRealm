@@ -16,90 +16,144 @@
 var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount)
 	{
 	var tryCount = 0;
-
+	var currentBestDistance = 0;
+	var currentBestPos = {};
 	var acceptablePosition = false;
+	var currentDistance = 0;
 	while (!acceptablePosition || (tryCount < maxTryCount && maxTryCount != undefined))
 		{
 		var randomPos = {};
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
-		if (dClosestPlayer(playerList, randomPos) >= minimumDistance)
+		currentDistance = dClosestPlayer(playerList, randomPos);
+		if (currentDistance >= minimumDistance)
 			{
 			acceptablePosition = true;
+			currentBestPos = randomPos;
 			}
+		else if(currentDistance >= currentBestDistance) {
+			currentBestPos = randomPos;
+		}
 		tryCount++;
 		}
-	
-	if (randomPos != undefined)
-		{
-		return randomPos;
-		} else
-		{
-		return null;
-		}
+		return currentBestPos;
 	};
 
-/*
-* Return the distance between the provided position and the closes player
+/**
+* Return the distance between the provided position and the closest player
 * @param {Array} players - List of all players
 * @param {Point} position - The position to which compare
 * @return {Number} The distance in pixels from position to the closest player
 */
 var dClosestPlayer = function (players, position)
-  {
-  var currentMin = 9999999; // Arbitrarily large number
-  for (var id in players)
-    {
-    var player = players[id];
-    if (player != undefined && !player.dead)
-      {
-      var distance = Math.sqrt( Math.pow( (player.sprite.position.x - position.x), 2 ) + 
-                                Math.pow( (player.sprite.position.y - position.y), 2) );
-      if (distance <= currentMin)
-        {
-        currentMin = distance;
-        }
-      }
-    }
-  return currentMin;
-  };
+	{
+	var currentMin = 9999999; // Arbitrarily large number
+	for (var id in players)
+		{
+		var player = players[id];
+		if (player != undefined && !player.dead)
+			{
+			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - position.x), 2 ) + 
+																Math.pow( (player.sprite.position.y - position.y), 2) );
+			if (distance <= currentMin)
+				{
+				currentMin = distance;
+				}
+			}
+		}
+	return currentMin;
+	};
 
-/*
+/**
 * Picks a random entry from a dictionary
 * @param {Array} dict - The dictionary from which we pick an object
 * @return {Object} A random object from the array
 */
 
 var pickRandomFromDictionary = function (dict)
-  {
-  var keys = Object.keys(dict);
-  var object
-  object = dict[keys[ keys.length * Math.random() << 0]];
-  return object;
-  };
+	{
+	var keys = Object.keys(dict);
+	var object
+	object = dict[keys[ keys.length * Math.random() << 0]];
+	return object;
+	};
 
-/*
-* Resizes the game to fit new window dimensions
+/**
+* Return a player object closest to the given point or undefined if no player was found
+* Used in some énemies when finding a new target
+* @param {Array} players - The list of all player objects
+* @param {Point} position - The point we need to find the closest player to  
+* @return {player} - The player object closest to a point
 */
-var resizeGame = function ()
-  {
-  var height = window.innerHeight * window.devicePixelRatio;
-  var width = window.innerWidth * window.devicePixelRatio;
+	var getLivingPlayerClosestToPoint = function(players, position) 
+	{
+	var currentMin = 9999999; // Arbitrarily large number
+	var closestPlayer;
+	var alivePlayers = getAllLivingFromDict(players);
+	if(alivePlayers == undefined) return;
+	for (var id in alivePlayers)
+		{
+		var player = alivePlayers[id];
+		if (player != undefined)
+			{
+			var distance = Math.sqrt( Math.pow( (player.sprite.position.x - position.x), 2 ) + 
+																Math.pow( (player.sprite.position.y - position.y), 2) );
+			if (distance <= currentMin)
+				{
+				currentMin = distance;
+				closestPlayer = player;
+				}
+			}
+		}
+	return closestPlayer;
+	};
 
-  if (game != undefined)
-    {
-    game.width = width;
-    game.height = height;
-    game.stage.bounds.width = width;
-    game.stage.bounds.height = height;
+/**
+* Return a single random living object from a dictionary
+* @param {Array} dict - The dictionary containing the objects from which to find the living objects from
+* @return {Object} - List containing all living objects
+*/
+var getAliveFromObject = function(dict)
+	{
+	var aliveObject = [];
+	var keys = Object.keys(dict);
+	for(var i = 0; i < Object.keys(dict).length; i++)
+		{
+		if(!dict[keys[i]].dead)
+			{
+			aliveObject.push(dict[keys[i]]);
+			}
+		}
+	var random = Math.floor(Math.random() * aliveObject.length);
+	if(aliveObject.length > 0)
+		{
+		return aliveObject[random];
+		}
+	return;
+	};
 
-    if (game.renderType === 1)
-      {
-      game.renderer.resize(width, height);
-      Phaser.Canvas.setSmoothingEnabled(game.context, false);
-      }
-    }
-  };
+/**
+* Return a list of living objects from a dictionary
+* @param {Array} dict - The dictionary containing the objects from which to find the living objects from
+* @return {Array} - List containing all living objects
+*/
+var getAllLivingFromObject = function(dict)
+	{
+	var livingObjects = [];
+	var keys = Object.keys(dict);
+	for(var i = 0; i < Object.keys(dict).length; i++)
+		{
+		if(!dict[keys[i]].dead)
+			{
+			livingObjects.push(dict[keys[i]]);
+			}
+		}
+	if(livingObjects.length > 0)
+		{
+		return livingObjects;
+		}
+	return;
+	};
 
 /**
 * Returns a list of players around the specified point
@@ -157,3 +211,36 @@ var getPlayersInArea = function (players, botLeft, topRight)
 		}
 		return;
 }
+
+/**
+* Return a random integer between min and max
+* @param {Number} min - the lowest possible number to return
+* @param {Number} min - the highest possible number to return
+*/
+var getRandomInt = function (min, max)
+	{
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+
+/**
+* Resizes the game to fit new window dimensions
+*/
+var resizeGame = function ()
+	{
+	var height = window.innerHeight * window.devicePixelRatio;
+	var width = window.innerWidth * window.devicePixelRatio;
+
+	if (game != undefined)
+		{
+		game.width = width;
+		game.height = height;
+		game.stage.bounds.width = width;
+		game.stage.bounds.height = height;
+
+		if (game.renderType === 1)
+			{
+			game.renderer.resize(width, height);
+			Phaser.Canvas.setSmoothingEnabled(game.context, false);
+			}
+		}
+	};
