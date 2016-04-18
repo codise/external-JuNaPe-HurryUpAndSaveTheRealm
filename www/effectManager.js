@@ -67,7 +67,7 @@ self.createDeathEffect = function (target)
 self.popupScoreText = function(popUpText, target)
 	{
 	var text = game.add.text(target.position.x, target.position.y, popUpText, { font: "20px Arial", fill: "#FFFFFF"});
-	self.popUpList.push(text);
+	game.state.states.play.roundManager.popUpGroup.add(text);
 	game.physics.arcade.enable(text);
 	text.body.collideWorldBounds = true;
 	text.body.bounce.set(1);

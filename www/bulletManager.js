@@ -12,6 +12,9 @@ var playerMaxBullets = 200;
 var enemyBulletPool = enemyMaxBullets;
 var playerBulletPool = playerMaxBullets;
 
+self.playerBulletGroup = game.add.group();
+self.enemyBulletGroup = game.add.group();
+
 /*
 var playerArrowBullets = game.add.group();
 playerArrowBullets.enableBody = true;
@@ -61,12 +64,20 @@ playerBullets6.physicsBodyType = Phaser.Physics.ARCADE;
 playerBullets6.createMultiple(playerBulletPool, 'bullet6');
 
 
+
 self.playerBulletGroups.push(playerBullets1);
 self.playerBulletGroups.push(playerBullets2);
 self.playerBulletGroups.push(playerBullets3);
 self.playerBulletGroups.push(playerBullets4);
 self.playerBulletGroups.push(playerBullets5);
 self.playerBulletGroups.push(playerBullets6);
+
+self.playerBulletGroup.add(playerBullets1);
+self.playerBulletGroup.add(playerBullets2);
+self.playerBulletGroup.add(playerBullets3);
+self.playerBulletGroup.add(playerBullets4);
+self.playerBulletGroup.add(playerBullets5);
+self.playerBulletGroup.add(playerBullets6);
 
 /*
 self.playerBulletGroups.push(playerArrowBullets);
@@ -173,6 +184,21 @@ self.enemyBulletGroups.push(enemyBullets10);
 self.enemyBulletGroups.push(enemyBullets11);
 self.enemyBulletGroups.push(enemyBullets12);
 self.enemyBulletGroups.push(enemyBullets13);
+
+
+self.enemyBulletGroup.add(enemyBullets1);
+self.enemyBulletGroup.add(enemyBullets2);
+self.enemyBulletGroup.add(enemyBullets3);
+self.enemyBulletGroup.add(enemyBullets4);
+self.enemyBulletGroup.add(enemyBullets5);
+self.enemyBulletGroup.add(enemyBullets6);
+self.enemyBulletGroup.add(enemyBullets7);
+self.enemyBulletGroup.add(enemyBullets8);
+self.enemyBulletGroup.add(enemyBullets9);
+self.enemyBulletGroup.add(enemyBullets10);
+self.enemyBulletGroup.add(enemyBullets11);
+self.enemyBulletGroup.add(enemyBullets12);
+self.enemyBulletGroup.add(enemyBullets13);
 
 self.enemyBulletCount;
 self.playerBulletCount;
