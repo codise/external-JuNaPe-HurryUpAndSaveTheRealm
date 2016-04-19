@@ -75,6 +75,15 @@ var pHUD;
 var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
 
+// Powerup shimmer effects, using emitters
+
+var emitterList = [];
+emitterList[0] = game.effectManager.createPlayerEmitter('particle_blue');
+emitterList[1] = game.effectManager.createPlayerEmitter('particle_red');
+
+self.sprite.addChild(emitterList[0]);
+self.sprite.addChild(emitterList[1]);
+
 var scale = function ()
 	{
 	if (flipped)
@@ -197,11 +206,13 @@ self.update = function ()
 						if(activePowerUps[i].powerUpID == 'incSpeed') 
 						{
 							self.setSpeed(baseMovementSpeed);
+							emitterList[0].on = false;
 						}
 
 						else if (activePowerUps[i].powerUpID == 'incFireRate')
 						{
 							self.setFireRate(baseFireRate);
+							emitterList[1].on = false;
 						}
 						activePowerUps.splice(i,1); //We remove the expired powerup from the array
 					}				
@@ -325,12 +336,13 @@ self.startPowerUp = function(pUpID, pUpDuration, pUpStats)
 		{
 			case 'incSpeed':
 				self.setSpeed(movementSpeed + pUpStats);
+				emitterList[0].start(false, 500);
 				break;
 
 			case 'incFireRate':
 				self.setFireRate(fireRate - pUpStats);
+				emitterList[1].start(false, 500);
 				break;
-
 			default:
 				break;
 		}
