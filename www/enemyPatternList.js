@@ -11,10 +11,10 @@ enemyPatterns.hellbug = {
 	bulletDamage: 30,
 	maxSpeed: 90,
 	moveRate: 1200,
-	fireRate: 10000,
+	fireRate: 5000,
 	bulletSpeed: 200,
 	bulletLifespan: 5000,
-	bulletAmount: 5,
+	bulletAmount: 6,
 	bulletGraphic: 'enemyBullet1',
 };
 
@@ -26,7 +26,7 @@ enemyPatterns.skeleton = {
 	maxSpeed: 60,
 	moveRate: 800,
 	fireRate: 6000,
-	bulletSpeed: 200,
+	bulletSpeed: 250,
 	bulletLifespan: 5000,
 	bulletAmount: 3,
 	bulletGraphic: 'enemyBullet3',
@@ -50,7 +50,7 @@ enemyPatterns.slasher = {
 enemyPatterns.reaper = {
 	movementScheme: ['random'],
 	attackScheme: 'burst',
-	bulletDamage: 30,
+	bulletDamage: 50,
 	maxSpeed: 200,
 	moveRate: 500,
 	fireRate: 6000,
