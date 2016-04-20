@@ -58,8 +58,8 @@ self.loadRound = function (roundData)
 	{
 
 	// Set camera in the middle of the stage
-	game.camera.x = game.world.width/2 - game.camera.width/2;
-	game.camera.y = game.world.height/2 - game.camera.height/2;
+	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
+	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
 
 	rooms[0] = null;
