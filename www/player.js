@@ -1,6 +1,6 @@
 'use strict';
 
-function Player(game, x, y, bulletManager, id, weaponManager)
+function Player(game, x, y, bulletManager, id, weaponManager, enemyManager)
 {
 var self = this;
 
@@ -74,6 +74,9 @@ var pHUD;
 
 var spawnDelay = game.effectManager.getSpawnDuration();
 var spawnTimer = game.time.now;
+var deathRelativePos = {x: 0, y: 0};
+var enemyFreeSpawnRadius = game.width/15;
+var spawnBorder = game.width/15;
 
 var flip = function ()
 	{
@@ -209,6 +212,9 @@ self.update = function ()
 		}
 
 		} else if (self.dead && nextRespawn < 0) {
+		self.sprite.position.x = game.camera.x + deathRelativePos.x;
+		self.sprite.position.y = game.camera.y + deathRelativePos.y;
+		checkSpawnPosition();
 		game.effectManager.createSpawnEffect(self.sprite.position);
 		spawnTimer = game.time.now;
 		self.dead = false;
@@ -356,6 +362,8 @@ self.kill = function ()
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);
 	nextRespawn = respawnTime;
+	deathRelativePos.x = self.sprite.position.x - game.camera.x;
+	deathRelativePos.y = self.sprite.position.y - game.camera.y;
 	self.losePoints(100);
 	};
 
@@ -385,6 +393,24 @@ self.losePoints = function(amount)
 		game.playerList[id].totalScore -= amount;
 		}
 	}
+
+var checkSpawnPosition = function()
+	{
+	var distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); //why doesn't work getAllLivingFromObject('enemyList')?
+	while(distance < enemyFreeSpawnRadius)
+		{
+		findNewSpawnPostion();
+		distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); 
+		}
+	};
+
+var findNewSpawnPostion = function()
+	{
+	var newPosition = getRandomPosition(spawnBorder);
+	self.sprite.position.x = newPosition.x;
+	self.sprite.position.y = newPosition.y;
+	};
+
 
 var clearAllPowerups = function ()
 	{
