@@ -40,7 +40,7 @@ var keys = Object.keys(pUpDictionary);
 
 var PowerupSpawnCooldown = 3000; //Cooldown between attemps to spawn a powerup
 var CurrentCooldownTime = 0; 
-var POWERUP_SPAWN_RATE = 20; //The percentage rate of sucess in powerup spawn attempts.
+var POWERUP_SPAWN_RATE = 100; //The percentage rate of sucess in powerup spawn attempts.
 
 self.pUpGroup = game.add.group(); // Group manages sprites
 var pUpList = []; // List manages powerup objects

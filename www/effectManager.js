@@ -96,5 +96,15 @@ self.createPowerUpEmitter = function (position, sprite)
 	emitter.start(false, 500, 100);
 	return emitter;
 	};
+
+self.createPlayerEmitter = function (sprite)
+	{
+	var emitter = game.add.emitter(0, 0, 20);
+	emitter.makeParticles(sprite);
+	emitter.setAlpha(1, 1);
+	emitter.setScale(10 * scalingFactors.x, 20*scalingFactors.x, 10*scalingFactors.y, 20*scalingFactors.y, 500);
+	emitter.gravity = -100;
+	return emitter;
+	};
 }
 
