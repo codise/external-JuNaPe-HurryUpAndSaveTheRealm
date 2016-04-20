@@ -89,16 +89,16 @@ var instantiateRound = function ()
 		switch (rooms[1].moveDirection)
 			{
 			case "north":
-				rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y, - game.camera.height);
+				rooms[2].moveTo(game.camera.x, game.camera.y, - game.camera.height);
 				break;
 			case "east":
-				rooms[2].moveTo(rooms[1].backgroundLayer.position.x + game.camera.width, rooms[1].backgroundLayer.position.y);
+				rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
 				break;
 			case "south":
-				rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y + game.camera.height);
+				rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
 				break;
 			case "west":
-				rooms[2].moveTo(rooms[1].backgroundLayer.position.x - game.camera.width, rooms[1].backgroundLayer.position.y);
+				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
 				break;
 			default:
 				rooms[2] = null;
@@ -253,6 +253,7 @@ var updateRoomMovement = function ()
 		// Check if next room has passed the game.camera, if it has, align it with camera, load new room etc.
 		if (rooms[2] != undefined)
 			{
+
 			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
 					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
 				{
@@ -321,16 +322,16 @@ var instantiateNewRoom = function ()
 	switch (rooms[1].moveDirection)
     {
     case "north":
-      rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y, - game.camera.height);
+      rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
       break;
     case "east":
-      rooms[2].moveTo(rooms[1].backgroundLayer.position.x + game.camera.width, rooms[1].backgroundLayer.position.y);
+      rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
       break;
     case "south":
-      rooms[2].moveTo(rooms[1].backgroundLayer.position.x, rooms[1].backgroundLayer.position.y + game.camera.height);
+      rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
       break;
     case "west":
-      rooms[2].moveTo(rooms[1].backgroundLayer.position.x - game.camera.width, rooms[1].backgroundLayer.position.y);
+      rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
       break;
     default:
       rooms[2] = null;
