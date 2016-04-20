@@ -390,6 +390,8 @@ self.kill = function ()
 				emitterList[i].on = false;
 				}
 		}
+
+	activePowerUps = [];
 	};
 
 
