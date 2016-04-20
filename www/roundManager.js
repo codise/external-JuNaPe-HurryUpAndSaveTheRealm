@@ -79,15 +79,12 @@ self.loadRound = function (roundData)
 		{
 		rooms[i + 1] = new Room(game,
 														currentRound.rooms[i].roomBg,
-														currentRound.rooms[i].tileset,
-														currentRound.rooms[i].roomJSON,
 														currentRound.rooms[i].moveDirection,
 														currentRound.rooms[i].moveSpeed,
 														self);
-		rooms[i + 1].preload(instantiateRound);
 		}
-
 	nextRoom = 2;
+	instantiateRound();
 	};
 
 var instantiateRound = function ()
@@ -304,17 +301,14 @@ var updateRoomMovement = function ()
 					{
 					rooms[2] = new Room(game,
 															currentRound.rooms[nextRoom].roomBg,
-															currentRound.rooms[nextRoom].tileset,
-															currentRound.rooms[nextRoom].roomJSON,
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);
-					rooms[2].preload(instantiateNewRoom)
 					lastPaused = game.time.now + pauseTime;
+					instantiateNewRoom();
 					nextRoom++;
 					} else
 					{
-
 					var lastMovedDirection = 'null';
 					if(currentRound.rooms[currentRound.rooms.length-2] != undefined)
 						{
