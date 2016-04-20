@@ -48,21 +48,18 @@ var rooms = [];
 var roomGroup = game.add.group();
 var nextRoom;
 
-
 var lastPaused = 0;
 var pauseTime = 500;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 0.5;
+speedDict["normal"] = 2;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
-
-var done = false;
 
 self.loadRound = function (roundData)
 	{
@@ -84,16 +81,12 @@ self.loadRound = function (roundData)
 														self);
 		}
 	nextRoom = 2;
-	instantiateRound();
-	};
 
-var instantiateRound = function ()
-	{
+	// Position the two loaded rooms
 
-	// Position the two loaded rooms correctly
+	rooms[1].moveTo(game.camera.x, game.camera.y);
 	if (rooms[2] != undefined)
 		{
-		rooms[1].moveTo(game.camera.x, game.camera.y);
 		switch (rooms[1].moveDirection)
 			{
 			case "north":
@@ -111,12 +104,8 @@ var instantiateRound = function ()
 			default:
 				rooms[2] = null;
 			}
-		startRound();
 		}
-	};
 
-var startRound = function ()
-	{
 	roundRunning = true;
 	currentDirection = rooms[1].moveDirection;
 	currentSpeed = rooms[1].moveSpeed;
@@ -180,25 +169,6 @@ self.disconnectPlayer = function (id)
 self.update = function ()
 	{
 
-	//game.world.bringToTop(drawOrderGroup);
-	/*
-	game.world.bringToTop(playerGroup);
-	game.world.bringToTop(enemyManager.enemyGroup);
-	game.world.bringToTop(powerupManager.pUpGroup);
-	game.world.bringToTop(weaponManager.weaponGroup);
-	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
-	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
-	scoreText.bringToTop();
-
-	var popUpList = game.effectManager.popUpList;
-	for(var i = 0; i < popUpList.length; i++)
-		{
-		popUpList[i].bringToTop();
-		}
-
-	qr.bringToTop();
-
-	*/
 	updateScore();
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
@@ -226,12 +196,6 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
 
-		/*for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
-			{
-			//game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
-			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], enemyManager.enemyGroup);
-			}
-		*/
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
 			{
@@ -304,8 +268,24 @@ var updateRoomMovement = function ()
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);
+					switch (rooms[1].moveDirection)
+    					{
+    					case "north":
+      					rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
+      					break;
+    					case "east":
+      					rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+      					break;
+    					case "south":
+      					rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
+      					break;
+    					case "west":
+      					rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+      					break;
+    					default:
+      					rooms[2] = null;
+    					}
 					lastPaused = game.time.now + pauseTime;
-					instantiateNewRoom();
 					nextRoom++;
 					} else
 					{
@@ -345,27 +325,6 @@ var updateRoomMovement = function ()
 				}
 			}
 		}
-	};
-
-var instantiateNewRoom = function ()
-	{
-	switch (rooms[1].moveDirection)
-    {
-    case "north":
-      rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-      break;
-    case "east":
-      rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-      break;
-    case "south":
-      rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
-      break;
-    case "west":
-      rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-      break;
-    default:
-      rooms[2] = null;
-    }
 	};
 
 var updateScore = function ()
