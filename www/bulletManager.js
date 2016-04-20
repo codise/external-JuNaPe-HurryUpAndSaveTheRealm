@@ -181,15 +181,6 @@ self.playerBulletCount;
 
 //var bulletLifespan = 1000;
 
-var scale = function (listOfGroups)
-	{
-	for (var i = 0; i < listOfGroups.length; i++)
-		{
-		listOfGroups[i].setAll('scale.x', scalingFactors.x);
-		listOfGroups[i].setAll('scale.y', scalingFactors.y);
-		}
-	};
-
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
 self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan)
 	{
@@ -279,6 +270,9 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 				case 'enemyBullet12':
 					var bullet = enemyBullets12.getFirstDead();
 					break;
+				case 'enemyBullet13':
+					var bullet = enemyBullets13.getFirstDead();
+					break;
 				default:
 					var bullet = enemyGenericBullets.getFirstDead();
 				}
@@ -292,6 +286,8 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		bullet.lifespan = bulletLifespan;
 		bullet.body.setSize(bullet.width, bullet.width); //26x26 box pelaajalle
 		bullet.angle = angle + 90;
+		bullet.scale.x = scalingFactors.x;
+		bullet.scale.y = scalingFactors.y;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
 		bullet.damage = damage;
 		}
@@ -304,15 +300,18 @@ self.killbullet = function (bullet)
 
 self.update = function ()
 	{
-	scale(self.enemyBulletGroups);
-	scale(self.playerBulletGroups);
-
 	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroups);
 	self.playerBulletCount = countLiveBullets(self.playerBulletGroups);
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
 	//console.log(enemyBulletPool)
 	};
+
+/*
+* Calculates the number of bullets currently alive on the screen
+* @param {Array} groupList - The group containing all the bullets
+* @returns {Number} The number of bullets alive on the screen
+*/
 
 var countLiveBullets = function (groupList)
 	{

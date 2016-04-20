@@ -60,6 +60,8 @@ self.update = function(players)
 		if(getRandomInt(0,100) <= POWERUP_SPAWN_RATE) {		
 			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
 			var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), randomPos, players);
+      newpUp.sprite.scale.x = 2 * scalingFactors.x;
+      newpUp.sprite.scale.y = 2 * scalingFactors.y;
 			self.pUpGroup.add(newpUp.sprite);
 			pUpList.push(newpUp);
 		}
@@ -93,7 +95,7 @@ self.update = function(players)
 /**
 * Spawns a specified powerup on specified coordinates
 * @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
-* @param {Int} pUp - The integer ID of the powerup to spawn
+* @param {Number} pUp - The integer ID of the powerup to spawn
 */
 self.spawnPowerupOn = function(point, pUp)
 {
@@ -108,7 +110,7 @@ self.spawnPowerupOn = function(point, pUp)
 /**
 * Spawns a random powerup on specified coordinates
 * @param {point} point - The point where the powerup will be spawned provided as an object with x and y properties
-* @param {Int} pUp - The integer ID of the powerup to spawn
+* @param {Number} pUp - The integer ID of the powerup to spawn
 */
 self.spawnRandomPowerupOn = function(point)
 {
@@ -119,9 +121,4 @@ self.spawnRandomPowerupOn = function(point)
 		pUpDropList.push(newpUp);
 	}
 }
-
-var getRandomInt = function (min, max)
-	{
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-	};
 }
