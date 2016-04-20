@@ -24,10 +24,20 @@ qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
 qr.anchor.setTo(1,1);
 
+//This group is used to manage the draw order of other groups
+//The draw order is defined by the order in which groupds are added
+//The last gorup is always drawn on top of others
+var drawOrderGroup = game.add.group(); 
+
+self.backgroundLayerGroup = game.add.group();
+
+self.popUpGroup = game.add.group();
+
 var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '', { fontSize: '12px', fill: '#f00'});
 fpsText.anchor.setTo(0, 1);
 fpsText.stroke = '#000000';
 fpsText.strokeThickness = 1;
+
 
 // Variables related to map functioning
 
@@ -52,7 +62,7 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
-
+var done = false;
 
 self.loadRound = function (roundData)
 	{
@@ -72,7 +82,8 @@ self.loadRound = function (roundData)
 														currentRound.rooms[i].tileset,
 														currentRound.rooms[i].roomJSON,
 														currentRound.rooms[i].moveDirection,
-														currentRound.rooms[i].moveSpeed);
+														currentRound.rooms[i].moveSpeed,
+														self);
 		rooms[i + 1].preload(instantiateRound);
 		}
 
@@ -112,7 +123,27 @@ var startRound = function ()
 	roundRunning = true;
 	currentDirection = rooms[1].moveDirection;
 	currentSpeed = rooms[1].moveSpeed;
+	establishDrawOrder();
+	};
 
+
+/**
+* Initializes the draw order of all sprite groups in the game
+* GROUPS ARE DRAWN IN THE ORDER THEY ARE DEFINED!
+* New groups always go above older ones
+*/
+var establishDrawOrder = function() 
+	{
+	drawOrderGroup.add(self.backgroundLayerGroup);	
+	drawOrderGroup.add(enemyManager.enemyGroup);
+	drawOrderGroup.add(powerupManager.pUpGroup);
+	drawOrderGroup.add(playerGroup);
+	drawOrderGroup.add(weaponManager.weaponGroup);
+	drawOrderGroup.add(scoreText);
+	drawOrderGroup.add(bulletManager.playerBulletGroup);
+	drawOrderGroup.add(bulletManager.enemyBulletGroup);
+	drawOrderGroup.add(self.popUpGroup);
+	drawOrderGroup.add(qr);
 	};
 
 // Client data parsing
@@ -152,6 +183,8 @@ self.disconnectPlayer = function (id)
 self.update = function ()
 	{
 
+	//game.world.bringToTop(drawOrderGroup);
+	/*
 	game.world.bringToTop(playerGroup);
 	game.world.bringToTop(enemyManager.enemyGroup);
 	game.world.bringToTop(powerupManager.pUpGroup);
@@ -165,15 +198,16 @@ self.update = function ()
 		{
 		popUpList[i].bringToTop();
 		}
-	updateScore();
 
 	qr.bringToTop();
+
+	*/
+	updateScore();
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
 	fpsText.bringToTop();
 	fpsText.text = ' FPS: ' + game.time.fps + '\n now.elapsed: ' + game.time.elapsed + 'ms\n time.elapsed: ' + game.time.elapsedMS + 'ms';
 	fpsText.position.setTo(game.camera.x, game.camera.y + game.camera.height);
-
 
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
@@ -193,13 +227,14 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
 
-		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
+		/*for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
 			{
 			//game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
 			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], enemyManager.enemyGroup);
 			}
-
+		*/
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
 			{
@@ -272,7 +307,8 @@ var updateRoomMovement = function ()
 															currentRound.rooms[nextRoom].tileset,
 															currentRound.rooms[nextRoom].roomJSON,
 															currentRound.rooms[nextRoom].moveDirection,
-															currentRound.rooms[nextRoom].moveSpeed);
+															currentRound.rooms[nextRoom].moveSpeed,
+															self);
 					rooms[2].preload(instantiateNewRoom)
 					lastPaused = game.time.now + pauseTime;
 					nextRoom++;

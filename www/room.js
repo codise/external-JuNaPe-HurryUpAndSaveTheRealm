@@ -7,9 +7,10 @@ This object contains the information about a room in the game.
 @param {Image} - background - is the path to the rooms backround png.
 @param {Image} - collisionAssets is a path to tileset which has possible nonwall collidable assets, which are present in the room.
 @param {Tilemap} - collisionData is a path to a tilemap generated wih Tiled.
+@param {roundManager} - roundManager Current roundmanager for accessing layergroups 
 */
 
-function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed)
+function Room (game, background, collisionAssets, collisionData, moveDirection, moveSpeed, roundManager)
 {
 var self = this;
 
@@ -48,9 +49,13 @@ var create = function ()
 	{
 	self.backgroundLayer = game.add.sprite(0, 0, background);
 	self.backgroundLayer.exists = false;
+	
 	self.backgroundLayer.smoothed = false;
+	
 	self.layerGroup.add(self.backgroundLayer);
 	self.layerGroup.setAll('fixedToCamera', false);
+		roundManager.backgroundLayerGroup.add(self.layerGroup);
+
 	mycallback();
 	};
 
