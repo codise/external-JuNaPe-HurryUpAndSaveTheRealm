@@ -25,7 +25,7 @@ var enemyDictionary =
 		patterns: [enemyPatterns.slasher]},
 	reaper: {sprites: ['enemy_ghost'],
 		hitColor: 0xCC0000,
-		maxHealth: 20,
+		maxHealth: 8,
 		patterns: [enemyPatterns.reaper]}
 	};
 
