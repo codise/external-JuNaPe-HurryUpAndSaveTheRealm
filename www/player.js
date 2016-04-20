@@ -197,10 +197,7 @@ self.update = function ()
 		//We should only check for collisions when there are collidable objects on screen
 		if(bulletManager.enemyBulletCount > 0)
 			{
-			for (var i = 0; i < bulletManager.enemyBulletGroup.children.length; i++) 
-				{
-				game.physics.arcade.overlap(bulletManager.enemyBulletGroup.children[i], self.sprite, self.playerHit, null, self); 
-				}
+			game.physics.arcade.overlap(bulletManager.enemyBulletGroup, self.sprite, self.playerHit, null, self); 
 			}
 
 		//Check for powerups only if powerups are active
