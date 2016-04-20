@@ -181,6 +181,63 @@ var getAllLivingFromObject = function(dict)
 	};
 
 /**
+* Returns a list of players around the specified point
+* @param {Array} players - List of all players. 
+* @param {Point} point - The point around which to check
+* @param {Number} sizeX - The radius of the square in X direction which we use to check
+* @param {Number} sizeY - The radius of the square in Y direction which we use to check
+* @return {Array} List of all players within the specified area, or undefined if no players found in the area
+*/
+var getPlayersAroundPoint = function (players,point,sizeX,sizeY)
+{
+	//We use the data provided to construct a square around the area
+
+	//Bottom left
+	var squarePointsA = {}	
+	squarePointsA.x = point.x-sizeX;
+	squarePointsA.y = point.y-sizeY;
+
+	//Top right
+	var squarePointsB = {}
+	squarePointsB.x = point.x+sizeX;
+	squarePointsB.y = point.y+sizeY;
+
+	return getPlayersInArea(players,squarePointsA,squarePointsB);
+
+}
+
+
+/**
+* Return a list of players inside the provided area defined by two points
+* @param {Array} players - List of all players in the game
+* @param {Point} botLeft - Represents the bottom left corner coordinates of the square
+* @param {Point} topRight - Represents the top right corner coordinates of the square
+* @return {Array} Array containing players inside the provided area or undefined if no players found in the area
+*/
+var getPlayersInArea = function (players, botLeft, topRight) 
+{
+	var returnPlayers = [];
+	var keys = Object.keys(players);
+	var curPos;
+	for(var i = 0; i < Object.keys(players).length; i++)
+		{
+			curPos = players[keys[i]].sprite.position;
+			if(curPos.x > botLeft.x && 
+				 curPos.y > botLeft.y && 
+				 curPos.x < topRight.x && 
+				 curPos.y < topRight.y)
+			{
+				returnPlayers.push(players[keys[i]]);
+			}
+		}
+		if(returnPlayers.length > 0) 
+		{
+			return returnPlayers;
+		}
+		return;
+}
+
+/**
 * Return a random integer between min and max
 * @param {Number} min - the lowest possible number to return
 * @param {Number} min - the highest possible number to return
