@@ -380,6 +380,16 @@ self.kill = function ()
 	deathRelativePos.x = self.sprite.position.x - game.camera.x;
 	deathRelativePos.y = self.sprite.position.y - game.camera.y;
 	self.losePoints(100);
+
+	// Disable all active emitters
+	
+	for (var i = 0; i < emitterList.length; i++)
+		{
+			if (emitterList[i] != undefined)
+				{
+				emitterList[i].on = false;
+				}
+		}
 	};
 
 
