@@ -51,9 +51,15 @@ var nextRoom;
 var lastPaused = 0;
 var pauseTime = 500;
 
+var defaultMinDX = 6 * game.world.width;
+var defaultMinDY = 6 * game.world.height;
+
+var currentMinDX = defaultMinDX;
+var currentMinDY = defaultMinDY;
+
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 4;
+speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
@@ -250,9 +256,13 @@ var updateRoomMovement = function ()
 		if (rooms[2] != undefined)
 			{
 
-			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
-					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
+			var testDX = Math.abs(rooms[2].getPos().x - game.camera.x);
+			var testDY = Math.abs(rooms[2].getPos().y - game.camera.y);
+
+			if (testDX > currentMinDX || testDY > currentMinDY)
 				{
+				currentMinDX = defaultMinDX;
+				currentMinDY = defaultMinDY;
 				rooms.shift();
 				delete rooms[0];
 
@@ -322,6 +332,10 @@ var updateRoomMovement = function ()
 					enemyManager.createBoss(currentRound.boss, bossPos);
 					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
 					}
+				} else
+				{
+				currentMinDX = testDX;
+				currentMinDY = testDY;
 				}
 			}
 		}
