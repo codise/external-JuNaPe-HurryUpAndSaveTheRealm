@@ -1,16 +1,17 @@
 'use strict';
 
 /** Room object
-This object contains the information about a room in the game.
-
-@param deviceDimensionData is the dimension of the screen viewing device as a object.
-@param {Image} - background - is the path to the rooms backround png.
-@param {Image} - collisionAssets is a path to tileset which has possible nonwall collidable assets, which are present in the room.
-@param {Tilemap} - collisionData is a path to a tilemap generated wih Tiled.
-@param {roundManager} - roundManager Current roundmanager for accessing layergroups 
+*This object contains the information about a room in the game.
+*
+*@param {object} - game - points to the Game object
+*@param {Image} - background - is the path to the rooms backround png.
+*@param {object} - colliders - list of all data to be made into collidable sprites
+*@param {string} - moveDirection - The direction where the game camera will go next
+*@param {string} - moveSpeed - The speed of the camera during next transition
+*@param {roundManager} - roundManager - Current roundmanager for accessing layergroups 
 */
 
-function Room (game, background, moveDirection, moveSpeed, roundManager)
+function Room (game, background, colliders, moveDirection, moveSpeed, roundManager)
 {
 var self = this;
 
@@ -23,6 +24,11 @@ self.backgroundLayer = game.add.sprite(0, 0, background);
 self.backgroundLayer.smoothed = false;
 
 roundManager.backgroundLayerGroup.add(self.backgroundLayer);
+
+for (var id in colliders)
+	{
+	colliders[id] // TODO
+	}
 
 self.onceScaled = false;
 var scale = function ()
