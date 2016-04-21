@@ -15,7 +15,9 @@ var loadState = function ()
 		game.load.image('player4', 'assets/player_classes/viking.png');
 		game.load.image('player5', 'assets/player_classes/ninja.png');
 		game.load.image('player6', 'assets/player_classes/warlock.png');
+		
 		game.load.image('empty', 'assets/other/empty.png');
+		game.load.image('test', 'assets/other/testpixel.png');
 
 		// Load bullet sprites
 
