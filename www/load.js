@@ -7,6 +7,48 @@ var loadState = function ()
 
 	self.preload = function ()
 		{
+		// Load level backgrounds
+	
+		//Round1
+		game.load.image('DemoMap1.png', 'assets/maps/backgrounds/DemoMap1.png');
+		game.load.image('DemoMap2.png', 'assets/maps/backgrounds/DemoMap2.png');
+		game.load.image('DemoMap3.png', 'assets/maps/backgrounds/DemoMap3.png');
+		game.load.image('DemoMap4.png', 'assets/maps/backgrounds/DemoMap4.png');
+		game.load.image('DemoMap5.png', 'assets/maps/backgrounds/DemoMap5.png');
+
+		//Round2
+		game.load.image('Demo2Map1.png', 'assets/maps/backgrounds/Demo2Map1.png');
+		game.load.image('Demo2Map2.png', 'assets/maps/backgrounds/Demo2Map2.png');
+		game.load.image('Demo2Map3.png', 'assets/maps/backgrounds/Demo2Map3.png');
+		game.load.image('Demo2Map4.png', 'assets/maps/backgrounds/Demo2Map4.png');
+		game.load.image('Demo2Map5.png', 'assets/maps/backgrounds/Demo2Map5.png');
+
+		//Round3
+		game.load.image('Demo3Map1.png', 'assets/maps/backgrounds/Demo3Map1.png');
+		game.load.image('Demo3Map2.png', 'assets/maps/backgrounds/Demo3Map2.png');
+		game.load.image('Demo3Map3.png', 'assets/maps/backgrounds/Demo3Map3.png');
+		game.load.image('Demo3Map4.png', 'assets/maps/backgrounds/Demo3Map4.png');
+		game.load.image('Demo3Map5.png', 'assets/maps/backgrounds/Demo3Map5.png');
+
+		//Round4
+		game.load.image('Demo4Map1.png', 'assets/maps/backgrounds/Demo4Map1.png');
+		game.load.image('Demo4Map2.png', 'assets/maps/backgrounds/Demo4Map2.png');
+		game.load.image('Demo4Map3.png', 'assets/maps/backgrounds/Demo4Map3.png');
+		game.load.image('Demo4Map4.png', 'assets/maps/backgrounds/Demo4Map4.png');
+
+		//Round5
+		game.load.image('Demo5Map1.png', 'assets/maps/backgrounds/Demo5Map1.png');
+		game.load.image('Demo5Map2.png', 'assets/maps/backgrounds/Demo5Map2.png');
+		game.load.image('Demo5Map3.png', 'assets/maps/backgrounds/Demo5Map3.png');
+		game.load.image('Demo5Map4.png', 'assets/maps/backgrounds/Demo5Map4.png');
+
+
+
+
+
+
+
+
 		// Load player sprites
 
 		game.load.image('player1', 'assets/player_classes/knight.png');

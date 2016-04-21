@@ -11,167 +11,20 @@ var enemyBulletPool = enemyMaxBullets;
 var playerBulletPool = playerMaxBullets;
 
 self.playerBulletGroup = game.add.group();
+self.playerBulletGroup.enableBody = true;
+self.playerBulletGroup.physicsBodyType = Phaser.Physics.ARCADE;
+self.playerBulletGroup.createMultiple(playerBulletPool, 'empty');
+self.playerBulletGroup.setAll('alive', false);
+
 self.enemyBulletGroup = game.add.group();
-
-/*
-var playerArrowBullets = game.add.group();
-playerArrowBullets.enableBody = true;
-playerArrowBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerArrowBullets.createMultiple(playerBulletPool, 'arrow');
-*/
-var playerMagicBullets = game.add.group();
-playerMagicBullets.enableBody = true;
-playerMagicBullets.physicsBodyType = Phaser.Physics.ARCADE;
-playerMagicBullets.createMultiple(playerBulletPool, 'magic');
-
-
-//knight bullet
-var playerBullets1 = game.add.group();
-playerBullets1.enableBody = true;
-playerBullets1.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets1.createMultiple(playerBulletPool, 'bullet1');
-
-//elf bullet
-var playerBullets2 = game.add.group();
-playerBullets2.enableBody = true;
-playerBullets2.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets2.createMultiple(playerBulletPool, 'bullet2');
-
-//mage bullet
-var playerBullets3 = game.add.group();
-playerBullets3.enableBody = true;
-playerBullets3.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets3.createMultiple(playerBulletPool, 'bullet3');
-
-//viking bullet
-var playerBullets4 = game.add.group();
-playerBullets4.enableBody = true;
-playerBullets4.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets4.createMultiple(playerBulletPool, 'bullet4');
-
-//ninja bullet
-var playerBullets5 = game.add.group();
-playerBullets5.enableBody = true;
-playerBullets5.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets5.createMultiple(playerBulletPool, 'bullet5');
-
-//warlock bullet
-var playerBullets6 = game.add.group();
-playerBullets6.enableBody = true;
-playerBullets6.physicsBodyType = Phaser.Physics.ARCADE;
-playerBullets6.createMultiple(playerBulletPool, 'bullet6');
-
-self.playerBulletGroup.add(playerBullets1);
-self.playerBulletGroup.add(playerBullets2);
-self.playerBulletGroup.add(playerBullets3);
-self.playerBulletGroup.add(playerBullets4);
-self.playerBulletGroup.add(playerBullets5);
-self.playerBulletGroup.add(playerBullets6);
-
-
-var enemyGenericBullets = game.add.group();
-enemyGenericBullets.enableBody = true;
-enemyGenericBullets.physicsBodyType = Phaser.Physics.ARCADE;
-enemyGenericBullets.createMultiple(enemyBulletPool, 'magic');
-
-//blue
-var enemyBullets1 = game.add.group();
-enemyBullets1.enableBody = true;
-enemyBullets1.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets1.createMultiple(enemyBulletPool, 'enemyBullet1');
-
-//spike
-var enemyBullets2 = game.add.group();
-enemyBullets2.enableBody = true;
-enemyBullets2.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets2.createMultiple(enemyBulletPool, 'enemyBullet2');
-
-//bone
-var enemyBullets3 = game.add.group();
-enemyBullets3.enableBody = true;
-enemyBullets3.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets3.createMultiple(enemyBulletPool, 'enemyBullet3');
-
-//yellow
-var enemyBullets4 = game.add.group();
-enemyBullets4.enableBody = true;
-enemyBullets4.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets4.createMultiple(enemyBulletPool, 'enemyBullet4');
-
-//red
-var enemyBullets5 = game.add.group();
-enemyBullets5.enableBody = true;
-enemyBullets5.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets5.createMultiple(enemyBulletPool, 'enemyBullet5');
-
-//fireball
-var enemyBullets6 = game.add.group();
-enemyBullets6.enableBody = true;
-enemyBullets6.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets6.createMultiple(enemyBulletPool, 'enemyBullet6');
-
-//sword
-var enemyBullets7 = game.add.group();
-enemyBullets7.enableBody = true;
-enemyBullets7.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets7.createMultiple(enemyBulletPool, 'enemyBullet7');
-
-//boss 2 sparky
-var enemyBullets8 = game.add.group();
-enemyBullets8.enableBody = true;
-enemyBullets8.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets8.createMultiple(enemyBulletPool, 'enemyBullet8');
-
-//sparky line
-var enemyBullets9 = game.add.group();
-enemyBullets9.enableBody = true;
-enemyBullets9.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets9.createMultiple(enemyBulletPool, 'enemyBullet9');
-
-//fork
-var enemyBullets10 = game.add.group();
-enemyBullets10.enableBody = true;
-enemyBullets10.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets10.createMultiple(enemyBulletPool, 'enemyBullet10');
-
-//wave
-var enemyBullets11 = game.add.group();
-enemyBullets11.enableBody = true;
-enemyBullets11.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets11.createMultiple(enemyBulletPool, 'enemyBullet11');
-
-//slash?
-var enemyBullets12 = game.add.group();
-enemyBullets12.enableBody = true;
-enemyBullets12.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets12.createMultiple(enemyBulletPool, 'enemyBullet12');
-
-//Reaper Skull
-var enemyBullets13 = game.add.group();
-enemyBullets13.enableBody = true;
-enemyBullets13.physicsBodyType = Phaser.Physics.ARCADE;
-enemyBullets13.createMultiple(enemyBulletPool, 'enemyBullet13');
-
-self.enemyBulletGroup.add(enemyBullets1);
-self.enemyBulletGroup.add(enemyBullets2);
-self.enemyBulletGroup.add(enemyBullets3);
-self.enemyBulletGroup.add(enemyBullets4);
-self.enemyBulletGroup.add(enemyBullets5);
-self.enemyBulletGroup.add(enemyBullets6);
-self.enemyBulletGroup.add(enemyBullets7);
-self.enemyBulletGroup.add(enemyBullets8);
-self.enemyBulletGroup.add(enemyBullets9);
-self.enemyBulletGroup.add(enemyBullets10);
-self.enemyBulletGroup.add(enemyBullets11);
-self.enemyBulletGroup.add(enemyBullets12);
-self.enemyBulletGroup.add(enemyBullets13);
+self.enemyBulletGroup.enableBody = true;
+self.enemyBulletGroup.physicsBodyType = Phaser.Physics.ARCADE;
+self.enemyBulletGroup.createMultiple(enemyBulletPool, 'empty');
+self.enemyBulletGroup.setAll('alive', false);
 
 self.enemyBulletCount;
 self.playerBulletCount;
 
-//var bulletSpeed = 200;
-
-//var bulletLifespan = 1000;
 
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
 self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan)
@@ -180,43 +33,8 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		{
 		if (playerBulletPool > 0)
 			{
-			switch (type)
-				{
-//				case 'arrow':
-//					var bullet = playerArrowBullets.getFirstDead();
-//					// Other type spesific attributes
-//					break;
-//				case 'magic':
-//					var bullet = playerMagicBullets.getFirstDead();
-//					/*var flame = self.game.add.sprite(pos.x, pos.y, 'flame');
-//					self.game.physics.enable(flame, Phaser.Physics.ARCADE);
-//					flame.anchor.setTo(0.5, 0.5);
-//					flame.alpha = 1;
-//					self.game.add.tween(flame).to({alpha: 0}, 100, "Linear", true);
-//					self.game.physics.arcade.velocityFromAngle(angle, self.bulletSpeed, flame.body.velocity);
-//					flame.events.onOutOfBounds.add(flame.destroy, this);*/
-//					break;
-				case 'bullet1':
-					var bullet = playerBullets1.getFirstDead();
-					break;
-				case 'bullet2':
-					var bullet = playerBullets2.getFirstDead();
-					break;
-				case 'bullet3':
-					var bullet = playerBullets3.getFirstDead();
-					break;
-				case 'bullet4':
-					var bullet = playerBullets4.getFirstDead();
-					break;
-				case 'bullet5':
-					var bullet = playerBullets5.getFirstDead();
-					break;
-				case 'bullet6':
-					var bullet = playerBullets6.getFirstDead();
-					break;
-				default:
-					var bullet = playerMagicBullets.getFirstDead();
-				}
+			var bullet = self.playerBulletGroup.getFirstDead();
+			bullet.loadTexture(type);
 			bullet.playerId = playerid;
 			playerBulletPool--;
 			}
@@ -224,50 +42,8 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		{
 		if (enemyBulletPool > 0)
 			{
-			switch (type)
-				{
-				case 'enemyBullet1':
-					var bullet = enemyBullets1.getFirstDead();
-					break;
-				case 'enemyBullet2':
-					var bullet = enemyBullets2.getFirstDead();
-					break;
-				case 'enemyBullet3':
-					var bullet = enemyBullets3.getFirstDead();
-					break;
-				case 'enemyBullet4':
-					var bullet = enemyBullets4.getFirstDead();
-					break;
-				case 'enemyBullet5':
-					var bullet = enemyBullets5.getFirstDead();
-					break;
-				case 'enemyBullet6':
-					var bullet = enemyBullets6.getFirstDead();
-					break;
-				case 'enemyBullet7':
-					var bullet = enemyBullets7.getFirstDead();
-					break;
-				case 'enemyBullet8':
-					var bullet = enemyBullets8.getFirstDead();
-					break;
-				case 'enemyBullet9':
-					var bullet = enemyBullets9.getFirstDead();
-					break;
-				case 'enemyBullet10':
-					var bullet = enemyBullets10.getFirstDead();
-					break;
-				case 'enemyBullet11':
-					var bullet = enemyBullets11.getFirstDead();
-					break;
-				case 'enemyBullet12':
-					var bullet = enemyBullets12.getFirstDead();
-					break;
-				case 'enemyBullet13':
-					var bullet = enemyBullets13.getFirstDead();
-					break;
-				default:
-					var bullet = enemyGenericBullets.getFirstDead();
-				}
+			var bullet = self.enemyBulletGroup.getFirstDead();
+			bullet.loadTexture(type);
 			enemyBulletPool--;
 			}
 		}
@@ -292,29 +68,14 @@ self.killbullet = function (bullet)
 
 self.update = function ()
 	{
-	self.enemyBulletCount = countLiveBullets(self.enemyBulletGroup);
-	self.playerBulletCount = countLiveBullets(self.playerBulletGroup);
+	self.enemyBulletCount = self.enemyBulletGroup.countLiving();
+	self.playerBulletCount = self.playerBulletGroup.countLiving();
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
 	//console.log(enemyBulletPool)
 	};
 
-/*
-* Calculates the number of bullets currently alive on the screen
-* @param {Array} groupList - The group containing all the bullets
-* @returns {Number} The number of bullets alive on the screen
-*/
 
-var countLiveBullets = function (groupList)
-	{
-	var count = 0;
-	for (var i = 0; i < groupList.children.length; i++) 
-		{
-		count += groupList.children[i].countLiving();
-		}
-	return count;
-
-	};
 }
 
 
