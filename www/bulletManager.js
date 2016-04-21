@@ -14,7 +14,7 @@ self.playerBulletGroup = game.add.group();
 self.playerBulletGroup.enableBody = true;
 self.playerBulletGroup.physicsBodyType = Phaser.Physics.ARCADE;
 self.playerBulletGroup.createMultiple(playerBulletPool, 'empty');
-self.playerBulletGroup.setAll('aiive', false);
+self.playerBulletGroup.setAll('alive', false);
 
 self.enemyBulletGroup = game.add.group();
 self.enemyBulletGroup.enableBody = true;
@@ -49,7 +49,6 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		}
 	if (bullet != undefined)
 		{
-		console.log(bullet.body);
 		bullet.anchor.setTo(0.5, 0.5);
 		bullet.reset(pos.x, pos.y);
 		bullet.lifespan = bulletLifespan;
