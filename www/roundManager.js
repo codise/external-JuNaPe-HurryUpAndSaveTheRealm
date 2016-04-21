@@ -64,6 +64,8 @@ self.lastRoomTimer = 0;
 
 var done = false;
 
+var initialSpawnBorder = game.width/15;
+
 self.loadRound = function (roundData)
 	{
 
@@ -158,7 +160,7 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	var spawnPosition = getInitialSpawnPos(game, players, minPlayerSpawnDistance, initialSpawnBorder, null);
 	game.effectManager.createSpawnEffect(spawnPosition);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager, enemyManager);
 	players[id].sprite.scale.x = scalingFactors.x;

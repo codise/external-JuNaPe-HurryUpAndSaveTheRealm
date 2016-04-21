@@ -40,6 +40,40 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 	};
 
 /**
+* Get a initial spawn point 
+* @param {game} game - The game object
+* @param {Array} playerList - The list containing all player objects
+* @param {Number} minimumDistance - The minimum distance from players to spawn from
+* @param {Number} maxTryCount - The maximum amount of attempts until returning null
+* @return {Point} A Point where to spawn initially
+*/
+var getInitialSpawnPos = function (game, playerList, minimumDistance, borderLength, maxTryCount)
+	{
+	var tryCount = 0;
+	var currentBestDistance = 0;
+	var currentBestPos = {};
+	var acceptablePosition = false;
+	var currentDistance = 0;
+	while (!acceptablePosition || (tryCount < maxTryCount && maxTryCount != undefined))
+		{
+		var randomPos = {};
+		randomPos.x = game.camera.x + game.rnd.integerInRange(borderLength, game.camera.width - borderLength);
+		randomPos.y = game.camera.y + game.rnd.integerInRange(borderLength, game.camera.height - borderLength);
+		currentDistance = dClosestPlayer(playerList, randomPos);
+		if (currentDistance >= minimumDistance)
+			{
+			acceptablePosition = true;
+			currentBestPos = randomPos;
+			}
+		else if(currentDistance >= currentBestDistance) {
+			currentBestPos = randomPos;
+		}
+		tryCount++;
+		}
+		return currentBestPos;
+	};
+
+/**
 * Return the distance between the provided position and the closest player
 * @param {Array} players - List of all players
 * @param {Point} position - The position to which compare
