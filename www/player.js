@@ -231,7 +231,7 @@ self.update = function ()
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
-		pHUD.updateHealthBar();
+		if (pHUD != undefined) pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
 		}
@@ -368,8 +368,8 @@ self.kill = function ()
 	{
 	clearAllPowerups();
 	game.effectManager.popupScoreText('-100',self.sprite);
-	self.sprite.exists = false;
-	self.weapon.sprite.exists = false;
+	if (self.sprite != undefined) self.sprite.exists = false;
+	if (self.weapon != undefined) self.weapon.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);
