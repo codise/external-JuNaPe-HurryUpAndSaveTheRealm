@@ -73,12 +73,15 @@ var scale = function ()
 self.moveTo = function (x, y)
 	{
 	self.backgroundLayer.position.setTo(x, y);
-		console.log('bg'+ self.backgroundLayer.position)
 	for(var i = 0; i < sprites.length; i++)
 		{
-		sprites[i].position.x += x;
-		sprites[i].position.y += y;
-		console.log(sprites[i].position)
+		if(!sprites[i].moved)
+			{
+			sprites[i].position.x += x;
+			sprites[i].position.y += y;
+			sprites[i].moved = true;
+			}
+		
 		}
 	//roundManager.collisionGroup.position.setTo(x, y);
 	};

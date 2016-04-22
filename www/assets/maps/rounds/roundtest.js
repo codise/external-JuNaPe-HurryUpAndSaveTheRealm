@@ -9,6 +9,9 @@ var roundtest = {};
 
 var tileWidth = 80;
 var tileHeight = 72;
+var maxTilesX = 24;
+var maxTilesY = 15;
+
 
 var room1colliders = {};
 //top wall
@@ -73,8 +76,8 @@ room2colliders[2] =
 {
 	width: 1 * tileWidth,
 	height: 1 * tileHeight,
-	x: 12 * tileWidth,
-	y: 7.5 * tileHeight,
+	x: maxTilesX / 2 * tileWidth,
+	y: maxTilesY / 2 * tileHeight,
 	anchorX: 0.5,
 	anchorY: 0.5,
 	image: 'grave1'
