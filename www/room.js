@@ -25,10 +25,32 @@ self.backgroundLayer.smoothed = false;
 
 roundManager.backgroundLayerGroup.add(self.backgroundLayer);
 
-for (var id in colliders)
+for (var spriteData in colliders)
 	{
-	colliders[id] // TODO
+	/*
+	width: tileWidth,
+	height: 15 * tileHeight,
+	x: 24 * tileWidth,
+	y: 0,
+	anchorX: 1,
+	anchorY: 0,
+	image: 'test'
+	*/
+	var sprite = game.add.sprite(0, 0, 'empty');
+	sprite.exists = false;
+	sprite.width = colliders[spriteData].width;
+	sprite.height = colliders[spriteData].height;
+	sprite.position.setTo(self.backgroundLayer.x + colliders[spriteData].x, self.backgroundLayer.y + colliders[spriteData].y);
+	sprite.anchor.setTo(colliders[spriteData].anchorX, colliders[spriteData].anchorY);
+	sprite.loadTexture(colliders[spriteData].image);
+	sprite.exists = true;
+	game.physics.enable(sprite, Phaser.Physics.ARCADE);
+	//self.backgroundLayer.addChild(sprite);
+	//roundManager.backgroundLayerGroup.add(sprite);
 	}
+
+
+
 
 self.onceScaled = false;
 var scale = function ()

@@ -14,7 +14,7 @@ var room1colliders = {};
 //top wall
 room1colliders[0] = 
 {
-	width: 23 * tileWidth,
+	width: 24 * tileWidth,
 	height: 2 * tileHeight,
 	x: 0,
 	y: 0,
@@ -25,8 +25,8 @@ room1colliders[0] =
 //bottom wall
 room1colliders[1] = 
 {
-	width: 23 * tileWidth,
-	height: 0.8 * tileHeight,
+	width: 24 * tileWidth,
+	height: 0.7 * tileHeight,
 	x: 0,
 	y: 15 * tileHeight,
 	anchorX: 0,
@@ -50,7 +50,7 @@ var room5colliders = {};
 //top wall
 room5colliders[0] = 
 {
-	width: 23 * tileWidth,
+	width: 24 * tileWidth,
 	height: 2 * tileHeight,
 	x: 0,
 	y: 0,
@@ -61,8 +61,8 @@ room5colliders[0] =
 //bottom wall
 room5colliders[1] = 
 {
-	width: 23 * tileWidth,
-	height: 0.8 * tileHeight,
+	width: 24 * tileWidth,
+	height: 0.7 * tileHeight,
 	x: 0,
 	y: 15 * tileHeight,
 	anchorX: 0,
@@ -83,7 +83,7 @@ room5colliders[2] =
 
 
 roundtest.rooms = [
-	{"roomBg": "DemoMap1.png", "colliders": room1colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "fast"},
+	{"roomBg": "DemoMap1.png", "colliders": room1colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "normal"},
 	{"roomBg": "DemoMap5.png", "colliders": room5colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "null", "moveSpeed": "stop"},
 	];
 roundtest.boss = 'king';

@@ -53,7 +53,7 @@ var pauseTime = 500;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 2;
+speedDict["normal"] = 0.1;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
@@ -121,7 +121,7 @@ self.loadRound = function (roundData)
 */
 var establishDrawOrder = function() 
 	{
-	drawOrderGroup.add(self.backgroundLayerGroup);	
+	drawOrderGroup.add(self.backgroundLayerGroup);
 	drawOrderGroup.add(enemyManager.enemyGroup);
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
@@ -196,6 +196,10 @@ self.update = function ()
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
+		game.physics.arcade.collide(enemyManager.enemyGroup, self.backgroundLayerGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.backgroundLayerGroup);
+		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.backgroundLayerGroup);
+		game.physics.arcade.collide(playerGroup, self.backgroundLayerGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
