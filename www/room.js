@@ -24,6 +24,7 @@ self.backgroundLayer = game.add.sprite(0, 0, background);
 self.backgroundLayer.smoothed = false;
 
 roundManager.backgroundLayerGroup.add(self.backgroundLayer);
+var sprites = [];
 
 for (var spriteData in colliders)
 	{
@@ -40,16 +41,26 @@ for (var spriteData in colliders)
 	sprite.exists = false;
 	sprite.width = colliders[spriteData].width;
 	sprite.height = colliders[spriteData].height;
-	sprite.position.setTo(self.backgroundLayer.x + colliders[spriteData].x, self.backgroundLayer.y + colliders[spriteData].y);
 	sprite.anchor.setTo(colliders[spriteData].anchorX, colliders[spriteData].anchorY);
+	sprite.position.setTo(colliders[spriteData].x, colliders[spriteData].y);
 	sprite.loadTexture(colliders[spriteData].image);
 	sprite.exists = true;
 	game.physics.enable(sprite, Phaser.Physics.ARCADE);
+	sprite.body.immovable = true;
 	//self.backgroundLayer.addChild(sprite);
-	//roundManager.backgroundLayerGroup.add(sprite);
+	roundManager.collisionGroup.add(sprite);
+	sprites.push(sprite);
 	}
 
+/*
 
+		//
+		testsprite=game.add.sprite(game.camera.x + game.camera.width /2, game.camera.y + game.camera.height /2, 'player2Weapon');
+		game.physics.enable(testsprite, Phaser.Physics.ARCADE);
+		testsprite.body.immovable = true;
+		//self.popUpGroup.add(testsprite);
+		//
+*/
 
 
 self.onceScaled = false;
@@ -57,11 +68,20 @@ var scale = function ()
 	{
 	self.backgroundLayer.scale.x = scalingFactors.x;
 	self.backgroundLayer.scale.y = scalingFactors.y;
+	roundManager.collisionGroup.scale.setTo(scalingFactors.x, scalingFactors.y);
 	};
 
 self.moveTo = function (x, y)
 	{
-	self.backgroundLayer.reset(x, y);
+	self.backgroundLayer.position.setTo(x, y);
+		console.log('bg'+ self.backgroundLayer.position)
+	for(var i = 0; i < sprites.length; i++)
+		{
+		sprites[i].position.x += x;
+		sprites[i].position.y += y;
+		console.log(sprites[i].position)
+		}
+	//roundManager.collisionGroup.position.setTo(x, y);
 	};
 
 self.updateScaling = function ()

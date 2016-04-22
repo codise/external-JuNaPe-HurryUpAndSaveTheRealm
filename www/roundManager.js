@@ -30,8 +30,8 @@ qr.anchor.setTo(1,1);
 var drawOrderGroup = game.add.group(); 
 
 self.backgroundLayerGroup = game.add.group();
-
 self.popUpGroup = game.add.group();
+self.collisionGroup = game.add.group();
 
 var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '', { fontSize: '12px', fill: '#f00'});
 fpsText.anchor.setTo(0, 1);
@@ -53,13 +53,14 @@ var pauseTime = 500;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 0.1;
+speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
 self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
+
 
 self.loadRound = function (roundData)
 	{
@@ -122,6 +123,7 @@ self.loadRound = function (roundData)
 var establishDrawOrder = function() 
 	{
 	drawOrderGroup.add(self.backgroundLayerGroup);
+	drawOrderGroup.add(self.collisionGroup);
 	drawOrderGroup.add(enemyManager.enemyGroup);
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
@@ -196,10 +198,10 @@ self.update = function ()
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
-		game.physics.arcade.collide(enemyManager.enemyGroup, self.backgroundLayerGroup);
-		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.backgroundLayerGroup);
-		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.backgroundLayerGroup);
-		game.physics.arcade.collide(playerGroup, self.backgroundLayerGroup);
+		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup);
+		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup);
+		game.physics.arcade.collide(playerGroup, self.collisionGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
