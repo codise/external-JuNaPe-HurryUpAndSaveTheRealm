@@ -39,11 +39,11 @@ for (var spriteData in colliders)
 	*/
 	var sprite = game.add.sprite(0, 0, 'empty');
 	sprite.exists = false;
-	sprite.width = colliders[spriteData].width;
-	sprite.height = colliders[spriteData].height;
-	sprite.anchor.setTo(colliders[spriteData].anchorX, colliders[spriteData].anchorY);
-	sprite.position.setTo(colliders[spriteData].x, colliders[spriteData].y);
 	sprite.loadTexture(colliders[spriteData].image);
+	sprite.width = colliders[spriteData].width * scalingFactors.x;
+	sprite.height = colliders[spriteData].height * scalingFactors.y;
+	sprite.anchor.setTo(colliders[spriteData].anchorX, colliders[spriteData].anchorY);
+	sprite.position.setTo((self.backgroundLayer.x + colliders[spriteData].x)*scalingFactors.x, (self.backgroundLayer.y + colliders[spriteData].y)*scalingFactors.y);
 	sprite.exists = true;
 	game.physics.enable(sprite, Phaser.Physics.ARCADE);
 	sprite.body.immovable = true;
@@ -68,7 +68,6 @@ var scale = function ()
 	{
 	self.backgroundLayer.scale.x = scalingFactors.x;
 	self.backgroundLayer.scale.y = scalingFactors.y;
-	roundManager.collisionGroup.scale.setTo(scalingFactors.x, scalingFactors.y);
 	};
 
 self.moveTo = function (x, y)

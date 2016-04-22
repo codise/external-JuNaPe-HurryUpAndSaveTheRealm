@@ -44,7 +44,7 @@ var loadState = function ()
 
 
 
-
+		game.load.image('grave1', 'assets/maps/tiles/Grave1.png');
 
 
 
