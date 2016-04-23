@@ -43,8 +43,8 @@ var setupDone = false;
 
 var flipped = false;
 
-var baseFireRate; // 200
-var fireRate = baseFireRate;
+var baseFireRate;
+var fireRate;
 
 var nextFire = 0;
 
@@ -157,11 +157,14 @@ self.update = function ()
 				
 				var info = playerPatterns[input.pClass];
 				baseFireRate = info.baseFireRate;
+				fireRate = baseFireRate;
 				baseMovementSpeed = info.baseMovementSpeed;
 				movementSpeed = baseMovementSpeed;
 				bulletDamage = info.bulletDamage;
 				bulletSpeed = info.bulletSpeed;
 				bulletLifespan = info.bulletLifespan;
+				self.maxHealth = info.maxHealth;
+				self.currentHealth = self.maxHealth;
 
 				setupDone = true;
 				}
