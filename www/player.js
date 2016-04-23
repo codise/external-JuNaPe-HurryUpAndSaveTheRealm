@@ -43,20 +43,20 @@ var setupDone = false;
 
 var flipped = false;
 
-var fireRate = 200;
-var baseFireRate = 200;
+var baseFireRate; // 200
+var fireRate = baseFireRate;
 
 var nextFire = 0;
 
-var movementSpeed = 200;
-var baseMovementSpeed = 200;
+var baseMovementSpeed;
+var movementSpeed;
 
 var respawnTime = 250;
 var nextRespawn = 0;
 
-var bulletDamage = 2;
-var bulletSpeed = 1000;
-var bulletLifespan = 1000;
+var bulletDamage; 
+var bulletSpeed;
+var bulletLifespan;
 
 var cameraPadding = 20;
 
@@ -154,6 +154,15 @@ self.update = function ()
 				//console.log('setting up player');
 				setClassAndName(input.pClass, input.pName);
 				createPlayer();
+				
+				var info = playerPatterns[input.pClass];
+				baseFireRate = info.baseFireRate;
+				baseMovementSpeed = info.baseMovementSpeed;
+				movementSpeed = baseMovementSpeed;
+				bulletDamage = info.bulletDamage;
+				bulletSpeed = info.bulletSpeed;
+				bulletLifespan = info.bulletLifespan;
+
 				setupDone = true;
 				}
 			var length = input.moveLength;
@@ -165,7 +174,7 @@ self.update = function ()
 			game.physics.arcade.velocityFromAngle(moveAngle, movementSpeed * length, self.sprite.body.velocity);
 
 			var shooting = input.shootAngle != 0;
-			
+
 			if(Math.abs(input.shootAngle) > 180/2 && !flipped)
 				{
 				flipped = true;
@@ -183,7 +192,6 @@ self.update = function ()
 				{
 				flipped = true;
 				}
-
 				
 			if (shooting && (game.time.now > nextFire))
 				{

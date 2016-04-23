@@ -53,7 +53,7 @@ var pauseTime = 500;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 2;
+speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
