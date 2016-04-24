@@ -5,7 +5,7 @@ var playerPatterns = {};
 //knigth
 playerPatterns["0"] =
 	{
-	baseMovementSpeed: 200,
+	baseMovementSpeed: 210,
 	baseFireRate: 300,
 	bulletDamage: 3,
 	bulletSpeed: 1000,
@@ -38,7 +38,7 @@ playerPatterns["2"] =
 //viking
 playerPatterns["3"] =
 	{
-	baseMovementSpeed: 200,
+	baseMovementSpeed: 180,
 	baseFireRate: 350,
 	bulletDamage: 4,
 	bulletSpeed: 800,
@@ -49,7 +49,7 @@ playerPatterns["3"] =
 //ninja
 playerPatterns["4"] =
 	{
-	baseMovementSpeed: 200,
+	baseMovementSpeed: 250,
 	baseFireRate: 150,
 	bulletDamage: 3,
 	bulletSpeed: 1600,
@@ -60,7 +60,7 @@ playerPatterns["4"] =
 //warlock
 playerPatterns["5"] =
 	{
-	baseMovementSpeed: 200,
+	baseMovementSpeed: 220,
 	baseFireRate: 250,
 	bulletDamage: 4,
 	bulletSpeed: 900,
