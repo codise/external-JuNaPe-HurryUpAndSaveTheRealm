@@ -35,6 +35,13 @@ body{
   padding: 5px;
 }
 
+.classStats {
+  text-align: left;
+  font-size: 55%;
+  color: #fff;
+  font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+}
+
 .chosenclass {
   border-color: #c22;
   background-color: #955;
@@ -148,14 +155,123 @@ function playGame()
       <b class="label">Pick a class</b>
       <br>
 
-      <img class="playerclass" id="0" src="assets/player_classes/knight_with_weapon.png">
-      <img class="playerclass" id="1" src="assets/player_classes/elf_with_weapon.png">
-      <img class="playerclass" id="2" src="assets/player_classes/mage_with_weapon.png">
-      <br>
+      <table align="center">
+        <tr>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/knight_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/elf_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/mage_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/viking_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/ninja_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass">
+              <tr>
+                <td>
+                  <img align="left" id="0" src="assets/player_classes/warlock_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" class="classStats">
+                    <p>HEALTH<span>___________</span></p>
+                    <p>SPEED<span>_____________</span></p>
+                    <p>DAMAGE<span>___________</span></p>
+                    <p>FIRE RATE<span>_________</span></p>
+                    <p>RANGE<span>____________</span></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-      <img class="playerclass" id="3" src="assets/player_classes/viking_with_weapon.png">
-      <img class="playerclass" id="4" src="assets/player_classes/ninja_with_weapon.png">
-      <img class="playerclass" id="5" src="assets/player_classes/warlock_with_weapon.png">
+    
+    
+      </table>
       <br><br>
 
       <input id="play" type=button value="  Play  ">
