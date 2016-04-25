@@ -203,7 +203,6 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
-		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
