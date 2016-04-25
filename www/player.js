@@ -43,20 +43,20 @@ var setupDone = false;
 
 var flipped = false;
 
-var fireRate = 200;
-var baseFireRate = 200;
+var baseFireRate;
+var fireRate;
 
 var nextFire = 0;
 
-var movementSpeed = 200;
-var baseMovementSpeed = 200;
+var baseMovementSpeed;
+var movementSpeed;
 
 var respawnTime = 250;
 var nextRespawn = 0;
 
-var bulletDamage = 2;
-var bulletSpeed = 1000;
-var bulletLifespan = 1000;
+var bulletDamage; 
+var bulletSpeed;
+var bulletLifespan;
 
 var cameraPadding = 20;
 
@@ -154,6 +154,18 @@ self.update = function ()
 				//console.log('setting up player');
 				setClassAndName(input.pClass, input.pName);
 				createPlayer();
+				
+				var info = playerPatterns[input.pClass];
+				baseFireRate = info.baseFireRate;
+				fireRate = baseFireRate;
+				baseMovementSpeed = info.baseMovementSpeed;
+				movementSpeed = baseMovementSpeed;
+				bulletDamage = info.bulletDamage;
+				bulletSpeed = info.bulletSpeed;
+				bulletLifespan = info.bulletLifespan;
+				self.maxHealth = info.maxHealth;
+				self.currentHealth = self.maxHealth;
+
 				setupDone = true;
 				}
 			var length = input.moveLength;
@@ -165,7 +177,7 @@ self.update = function ()
 			game.physics.arcade.velocityFromAngle(moveAngle, movementSpeed * length, self.sprite.body.velocity);
 
 			var shooting = input.shootAngle != 0;
-			
+
 			if(Math.abs(input.shootAngle) > 180/2 && !flipped)
 				{
 				flipped = true;
@@ -183,7 +195,6 @@ self.update = function ()
 				{
 				flipped = true;
 				}
-
 				
 			if (shooting && (game.time.now > nextFire))
 				{
@@ -231,7 +242,7 @@ self.update = function ()
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
-		pHUD.updateHealthBar();
+		if (pHUD != undefined) pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
 		}
@@ -368,8 +379,8 @@ self.kill = function ()
 	{
 	clearAllPowerups();
 	game.effectManager.popupScoreText('-100',self.sprite);
-	self.sprite.exists = false;
-	self.weapon.sprite.exists = false;
+	if (self.sprite != undefined) self.sprite.exists = false;
+	if (self.weapon != undefined) self.weapon.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
 	game.effectManager.createDeathEffect(self);
