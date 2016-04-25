@@ -197,10 +197,10 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
-		game.physics.arcade.collide(bulletManager.playerBulletGroup, enemyManager.enemyGroup);
+
 		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
-		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup);
-		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup, bulletCollisionHandler);
+		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup, bulletCollisionHandler);
 		game.physics.arcade.collide(playerGroup, self.collisionGroup);
 
 		updateRoomMovement();
@@ -214,6 +214,11 @@ self.update = function ()
 		} 
 
 	};
+
+var bulletCollisionHandler = function(bullet, wall) 
+	{
+		bulletManager.killbullet(bullet);
+	}
 
 var updateRoomMovement = function ()
 	{
