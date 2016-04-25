@@ -199,7 +199,7 @@ self.update = function ()
 			if (shooting && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan);
+				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan, 'sine');
 				}
 			self.weapon.sprite.angle = input.shootAngle;
 			self.weapon.update(flipped, input);		
@@ -278,7 +278,7 @@ self.playerHit = function(player, bullet)
 	self.sprite.tint = 0xCC0000;
 	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
-	bulletManager.killbullet(bullet);
+	bulletManager.killBullet(bullet);
 	self.takeDamage(damage);
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};

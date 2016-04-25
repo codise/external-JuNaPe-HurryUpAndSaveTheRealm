@@ -126,7 +126,7 @@ self.enemyHit = function(enemy, bullet)
 		players[bullet.playerId].getPoints(bullet.damage);
 		}
 	self.takeDamage(bullet.damage);
-	bullet.kill();
+	bulletManager.killBullet(bullet);
 	};
 	
 self.takeDamage = function(damage) 
@@ -308,9 +308,9 @@ var attack = function ()
 					{
 					if(i === currentPattern.bulletAmount)
 						{
-							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan, 'sine');
 						} else {
-							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan, 'sine');
 						}
 					bulletSpeed = bulletSpeed + currentPattern.bulletSpeedVariance;
 					}
