@@ -242,7 +242,7 @@ self.update = function ()
 		self.dead = false;
 		self.currentHealth = self.maxHealth;
 		gameClient.callClientRpc(self.id, "setDeath", [true], self, null);
-		if (pHUD != undefined*) pHUD.updateHealthBar();
+		if (pHUD != undefined) pHUD.updateHealthBar();
 		} else {
 		nextRespawn--;
 		}
