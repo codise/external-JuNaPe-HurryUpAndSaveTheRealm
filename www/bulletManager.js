@@ -29,7 +29,7 @@ self.playerBulletCount;
 
 
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
-self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan, specialType = '')
+self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan, specialInfo = {type: ''})
 	{
 	if (playerid >= 0)
 		{
@@ -60,9 +60,9 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		bullet.scale.y = scalingFactors.y;
 		bullet.damage = damage;
 		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
-		if (specialType != '')
+		if (specialInfo.type != '')
 			{
-			var newSpecialBullet = new SpecialBullet(bullet, specialType);
+			var newSpecialBullet = new SpecialBullet(bullet, specialInfo);
 			specialBullets.push(newSpecialBullet);
 			bullet.isSpecial = true;
 			} else

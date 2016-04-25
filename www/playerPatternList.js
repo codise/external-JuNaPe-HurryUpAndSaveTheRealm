@@ -28,7 +28,7 @@ playerPatterns["1"] =
 playerPatterns["2"] =
 	{
 	baseMovementSpeed: 200,
-	baseFireRate: 500,
+	baseFireRate: 100,
 	bulletDamage: 10,
 	bulletSpeed: 200,
 	bulletLifespan: 5000,

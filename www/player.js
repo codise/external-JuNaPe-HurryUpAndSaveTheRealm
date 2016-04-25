@@ -199,7 +199,8 @@ self.update = function ()
 			if (shooting && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan, 'sine');
+        var special = {type: 'sawTooth', amplitude: 100, freqNum: 1};
+				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan, special);
 				}
 			self.weapon.sprite.angle = input.shootAngle;
 			self.weapon.update(flipped, input);		
