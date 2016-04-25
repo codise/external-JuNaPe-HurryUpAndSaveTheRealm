@@ -59,7 +59,7 @@ var currentMinDY = defaultMinDY;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
-speedDict["normal"] = 0.5;
+speedDict["normal"] =0;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 

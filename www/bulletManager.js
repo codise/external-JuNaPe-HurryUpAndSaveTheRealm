@@ -83,7 +83,14 @@ self.update = function ()
 	self.playerBulletCount = self.playerBulletGroup.countLiving();
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
-	specialBullets.forEach(function (bullet) { if (bullet != undefined) bullet.update(); });
+	specialBullets.forEach(function (bullet, index)
+												 	{
+												 	if (bullet != undefined)
+												 		{
+												 		if (bullet.dead) specialBullets.splice(index, 1);
+												 		bullet.update();
+												 		}
+												 	});
 	};
 
 

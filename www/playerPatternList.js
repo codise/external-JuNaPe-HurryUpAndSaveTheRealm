@@ -30,8 +30,8 @@ playerPatterns["2"] =
 	baseMovementSpeed: 200,
 	baseFireRate: 500,
 	bulletDamage: 10,
-	bulletSpeed: 2000,
-	bulletLifespan: 500,
+	bulletSpeed: 200,
+	bulletLifespan: 5000,
 	maxHealth: 120
 	};
 
