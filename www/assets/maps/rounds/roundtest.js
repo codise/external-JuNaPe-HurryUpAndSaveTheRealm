@@ -122,8 +122,8 @@ room5colliders[2] =
 
 
 roundtest.rooms = [
-	{"roomBg": "DemoMap1.png", "colliders": room1colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "normal"},
-	{"roomBg": "DemoMap1.png", "colliders": room2colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "normal"},
-	{"roomBg": "DemoMap5.png", "colliders": room5colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "null", "moveSpeed": "stop"},
+	{"roomBg": "Demo1Map1.png", "colliders": room1colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "normal"},
+	{"roomBg": "Demo1Map1.png", "colliders": room2colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "east", "moveSpeed": "normal"},
+	{"roomBg": "Demo1Map5.png", "colliders": room5colliders, "roomJSON": "castlebasic.json", "tileset": "tileset.png", "moveDirection": "null", "moveSpeed": "stop"},
 	];
 roundtest.boss = 'king';

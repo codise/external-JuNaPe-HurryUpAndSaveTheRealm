@@ -10,11 +10,11 @@ var loadState = function ()
 		// Load level backgrounds
 	
 		//Round1
-		game.load.image('DemoMap1.png', 'assets/maps/backgrounds/DemoMap1.png');
-		game.load.image('DemoMap2.png', 'assets/maps/backgrounds/DemoMap2.png');
-		game.load.image('DemoMap3.png', 'assets/maps/backgrounds/DemoMap3.png');
-		game.load.image('DemoMap4.png', 'assets/maps/backgrounds/DemoMap4.png');
-		game.load.image('DemoMap5.png', 'assets/maps/backgrounds/DemoMap5.png');
+		game.load.image('Demo1Map1.png', 'assets/maps/backgrounds/Demo1Map1.png');
+		game.load.image('Demo1Map2.png', 'assets/maps/backgrounds/Demo1Map2.png');
+		game.load.image('Demo1Map3.png', 'assets/maps/backgrounds/Demo1Map3.png');
+		game.load.image('Demo1Map4.png', 'assets/maps/backgrounds/Demo1Map4.png');
+		game.load.image('Demo1Map5.png', 'assets/maps/backgrounds/Demo1Map5.png');
 
 		//Round2
 		game.load.image('Demo2Map1.png', 'assets/maps/backgrounds/Demo2Map1.png');
