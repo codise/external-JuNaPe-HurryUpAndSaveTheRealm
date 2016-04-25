@@ -63,12 +63,19 @@ var loadState = function ()
 		game.load.image('generic_Straight_Hori_short_stairs1', 'assets/maps/backgrounds/Generics/Straight_Hori_short_stairs1.png');
 		game.load.image('generic_Straight_Hori_short1', 'assets/maps/backgrounds/Generics/Straight_Hori_short1.png');
 		game.load.image('generic_Straight_Hori_short2', 'assets/maps/backgrounds/Generics/Straight_Hori_short2.png');
+		game.load.image('generic_Straight_Hori_short3', 'assets/maps/backgrounds/Generics/Straight_Hori_short3.png');
+		Straight_Hori_short_Enlarged1
+		Straight_Hori_short_Enlarged2
 			//Turns
 		game.load.image('generic_Turn_EtN1', 'assets/maps/backgrounds/Generics/Turn_EtN1.png');
 		game.load.image('generic_Turn_EtN2', 'assets/maps/backgrounds/Generics/Turn_EtN2.png');
+		game.load.image('generic_Turn_EtN3', 'assets/maps/backgrounds/Generics/Turn_EtN3.png');
 		game.load.image('generic_Turn_EtS1', 'assets/maps/backgrounds/Generics/Turn_EtS1.png');
+		game.load.image('generic_Turn_EtS2', 'assets/maps/backgrounds/Generics/Turn_EtS2.png');
 		game.load.image('generic_Turn_WtN1', 'assets/maps/backgrounds/Generics/Turn_WtN1.png');
+		game.load.image('generic_Turn_WtN2', 'assets/maps/backgrounds/Generics/Turn_WtN2.png');
 		game.load.image('generic_Turn_WtS1', 'assets/maps/backgrounds/Generics/Turn_WtS1.png');
+		game.load.image('generic_Turn_WtS2', 'assets/maps/backgrounds/Generics/Turn_WtS2.png');
 
 		 
 		 
