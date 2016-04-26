@@ -121,14 +121,12 @@ self.enemyHit = function(enemy, bullet)
 	{
 	self.sprite.tint = hitColor;
 	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
-	var playerId = bullet.playerId;
-	var damage = bullet.damage;
-	bullet.kill();
-	if(players[playerId] != undefined)
+	if(players[bullet.playerId] != undefined)
 		{
-		players[playerId].getPoints(1);
+		players[bullet.playerId].getPoints(bullet.damage);
 		}
-	self.takeDamage(damage);
+	self.takeDamage(bullet.damage * 100); //TODO remove 100
+	bullet.kill();
 	};
 	
 self.takeDamage = function(damage) 

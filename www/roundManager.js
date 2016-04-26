@@ -51,8 +51,14 @@ var nextRoom;
 var lastPaused = 0;
 var pauseTime = 500;
 
+var defaultMinDX = 6 * game.world.width;
+var defaultMinDY = 6 * game.world.height;
+
+var currentMinDX = defaultMinDX;
+var currentMinDY = defaultMinDY;
+
 var speedDict = [];
-speedDict["normal"] = 2;
+speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
 
@@ -60,7 +66,9 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
+var done = false;
 
+var initialSpawnBorder = game.width/15;
 self.loadRound = function (roundData)
 	{
 
@@ -146,7 +154,7 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	var spawnPosition = getInitialSpawnPos(game, players, minPlayerSpawnDistance, initialSpawnBorder, null);
 	game.effectManager.createSpawnEffect(spawnPosition);
 	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager, enemyManager);
 	players[id].sprite.scale.x = scalingFactors.x;
@@ -196,7 +204,6 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
-
 		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
 		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup, bulletCollisionHandler);
 		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup, bulletCollisionHandler);
@@ -261,9 +268,13 @@ var updateRoomMovement = function ()
 		if (rooms[2] != undefined)
 			{
 
-			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
-					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
+			var testDX = Math.abs(rooms[2].getPos().x - game.camera.x);
+			var testDY = Math.abs(rooms[2].getPos().y - game.camera.y);
+
+			if (testDX > currentMinDX || testDY > currentMinDY)
 				{
+				currentMinDX = defaultMinDX;
+				currentMinDY = defaultMinDY;
 				rooms.shift();
 				delete rooms[0];
 
@@ -334,6 +345,10 @@ var updateRoomMovement = function ()
 					enemyManager.createBoss(currentRound.boss, bossPos);
 					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
 					}
+				} else
+				{
+				currentMinDX = testDX;
+				currentMinDY = testDY;
 				}
 			}
 		}

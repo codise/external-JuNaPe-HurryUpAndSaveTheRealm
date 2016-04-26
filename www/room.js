@@ -20,7 +20,7 @@ self.backgroundLayer;
 self.moveDirection = moveDirection;
 self.moveSpeed = moveSpeed;
 
-self.backgroundLayer = game.add.sprite(0, 0, background);
+self.backgroundLayer = game.add.sprite(0, 0, 'empty');
 self.backgroundLayer.smoothed = false;
 
 roundManager.backgroundLayerGroup.add(self.backgroundLayer);
@@ -89,6 +89,7 @@ self.moveTo = function (x, y)
 self.updateScaling = function ()
 	{
 	scale();
+	self.backgroundLayer.loadTexture(background);
 	self.onceScaled = true;
 	};
 

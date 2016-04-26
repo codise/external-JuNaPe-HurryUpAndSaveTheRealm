@@ -5,6 +5,47 @@
 |     Here you'll find useful functions    |
 ==========================================*/
 
+
+
+/**
+* Helper variables for room collision generation
+*/
+var tileWidth = 80;
+var tileHeight = 72;
+var maxTilesX = 24;
+var maxTilesY = 15;
+
+/**
+* Collision object to help streamline positioning collision objects in a room
+*/
+function smallCollisionSprite (width, height, xPos, yPos, image)
+{
+var self = this;
+self.width = width;
+self.height = height;
+self.anchorX = 0.5;
+self.anchorY = 1;
+self.x = xPos;
+self.y = yPos;
+self.image = image;
+self.bodyWidth = width;
+self.bodyHeight = width;
+}
+
+/*
+room1colliders[0] = 
+{
+	width: 6 * tileWidth,
+	height: 3 * tileHeight,
+	x: maxTilesX * tileWidth / 2,
+	y: 0,
+	anchorX: 0.5,
+	anchorY: 0,
+	image: 'test'
+};
+*/
+
+
 /**
 * Get a point a minimum distance away from all players
 * @param {game} game - The game object
@@ -25,6 +66,40 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 		var randomPos = {};
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
+		currentDistance = dClosestPlayer(playerList, randomPos);
+		if (currentDistance >= minimumDistance)
+			{
+			acceptablePosition = true;
+			currentBestPos = randomPos;
+			}
+		else if(currentDistance >= currentBestDistance) {
+			currentBestPos = randomPos;
+		}
+		tryCount++;
+		}
+		return currentBestPos;
+	};
+
+/**
+* Get a initial spawn point 
+* @param {game} game - The game object
+* @param {Array} playerList - The list containing all player objects
+* @param {Number} minimumDistance - The minimum distance from players to spawn from
+* @param {Number} maxTryCount - The maximum amount of attempts until returning null
+* @return {Point} A Point where to spawn initially
+*/
+var getInitialSpawnPos = function (game, playerList, minimumDistance, borderLength, maxTryCount)
+	{
+	var tryCount = 0;
+	var currentBestDistance = 0;
+	var currentBestPos = {};
+	var acceptablePosition = false;
+	var currentDistance = 0;
+	while (!acceptablePosition || (tryCount < maxTryCount && maxTryCount != undefined))
+		{
+		var randomPos = {};
+		randomPos.x = game.camera.x + game.rnd.integerInRange(borderLength, game.camera.width - borderLength);
+		randomPos.y = game.camera.y + game.rnd.integerInRange(borderLength, game.camera.height - borderLength);
 		currentDistance = dClosestPlayer(playerList, randomPos);
 		if (currentDistance >= minimumDistance)
 			{

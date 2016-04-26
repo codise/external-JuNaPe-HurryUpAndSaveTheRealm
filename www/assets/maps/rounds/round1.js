@@ -3,11 +3,6 @@
 //The First Demo Map
 var round1 = {};
 
-var tileWidth = 80;
-var tileHeight = 72;
-var maxTilesX = 24;
-var maxTilesY = 15;
-
 //----
 
 var room1colliders = {};
@@ -28,7 +23,7 @@ room1colliders[1] =
 	width: 24 * tileWidth,
 	height: 0.7 * tileHeight,
 	x: 0,
-	y: 15 * tileHeight,
+	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
 	image: 'test'
@@ -37,7 +32,7 @@ room1colliders[1] =
 room1colliders[2] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: 0,
 	y: 0,
 	anchorX: 0,
@@ -65,7 +60,7 @@ room2colliders[1] =
 	width: 1 * tileWidth,
 	height: 0.7 * tileHeight,
 	x: 0,
-	y: 15 * tileHeight,
+	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
 	image: 'test'
@@ -74,7 +69,7 @@ room2colliders[1] =
 room2colliders[2] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: maxTilesX * tileWidth,
 	y: 0,
 	anchorX: 1,
@@ -90,7 +85,7 @@ var room3colliders = {};
 room3colliders[0] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: 0,
 	y: 0,
 	anchorX: 0,
@@ -101,7 +96,7 @@ room3colliders[0] =
 room3colliders[1] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: maxTilesX * tileWidth,
 	y: 0,
 	anchorX: 1,
@@ -117,10 +112,10 @@ var room4colliders = {};
 room4colliders[0] = 
 {
 	width: 1 * tileWidth,
-	height: 2 * tileHeight,
+	height: 1 * tileHeight,
 	x: maxTilesX * tileWidth,
 	y: 0,
-	anchorX: 0,
+	anchorX: 1,
 	anchorY: 0,
 	image: 'test'
 };
@@ -130,7 +125,7 @@ room4colliders[1] =
 	width: 24 * tileWidth,
 	height: 0.7 * tileHeight,
 	x: 0,
-	y: 15 * tileHeight,
+	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
 	image: 'test'
@@ -139,7 +134,7 @@ room4colliders[1] =
 room4colliders[2] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: 0,
 	y: 0,
 	anchorX: 0,
@@ -168,7 +163,7 @@ room5colliders[1] =
 	width: 24 * tileWidth,
 	height: 0.7 * tileHeight,
 	x: 0,
-	y: 15 * tileHeight,
+	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
 	image: 'test'
@@ -177,7 +172,7 @@ room5colliders[1] =
 room5colliders[2] = 
 {
 	width: tileWidth,
-	height: 15 * tileHeight,
+	height: maxTilesY * tileHeight,
 	x: maxTilesX * tileWidth,
 	y: 0,
 	anchorX: 1,
