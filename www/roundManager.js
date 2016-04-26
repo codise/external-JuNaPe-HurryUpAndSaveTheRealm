@@ -9,6 +9,7 @@ var self = this;
 
 self.dirty = [];
 self.dirty['score'] = true;
+self.dirty['playerAmount'] = true;
 
 var players = {};
 var playerGroup = game.add.group();
@@ -164,6 +165,8 @@ self.newPlayer = function (id)
 	players[id].sprite.scale.x = scalingFactors.x;
 	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
+
+	self.dirty['playerAmount'] = true;
 	};
 
 self.disconnectPlayer = function (id)

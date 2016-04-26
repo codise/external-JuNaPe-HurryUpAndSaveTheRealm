@@ -79,13 +79,18 @@ self.update = function (players)
 	{
 
 	//First calculate the new maximum number of enemies	
-	playerAmount = Object.keys(players).length;
-	maxEnemies = enemyScalingCoefficient * playerAmount;	
+	if (game.state.states.play.roundManager.dirty['playerAmount'])
+		{
+		playerAmount = Object.keys(players).length;
+		maxEnemies = enemyScalingCoefficient * playerAmount;	
+		MaxEnemiesToSpawn = Math.round(playerAmount/2);
+		spawnCooldown = MAX_SPAWNCOOLDOWN-(playerAmount*200);
+		game.state.states.play.roundManager.dirty['playerAmount'] = false;
+		};
 
 	if (self.enemyPool > 0 && playerAmount > 0 && game.time.now > nextSpawn && SPAWNING == true)
 		{
 		// Determine how many mobs to spawn
-		MaxEnemiesToSpawn = Math.round(playerAmount/2);
 		enemiesToSpawn = game.rnd.integerInRange(1, MaxEnemiesToSpawn);
 
 		// Spawn new mobs
@@ -107,8 +112,6 @@ self.update = function (players)
 				}
 			}
 
-		//Calculate the next time to attempt enemy spawning
-		spawnCooldown = MAX_SPAWNCOOLDOWN-(playerAmount*200);
 		if(spawnCooldown < 1000) spawnCooldown = 1000;
 		nextSpawn = game.time.now + spawnCooldown;
 		}

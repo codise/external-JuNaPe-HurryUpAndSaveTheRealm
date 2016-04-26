@@ -72,10 +72,7 @@ self.update = function ()
 	self.playerBulletCount = self.playerBulletGroup.countLiving();
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
-	//console.log(enemyBulletPool)
 	};
-
-
 }
 
 
