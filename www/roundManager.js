@@ -10,6 +10,7 @@ var self = this;
 self.dirty = [];
 self.dirty['score'] = true;
 self.dirty['playerAmount'] = true;
+self.dirty['rooms'] = true;
 
 var players = {};
 var playerGroup = game.add.group();
@@ -93,6 +94,7 @@ self.loadRound = function (roundData)
 														currentRound.rooms[i].moveDirection,
 														currentRound.rooms[i].moveSpeed,
 														self);
+		self.dirty['rooms'] = true;
 		}
 	nextRoom = 2;
 
@@ -233,7 +235,11 @@ self.update = function ()
 
 var updateRoomMovement = function ()
 	{
-	rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+	if (self.dirty['rooms'])
+		{
+		rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+		self.dirty['rooms'] = false;
+		}
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -295,6 +301,7 @@ var updateRoomMovement = function ()
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);
+					self.dirty['rooms'] = true;
 					switch (rooms[1].moveDirection)
     					{
     					case "north":
