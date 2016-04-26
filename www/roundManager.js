@@ -7,6 +7,9 @@ var self = this;
 
 // Variables related to managing game mechanics
 
+self.dirty = [];
+self.dirty['score'] = true;
+
 var players = {};
 var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
@@ -37,6 +40,7 @@ var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '
 fpsText.anchor.setTo(0, 1);
 fpsText.stroke = '#000000';
 fpsText.strokeThickness = 1;
+
 
 
 // Variables related to map functioning
@@ -139,6 +143,7 @@ var establishDrawOrder = function()
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);
 	drawOrderGroup.add(self.popUpGroup);
 	drawOrderGroup.add(qr);
+	drawOrderGroup.add(fpsText);
 	};
 
 // Client data parsing
@@ -178,10 +183,17 @@ self.disconnectPlayer = function (id)
 self.update = function ()
 	{
 
-	updateScore();
+	if (self.dirty['score']) 
+		{
+		updateScore();
+		self.dirty['score'] = false;
+		}
+
+	scoreText.position.x = game.camera.x + 16;
+	scoreText.position.y = game.camera.y + 16;
+
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
-	fpsText.bringToTop();
 	fpsText.text = ' FPS: ' + game.time.fps + '\n now.elapsed: ' + game.time.elapsed + 'ms\n time.elapsed: ' + game.time.elapsedMS + 'ms';
 	fpsText.position.setTo(game.camera.x, game.camera.y + game.camera.height);
 
@@ -355,8 +367,6 @@ var updateScore = function ()
 		}
 	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
 	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.position.x = game.camera.x + 16;
-	scoreText.position.y = game.camera.y + 16;
 	};
 
 var scoreTableToText = function (scoreTable)
@@ -370,6 +380,7 @@ var scoreTableToText = function (scoreTable)
 			text += scoreTable[i].name + " :: " + scoreTable[i].score + " / " + scoreTable[i].totalScore + "\n";
 			}
 		}
+	
 	return text;
 	};
 
