@@ -63,7 +63,7 @@ var MaxEnemiesToSpawn = 0; 		//The maximum amount of enemies we try to spawn on 
 
 var enemiesToSpawn = 1; 		//The actual number of enemies we attempt to spawn
 
-var SPAWNING =false;
+var SPAWNING = true;
 
 var spawningDistance = 50; 		// The minimum distance of spawned creature to closest player. BEWARE! if too big the game performance will suffer while trying to spawn creatures.
 

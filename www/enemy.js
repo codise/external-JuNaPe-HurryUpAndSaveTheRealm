@@ -308,9 +308,9 @@ var attack = function ()
 					{
 					if(i === currentPattern.bulletAmount)
 						{
-							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan, 'sine');
+							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
 						} else {
-							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan, 'sine');
+							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
 						}
 					bulletSpeed = bulletSpeed + currentPattern.bulletSpeedVariance;
 					}

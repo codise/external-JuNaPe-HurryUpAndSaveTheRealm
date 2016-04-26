@@ -45,7 +45,6 @@ var flipped = false;
 
 var baseFireRate;
 var fireRate;
-var special;
 
 var nextFire = 0;
 
@@ -164,7 +163,6 @@ self.update = function ()
 				bulletDamage = info.bulletDamage;
 				bulletSpeed = info.bulletSpeed;
 				bulletLifespan = info.bulletLifespan;
-        special = info.special;
 				self.maxHealth = info.maxHealth;
 				self.currentHealth = self.maxHealth;
 
@@ -201,7 +199,7 @@ self.update = function ()
 			if (shooting && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan, special);
+				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan);
 				}
 			self.weapon.sprite.angle = input.shootAngle;
 			self.weapon.update(flipped, input);		
