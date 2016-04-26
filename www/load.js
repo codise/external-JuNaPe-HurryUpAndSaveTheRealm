@@ -7,6 +7,11 @@ var loadState = function ()
 
 	self.preload = function ()
 		{
+
+		// Load waiting state demo video
+		
+		game.load.video('demo', 'assets/video/placeholder_demo.mp4');
+
 		// Load level backgrounds
 	
 		//Round1
