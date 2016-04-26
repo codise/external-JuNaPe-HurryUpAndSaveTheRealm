@@ -45,6 +45,7 @@ var flipped = false;
 
 var baseFireRate;
 var fireRate;
+var special;
 
 var nextFire = 0;
 
@@ -163,6 +164,7 @@ self.update = function ()
 				bulletDamage = info.bulletDamage;
 				bulletSpeed = info.bulletSpeed;
 				bulletLifespan = info.bulletLifespan;
+        special = info.special;
 				self.maxHealth = info.maxHealth;
 				self.currentHealth = self.maxHealth;
 
@@ -199,7 +201,6 @@ self.update = function ()
 			if (shooting && (game.time.now > nextFire))
 				{
 				nextFire = game.time.now + fireRate;
-        var special = {type: 'sawTooth', amplitude: 100, freqNum: 1};
 				bulletManager.createBullet(bullets[self.playerClass], bulletDamage, self.id, input.shootAngle, self.sprite.position, bulletSpeed, bulletLifespan, special);
 				}
 			self.weapon.sprite.angle = input.shootAngle;

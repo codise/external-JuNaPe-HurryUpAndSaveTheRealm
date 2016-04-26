@@ -28,22 +28,24 @@ playerPatterns["1"] =
 playerPatterns["2"] =
 	{
 	baseMovementSpeed: 200,
-	baseFireRate: 100,
+	baseFireRate: 200,
 	bulletDamage: 10,
 	bulletSpeed: 200,
 	bulletLifespan: 5000,
-	maxHealth: 120
+	maxHealth: 120,
+  special: {type: 'sine', amplitude: 100, period: 4}
 	};
 
 //viking
 playerPatterns["3"] =
 	{
 	baseMovementSpeed: 180,
-	baseFireRate: 350,
+	baseFireRate: 200,
 	bulletDamage: 4,
-	bulletSpeed: 800,
-	bulletLifespan: 400,
-	maxHealth: 250
+	bulletSpeed: 200,
+	bulletLifespan: 5000,
+	maxHealth: 250,
+  special: {type: 'sawTooth', amplitude: 100, period: 4}
 	};
 
 //ninja

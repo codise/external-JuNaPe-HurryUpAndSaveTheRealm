@@ -8,7 +8,7 @@ var sprite = bulletSprite;
 
 var type = info.type;
 var amplitude = info.amplitude;
-var freqNum = info.freqNum;
+var waveTime = info.waveTime;
 
 var getPerpendicularVec = function (vec)
 	{
@@ -42,6 +42,13 @@ var dot = function (vec1, vec2)
 	return vec1.x * vec2.x + vec1.y * vec2.y;
 	};
 
+var rotate = function (angle, vec)
+	{
+	var x = vec.x * Math.cos(angle) + vec.y * Math.sin(angle);
+	var y = vec.y * Math.cos(angle) - vec.x * Math.sin(angle);
+	return {x: x, y: y};
+	};
+
 self.dead = false;
 
 
@@ -54,34 +61,35 @@ self.update = function ()
 		switch (type)
 			{
 			case 'sine':
-				moveBulletSine(sprite, amplitude, freqNum);
+				moveBulletSine(sprite, amplitude, waveTime);
 				break;
 			case 'sawTooth':
-				moveBulletSawTooth(sprite, amplitude, freqNum);
+				moveBulletSawTooth(sprite, amplitude, waveTime);
 				break;
 			default:
-				moveBulletSine(sprite, amplitude, freqNum);
+				moveBulletSine(sprite, amplitude, waveTime);
 			}
 		}
 	};
 
 var perpendicularVec = normalize(getPerpendicularVec(sprite.body.velocity));
 var started = false;
-
-// Sine wave
-var sineClock = 0;
 var tau = Math.PI * 2;
 var origLength = vecLength(bulletSprite.body.velocity);
 var freq;
 
-var moveBulletSine = function (bullet, amplitude, waveTime)
+
+// Sine wave
+var sineClock = 0;
+
+var moveBulletSine = function (bullet, amplitude, period)
 	{
 	if (!started)
 		{
-		freq = 1/(2 * waveTime);
+		freq = 1/period;
 		started = true;
 		}
-	var factor = amplitude * Math.cos(tau * freq * sineClock);
+	var factor = (amplitude * Math.cos(tau * freq * sineClock))/(period);
 	var newVelocity = vectorSum(bullet.body.velocity, times(factor, perpendicularVec));
 	var normalizedVec = normalize(newVelocity);
 	bullet.body.velocity.x = origLength * normalizedVec.x;
@@ -90,32 +98,35 @@ var moveBulletSine = function (bullet, amplitude, waveTime)
 	};
 
 var sawClock = 0;
-var nextDirChange;
+
 var directionVec;
 var origVec = {};
 var origVecNorm;
+var flipped = false;
 
-var moveBulletSawTooth = function (bullet, amplitude, waveTime)
+var moveBulletSawTooth = function (bullet, amplitude, period)
 	{
 	if (!started)
 		{
-		length = Math.sqrt(Math.pow(vecLength(bullet.body.velocity) * waveTime, 2) + Math.pow(amplitude, 2));
 		origVec.x = bullet.body.velocity.x;
 		origVec.y = bullet.body.velocity.y;
-		directionVec = times(length, normalize(vectorSum(bullet.body.velocity, times(amplitude, perpendicularVec))));
-		nextDirChange = waveTime;
 		origVecNorm = normalize(origVec);
+		freq = 1/period;
+		var alpha = Math.tan(2 * amplitude / period);
+		directionVec = rotate(alpha, origVec);
 		started = true;
-		} else
-		{
-		if (nextDirChange <= sawClock)
-			{
-			var negDirect = times(-1, directionVec);
-			var newDirectionVec = vectorSum(negDirect, times(-1, times(2 * dot(negDirect, origVecNorm), origVecNorm)));
-			directionVec = newDirectionVec;
-			nextDirChange += waveTime;
-			}
 		}
+
+	var factor = amplitude * Math.cos(tau * freq * sawClock)/period;
+
+	if ((factor <= 0 && !flipped) || (factor > 0 && flipped))
+		{
+		var negDirect = times(-1, directionVec);
+		var newDirectionVec = vectorSum(negDirect, times(-1, times(2 * dot(negDirect, origVecNorm), origVecNorm)));
+		directionVec = newDirectionVec;
+		flipped = !flipped;
+		}
+
 	bullet.body.velocity.x = directionVec.x;
 	bullet.body.velocity.y = directionVec.y;
 
