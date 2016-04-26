@@ -61,6 +61,19 @@ room1colliders[4] =
 	anchorY: 1,
 	image: 'test'
 };
+//pillars
+room1colliders.p1 = new smallCollisionSprite( 4.5* tileWidth, 5 * tileHeight, 'pillar');
+room1colliders.p2 = new smallCollisionSprite( 8.5* tileWidth, 5 * tileHeight, 'pillar');
+room1colliders.p3 = new smallCollisionSprite( 11.5* tileWidth, 5 * tileHeight, 'pillar');
+room1colliders.p4 = new smallCollisionSprite( 15.5* tileWidth, 5 * tileHeight, 'pillar');
+room1colliders.p5 = new smallCollisionSprite( 18.5* tileWidth, 5 * tileHeight, 'pillar');
+room1colliders.p6 = new smallCollisionSprite( 4.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+room1colliders.p7 = new smallCollisionSprite( 8.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+room1colliders.p8 = new smallCollisionSprite( 11.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+room1colliders.p9 = new smallCollisionSprite( 15.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+room1colliders.p10 = new smallCollisionSprite( 18.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+
+
 
 //----
 
@@ -109,6 +122,9 @@ room2colliders[3] =
 	anchorY: 1,
 	image: 'test'
 };
+//candelabra
+room2colliders.c1 = new smallCollisionSprite( 17.5*tileWidth, 8*tileHeight, 'candelabrum');
+room2colliders.c2 = new smallCollisionSprite( 12.5*tileWidth, 12*tileHeight, 'candelabrum');
 
 //----
 
@@ -135,6 +151,11 @@ room3colliders[1] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room3colliders.c1 = new smallCollisionSprite( 8.5*tileWidth, 6*tileHeight, 'candelabrum');
+room3colliders.c2 = new smallCollisionSprite( 16.5*tileWidth, 6*tileHeight, 'candelabrum');
+room3colliders.c3 = new smallCollisionSprite( 8.5*tileWidth, 11*tileHeight, 'candelabrum');
+room3colliders.c4 = new smallCollisionSprite( 16.5*tileWidth, 11*tileHeight, 'candelabrum');
 
 //----
 
@@ -205,6 +226,16 @@ room4colliders[5] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room4colliders.c1 = new smallCollisionSprite( 4.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
+room4colliders.c2 = new smallCollisionSprite( 8.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
+room4colliders.c3 = new smallCollisionSprite( 16.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
+room4colliders.c4 = new smallCollisionSprite( 19.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
+room4colliders.c5 = new smallCollisionSprite( 14.5 *tileWidth, 8*tileHeight, 'candelabrum');
+room4colliders.c6 = new smallCollisionSprite( 12.5 *tileWidth, 6*tileHeight, 'candelabrum');
+//pillars
+room4colliders.p1 = new smallCollisionSprite( 2.5* tileWidth, 4 * tileHeight, 'pillar');
+room4colliders.p2 = new smallCollisionSprite( 2.5* tileWidth, 12 * tileHeight, 'pillar');
 
 //----
 
@@ -308,9 +339,16 @@ room5colliders[8] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room5colliders.c1 = new smallCollisionSprite( 2.5 *tileWidth, 4 *tileHeight, 'candelabrum');
+room5colliders.c2 = new smallCollisionSprite( 2.5 *tileWidth, (maxTilesY - 3) *tileHeight, 'candelabrum');
+//pillars
+room5colliders.p1 = new smallCollisionSprite( 12.5* tileWidth, 4 * tileHeight, 'pillar');
+room5colliders.p2 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, 4 * tileHeight, 'pillar');
+room5colliders.p3 = new smallCollisionSprite( 12.5* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
+room5colliders.p4 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
 
 //----
-
 
 round2.rooms = [
 	{"roomBg": "Demo2Map1.png", "colliders": room1colliders, "moveDirection": "east", "moveSpeed": "normal"},

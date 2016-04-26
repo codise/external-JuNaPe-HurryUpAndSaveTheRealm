@@ -130,11 +130,11 @@ self.loadRound = function (roundData)
 var establishDrawOrder = function() 
 	{
 	drawOrderGroup.add(self.backgroundLayerGroup);
-	drawOrderGroup.add(self.collisionGroup);
 	drawOrderGroup.add(enemyManager.enemyGroup);
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
 	drawOrderGroup.add(weaponManager.weaponGroup);
+	drawOrderGroup.add(self.collisionGroup);
 	drawOrderGroup.add(scoreText);
 	drawOrderGroup.add(bulletManager.playerBulletGroup);
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);

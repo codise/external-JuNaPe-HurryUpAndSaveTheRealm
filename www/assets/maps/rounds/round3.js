@@ -21,18 +21,30 @@ room1colliders[0] =
 //----
 
 var room2colliders = {};
+//statue
+room2colliders.s1 = new smallCollisionSprite( maxTilesX / 2 *tileWidth, maxTilesY / 2 *tileHeight, 'statueHero');
 
 //----
 
 var room3colliders = {};
+//pillars
+room3colliders.p1 = new smallCollisionSprite( 7.5 * tileWidth, 6 * tileHeight, 'pillar');
+room3colliders.p2 = new smallCollisionSprite( 15.5 * tileWidth, 6 * tileHeight, 'pillar');
+room3colliders.p3 = new smallCollisionSprite( 7.5 * tileWidth, 11 * tileHeight, 'pillar');
+room3colliders.p4 = new smallCollisionSprite( 15.5 * tileWidth, 11 * tileHeight, 'pillar');
 
 //----
 
 var room4colliders = {};
+//statue
+room4colliders.s1 = new smallCollisionSprite( maxTilesX / 2 *tileWidth, maxTilesY / 2 *tileHeight, 'statueHeroBroken');
 
 //----
 
 var room5colliders = {};
+//pillars
+room5colliders.p1 = new smallCollisionSprite( 7.5 * tileWidth, 5 * tileHeight, 'pillar');
+room5colliders.p2 = new smallCollisionSprite( 7.5 * tileWidth, 12 * tileHeight, 'pillar');
 
 //----
 

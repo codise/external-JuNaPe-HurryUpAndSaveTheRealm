@@ -39,6 +39,11 @@ room1colliders[2] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room1colliders.c1 = new smallCollisionSprite( 3.6*tileWidth, 5*tileHeight, 'candelabrum');
+room1colliders.c2 = new smallCollisionSprite( 3.6*tileWidth, (maxTilesY-3)*tileHeight, 'candelabrum');
+room1colliders.c3 = new smallCollisionSprite( 7.7*tileWidth, 4*tileHeight, 'candelabrum');
+room1colliders.c4 = new smallCollisionSprite( 7.7*tileWidth, (maxTilesY-2)*tileHeight, 'candelabrum');
 
 //----
 
@@ -76,6 +81,11 @@ room2colliders[2] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room2colliders.c1 = new smallCollisionSprite( (maxTilesX-3.6)*tileWidth, 5*tileHeight, 'candelabrum');
+room2colliders.c2 = new smallCollisionSprite( (maxTilesX-2.5)*tileWidth, 7*tileHeight, 'candelabrum');
+room2colliders.c3 = new smallCollisionSprite( (maxTilesX-3.6)*tileWidth, (maxTilesY-3)*tileHeight, 'candelabrum');
+room2colliders.c4 = new smallCollisionSprite( (maxTilesX-2.5)*tileWidth, (maxTilesY-5)*tileHeight, 'candelabrum');
 
 //----
 
@@ -103,6 +113,14 @@ room3colliders[1] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room3colliders.c1 = new smallCollisionSprite( 8*tileWidth, 4*tileHeight, 'candelabrum');
+room3colliders.c2 = new smallCollisionSprite( (maxTilesX-8)*tileWidth, 4*tileHeight, 'candelabrum');
+room3colliders.c3 = new smallCollisionSprite( 8*tileWidth, (maxTilesY-3)*tileHeight, 'candelabrum');
+room3colliders.c4 = new smallCollisionSprite( (maxTilesX-8)*tileWidth, (maxTilesY-3)*tileHeight, 'candelabrum');
+//pillars
+room3colliders.p1 = new smallCollisionSprite( 8*tileWidth, (maxTilesY+1)*tileHeight/2, 'pillar');
+room3colliders.p2 = new smallCollisionSprite( (maxTilesX-8)*tileWidth, (maxTilesY+1)*tileHeight/2, 'pillar');
 
 //----
 
@@ -141,6 +159,13 @@ room4colliders[2] =
 	anchorY: 0,
 	image: 'test'
 };
+//candelabra
+room4colliders.c1 = new smallCollisionSprite( 3.7*tileWidth, (maxTilesY-6)*tileHeight, 'candelabrum');
+room4colliders.c3 = new smallCollisionSprite( 3.7*tileWidth, (maxTilesY-2)*tileHeight, 'candelabrum');
+room4colliders.c2 = new smallCollisionSprite( 7.8*tileWidth, (maxTilesY-2)*tileHeight, 'candelabrum');
+//pillars
+room4colliders.p1 = new smallCollisionSprite( (maxTilesX - 1.5)* tileWidth, 4* tileHeight, 'pillar');
+room4colliders.p2 = new smallCollisionSprite( (maxTilesX - 1.5)* tileWidth, (maxTilesY - 2)* tileHeight , 'pillar');
 
 //----
 
@@ -179,11 +204,13 @@ room5colliders[2] =
 	anchorY: 0,
 	image: 'test'
 };
+//pillars
+room5colliders.p1 = new smallCollisionSprite( 2.5* tileWidth, 5* tileHeight, 'pillar');
+room5colliders.p2 = new smallCollisionSprite( 6.7* tileWidth, 5* tileHeight, 'pillar');
+room5colliders.p3 = new smallCollisionSprite( 2.5* tileWidth, (maxTilesY - 2)* tileHeight , 'pillar');
+room5colliders.p4 = new smallCollisionSprite( 6.7* tileWidth, (maxTilesY - 2)* tileHeight , 'pillar');
 
 //----
-
-
-
 
 
 

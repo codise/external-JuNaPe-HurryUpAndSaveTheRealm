@@ -25,6 +25,9 @@ var room2colliders = {};
 //----
 
 var room3colliders = {};
+//pillars
+room3colliders.p1 = new smallCollisionSprite( 5.5 * tileWidth, 3 * tileHeight, 'pillar');
+room3colliders.p2 = new smallCollisionSprite( 18.5 * tileWidth, 3 * tileHeight, 'pillar');
 
 //----
 
@@ -40,6 +43,13 @@ room4colliders[0] =
 	anchorY: 0,
 	image: 'test'
 };
+//pillars
+room4colliders.p1 = new smallCollisionSprite( 5.5 * tileWidth, 3 * tileHeight, 'pillar');
+room4colliders.p2 = new smallCollisionSprite( 18.5 * tileWidth, 3 * tileHeight, 'pillar');
+room4colliders.p3 = new smallCollisionSprite( 3.5 * tileWidth, 8 * tileHeight, 'pillar');
+room4colliders.p4 = new smallCollisionSprite( 20.5 * tileWidth, 8 * tileHeight, 'pillar');
+room4colliders.p5 = new smallCollisionSprite( 5.5 * tileWidth, 13 * tileHeight, 'pillar');
+room4colliders.p6 = new smallCollisionSprite( 18.5 * tileWidth, 13 * tileHeight, 'pillar');
 
 //----
 

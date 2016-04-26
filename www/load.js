@@ -43,9 +43,22 @@ var loadState = function ()
 		game.load.image('Demo5Map4.png', 'assets/maps/backgrounds/Demo5Map4.png');
 
 
-
-		game.load.image('grave1', 'assets/maps/tiles/Grave1.png');
-
+		//Collidable objects found in rooms
+		//small items
+		game.load.image('grave1', 'assets/maps/fieldObjects/smallCollidables/Grave1.png');
+		game.load.image('grave2', 'assets/maps/fieldObjects/smallCollidables/Grave2.png');
+		game.load.image('grave3', 'assets/maps/fieldObjects/smallCollidables/Grave3.png');
+		game.load.image('grave4', 'assets/maps/fieldObjects/smallCollidables/Grave4.png');
+		game.load.image('grave5', 'assets/maps/fieldObjects/smallCollidables/Grave5.png');
+		game.load.image('candelabrum', 'assets/maps/fieldObjects/smallCollidables/candelabrum.png');
+		game.load.image('pillar', 'assets/maps/fieldObjects/smallCollidables/pillar.png');
+		game.load.image('pillarGone', 'assets/maps/fieldObjects/smallCollidables/pillar_Gone.png');
+		game.load.image('statueHero', 'assets/maps/fieldObjects/smallCollidables/Statue_Hero.png');
+		game.load.image('statueHeroBroken', 'assets/maps/fieldObjects/smallCollidables/Statue_Hero_Broken.png');
+		game.load.image('statueHeroWorn', 'assets/maps/fieldObjects/smallCollidables/Statue_HeroWorn.png');
+		//large items
+		game.load.image('kingStatue', 'assets/maps/fieldObjects/largeCollidables/KingStatue.png');
+		
 
 
 

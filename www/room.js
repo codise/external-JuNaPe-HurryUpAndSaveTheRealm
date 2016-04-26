@@ -36,6 +36,7 @@ for (var spriteData in colliders)
 	anchorX: 1,
 	anchorY: 0,
 	image: 'test'
+	bodyBoxLength: jotain
 	*/
 	var sprite = game.add.sprite(0, 0, 'empty');
 	sprite.exists = false;
@@ -47,6 +48,10 @@ for (var spriteData in colliders)
 	sprite.exists = true;
 	game.physics.enable(sprite, Phaser.Physics.ARCADE);
 	sprite.body.immovable = true;
+	if(colliders[spriteData].bodyBoxLength != undefined)
+		{
+		sprite.body.setSize(colliders[spriteData].bodyBoxLength*scalingFactors.x, 0.8*colliders[spriteData].bodyBoxLength*scalingFactors.y);
+		}
 	//self.backgroundLayer.addChild(sprite);
 	roundManager.collisionGroup.add(sprite);
 	sprites.push(sprite);
