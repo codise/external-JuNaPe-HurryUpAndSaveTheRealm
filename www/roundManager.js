@@ -23,7 +23,7 @@ var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
 game.physics.enable(qr, Phaser.Physics.ARCADE);
-qr.sprite.body.immovable = true;
+qr.body.immovable = true;
 qr.anchor.setTo(1,1);
 
 //This group is used to manage the draw order of other groups
@@ -204,6 +204,7 @@ self.update = function ()
 
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(qr, playerGroup);
+		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 
