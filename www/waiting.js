@@ -18,7 +18,7 @@ var qrText;
 
 self.preload = function ()
 	{
-	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
+	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
 	qr.scale.x = 1.5*scalingFactors.x;
 	qr.scale.y = 1.5*scalingFactors.y;
 	qr.anchor.setTo(1,1);
