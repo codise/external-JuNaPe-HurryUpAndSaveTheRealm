@@ -15,7 +15,7 @@ room1colliders[0] =
 	y: 0,
 	anchorX: 0.5,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 
 //----

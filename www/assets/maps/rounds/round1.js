@@ -15,7 +15,7 @@ room1colliders[0] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //bottom wall
 room1colliders[1] = 
@@ -26,7 +26,7 @@ room1colliders[1] =
 	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
-	image: 'test'
+	image: 'empty'
 };
 //left wall
 room1colliders[2] = 
@@ -37,7 +37,7 @@ room1colliders[2] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //candelabra
 room1colliders.c1 = new smallCollisionSprite( 3.6*tileWidth, 5*tileHeight, 'candelabrum');
@@ -57,7 +57,7 @@ room2colliders[0] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //bottom corner wall
 room2colliders[1] = 
@@ -68,7 +68,7 @@ room2colliders[1] =
 	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
-	image: 'test'
+	image: 'empty'
 };
 //right wall
 room2colliders[2] = 
@@ -79,7 +79,7 @@ room2colliders[2] =
 	y: 0,
 	anchorX: 1,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //candelabra
 room2colliders.c1 = new smallCollisionSprite( (maxTilesX-3.6)*tileWidth, 5*tileHeight, 'candelabrum');
@@ -100,7 +100,7 @@ room3colliders[0] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //right wall
 room3colliders[1] = 
@@ -111,7 +111,7 @@ room3colliders[1] =
 	y: 0,
 	anchorX: 1,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //candelabra
 room3colliders.c1 = new smallCollisionSprite( 8*tileWidth, 4*tileHeight, 'candelabrum');
@@ -135,7 +135,7 @@ room4colliders[0] =
 	y: 0,
 	anchorX: 1,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //bottom wall
 room4colliders[1] = 
@@ -146,7 +146,7 @@ room4colliders[1] =
 	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
-	image: 'test'
+	image: 'empty'
 };
 //left wall
 room4colliders[2] = 
@@ -157,7 +157,7 @@ room4colliders[2] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //candelabra
 room4colliders.c1 = new smallCollisionSprite( 3.7*tileWidth, (maxTilesY-6)*tileHeight, 'candelabrum');
@@ -180,7 +180,7 @@ room5colliders[0] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //bottom wall
 room5colliders[1] = 
@@ -191,7 +191,7 @@ room5colliders[1] =
 	y: maxTilesY * tileHeight,
 	anchorX: 0,
 	anchorY: 1,
-	image: 'test'
+	image: 'empty'
 };
 //right wall
 room5colliders[2] = 
@@ -202,7 +202,7 @@ room5colliders[2] =
 	y: 0,
 	anchorX: 1,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //pillars
 room5colliders.p1 = new smallCollisionSprite( 2.5* tileWidth, 5* tileHeight, 'pillar');

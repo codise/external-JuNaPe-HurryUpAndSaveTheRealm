@@ -15,7 +15,7 @@ room1colliders[0] =
 	y: 0,
 	anchorX: 1,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 
 //----
@@ -41,7 +41,7 @@ room4colliders[0] =
 	y: 0,
 	anchorX: 0,
 	anchorY: 0,
-	image: 'test'
+	image: 'empty'
 };
 //pillars
 room4colliders.p1 = new smallCollisionSprite( 5.5 * tileWidth, 3 * tileHeight, 'pillar');

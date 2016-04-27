@@ -125,7 +125,7 @@ self.enemyHit = function(enemy, bullet)
 		{
 		players[bullet.playerId].getPoints(bullet.damage);
 		}
-	self.takeDamage(bullet.damage * 100); //TODO remove 100
+	self.takeDamage(bullet.damage);
 	bullet.kill();
 	};
 	
