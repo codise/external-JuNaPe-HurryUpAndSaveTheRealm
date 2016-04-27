@@ -23,9 +23,11 @@ var scoreBoard = new  ScoreBoard(game, {x: 0, y: 0});
 
 var roundRunning = false;
 
-var qr = game.add.image(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
+var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
+game.physics.enable(qr, Phaser.Physics.ARCADE);
+qr.body.immovable = true;
 qr.anchor.setTo(1,1);
 
 //This group is used to manage the draw order of other groups
@@ -209,6 +211,8 @@ self.update = function ()
 		powerupManager.update(playerGroup);
 
 		game.physics.arcade.collide(playerGroup);
+		game.physics.arcade.collide(qr, playerGroup);
+		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 
