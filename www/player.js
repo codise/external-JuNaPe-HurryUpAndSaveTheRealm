@@ -167,6 +167,7 @@ self.update = function ()
 				self.currentHealth = self.maxHealth;
 
 				setupDone = true;
+				game.state.states.play.roundManager.dirty['score'] = true;
 				}
 			var length = input.moveLength;
 			if(length > 1)
@@ -278,7 +279,7 @@ self.playerHit = function(player, bullet)
 	self.sprite.tint = 0xCC0000;
 	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
-	bulletManager.killbullet(bullet);
+	bulletManager.killBullet(bullet);
 	self.takeDamage(damage);
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
@@ -414,6 +415,7 @@ self.getPoints =  function(amount)
 		{
 		game.playerList[id].totalScore += amount;
 		}
+	game.state.states.play.roundManager.dirty['score'] = true;
 	}
 
 /**

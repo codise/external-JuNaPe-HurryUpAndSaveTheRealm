@@ -7,6 +7,11 @@ var loadState = function ()
 
 	self.preload = function ()
 		{
+
+		// Load waiting state demo video
+		
+		game.load.video('demo', 'assets/video/placeholder_demo.mp4');
+
 		// Load level backgrounds
 	
 		//Round1
@@ -180,6 +185,10 @@ var loadState = function ()
 		// Load QR
 		game.load.image('qr_niko', 'assets/QR/niko.jpg');
 		game.load.image('qr_janika', 'assets/QR/janika.jpg');
+
+    // Load score background
+
+    game.load.image('scoreBackground', 'assets/other/placeholder_scoreBackground.jpg');
 		
 		};
 
