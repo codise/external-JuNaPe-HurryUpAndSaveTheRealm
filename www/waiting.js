@@ -21,6 +21,8 @@ var demoVideoSprite;
 
 self.preload = function ()
 	{
+	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
+
 	// Load and start video
 	
 	demoVideo = game.add.video('demo');
