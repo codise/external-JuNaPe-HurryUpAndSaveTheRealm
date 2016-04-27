@@ -7,26 +7,23 @@ var self = this;
 self.roundManager;
 
 var weaponManager;
-self.enemyManager;
-self.bulletManager;
+var enemyManager;
+var bulletManager;
 var powerupManager;
 
 window.onresize = resizeGame;
 
 self.preload = function ()
 	{
-	game.time.advancedTiming = true;
-	game.stage.disableVisibilityChange = true;
-	
-	self.bulletManager = new BulletManager(game);
-	self.enemyManager = new EnemyManager(game, self.bulletManager);
+	bulletManager = new BulletManager(game);
+	enemyManager = new EnemyManager(game, bulletManager);
 	
 	weaponManager = new WeaponManager(game);
 	powerupManager = new PowerupManager(game);
 
 	game.world.setBounds(0, 0, 10 * gameWidth, 10 * gameHeight);
 
-	self.roundManager = new RoundManager(game, self.bulletManager, self.enemyManager, weaponManager, powerupManager);
+	self.roundManager = new RoundManager(game, bulletManager, enemyManager, weaponManager, powerupManager);
 	if (game.currentRound == undefined || game.currentRound + 1 >= rounds.length)
 		{
 		game.currentRound = 0;
@@ -65,8 +62,6 @@ self.update = function ()
 
 self.render = function ()
 	{
-	game.debug.text('FPS: ' + (game.time.fps || '--') , 2, game.camera.height - 8, "#ff0000");
-
 	};
 
 
@@ -81,5 +76,4 @@ self.onControllerDisconnected = function (id)
 	self.roundManager.disconnectPlayer(id);
 	delete game.playerList[id];
 	};
-
 };

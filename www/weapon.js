@@ -12,7 +12,10 @@ function Weapon(game, player, weaponName)
 
 	self.update = function(flipped, input)
 		{
-		self.sprite.position = player.sprite.position;
+		if(player != undefined)
+			{
+			self.sprite.position = player.sprite.position;
+			}
 		if(flipped)
 			{
 			self.sprite.scale.x = scalingFactors.x;

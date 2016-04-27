@@ -1,72 +1,97 @@
 'use strict';
 
-function Enemy(enemyInfo, game, bulletManager, players, position)
+function Enemy (enemyInfo, game, bulletManager, position)
 {
 var self = this;
-
-var maxSpeed = enemyInfo.maxSpeed;
-
-self.sprite = game.add.sprite(position.x, position.y, enemyInfo.sprite);
+self.sprite = game.add.sprite(position.x, position.y, enemyInfo.sprites[0]);
 self.sprite.anchor.setTo(0.5, 0.5);
 var flipped = false;
 
+var isBoss = enemyInfo.boss;
+game.physics.enable(self.sprite, Phaser.Physics.ARCADE);
 var hitColorTime = 50;
 var hitColor = enemyInfo.hitColor;
 
+var patternTimeout;
+var currentPatterns;
+self.maxHealth = enemyInfo.maxHealth
+if(isBoss)
+	{
+	currentPatterns = enemyInfo.normalPatterns;
+	var healthBar = new Hud(game, self);
+	self.maxHealth *= Object.keys(game.playerList).length;
+	} else 
+	{
+	currentPatterns = enemyInfo.patterns;
+	}
+	
+self.currentHealth = self.maxHealth;
+var currentPatternIndex = -1;
+var currentPattern;
+nextPattern();
+
 var nextMove = 0;
-var moveRate = enemyInfo.moveRate;//2500;
-var movementScheme = enemyInfo.movementScheme;
 
-var xDirection = [1, -1];
-//self.yDirection = [1, -1];
+var shotsFired = 0;
+var movementDirection = 0;
 
-var fireRate = enemyInfo.fireRate;//5000;
-var nextFire = 0;
-var shootingScheme = enemyInfo.shootingScheme;
+var nextFire = game.time.now + currentPattern.fireRate;
 
-var maxHealth = enemyInfo.maxHealth;//10;
-var currentHealth = maxHealth;
-
-var mPlayers = players;
-var currentTarget = pickRandomFromDictionary(mPlayers);
+var lowHealth = false;
 
 var cameraPadding = 20;
+var players;
+var targetPlayer;
 
-// Small delay before enemy really spawns, this will be obsolete when spawn effects are part of spritesheet
-
-var spawnDelay = game.effectManager.getSpawnDuration(); // in ms
-var spawnTimer = game.time.now;
-
-
-
-var scale = function ()
+var flip = function ()
 	{
 	if (flipped)
 		{
-		self.sprite.scale.x = scalingFactors.x;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x);
 		} else
 		{
-		self.sprite.scale.x = -scalingFactors.x;
+		self.sprite.scale.x = Math.abs(self.sprite.scale.x) * -1;
 		}
-	self.sprite.scale.y = scalingFactors.y;
 	};
 
-
-self.update = function (players)
+self.update = function (playersObj)
 	{
-	self.sprite.exists = ! (spawnTimer + spawnDelay > game.time.now);
-
-	mPlayers = players;
-	if (currentTarget === undefined)
+	players = playersObj;
+	flip();
+	if (patternTimeout != undefined)
 		{
-		currentTarget = pickRandomFromDictionary(mPlayers);
+		if (game.time.now >= patternTimeout) 
+			{
+			nextPattern();
+			}
 		}
-
-	scale();
-	if(game.time.now > nextMove) 
+	if (targetPlayer)
+		{
+		if(targetPlayer.dead)
+			{
+			var newTarget = getAliveFromObject(players);
+			if (newTarget != undefined)
+				{
+				targetPlayer = newTarget;
+				} else if(currentPatterns.length > 1)
+				{
+				nextPattern();
+				}
+			}
+		}
+	if(isBoss && self.currentHealth < self.maxHealth / 3 && lowHealth == false)
+		{
+		lowHealth = true;
+		currentPatterns = enemyInfo.ragePatterns;
+		currentPatternIndex = -1;
+		nextPattern();
+		}
+	
+	if (game.time.now > nextMove)
 		{
 		move();
 		}
+		
 	if (self.sprite.body.velocity.x > 0 && flipped)
 		{
 		flipped = false;
@@ -74,38 +99,40 @@ self.update = function (players)
 		{
 		flipped = true;
 		}
-
+		
 	if (game.time.now > nextFire)
 		{
-		fire();
+		attack(players);
 		}
-
+	
 	if(bulletManager.playerBulletCount > 0) 
 		{
-		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
-			{
-			game.physics.arcade.overlap(bulletManager.playerBulletGroups[i], self.sprite, self.enemyHit, null, self); 
-			}
+		game.physics.arcade.overlap(bulletManager.playerBulletGroup, self.sprite, self.enemyHit, null, self); 
 		}
+	
 	checkCameraBounds();
-	};
-
+	if(healthBar != undefined)
+		{
+		healthBar.updateHealthBar();
+		}
+	}
+	
 self.enemyHit = function(enemy, bullet) 
 	{
 	self.sprite.tint = hitColor;
 	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
-	var playerId = bullet.playerId;
-	var damage = bullet.damage;
-	bullet.kill();
-	mPlayers[playerId].getPoints(1);
-	self.enemyTakeDamage(damage);
-	if(self.sprite.dead) mPlayers[playerId].getPoints(20);
+	if(players[bullet.playerId] != undefined)
+		{
+		players[bullet.playerId].getPoints(bullet.damage);
+		}
+	self.takeDamage(bullet.damage);
+	bulletManager.killBullet(bullet);
 	};
-
-self.enemyTakeDamage = function(damage) 
+	
+self.takeDamage = function(damage) 
 	{
-	currentHealth = currentHealth - damage;
-	if(currentHealth <= 0)
+	self.currentHealth = self.currentHealth - damage;
+	if(self.currentHealth <= 0)
 		{
 		self.sprite.dead = true;
 		}
@@ -113,99 +140,206 @@ self.enemyTakeDamage = function(damage)
 
 self.kill = function ()
 	{
+	if (isBoss)
+		{
+		game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
+		game.state.states.play.roundManager.lastRoomTimer = game.time.now + game.state.states.play.roundManager.lastRoomTimeout;
+		}
 	self.sprite.destroy();
-	game.effectManager.createDeathEffect(self);
 	};
 
+function nextPattern()
+	{
+	if(targetPlayer)
+		{
+		targetPlayer = undefined;
+		}
+	shotsFired = 0;
+	currentPatternIndex++;
+	if(currentPatternIndex >= currentPatterns.length)
+		{
+		currentPatternIndex = 0;
+		}
+	currentPattern = currentPatterns[currentPatternIndex];
+	patternTimeout = game.time.now + currentPattern.patternRate;
+	nextFire = game.time.now + 10;
+	nextMove = game.time.now;
+	if(currentPattern.onlyOnce && currentPattern.done)
+		{
+		nextPattern();
+		return;
+		} else if (!currentPattern.done) {
+		currentPattern.done = true;
+		}
+	if(currentPattern.texture != undefined)
+		{
+		loadTexture(currentPattern.texture);
+		}
+	};
+
+function loadTexture(textureIndex)
+	{
+	if(textureIndex < enemyInfo.sprites.length && textureIndex > -1)
+		{
+		self.sprite.loadTexture(enemyInfo.sprites[textureIndex]);
+		}
+	};
+
+//sets movement direction based on pattern
+//movement speed and turn rate (how often a new direction is taken) are pattern specific
 var move = function ()
 	{
-	switch (movementScheme)
+	switch (currentPattern.movementScheme[0])
 		{
-		case 'chargeSingle':
-			if(currentTarget != undefined)
+		case 'random':
+			movementDirection = Math.floor(Math.random()*360);
+			break;
+		case 'shake':
+			movementDirection += 180;
+			break;
+		case 'charge':
+			var target;
+			if(!targetPlayer)
 				{
-				var angle = game.physics.arcade.angleBetween(self.sprite, currentTarget.sprite) * 180/Math.PI;
-				game.physics.arcade.velocityFromAngle(angle, maxSpeed, self.sprite.body.velocity);
+				target = getAliveFromObject(players);
+				targetPlayer = target;
 				} else {
-				console.log('tried to charge at undefined player');
+				target = targetPlayer;
+				}
+			if(target != undefined)
+				{
+				movementDirection = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI
+				} else {
+				movementDirection = Math.floor(Math.random()*360);
 				}
 			break;
 		default:
-			var angle = Math.floor(Math.random()*181);
-			angle *= xDirection[Math.floor(Math.random()*2)];
-			game.physics.arcade.velocityFromAngle(angle, maxSpeed, self.sprite.body.velocity);
 		}
-	nextMove = game.time.now + moveRate;
+		game.physics.arcade.velocityFromAngle(movementDirection, currentPattern.maxSpeed, self.sprite.body.velocity);
+		nextMove = game.time.now + currentPattern.moveRate;
 	};
 
-var fire = function ()
+var attack = function ()
 	{
-	if (self.sprite.exists)
+	switch (currentPattern.attackScheme)
 		{
-		switch (shootingScheme[0])
-			{
-			case 'directedBurst':
-				createDirectedBurst(shootingScheme[1], shootingScheme[2]);
-				break;
-			case 'slasherShot':
-				createSlasherShot(shootingScheme[1], shootingScheme[2]);
-				break;
-			default:
-				createRadialPulse(shootingScheme[1], shootingScheme[2]);	
-			}
-		nextFire = game.time.now + fireRate;
-		}
-	};
-
-var createRadialPulse = function (n, bulletGraphic)
-	{
-	// Creates n bullets radially from monster
-	var randomOffset = Math.floor((Math.random() * 360));
-	for (var i = 0; i < n; i++)
-		{
-		var angle = 360/n * i + randomOffset;
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
-		}
-	};
-
-var createDirectedBurst = function (n, bulletGraphic)
-	{
-	// Creates a group of bullets shot at a player, like a shotgun
-	if(currentTarget != undefined)
-		{	
-		var angleBetween = game.physics.arcade.angleBetween(self.sprite, currentTarget.sprite) * 180/Math.PI;
-		} else {
-		console.log('tried to shoot at undefined player');
-		}
-	for (var i = 0 - ((n-1)/2) ; i <= 0 + ((n-1)/2); i++)
-		{
-		// 4 degrees of random offset
-		var randomOffset = Math.floor((Math.random() * 9)) - 4;
-		var angle = angleBetween + ((i )* 10) + randomOffset;
+		case 'spiral':
+			for(var i = 1; i <= currentPattern.bulletAmount; i++)
+				{
+				//gives a random offset between -shotAngleVariance and shotAngleVariance
+				var randomAngleOffset
+				if(currentPattern.shotAngleVariance)
+					{
+					randomAngleOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+					} else {
+					randomAngleOffset = 0;
+					}
+				var shotRotation;
+				if(currentPattern.shotRotation)
+					{
+					shotRotation = currentPattern.shotRotation;
+					} else 
+					{
+					shotRotation = 0;
+					}
+				var angle = 360 * i/currentPattern.bulletAmount + shotsFired * shotRotation + randomAngleOffset;
+				bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
+				}
+			break;
 		
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 200, 5000);
-		}
-	};
-
-var createSlasherShot = function (n, bulletGraphic)
-	{
-	// Creates a group of bullets shot at a player, like a shotgun
-	if(currentTarget != undefined)
-		{	
-		var angleBetween = game.physics.arcade.angleBetween(self.sprite, currentTarget.sprite) * 180/Math.PI;
-		} else {
-		console.log('tried to shoot at undefined player');
-		}
-	for (var i = 0 - ((n-1)/2) ; i <= 0 + ((n-1)/2); i++)
-		{
-		// 4 degrees of random offset
-		var randomOffset = Math.floor((Math.random() * 9)) - 4;
-		var angle = angleBetween + ((i )* 10) + randomOffset;
+		case 'radial':
+			var randomOffset = Math.floor((Math.random() * 360));
+			for (var i = 0; i < currentPattern.bulletAmount; i++)
+				{
+				var angle = 360/currentPattern.bulletAmount * i + randomOffset;
+				bulletManager.createBullet(currentPattern.bulletGraphic, 30, -1, angle, self.sprite.position, currentPattern.bulletSpeed, currentPattern.bulletLifespan);
+				}
+			break;
 		
-		bulletManager.createBullet(bulletGraphic, 10, -1, angle, self.sprite.position, 400, 500);
+		case 'burst':
+			var target = checkShootTarget();
+			
+			for(var i = 0 - ((currentPattern.bulletAmount-1)/2) ; i <= 0 + ((currentPattern.bulletAmount-1)/2); i++)
+				{
+				if(target != undefined && !target.dead)
+					{
+					//gives a random offset between -shotAngleVariance and shotAngleVariance
+					var randomAngleOffset
+					if(currentPattern.shotAngleVariance)
+						{
+						randomAngleOffset = Math.floor((Math.random() * 2 * currentPattern.shotAngleVariance + 1)) - currentPattern.shotAngleVariance;
+						} else {
+						randomAngleOffset = 0;
+						}
+					var burstSpreadAngle;
+					if (currentPattern.burstSpreadAngle) 
+						{
+						burstSpreadAngle = currentPattern.burstSpreadAngle;
+						} else 
+						{
+						burstSpreadAngle = 10;
+						}
+					var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI + (i * burstSpreadAngle) + randomAngleOffset;
+					
+					//amount from negative bulletSpeedVariance to positive bulletSpeedVariance
+					var randomSpeedOffset
+					if(currentPattern.bulletSpeedVariance)
+						{
+						randomSpeedOffset = Math.floor((Math.random() * 2 * currentPattern.bulletSpeedVariance + 1)) - currentPattern.bulletSpeedVariance;
+						} else {
+						randomSpeedOffset = 0;
+						}
+					var bulletSpeed = currentPattern.bulletSpeed + randomSpeedOffset;
+					bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+					} else 
+					{
+					nextPattern();
+					}
+				}
+			break;
+		case 'line':
+			var target = checkShootTarget();
+			
+			if(target != undefined && !target.dead)
+				{
+				var angle = game.physics.arcade.angleBetween(self.sprite, target.sprite) * 180/Math.PI;
+				var bulletSpeed = currentPattern.bulletSpeed;
+				for(var i = 1; i <= currentPattern.bulletAmount; i++)
+					{
+					if(i === currentPattern.bulletAmount)
+						{
+							bulletManager.createBullet(currentPattern.bulletGraphic, currentPattern.bulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+						} else {
+							bulletManager.createBullet(currentPattern.lineBulletGraphic, currentPattern.lineBulletDamage, -1, angle, self.sprite.position, bulletSpeed, currentPattern.bulletLifespan);
+						}
+					bulletSpeed = bulletSpeed + currentPattern.bulletSpeedVariance;
+					}
+				} else 
+				{
+				nextPattern();
+				}
+			
+			
+		default:
+		}
+	shotsFired ++;
+	nextFire = game.time.now + currentPattern.fireRate;
+	};
+	
+var checkShootTarget = function ()
+	{
+	if(currentPattern.stickToTarget && !targetPlayer)
+		{
+		targetPlayer = getAliveFromObject(players);
+		return targetPlayer;
+		} else if (currentPattern.stickToTarget && targetPlayer)
+		{
+		return targetPlayer;
+		} else {
+		return getAliveFromObject(players);
 		}
 	};
-
+	
 var checkCameraBounds = function ()
 	{
 	if (self.sprite.position.x < game.camera.x + cameraPadding)

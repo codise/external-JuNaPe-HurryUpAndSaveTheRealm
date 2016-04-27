@@ -7,6 +7,11 @@ var self = this;
 
 // Variables related to managing game mechanics
 
+self.dirty = [];
+self.dirty['score'] = true;
+self.dirty['playerAmount'] = true;
+self.dirty['rooms'] = true;
+
 var players = {};
 var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
@@ -14,15 +19,29 @@ playerGroup.enableBody = true;
 
 var minPlayerSpawnDistance = 10;
 
-var scoreTable = [];
-var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
+var scoreBoard = new  ScoreBoard(game, {x: 0, y: 0});
 
 var roundRunning = false;
 
-var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
+var qr = game.add.image(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
 qr.anchor.setTo(1,1);
+
+//This group is used to manage the draw order of other groups
+//The draw order is defined by the order in which groupds are added
+//The last gorup is always drawn on top of others
+var drawOrderGroup = game.add.group(); 
+
+self.backgroundLayerGroup = game.add.group();
+
+self.popUpGroup = game.add.group();
+
+var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '', { fontSize: '12px', fill: '#f00'});
+fpsText.anchor.setTo(0, 1);
+fpsText.stroke = '#000000';
+fpsText.strokeThickness = 1;
+
 
 
 // Variables related to map functioning
@@ -34,9 +53,14 @@ var rooms = [];
 var roomGroup = game.add.group();
 var nextRoom;
 
-
 var lastPaused = 0;
 var pauseTime = 500;
+
+var defaultMinDX = 6 * game.world.width;
+var defaultMinDY = 6 * game.world.height;
+
+var currentMinDX = defaultMinDX;
+var currentMinDY = defaultMinDY;
 
 var speedDict = [];
 speedDict["slow"] = 0.25;
@@ -48,14 +72,15 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
+var done = false;
 
-
+var initialSpawnBorder = game.width/15;
 self.loadRound = function (roundData)
 	{
 
 	// Set camera in the middle of the stage
-	game.camera.x = game.world.width/2 - game.camera.width/2;
-	game.camera.y = game.world.height/2 - game.camera.height/2;
+	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
+	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
 
 	rooms[0] = null;
@@ -65,49 +90,62 @@ self.loadRound = function (roundData)
 		{
 		rooms[i + 1] = new Room(game,
 														currentRound.rooms[i].roomBg,
-														currentRound.rooms[i].tileset,
-														currentRound.rooms[i].roomJSON,
 														currentRound.rooms[i].moveDirection,
-														currentRound.rooms[i].moveSpeed);
-		rooms[i + 1].preload(instantiateRound);
+														currentRound.rooms[i].moveSpeed,
+														self);
+		self.dirty['rooms'] = true;
 		}
-
 	nextRoom = 2;
 
-	};
-
-var instantiateRound = function ()
-	{
-
-	// Position the two loaded rooms correctly
+	// Position the two loaded rooms
 
 	rooms[1].moveTo(game.camera.x, game.camera.y);
-	switch (rooms[1].moveDirection)
+	if (rooms[2] != undefined)
 		{
-		case "north":
-			rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-			break;
-		case "east":
-			rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-			break;
-		case "south":
-			rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
-			break;
-		case "west":
-			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-			break;
-		default:
-			rooms[2] = null;
+		switch (rooms[1].moveDirection)
+			{
+			case "north":
+				rooms[2].moveTo(game.camera.x, game.camera.y, - game.camera.height);
+				break;
+			case "east":
+				rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+				break;
+			case "south":
+				rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
+				break;
+			case "west":
+				rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+				break;
+			default:
+				rooms[2] = null;
+			}
 		}
-	startRound();
-	};
 
-var startRound = function ()
-	{
 	roundRunning = true;
 	currentDirection = rooms[1].moveDirection;
 	currentSpeed = rooms[1].moveSpeed;
+	establishDrawOrder();
+	};
 
+
+/**
+* Initializes the draw order of all sprite groups in the game
+* GROUPS ARE DRAWN IN THE ORDER THEY ARE DEFINED!
+* New groups always go above older ones
+*/
+var establishDrawOrder = function() 
+	{
+	drawOrderGroup.add(self.backgroundLayerGroup);	
+	drawOrderGroup.add(enemyManager.enemyGroup);
+	drawOrderGroup.add(powerupManager.pUpGroup);
+	drawOrderGroup.add(playerGroup);
+	drawOrderGroup.add(weaponManager.weaponGroup);
+	drawOrderGroup.add(scoreBoard.sprite);
+	drawOrderGroup.add(bulletManager.playerBulletGroup);
+	drawOrderGroup.add(bulletManager.enemyBulletGroup);
+	drawOrderGroup.add(self.popUpGroup);
+	drawOrderGroup.add(qr);
+	drawOrderGroup.add(fpsText);
 	};
 
 // Client data parsing
@@ -122,10 +160,14 @@ self.setPlayerInput = function (id, input)
 	
 self.newPlayer = function (id)
 	{
-	var spawnPosition = getPosMinDPlayers(game, players, minPlayerSpawnDistance, null);
+	var spawnPosition = getInitialSpawnPos(game, players, minPlayerSpawnDistance, initialSpawnBorder, null);
 	game.effectManager.createSpawnEffect(spawnPosition);
-	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager);
+	players[id] = new Player(game, spawnPosition.x, spawnPosition.y, bulletManager, id, weaponManager, enemyManager);
+	players[id].sprite.scale.x = scalingFactors.x;
+	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
+
+	self.dirty['playerAmount'] = true;
 	};
 
 self.disconnectPlayer = function (id)
@@ -144,22 +186,12 @@ self.disconnectPlayer = function (id)
 
 self.update = function ()
 	{
-	game.world.bringToTop(playerGroup);
-	game.world.bringToTop(enemyManager.enemyGroup);
-	game.world.bringToTop(powerupManager.pUpGroup);
-	game.world.bringToTop(weaponManager.weaponGroup);
-	bulletManager.playerBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
-	bulletManager.enemyBulletGroups.forEach(function (whatToBring) { game.world.bringToTop(whatToBring) }, this);
-	scoreText.bringToTop();
-	var popUpList = game.effectManager.popUpList;
-	for(var i = 0; i < popUpList.length; i++)
-		{
-		popUpList[i].bringToTop();
-		}
-	updateScore();
+	scoreBoard.update(players);
 
-	qr.bringToTop();
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
+
+	fpsText.text = ' FPS: ' + game.time.fps + '\n now.elapsed: ' + game.time.elapsed + 'ms\n time.elapsed: ' + game.time.elapsedMS + 'ms';
+	fpsText.position.setTo(game.camera.x, game.camera.y + game.camera.height);
 
 	if (roundRunning && lastPaused < game.time.now && !self.roundOver)
 		{
@@ -180,12 +212,6 @@ self.update = function ()
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 
-		for (var i = 0; i < bulletManager.playerBulletGroups.length; i++)
-			{
-			//game.physics.arcade.collide(bulletManager.playerBulletGroups[i], playerGroup);
-			game.physics.arcade.collide(bulletManager.playerBulletGroups[i], enemyManager.enemyGroup);
-			}
-
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
 			{
@@ -200,7 +226,11 @@ self.update = function ()
 
 var updateRoomMovement = function ()
 	{
-	rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+	if (self.dirty['rooms'])
+		{
+		rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+		self.dirty['rooms'] = false;
+		}
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -239,9 +269,14 @@ var updateRoomMovement = function ()
 		// Check if next room has passed the game.camera, if it has, align it with camera, load new room etc.
 		if (rooms[2] != undefined)
 			{
-			if (Math.abs(rooms[2].getPos().x - game.camera.x) <= Math.abs(changeInPos.x) &&
-					Math.abs(rooms[2].getPos().y - game.camera.y) <= Math.abs(changeInPos.y))
+
+			var testDX = Math.abs(rooms[2].getPos().x - game.camera.x);
+			var testDY = Math.abs(rooms[2].getPos().y - game.camera.y);
+
+			if (testDX > currentMinDX || testDY > currentMinDY)
 				{
+				currentMinDX = defaultMinDX;
+				currentMinDY = defaultMinDY;
 				rooms.shift();
 				delete rooms[0];
 
@@ -254,16 +289,31 @@ var updateRoomMovement = function ()
 					{
 					rooms[2] = new Room(game,
 															currentRound.rooms[nextRoom].roomBg,
-															currentRound.rooms[nextRoom].tileset,
-															currentRound.rooms[nextRoom].roomJSON,
 															currentRound.rooms[nextRoom].moveDirection,
-															currentRound.rooms[nextRoom].moveSpeed);
-					rooms[2].preload(instantiateNewRoom)
+															currentRound.rooms[nextRoom].moveSpeed,
+															self);
+					self.dirty['rooms'] = true;
+					switch (rooms[1].moveDirection)
+    					{
+    					case "north":
+      					rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
+      					break;
+    					case "east":
+      					rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+      					break;
+    					case "south":
+      					rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
+      					break;
+    					case "west":
+      					rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+      					break;
+    					default:
+      					rooms[2] = null;
+    					}
 					lastPaused = game.time.now + pauseTime;
 					nextRoom++;
 					} else
 					{
-
 					var lastMovedDirection = 'null';
 					if(currentRound.rooms[currentRound.rooms.length-2] != undefined)
 						{
@@ -297,65 +347,18 @@ var updateRoomMovement = function ()
 					enemyManager.createBoss(currentRound.boss, bossPos);
 					self.lastRoomTimer = game.time.now + self.lastRoomTimeout;
 					}
+				} else
+				{
+				currentMinDX = testDX;
+				currentMinDY = testDY;
 				}
 			}
 		}
 	};
 
-var instantiateNewRoom = function ()
-	{
-	switch (rooms[1].moveDirection)
-		{
-		case "north":
-			rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-			break;
-		case "east":
-			rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-			break;
-		case "south":
-			rooms[2].moveTo(game.camera.x, game.camera.y + game.camera.height);
-			break;
-		case "west":
-			rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-			break;
-		default:
-			rooms[2] = null;
-		}
-	};
-
-var updateScore = function ()
-	{
-	scoreTable = [];	
-	for (var i in players)
-		{
-		if (players[i] != undefined && game.playerList[players[i].id] != undefined)
-			{
-			scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
-			}
-		}
-	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
-	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.position.x = game.camera.x + 16;
-	scoreText.position.y = game.camera.y + 16;
-	};
-
-var scoreTableToText = function (scoreTable)
-	{
-	var text = '';
-
-	for (var i in scoreTable)
-		{
-		if (scoreTable[i].name != undefined)
-			{
-			text += scoreTable[i].name + " :: " + scoreTable[i].score + " / " + scoreTable[i].totalScore + "\n";
-			}
-		}
-	return text;
-	};
-
 self.getScoreTable = function ()
 	{
-	return scoreTable;
+	return scoreBoard.getScoreTable();
 	};
 	
 
