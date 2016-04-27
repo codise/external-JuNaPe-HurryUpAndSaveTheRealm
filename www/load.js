@@ -165,7 +165,7 @@ var loadState = function ()
 
 		// Load QR
 		game.load.image('qr_niko_wlan_markus', 'assets/QR/nikoMarkuksenWlan.jpg');
-		game.load.image('qr_niko_wlan_niko', 'assets/QR/nikoNikonWlan.jpg');
+		game.load.image('qr_niko_wlan_niko', 'assets/QR/nikoNikonWlan.png');
 		game.load.image('qr_janika', 'assets/QR/janika.jpg');
 		
 		};
