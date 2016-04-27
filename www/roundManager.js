@@ -29,6 +29,7 @@ qr.scale.y = 0.5*scalingFactors.y;
 game.physics.enable(qr, Phaser.Physics.ARCADE);
 qr.body.immovable = true;
 qr.anchor.setTo(1,1);
+qr.body.bounce.set(1,1);
 
 //This group is used to manage the draw order of other groups
 //The draw order is defined by the order in which groupds are added
@@ -212,14 +213,14 @@ self.update = function ()
 		powerupManager.update(playerGroup);
 
 		game.physics.arcade.collide(playerGroup);
-		game.physics.arcade.collide(qr, playerGroup);
-		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
 		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup, bulletCollisionHandler);
 		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup, bulletCollisionHandler);
 		game.physics.arcade.collide(playerGroup, self.collisionGroup);
+		game.physics.arcade.collide(qr, playerGroup);
+		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
