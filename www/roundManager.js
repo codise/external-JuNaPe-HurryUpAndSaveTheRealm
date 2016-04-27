@@ -235,7 +235,7 @@ self.update = function ()
 
 var bulletCollisionHandler = function(bullet, wall) 
 	{
-		bulletManager.killbullet(bullet);
+		bulletManager.killBullet(bullet);
 	}
 
 var updateRoomMovement = function ()
