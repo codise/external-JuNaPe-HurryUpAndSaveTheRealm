@@ -279,7 +279,7 @@ self.playerHit = function(player, bullet)
 	self.sprite.tint = 0xCC0000;
 	game.time.events.add(hitColorTime, function() {self.sprite.tint = 0xFFFFFF;});
 	var damage = bullet.damage;
-	bulletManager.killbullet(bullet);
+	bulletManager.killBullet(bullet);
 	self.takeDamage(damage);
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
 	};
