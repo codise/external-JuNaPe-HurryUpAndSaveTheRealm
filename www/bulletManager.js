@@ -10,6 +10,8 @@ var playerMaxBullets = 200;
 var enemyBulletPool = enemyMaxBullets;
 var playerBulletPool = playerMaxBullets;
 
+var specialBullets = [];
+
 self.playerBulletGroup = game.add.group();
 self.playerBulletGroup.enableBody = true;
 self.playerBulletGroup.physicsBodyType = Phaser.Physics.ARCADE;
@@ -27,7 +29,7 @@ self.playerBulletCount;
 
 
 // Type of bullet, player which shot the bullet, if enemybullet then -1, bullet direction, bullet position
-self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan)
+self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, bulletLifespan, specialInfo = {type: ''})
 	{
 	if (playerid >= 0)
 		{
@@ -56,12 +58,21 @@ self.createBullet = function (type, damage, playerid, angle, pos, bulletSpeed, b
 		bullet.angle = angle + 90;
 		bullet.scale.x = scalingFactors.x;
 		bullet.scale.y = scalingFactors.y;
-		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
 		bullet.damage = damage;
+		game.physics.arcade.velocityFromAngle(angle, bulletSpeed, bullet.body.velocity);
+		if (specialInfo.type != '')
+			{
+			var newSpecialBullet = new SpecialBullet(bullet, specialInfo);
+			specialBullets.push(newSpecialBullet);
+			bullet.isSpecial = true;
+			} else
+			{
+			bullet.isSpecial = false;
+			}
 		}
 	};
 
-self.killbullet = function (bullet)
+self.killBullet = function (bullet)
 	{
 	bullet.kill()
 	};
@@ -72,7 +83,14 @@ self.update = function ()
 	self.playerBulletCount = self.playerBulletGroup.countLiving();
 	enemyBulletPool = enemyMaxBullets - self.enemyBulletCount;
 	playerBulletPool = playerMaxBullets - self.playerBulletCount;
-	//console.log(enemyBulletPool)
+	specialBullets.forEach(function (bullet, index)
+												 	{
+												 	if (bullet != undefined)
+												 		{
+												 		if (bullet.dead) specialBullets.splice(index, 1);
+												 		bullet.update();
+												 		}
+												 	});
 	};
 
 
