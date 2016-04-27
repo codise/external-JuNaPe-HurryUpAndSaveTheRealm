@@ -29,19 +29,22 @@ self.getScoreTable = function ()
 
 self.update = function (players)
 	{
-	scoreTable = []
-  for (var i in players) 
-    {
-    if (players[i] != undefined && game.playerList[players[i].id] != undefined)
-      {
-      scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
-      }
-    }
-  scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
-  scoreText.text = scoreTableToText(scoreTable);
-	scoreBackground.width = scoreText.width;
-	scoreBackground.height = scoreText.height;
-	console.log(scoreBackground.height + "   " + (scoreText.text.split('\n').length - 1)); 
+	if (game.state.states.play.roundManager.dirty['score'])
+		{
+		scoreTable = []
+  	for (var i in players) 
+    	{
+    	if (players[i] != undefined && game.playerList[players[i].id] != undefined)
+      	{
+      	scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
+      	}
+    	}
+  	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
+  	scoreText.text = scoreTableToText(scoreTable);
+		scoreBackground.width = scoreText.width;
+		scoreBackground.height = scoreText.height;
+		game.state.states.play.roundManager.dirty['score'] = false;
+		}
   self.sprite.position.x = game.camera.x + 16;
   self.sprite.position.y = game.camera.y + 16;
   };

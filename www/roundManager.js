@@ -7,6 +7,11 @@ var self = this;
 
 // Variables related to managing game mechanics
 
+self.dirty = [];
+self.dirty['score'] = true;
+self.dirty['playerAmount'] = true;
+self.dirty['rooms'] = true;
+
 var players = {};
 var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
@@ -36,6 +41,7 @@ var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '
 fpsText.anchor.setTo(0, 1);
 fpsText.stroke = '#000000';
 fpsText.strokeThickness = 1;
+
 
 
 // Variables related to map functioning
@@ -87,6 +93,7 @@ self.loadRound = function (roundData)
 														currentRound.rooms[i].moveDirection,
 														currentRound.rooms[i].moveSpeed,
 														self);
+		self.dirty['rooms'] = true;
 		}
 	nextRoom = 2;
 
@@ -138,6 +145,7 @@ var establishDrawOrder = function()
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);
 	drawOrderGroup.add(self.popUpGroup);
 	drawOrderGroup.add(qr);
+	drawOrderGroup.add(fpsText);
 	};
 
 // Client data parsing
@@ -158,6 +166,8 @@ self.newPlayer = function (id)
 	players[id].sprite.scale.x = scalingFactors.x;
 	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
+
+	self.dirty['playerAmount'] = true;
 	};
 
 self.disconnectPlayer = function (id)
@@ -177,9 +187,9 @@ self.disconnectPlayer = function (id)
 self.update = function ()
 	{
 	scoreBoard.update(players);
+
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
-	fpsText.bringToTop();
 	fpsText.text = ' FPS: ' + game.time.fps + '\n now.elapsed: ' + game.time.elapsed + 'ms\n time.elapsed: ' + game.time.elapsedMS + 'ms';
 	fpsText.position.setTo(game.camera.x, game.camera.y + game.camera.height);
 
@@ -216,7 +226,11 @@ self.update = function ()
 
 var updateRoomMovement = function ()
 	{
-	rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+	if (self.dirty['rooms'])
+		{
+		rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+		self.dirty['rooms'] = false;
+		}
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -278,6 +292,7 @@ var updateRoomMovement = function ()
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);
+					self.dirty['rooms'] = true;
 					switch (rooms[1].moveDirection)
     					{
     					case "north":
