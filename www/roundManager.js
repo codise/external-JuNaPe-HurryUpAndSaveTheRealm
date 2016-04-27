@@ -14,8 +14,7 @@ playerGroup.enableBody = true;
 
 var minPlayerSpawnDistance = 10;
 
-var scoreTable = [];
-var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
+var scoreBoard = new  ScoreBoard(game, {x: 0, y: 0});
 
 var roundRunning = false;
 
@@ -134,7 +133,7 @@ var establishDrawOrder = function()
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
 	drawOrderGroup.add(weaponManager.weaponGroup);
-	drawOrderGroup.add(scoreText);
+	drawOrderGroup.add(scoreBoard.sprite);
 	drawOrderGroup.add(bulletManager.playerBulletGroup);
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);
 	drawOrderGroup.add(self.popUpGroup);
@@ -177,8 +176,7 @@ self.disconnectPlayer = function (id)
 
 self.update = function ()
 	{
-
-	updateScore();
+	scoreBoard.update(players);
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
 	fpsText.bringToTop();
@@ -343,39 +341,9 @@ var updateRoomMovement = function ()
 		}
 	};
 
-var updateScore = function ()
-	{
-	scoreTable = [];	
-	for (var i in players)
-		{
-		if (players[i] != undefined && game.playerList[players[i].id] != undefined)
-			{
-			scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
-			}
-		}
-	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
-	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.position.x = game.camera.x + 16;
-	scoreText.position.y = game.camera.y + 16;
-	};
-
-var scoreTableToText = function (scoreTable)
-	{
-	var text = '';
-
-	for (var i in scoreTable)
-		{
-		if (scoreTable[i].name != undefined)
-			{
-			text += scoreTable[i].name + " :: " + scoreTable[i].score + " / " + scoreTable[i].totalScore + "\n";
-			}
-		}
-	return text;
-	};
-
 self.getScoreTable = function ()
 	{
-	return scoreTable;
+	return scoreBoard.getScoreTable();
 	};
 	
 
