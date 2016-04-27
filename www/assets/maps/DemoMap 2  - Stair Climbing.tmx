@@ -142,7 +142,7 @@
    <image width="80" height="72" source="tiles/SkyBlue.png"/>
   </tile>
  </tileset>
- <layer name="DarkFloor" width="24" height="15" visible="0">
+ <layer name="DarkFloor" width="24" height="15">
   <data encoding="csv">
 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
@@ -199,7 +199,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="Room 1" width="24" height="15" visible="0">
+ <layer name="Room 1" width="24" height="15">
   <data encoding="csv">
 0,52,48,49,49,49,49,49,49,49,49,49,49,49,50,54,0,0,52,48,49,49,50,49,
 0,0,52,53,53,53,53,53,53,53,53,53,53,53,54,0,0,0,0,52,53,53,54,53,
