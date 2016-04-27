@@ -92,8 +92,6 @@ self.update = function ()
 												 		}
 												 	});
 	};
-
-
 }
 
 

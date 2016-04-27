@@ -30,6 +30,9 @@ self.preload = function ()
 	countDownText = game.add.text(80, 250, '', {font: '30px Courier', fill: '#ffffff'});
 	countDown = 8;
 	game.waitingRoomIds = [];
+	game.time.advancedTiming = true;
+	game.stage.disableVisibilityChange = true;
+
 	};
 
 self.update = function ()
@@ -68,28 +71,11 @@ self.update = function ()
 self.onControllerConnected = function (id)
 	{
 	game.playerList[id] = {};
-	/*
-	game.waitingRoomIds.push(id);
-	playerCount++;
-	*/
-	//
 	};
 
 self.onControllerDisconnected = function (id)
 	{
 	delete game.playerList[id];
-		/*
-	var index = game.waitingRoomIds.indexOf(id);
-	if (index > -1)
-		{
-		game.waitingRoomIds.splice(index, 1);
-		}
-	if (playerCount > 1)
-		{
-		playerCount--;
-		}
-		*/
-
 	};
 
 }

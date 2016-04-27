@@ -167,6 +167,7 @@ self.update = function ()
 				self.currentHealth = self.maxHealth;
 
 				setupDone = true;
+				game.state.states.play.roundManager.dirty['score'] = true;
 				}
 			var length = input.moveLength;
 			if(length > 1)
@@ -414,6 +415,7 @@ self.getPoints =  function(amount)
 		{
 		game.playerList[id].totalScore += amount;
 		}
+	game.state.states.play.roundManager.dirty['score'] = true;
 	}
 
 /**
