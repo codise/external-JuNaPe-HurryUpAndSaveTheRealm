@@ -237,7 +237,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,33
 </data>
  </layer>
- <layer name="Room 1 LittleDeco" width="24" height="15" visible="0">
+ <layer name="Room 1 LittleDeco" width="24" height="15">
   <data encoding="csv">
 20,23,0,0,0,0,0,0,0,0,0,0,0,0,0,22,21,21,23,0,0,0,0,0,
 0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,20,20,20,20,0,0,0,0,0,
@@ -256,7 +256,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="Copy of Room 1 LittleDeco" width="24" height="15">
+ <layer name="Copy of Room 1 LittleDeco" width="24" height="15" visible="0">
   <data encoding="csv">
 20,23,0,0,0,0,0,0,0,0,0,0,0,0,0,22,21,21,23,0,0,0,0,0,
 0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,20,20,20,20,0,0,0,0,0,
