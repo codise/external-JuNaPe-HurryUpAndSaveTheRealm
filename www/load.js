@@ -41,14 +41,52 @@ var loadState = function ()
 		game.load.image('Demo5Map2.png', 'assets/maps/backgrounds/Demo5Map2.png');
 		game.load.image('Demo5Map3.png', 'assets/maps/backgrounds/Demo5Map3.png');
 		game.load.image('Demo5Map4.png', 'assets/maps/backgrounds/Demo5Map4.png');
+		
+		//Generics
+		
+		game.load.image('generic_map_FloorOnly', 'assets/maps/backgrounds/Generics/map_FloorOnly.png');
+
+		//Deadends aka bossrooms
+		game.load.image('generic_DeadEnd_FromEast1', 'assets/maps/backgrounds/Generics/DeadEnd_FromEast1.png');
+		game.load.image('generic_DeadEnd_FromEast2', 'assets/maps/backgrounds/Generics/DeadEnd_FromEast2.png');	
+		game.load.image('generic_DeadEnd_FromWest1', 'assets/maps/backgrounds/Generics/DeadEnd_FromWest1.png');
+
+		//Entrances
+		game.load.image('generic_Entrance_FromEast1', 'assets/maps/backgrounds/Generics/Entrance_FromEast1.png');
+		game.load.image('generic_Entrance_FromEast2', 'assets/maps/backgrounds/Generics/Entrance_FromEast2.png');
+		game.load.image('generic_Entrance_FromWest1', 'assets/maps/backgrounds/Generics/Entrance_FromWest1.png');
+
+		//straight leftright
+		game.load.image('generic_Straight_Vert1', 'assets/maps/backgrounds/Generics/Straight_Vert1.png');
+		game.load.image('generic_Straight_Vert2', 'assets/maps/backgrounds/Generics/Straight_Vert2.png');
+		game.load.image('generic_Straight_Vert3', 'assets/maps/backgrounds/Generics/Straight_Vert3.png');
+		game.load.image('generic_Straight_Vert4', 'assets/maps/backgrounds/Generics/Straight_Vert4.png');
+
+		//Straight updown
+		game.load.image('generic_Straight_Hori_short_stairs1', 'assets/maps/backgrounds/Generics/Straight_Hori_short_stairs1.png');
+		game.load.image('generic_Straight_Hori_short1', 'assets/maps/backgrounds/Generics/Straight_Hori_short1.png');
+		game.load.image('generic_Straight_Hori_short2', 'assets/maps/backgrounds/Generics/Straight_Hori_short2.png');
+		game.load.image('generic_Straight_Hori_short3', 'assets/maps/backgrounds/Generics/Straight_Hori_short3.png');
+		game.load.image('generic_Straight_Hori_short_Enlarged1', 'assets/maps/backgrounds/Generics/Straight_Hori_short_Enlarged1.png');
+		game.load.image('generic_Straight_Hori_short_Enlarged2', 'assets/maps/backgrounds/Generics/Straight_Hori_short_Enlarged2.png');
 
 
 
+		//Turns
+		game.load.image('generic_Turn_EtN1', 'assets/maps/backgrounds/Generics/Turn_EtN1.png');
+		game.load.image('generic_Turn_EtN2', 'assets/maps/backgrounds/Generics/Turn_EtN2.png');
+		game.load.image('generic_Turn_EtN3', 'assets/maps/backgrounds/Generics/Turn_EtN3.png');
+		game.load.image('generic_Turn_EtS1', 'assets/maps/backgrounds/Generics/Turn_EtS1.png');
+		game.load.image('generic_Turn_EtS2', 'assets/maps/backgrounds/Generics/Turn_EtS2.png');
+		game.load.image('generic_Turn_WtN1', 'assets/maps/backgrounds/Generics/Turn_WtN1.png');
+		game.load.image('generic_Turn_WtN2', 'assets/maps/backgrounds/Generics/Turn_WtN2.png');
+		game.load.image('generic_Turn_WtS1', 'assets/maps/backgrounds/Generics/Turn_WtS1.png');
+		game.load.image('generic_Turn_WtS2', 'assets/maps/backgrounds/Generics/Turn_WtS2.png');
 
-
-
-
-
+		 
+		 
+		 
+		 
 		// Load player sprites
 
 		game.load.image('player1', 'assets/player_classes/knight.png');
