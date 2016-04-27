@@ -151,7 +151,7 @@ var loadState = function ()
 		// Load effects
 
 		game.load.spritesheet('explosion', 'assets/effects/placeholder_explosion.png', 64, 64, 23);
-		game.load.spritesheet('spawn', 'assets/effects/placeholder_spawn.png', 512, 512, 6);
+		game.load.spritesheet('spawn', 'assets/effects/SpawnCloud.png', 100, 100, 6);
 
 		//Load powerup sprites
 		game.load.image('item_book', 'assets/decorations/Book.png');
