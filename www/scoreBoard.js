@@ -56,17 +56,28 @@ var scoreTableToText = function (scoreTable)
 	var longestName = 4;
 	var longestScore = 5;
 	var longestTotalScore = 11;
-  for (var i in scoreTable)
-    {
-    if (scoreTable[i].name != undefined)
-      {
-      var nameLength = scoreTable[i].name.length;
+
+	for (var i in scoreTable)
+		{
+		if (scoreTable[i].name != undefined)
+			{
+			var nameLength = scoreTable[i].name.length;
       var scoreLength = (scoreTable[i].score + '').length;
       var totalScoreLength = (scoreTable[i].totalScore + '').length;
 
 			if (nameLength> longestName) longestName = nameLength;
 			if (scoreLength > longestScore) longestScore = scoreLength;
 			if (totalScoreLength > longestTotalScore) longestTotalScore = totalScoreLength;
+			}
+		}
+
+  for (var i in scoreTable)
+    {
+    if (scoreTable[i].name != undefined)
+      {
+			var nameLength = scoreTable[i].name.length;
+      var scoreLength = (scoreTable[i].score + '').length;
+      var totalScoreLength = (scoreTable[i].totalScore + '').length;
 
       text += '\n'
       			+ scoreTable[i].name + ' '.repeat(longestName - nameLength) + " :: " 
