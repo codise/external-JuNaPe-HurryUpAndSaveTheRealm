@@ -36,8 +36,8 @@ qr.anchor.setTo(1,1);
 var drawOrderGroup = game.add.group(); 
 
 self.backgroundLayerGroup = game.add.group();
-
 self.popUpGroup = game.add.group();
+self.collisionGroup = game.add.group();
 
 var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '', { fontSize: '12px', fill: '#f00'});
 fpsText.anchor.setTo(0, 1);
@@ -65,7 +65,6 @@ var currentMinDX = defaultMinDX;
 var currentMinDY = defaultMinDY;
 
 var speedDict = [];
-speedDict["slow"] = 0.25;
 speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
@@ -92,6 +91,7 @@ self.loadRound = function (roundData)
 		{
 		rooms[i + 1] = new Room(game,
 														currentRound.rooms[i].roomBg,
+														currentRound.rooms[i].colliders,
 														currentRound.rooms[i].moveDirection,
 														currentRound.rooms[i].moveSpeed,
 														self);
@@ -137,11 +137,12 @@ self.loadRound = function (roundData)
 */
 var establishDrawOrder = function() 
 	{
-	drawOrderGroup.add(self.backgroundLayerGroup);	
+	drawOrderGroup.add(self.backgroundLayerGroup);
 	drawOrderGroup.add(enemyManager.enemyGroup);
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
 	drawOrderGroup.add(weaponManager.weaponGroup);
+	drawOrderGroup.add(self.collisionGroup);
 	drawOrderGroup.add(scoreBoard.sprite);
 	drawOrderGroup.add(bulletManager.playerBulletGroup);
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);
@@ -215,6 +216,10 @@ self.update = function ()
 		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
+		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup, bulletCollisionHandler);
+		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup, bulletCollisionHandler);
+		game.physics.arcade.collide(playerGroup, self.collisionGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
@@ -227,6 +232,11 @@ self.update = function ()
 		} 
 
 	};
+
+var bulletCollisionHandler = function(bullet, wall) 
+	{
+		bulletManager.killbullet(bullet);
+	}
 
 var updateRoomMovement = function ()
 	{
@@ -293,6 +303,7 @@ var updateRoomMovement = function ()
 					{
 					rooms[2] = new Room(game,
 															currentRound.rooms[nextRoom].roomBg,
+															currentRound.rooms[nextRoom].colliders,
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);

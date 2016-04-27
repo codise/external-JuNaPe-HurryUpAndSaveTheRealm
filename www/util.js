@@ -5,6 +5,66 @@
 |     Here you'll find useful functions    |
 ==========================================*/
 
+
+
+/**
+* Helper variables for room collision generation
+*/
+var tileWidth = 80;
+var tileHeight = 72;
+var maxTilesX = 24;
+var maxTilesY = 15;
+
+/**
+* Collision objects to help streamline positioning them in a room
+* the body size is based on the current collidable object's images
+* new such images should follow similar dimensions
+*/
+function smallCollisionSprite (xPos, yPos, image)
+{
+var self = this;
+self.width = 94;
+self.height = 145;
+self.anchorX = 0.5;
+self.anchorY = 1;
+self.x = xPos;
+self.y = yPos;
+self.image = image;
+self.bodyBoxLength = 58;
+}
+
+/**
+* Collision objects to help streamline positioning them in a room
+* the body size is based on the current collidable object's images
+* new such images should follow similar dimensions
+*/
+function largeCollisionSprite (xPos, yPos, image)
+{
+var self = this;
+self.width = 280;
+self.height = 286;
+self.anchorX = 0.5;
+self.anchorY = 1;
+self.x = xPos;
+self.y = yPos;
+self.image = image;
+self.bodyBoxLength = 156;
+}
+
+/*
+room1colliders[0] = 
+{
+	width: 6 * tileWidth,
+	height: 3 * tileHeight,
+	x: maxTilesX * tileWidth / 2,
+	y: 0,
+	anchorX: 0.5,
+	anchorY: 0,
+	image: 'test'
+};
+*/
+
+
 /**
 * Get a point a minimum distance away from all players
 * @param {game} game - The game object

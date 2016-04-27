@@ -1,16 +1,17 @@
 'use strict';
 
 /** Room object
-This object contains the information about a room in the game.
-
-@param deviceDimensionData is the dimension of the screen viewing device as a object.
-@param {Image} - background - is the path to the rooms backround png.
-@param {Image} - collisionAssets is a path to tileset which has possible nonwall collidable assets, which are present in the room.
-@param {Tilemap} - collisionData is a path to a tilemap generated wih Tiled.
-@param {roundManager} - roundManager Current roundmanager for accessing layergroups 
+*This object contains the information about a room in the game.
+*
+*@param {object} - game - points to the Game object
+*@param {Image} - background - is the path to the rooms backround png.
+*@param {object} - colliders - list of all data to be made into collidable sprites
+*@param {string} - moveDirection - The direction where the game camera will go next
+*@param {string} - moveSpeed - The speed of the camera during next transition
+*@param {roundManager} - roundManager - Current roundmanager for accessing layergroups 
 */
 
-function Room (game, background, moveDirection, moveSpeed, roundManager)
+function Room (game, background, colliders, moveDirection, moveSpeed, roundManager)
 {
 var self = this;
 
@@ -23,6 +24,49 @@ self.backgroundLayer = game.add.sprite(0, 0, 'empty');
 self.backgroundLayer.smoothed = false;
 
 roundManager.backgroundLayerGroup.add(self.backgroundLayer);
+var sprites = [];
+
+for (var spriteData in colliders)
+	{
+	/*
+	width: tileWidth,
+	height: 15 * tileHeight,
+	x: 24 * tileWidth,
+	y: 0,
+	anchorX: 1,
+	anchorY: 0,
+	image: 'test'
+	bodyBoxLength: jotain
+	*/
+	var sprite = game.add.sprite(0, 0, 'empty');
+	sprite.exists = false;
+	sprite.loadTexture(colliders[spriteData].image);
+	sprite.width = colliders[spriteData].width * scalingFactors.x;
+	sprite.height = colliders[spriteData].height * scalingFactors.y;
+	sprite.anchor.setTo(colliders[spriteData].anchorX, colliders[spriteData].anchorY);
+	sprite.position.setTo((self.backgroundLayer.x + colliders[spriteData].x)*scalingFactors.x, (self.backgroundLayer.y + colliders[spriteData].y)*scalingFactors.y);
+	sprite.exists = true;
+	game.physics.enable(sprite, Phaser.Physics.ARCADE);
+	sprite.body.immovable = true;
+	if(colliders[spriteData].bodyBoxLength != undefined)
+		{
+		sprite.body.setSize(colliders[spriteData].bodyBoxLength*scalingFactors.x, 0.8*colliders[spriteData].bodyBoxLength*scalingFactors.y);
+		}
+	//self.backgroundLayer.addChild(sprite);
+	roundManager.collisionGroup.add(sprite);
+	sprites.push(sprite);
+	}
+
+/*
+
+		//
+		testsprite=game.add.sprite(game.camera.x + game.camera.width /2, game.camera.y + game.camera.height /2, 'player2Weapon');
+		game.physics.enable(testsprite, Phaser.Physics.ARCADE);
+		testsprite.body.immovable = true;
+		//self.popUpGroup.add(testsprite);
+		//
+*/
+
 
 self.onceScaled = false;
 var scale = function ()
@@ -33,7 +77,18 @@ var scale = function ()
 
 self.moveTo = function (x, y)
 	{
-	self.backgroundLayer.reset(x, y);
+	self.backgroundLayer.position.setTo(x, y);
+	for(var i = 0; i < sprites.length; i++)
+		{
+		if(!sprites[i].moved)
+			{
+			sprites[i].position.x += x;
+			sprites[i].position.y += y;
+			sprites[i].moved = true;
+			}
+		
+		}
+	//roundManager.collisionGroup.position.setTo(x, y);
 	};
 
 self.updateScaling = function ()

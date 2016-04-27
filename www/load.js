@@ -15,11 +15,11 @@ var loadState = function ()
 		// Load level backgrounds
 	
 		//Round1
-		game.load.image('DemoMap1.png', 'assets/maps/backgrounds/DemoMap1.png');
-		game.load.image('DemoMap2.png', 'assets/maps/backgrounds/DemoMap2.png');
-		game.load.image('DemoMap3.png', 'assets/maps/backgrounds/DemoMap3.png');
-		game.load.image('DemoMap4.png', 'assets/maps/backgrounds/DemoMap4.png');
-		game.load.image('DemoMap5.png', 'assets/maps/backgrounds/DemoMap5.png');
+		game.load.image('Demo1Map1.png', 'assets/maps/backgrounds/Demo1Map1.png');
+		game.load.image('Demo1Map2.png', 'assets/maps/backgrounds/Demo1Map2.png');
+		game.load.image('Demo1Map3.png', 'assets/maps/backgrounds/Demo1Map3.png');
+		game.load.image('Demo1Map4.png', 'assets/maps/backgrounds/Demo1Map4.png');
+		game.load.image('Demo1Map5.png', 'assets/maps/backgrounds/Demo1Map5.png');
 
 		//Round2
 		game.load.image('Demo2Map1.png', 'assets/maps/backgrounds/Demo2Map1.png');
@@ -46,7 +46,23 @@ var loadState = function ()
 		game.load.image('Demo5Map2.png', 'assets/maps/backgrounds/Demo5Map2.png');
 		game.load.image('Demo5Map3.png', 'assets/maps/backgrounds/Demo5Map3.png');
 		game.load.image('Demo5Map4.png', 'assets/maps/backgrounds/Demo5Map4.png');
-		
+
+		//Collidable objects found in rooms
+		//small items
+		game.load.image('grave1', 'assets/maps/fieldObjects/smallCollidables/Grave1.png');
+		game.load.image('grave2', 'assets/maps/fieldObjects/smallCollidables/Grave2.png');
+		game.load.image('grave3', 'assets/maps/fieldObjects/smallCollidables/Grave3.png');
+		game.load.image('grave4', 'assets/maps/fieldObjects/smallCollidables/Grave4.png');
+		game.load.image('grave5', 'assets/maps/fieldObjects/smallCollidables/Grave5.png');
+		game.load.image('candelabrum', 'assets/maps/fieldObjects/smallCollidables/candelabrum.png');
+		game.load.image('pillar', 'assets/maps/fieldObjects/smallCollidables/pillar.png');
+		game.load.image('pillarGone', 'assets/maps/fieldObjects/smallCollidables/pillar_Gone.png');
+		game.load.image('statueHero', 'assets/maps/fieldObjects/smallCollidables/Statue_Hero.png');
+		game.load.image('statueHeroBroken', 'assets/maps/fieldObjects/smallCollidables/Statue_Hero_Broken.png');
+		game.load.image('statueHeroWorn', 'assets/maps/fieldObjects/smallCollidables/Statue_HeroWorn.png');
+		//large items
+		game.load.image('kingStatue', 'assets/maps/fieldObjects/largeCollidables/KingStatue.png');
+
 		//Generics
 		
 		game.load.image('generic_map_FloorOnly', 'assets/maps/backgrounds/Generics/map_FloorOnly.png');
@@ -88,10 +104,6 @@ var loadState = function ()
 		game.load.image('generic_Turn_WtS1', 'assets/maps/backgrounds/Generics/Turn_WtS1.png');
 		game.load.image('generic_Turn_WtS2', 'assets/maps/backgrounds/Generics/Turn_WtS2.png');
 
-		 
-		 
-		 
-		 
 		// Load player sprites
 
 		game.load.image('player1', 'assets/player_classes/knight.png');
@@ -100,7 +112,9 @@ var loadState = function ()
 		game.load.image('player4', 'assets/player_classes/viking.png');
 		game.load.image('player5', 'assets/player_classes/ninja.png');
 		game.load.image('player6', 'assets/player_classes/warlock.png');
+		
 		game.load.image('empty', 'assets/other/empty.png');
+		game.load.image('test', 'assets/other/testpixel.png');
 
 		// Load bullet sprites
 

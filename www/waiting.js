@@ -57,8 +57,6 @@ self.preload = function ()
 	countDownText = game.add.text(80, 250, '', {font: '30px Courier', fill: '#ffffff'});
 	countDownText.stroke = '#000000';
 	countDownText.strokeThickness = 6;
-
-
 	countDown = 8;
 	game.waitingRoomIds = [];
 	game.time.advancedTiming = true;
