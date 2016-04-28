@@ -282,6 +282,8 @@ self.playerHit = function(player, bullet)
 	bulletManager.killBullet(bullet);
 	self.takeDamage(damage);
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
+	gameClient.callClientRpc(self.id, "playDamageSound",[true], self, null);
+
 	};
 
 

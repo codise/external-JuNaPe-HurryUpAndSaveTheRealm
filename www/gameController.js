@@ -12,6 +12,9 @@ var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
 
 var controller_state = {};
 
+var damageSound;
+var decodeDone = false;
+
 //get player name and class from url parameters
 var urlstring = window.location.href;
 var playerName;
@@ -60,6 +63,9 @@ self.preload = function ()
 		self.id = game.rnd.integerInRange(0, 1000);
 		}
 
+	//Sound effects need to be loaded on the phone if we want to play them on the phone
+	game.load.audio('damage', 'assets/sounds/effects/damage.ogg');
+
 	gameClient.connect(serverAddress, controllerPort, self.id, clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
 	game.load.image('background', 'assets/bg/controllerBackground.png');
@@ -91,8 +97,10 @@ self.create = function ()
 	controllerpad1.exists = false;
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
-	
 	deadText.bringToTop();
+	damageSound = game.add.audio('damage');
+	game.sound.setDecodedCallback(damageSound, function() {decodeDone = true}, this);
+
 	};
 
 self.reservePointer = function (stick, pointer, pad)
@@ -236,7 +244,17 @@ var clientConnected = function ()
 	{
 	gameClient.exposeRpcMethod("setDeath", self, self.setDeath);
 	gameClient.exposeRpcMethod("setHapticFeedback", self, self.setHapticFeedback);
+	gameClient.exposeRpcMethod("playDamageSound", self, self.playDamageSound);
+
 	};
+
+self.playDamageSound = function(arg) 
+	{
+		if(decodeDone) 
+			{
+				damageSound.play();
+			}
+	}
 
 self.setHapticFeedback = function(time)
 	{
