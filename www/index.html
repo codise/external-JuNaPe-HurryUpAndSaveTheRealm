@@ -90,20 +90,16 @@ div {
     <script>
 
 var chosenClass = -1;
+
 function init ()
 {
   var playButton = document.getElementById('play');
   playButton.addEventListener('click', playGame);
-  var classImgs = document.getElementsByClassName('playerclass');
-  for (var i = 0; i < classImgs.length; i++)
-  {
-    classImgs[i].addEventListener('click', chooseClass);
-  }
 }
 
-function chooseClass (event)
+function chooseClass(id)
 {
-  chosenClass = event.target.id;
+  chosenClass = id;
   setChosenImg();
 }
 
@@ -165,7 +161,7 @@ function playGame()
       <table align="center">
         <tr>
           <td>
-            <table class="playerclass" id="0">
+            <table class="playerclass" onclick="chooseClass(0)">
               <tr>
                 <td>
                   <img align="left" src="assets/player_classes/knight_with_weapon.png">
@@ -184,8 +180,8 @@ function playGame()
               </tr>
             </table>
           </td>
-          <td >
-            <table class="playerclass" id="1">
+          <td>
+            <table class="playerclass" onclick="chooseClass(1)">
               <tr>
            
                 <td>
@@ -201,12 +197,12 @@ function playGame()
                     <p>RANGE<span>____________</span></p>
                   </div>
                 </td>
-                </div>
+                
               </tr>
             </table>
           </td>
           <td>
-            <table class="playerclass" id="2">
+            <table class="playerclass" onclick="chooseClass(2)">
               <tr>
                 <td>
                   <img align="left" src="assets/player_classes/mage_with_weapon.png">
@@ -227,7 +223,7 @@ function playGame()
         </tr>
         <tr>
           <td>
-            <table class="playerclass" id="3">
+            <table class="playerclass" onclick="chooseClass(3)">
               <tr>
                 <td>
                   <img align="left" src="assets/player_classes/viking_with_weapon.png">
@@ -246,7 +242,7 @@ function playGame()
             </table>
           </td>
           <td>
-            <table class="playerclass" id="4">
+            <table class="playerclass" onclick="chooseClass(4)">
               <tr>
                 <td>
                   <img align="left" src="assets/player_classes/ninja_with_weapon.png">
@@ -265,7 +261,7 @@ function playGame()
             </table>
           </td>
           <td>
-            <table class="playerclass" id="5">
+            <table class="playerclass" onclick="chooseClass(5)">
               <tr>
                 <td>
                   <img align="left" src="assets/player_classes/warlock_with_weapon.png">
