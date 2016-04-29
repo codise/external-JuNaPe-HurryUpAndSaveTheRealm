@@ -18,14 +18,6 @@ var qrText;
 var demoVideo;
 var demoVideoSprite;
 
-var bgm01;
-var bgm02;
-var bgm03;
-var bgm04;
-var bgm05;
-
-var bgmReady = false;
-
 self.preload = function ()
 	{
 	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
@@ -40,17 +32,6 @@ self.preload = function ()
 
 	demoVideo.play(true);
 	
-	//Load and decode  background music for the rounds 
-
-	bgm01 = game.add.audio('bgm01');
-	bgm02 = game.add.audio('bgm02');
-	bgm03 = game.add.audio('bgm03');
-	bgm04 = game.add.audio('bgm04');
-	bgm05 = game.add.audio('bgm05');
-
-	game.sound.setDecodedCallback([bgm01, bgm02, bgm03, bgm04, bgm05], function () { bgmReady = true; }, this);
-
-
 	qr.scale.x = 1.5*scalingFactors.x;
 	qr.scale.y = 1.5*scalingFactors.y;
 	qr.anchor.setTo(1,1);
@@ -74,7 +55,7 @@ self.preload = function ()
 	countDownText = game.add.text(80, 250, '', {font: '30px Courier', fill: '#ffffff'});
 	countDownText.stroke = '#000000';
 	countDownText.strokeThickness = 6;
-	countDown = 2;
+	countDown = 10;
 	game.waitingRoomIds = [];
 	game.time.advancedTiming = true;
 	game.stage.disableVisibilityChange = true;
@@ -100,7 +81,7 @@ self.update = function ()
 		} else
 		{
 		pText.text = playersWaitingText + playerCount;
-		if (countDown < 1 && bgmReady) //We'll only start the game once the background music has properly finished loading
+		if (countDown < 1) 
 			{
 			demoVideoSprite.destroy();
 			game.state.start('play');

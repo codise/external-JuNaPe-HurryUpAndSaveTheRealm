@@ -74,18 +74,29 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
-var bgmMusic;
+// Initialize music variables only if not muted
+
+if (game.mute === false)
+	{
+	var bgmMusic;
+
+	var explosionSound;
+
+	var soundReady = false;
+
+	var availableSounds = ['explosion'];
+	}
 
 var done = false;
 
 var initialSpawnBorder = game.width/15;
 self.loadRound = function (roundData)
 	{
+
 	// Set camera in the middle of the stage
 	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
 	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
-	startBgmMusic(currentRound.bgm);
 	rooms[0] = null;
 
 	// Load first two rooms;
@@ -123,6 +134,15 @@ self.loadRound = function (roundData)
 			default:
 				rooms[2] = null;
 			}
+		}
+
+	// Setup music only if not muted	
+	if (game.mute === false)
+		{
+		startBgmMusic(currentRound.bgm);
+
+		explosionSound = game.add.audio('explosion');
+		game.sound.setDecodedCallback([explosionSound], function () { soundReady = true; }, this);
 		}
 
 	roundRunning = true;
@@ -389,6 +409,21 @@ var stopBgmMusic = function(bgmTrack)
 	{
 		bgmMusic.stop();
 	}
+
+self.playSoundOnScreen = function (soundIdentifier)
+	{
+	if (soundReady && !game.mute && availableSounds.indexOf(soundIdentifier) > -1)
+		{
+		switch (soundIdentifier)
+			{
+			case 'explosion':
+				explosionSound.play();
+				break;
+			default:
+				explosionSound.play();
+			}
+		}
+	};
 
 }
 
