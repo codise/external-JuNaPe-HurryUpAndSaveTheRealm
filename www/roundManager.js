@@ -74,17 +74,18 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
+var bgmMusic;
+
 var done = false;
 
 var initialSpawnBorder = game.width/15;
 self.loadRound = function (roundData)
 	{
-
 	// Set camera in the middle of the stage
 	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
 	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
-
+	startBgmMusic(currentRound.bgm);
 	rooms[0] = null;
 
 	// Load first two rooms;
@@ -228,6 +229,7 @@ self.update = function ()
 			if (self.lastRoomTimer < game.time.now)
 				{
 				self.roundOver = true;
+				stopBgmMusic();
 				}
 			}
 		} 
@@ -376,7 +378,17 @@ self.getScoreTable = function ()
 	{
 	return scoreBoard.getScoreTable();
 	};
+
+var startBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic = game.sound.play(bgmTrack);
+	}
 	
+
+var stopBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic.stop();
+	}
 
 }
 

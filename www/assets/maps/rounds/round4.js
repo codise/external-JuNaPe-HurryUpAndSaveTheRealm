@@ -60,3 +60,4 @@ round4.rooms = [
 	{"roomBg": "Demo4Map4.png", "colliders": room4colliders, "moveDirection": "null", "moveSpeed": "stop"},
 	];
 round4.boss = 'tentacle';
+round4.bgm = 'bgm04'

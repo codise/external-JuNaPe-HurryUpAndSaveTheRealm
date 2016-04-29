@@ -358,3 +358,4 @@ round2.rooms = [
 	{"roomBg": "Demo2Map5.png", "colliders": room5colliders, "moveDirection": "null", "moveSpeed": "stop"}
 	];
 round2.boss = 'king';
+round2.bgm = 'bgm02'

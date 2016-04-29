@@ -12,6 +12,13 @@ var loadState = function ()
 		
 		game.load.video('demo', 'assets/video/placeholder_demo.mp4');
 
+		//Load background music
+		game.load.audio('bgm01', 'assets/sounds/bgm/bgm01.ogg');
+		game.load.audio('bgm02', 'assets/sounds/bgm/bgm02.ogg');
+		game.load.audio('bgm03', 'assets/sounds/bgm/bgm03.ogg');
+		game.load.audio('bgm04', 'assets/sounds/bgm/bgm04.ogg');
+		game.load.audio('bgm05', 'assets/sounds/bgm/bgm05.ogg');
+
 		// Load level backgrounds
 	
 		//Round1
