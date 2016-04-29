@@ -282,7 +282,7 @@ self.playerHit = function(player, bullet)
 	bulletManager.killBullet(bullet);
 	self.takeDamage(damage);
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [50], self, null);
-	gameClient.callClientRpc(self.id, "playDamageSound",[true], self, null);
+	gameClient.callClientRpc(self.id, "playSound",['damage'], self, null);
 
 	};
 
@@ -386,7 +386,7 @@ self.kill = function ()
 	if (self.weapon != undefined) self.weapon.sprite.exists = false;
 	gameClient.callClientRpc(self.id, "setHapticFeedback", [200], self, null);
 	gameClient.callClientRpc(self.id, "setDeath", [false], self, null);
-	game.effectManager.createDeathEffect(self);
+	game.effectManager.createDeathEffect(self, game.playerList);
 	nextRespawn = respawnTime;
 	deathRelativePos.x = self.sprite.position.x - game.camera.x;
 	deathRelativePos.y = self.sprite.position.y - game.camera.y;
