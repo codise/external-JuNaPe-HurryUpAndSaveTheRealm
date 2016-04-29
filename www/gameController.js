@@ -72,8 +72,8 @@ self.preload = function ()
 		}
 
 	//Sound effects need to be loaded on the phone if we want to play them on the phone
-	game.load.audio('damage', 'assets/sounds/effects/placeholder_damage.ogg');
-	game.load.audio('explosion', 'assets/sounds/effects/placeholder_explosion.ogg');
+	game.load.audio('damage', ['assets/sounds/effects/placeholder_damage.ogg', 'assets/sounds/effects/placeholder_damage_ios.m4a']);
+	game.load.audio('explosion', ['assets/sounds/effects/placeholder_explosion.ogg', 'assets/sounds/effects/placeholder_explosion_ios.m4a']);
 
 	gameClient.connect(serverAddress, controllerPort, self.id, clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);

@@ -402,6 +402,7 @@ self.getScoreTable = function ()
 var startBgmMusic = function(bgmTrack) 
 	{
 		bgmMusic = game.sound.play(bgmTrack);
+		bgmMusic.loopFull();
 	}
 	
 
