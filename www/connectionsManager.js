@@ -19,11 +19,9 @@ var init = function ()
 game.onControllerConnected = function (id)
 	{
 	var current = game.state.current;
-	if (current === 'play')
+	if (current === 'play' || current === 'waiting' || current === 'roundOver')
 		{
 		game.state.getCurrentState().onControllerConnected(id);
-		} else if (current  === 'waiting')
-		{
 		game.state.getCurrentState().onControllerConnected(id);
 		}
 	};
@@ -31,10 +29,7 @@ game.onControllerConnected = function (id)
 game.onControllerDisconnected = function (id)
 	{
 	var current = game.state.current;
-	if (current === 'play')
-		{
-		game.state.getCurrentState().onControllerDisconnected(id);
-		} else if (current  === 'waiting')
+	if (current === 'play' || current === 'waiting' || current === 'roundOver')
 		{
 		game.state.getCurrentState().onControllerDisconnected(id);
 		}

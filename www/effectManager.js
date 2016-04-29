@@ -50,13 +50,19 @@ self.getSpawnDuration = function ()
 * @param {player|enemy} target - The target object on which's position we create the effect at
 */
 
-self.createDeathEffect = function (target)
+self.createDeathEffect = function (target, broadcastList = undefined)
 	{
 	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'explosion');
 	scale(effect);
 	effect.anchor.setTo(0.5, 0.5);
 	effect.animations.add('kaboom');
 	effect.animations.play('kaboom', 30, false, true);
+
+	if (broadcastList != undefined)
+		{
+		broadcastSound(broadcastList, 'explosion');
+		}
+
 	};
 
 /**

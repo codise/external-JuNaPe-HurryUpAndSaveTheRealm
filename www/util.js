@@ -371,3 +371,15 @@ var resizeGame = function ()
 			}
 		}
 	};
+
+/**
+* Broadcasts a sound to all connected players
+*/
+var broadcastSound = function (players, soundIdentifier)
+	{
+	var ids = Object.keys(players);
+	for (var i = 0; i < ids.length; i++)
+		{
+		gameClient.callClientRpc(ids[i], "playSound", [soundIdentifier], self, null);
+		}
+	};

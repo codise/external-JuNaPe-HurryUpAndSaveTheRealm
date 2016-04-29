@@ -12,8 +12,6 @@ var gameController = new Phaser.Game(w, h, Phaser.CANVAS);
 
 var controller_state = {};
 
-var damageSound;
-var decodeDone = false;
 
 //get player name and class from url parameters
 var urlstring = window.location.href;
@@ -53,6 +51,16 @@ var shootStick = {pointer: false, pad: false};
 var controllerpad1;
 var controllerpad2;
 
+
+// Audio related stuff
+
+var damageSound;
+var explosionSound;
+var availableAudio = ['damage', 'explosion'];
+
+var soundReady = false;
+
+
 var deadText;
 self.preload = function ()
 	{
@@ -64,7 +72,8 @@ self.preload = function ()
 		}
 
 	//Sound effects need to be loaded on the phone if we want to play them on the phone
-	game.load.audio('damage', 'assets/sounds/effects/damage.ogg');
+	game.load.audio('damage', 'assets/sounds/effects/placeholder_damage.ogg');
+	game.load.audio('explosion', 'assets/sounds/effects/placeholder_explosion.ogg');
 
 	gameClient.connect(serverAddress, controllerPort, self.id, clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
@@ -98,8 +107,13 @@ self.create = function ()
 	controllerpad2 = game.add.sprite(0, 0, 'circlepad');
 	controllerpad2.exists = false;
 	deadText.bringToTop();
+
+	// Sound needs to be decoded
+	
 	damageSound = game.add.audio('damage');
-	game.sound.setDecodedCallback(damageSound, function() {decodeDone = true}, this);
+	explosionSound = game.add.audio('explosion');
+
+	game.sound.setDecodedCallback([damageSound, explosionSound], function () { soundReady = true; }, this);
 
 	};
 
@@ -112,19 +126,6 @@ self.reservePointer = function (stick, pointer, pad)
 		pad.x = pointer.position.x - 30;
 		pad.y = pointer.position.y - 30;
 		stick.pad = pad;
-		/*
-		if(pointer === moveStick.pointer)
-			{
-			//console.log('pointer reserved to move');
-			} else if (pointer === shootStick.pointer)
-			{
-			//console.log('pointer reserved to shoot');
-			}
-			
-		} else 
-		{
-		//console.log("** failed to reserve pointer **");
-		*/
 		}
 	};
 
@@ -135,13 +136,11 @@ self.releasePointer = function (pointer)
 		moveStick.pointer = false;
 		moveStick.pad.exists = false;
 		moveStick.pad = false;
-		//console.log("released movestick");
 		} else if (shootStick.pointer === pointer)
 		{
 		shootStick.pointer = false;
 		shootStick.pad.exists = false;
 		shootStick.pad = false;
-		//console.log("released shootstick");
 		} else 
 		{
 		//console.log("-- failed to release pointer --");
@@ -244,17 +243,26 @@ var clientConnected = function ()
 	{
 	gameClient.exposeRpcMethod("setDeath", self, self.setDeath);
 	gameClient.exposeRpcMethod("setHapticFeedback", self, self.setHapticFeedback);
-	gameClient.exposeRpcMethod("playDamageSound", self, self.playDamageSound);
-
+	gameClient.exposeRpcMethod("playSound", self, self.playSound);
 	};
 
-self.playDamageSound = function(arg) 
+self.playSound = function(soundIdentifier) 
 	{
-		if(decodeDone) 
+	if(soundReady && availableAudio.indexOf(soundIdentifier) > -1)
+		{
+		switch (soundIdentifier)
 			{
+			case 'damage':
+				damageSound.play();
+				break;
+			case 'explosion':
+				explosionSound.play();
+				break;
+			default:
 				damageSound.play();
 			}
-	}
+		}
+	};
 
 self.setHapticFeedback = function(time)
 	{
