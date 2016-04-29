@@ -373,13 +373,19 @@ var resizeGame = function ()
 	};
 
 /**
-* Broadcasts a sound to all connected players
+* Broadcasts a sound to all connected players, if screen has sound enabled, then only play audio on screen.
 */
 var broadcastSound = function (players, soundIdentifier)
 	{
-	var ids = Object.keys(players);
-	for (var i = 0; i < ids.length; i++)
+	if (game.mute)
 		{
-		gameClient.callClientRpc(ids[i], "playSound", [soundIdentifier], self, null);
+		var ids = Object.keys(players);
+		for (var i = 0; i < ids.length; i++)
+			{
+			gameClient.callClientRpc(ids[i], "playSound", [soundIdentifier], self, null);
+			}
+		} else if (game.state.states.play.roundManager != undefined)
+		{
+			game.state.states.play.roundManager.playSoundOnScreen(soundIdentifier);
 		}
 	};

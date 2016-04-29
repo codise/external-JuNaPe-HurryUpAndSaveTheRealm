@@ -7,31 +7,26 @@ var loadingText;
 
 var loadingBar;
 
+var decoded = false;
+var loaded = false;
+
 self.create = function ()
 	{
-	game.load.onLoadComplete.add(loadEnd, this);
+	game.load.onLoadComplete.add(function () { loaded = true; }, this);
 	loadingBar = new LoadingBar(game);
 	load();
 	};
 
-var loadStart = function ()
-	{
-	console.log(loadingBar);
-	};
-
-var loadEnd = function ()
-	{
-	game.state.start('waiting');
-	};
-
 self.update = function ()
 	{
-	if (loadingBar != undefined)
+	if (loadingBar != undefined && ! loaded)
 		{
 		loadingBar.update(game.load.progress);
 		}
-	};
 
+	if (loaded && !decoded) loadingText.text = 'Decoding...';
+	if (loaded && decoded) game.state.start('waiting');
+	};
 
 var load = function ()
 	{
@@ -92,7 +87,6 @@ var load = function ()
 	game.load.image('kingStatue', 'assets/maps/fieldObjects/largeCollidables/KingStatue.png');
 
 	//Generics
-	
 	game.load.image('generic_map_FloorOnly', 'assets/maps/backgrounds/Generics/map_FloorOnly.png');
 
 	//Deadends aka bossrooms
@@ -219,7 +213,31 @@ var load = function ()
 
   game.load.image('scoreBackground', 'assets/other/placeholder_scoreBackground.jpg');
 
+	//Load sounds
+	
+	if (!game.mute)
+		{
+		game.load.audio('bgm01', 'assets/sounds/bgm/bgm01.ogg');
+		game.load.audio('bgm02', 'assets/sounds/bgm/bgm02.ogg');
+		game.load.audio('bgm03', 'assets/sounds/bgm/bgm03.ogg');
+		game.load.audio('bgm04', 'assets/sounds/bgm/bgm04.ogg');
+		game.load.audio('bgm05', 'assets/sounds/bgm/bgm05.ogg');
+		game.load.audio('explosion', 'assets/sounds/effects/placeholder_explosion.ogg');
 
+		var audioList = [];
+    
+		for (var i = 1; i < 6; i++)
+			{
+			audioList.push(game.add.audio('bgm0' + i));
+			}
+		audioList.push(game.add.audio('explosion'));
+
+		game.sound.setDecodedCallback(audioList, function () { decoded = true }, this);
+
+		} else 
+		{
+		decoded = true;
+		};
 
 	game.load.start();
 	

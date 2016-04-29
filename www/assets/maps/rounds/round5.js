@@ -82,3 +82,4 @@ round5.rooms = [
 	{"roomBg": "Demo5Map4.png", "colliders": room4colliders, "moveDirection": "null", "moveSpeed": "stop"},
 	];*/
 round5.boss = 'king';
+round5.bgm = 'bgm05'

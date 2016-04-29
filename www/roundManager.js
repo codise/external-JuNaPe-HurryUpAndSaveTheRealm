@@ -74,6 +74,19 @@ self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
 
+// Initialize music variables only if not muted
+
+if (game.mute === false)
+	{
+	var bgmMusic;
+
+	var explosionSound;
+
+	var soundReady = false;
+
+	var availableSounds = ['explosion'];
+	}
+
 var done = false;
 
 var initialSpawnBorder = game.width/15;
@@ -84,7 +97,6 @@ self.loadRound = function (roundData)
 	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
 	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
-
 	rooms[0] = null;
 
 	// Load first two rooms;
@@ -122,6 +134,15 @@ self.loadRound = function (roundData)
 			default:
 				rooms[2] = null;
 			}
+		}
+
+	// Setup music only if not muted	
+	if (game.mute === false)
+		{
+		startBgmMusic(currentRound.bgm);
+
+		explosionSound = game.add.audio('explosion');
+		game.sound.setDecodedCallback([explosionSound], function () { soundReady = true; }, this);
 		}
 
 	roundRunning = true;
@@ -228,6 +249,7 @@ self.update = function ()
 			if (self.lastRoomTimer < game.time.now)
 				{
 				self.roundOver = true;
+				stopBgmMusic();
 				}
 			}
 		} 
@@ -376,7 +398,32 @@ self.getScoreTable = function ()
 	{
 	return scoreBoard.getScoreTable();
 	};
+
+var startBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic = game.sound.play(bgmTrack);
+	}
 	
+
+var stopBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic.stop();
+	}
+
+self.playSoundOnScreen = function (soundIdentifier)
+	{
+	if (soundReady && !game.mute && availableSounds.indexOf(soundIdentifier) > -1)
+		{
+		switch (soundIdentifier)
+			{
+			case 'explosion':
+				explosionSound.play();
+				break;
+			default:
+				explosionSound.play();
+			}
+		}
+	};
 
 }
 
