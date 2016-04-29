@@ -32,8 +32,8 @@ self.createSpawnEffect = function (position)
 	effect.anchor.setTo(0.5, 0.5);
 	effect.animations.add('splurt');
 	effect.animations.play('splurt', fps, false, true);
-	effect.scale.x *= 1/2;
-	effect.scale.y *= 1/2;
+	//effect.scale.x *= 1/2;
+	//effect.scale.y *= 1/2;
 
 	// Set delay
 	
