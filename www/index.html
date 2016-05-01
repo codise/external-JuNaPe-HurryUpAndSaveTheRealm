@@ -100,8 +100,8 @@ div {
 }
 
     </style>
-    <script src="playerPatternList"></script>
-    <script src="playerClassStats"></script>
+    <script src="playerPatternList.js"></script>
+    <script src="playerClassStats.js"></script>
     <script>
 
 var chosenClass = -1;
@@ -115,30 +115,32 @@ function init ()
 
 function drawStatistics()
 {
-for(var i = 0; i < 6; i++)
-  {
-  var container = document.getElementById(i);
-  var healthCanvas = container.getElementsByClassName('health')[0];
-  var healthCanvasCtx = healthCanvas.getContext("2d");
-  healthCanvasCtx.fillStyle = "#ff3300";
-  healthCanvasCtx.fillRect(0, 0, 50, 15);
-  var speedCanvas = container.getElementsByClassName('speed')[0];
-  var speedCanvasCtx = speedCanvas.getContext("2d");
-  speedCanvasCtx.fillStyle = "#ff3300";
-  speedCanvasCtx.fillRect(0, 0, 50, 15);
-  var damageCanvas = container.getElementsByClassName('damage')[0];
-  var damageCanvasCtx = damageCanvas.getContext("2d");
-  damageCanvasCtx.fillStyle = "#ff3300";
-  damageCanvasCtx.fillRect(0, 0, 50, 15);
-  var fireRateCanvas = container.getElementsByClassName('fireRate')[0];
-  var fireRateCanvasCtx = fireRateCanvas.getContext("2d");
-  fireRateCanvasCtx.fillStyle = "#ff3300";
-  fireRateCanvasCtx.fillRect(0, 0, 50, 15);
-  var rangeCanvas = container.getElementsByClassName('range')[0];
-  var rangeCanvasCtx = rangeCanvas.getContext("2d");
-  rangeCanvasCtx.fillStyle = "#ff3300";
-  rangeCanvasCtx.fillRect(0, 0, 50, 15);
-  }
+  var playerClassStats = new PlayerClassStats();
+  playerClassStats.getMaxValues();
+  for(var i = 0; i < 6; i++)
+    {
+    var container = document.getElementById(i);
+    var healthCanvas = container.getElementsByClassName('health')[0];
+    var healthCanvasCtx = healthCanvas.getContext("2d");
+    healthCanvasCtx.fillStyle = "#ff3300";
+    healthCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'health', 60), 15);
+    var speedCanvas = container.getElementsByClassName('speed')[0];
+    var speedCanvasCtx = speedCanvas.getContext("2d");
+    speedCanvasCtx.fillStyle = "#ff3300";
+    speedCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'speed', 60), 15);
+    var damageCanvas = container.getElementsByClassName('damage')[0];
+    var damageCanvasCtx = damageCanvas.getContext("2d");
+    damageCanvasCtx.fillStyle = "#ff3300";
+    damageCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'damage', 60), 15);
+    var fireRateCanvas = container.getElementsByClassName('fireRate')[0];
+    var fireRateCanvasCtx = fireRateCanvas.getContext("2d");
+    fireRateCanvasCtx.fillStyle = "#ff3300";
+    fireRateCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'fireRate', 60), 15);
+    var rangeCanvas = container.getElementsByClassName('range')[0];
+    var rangeCanvasCtx = rangeCanvas.getContext("2d");
+    rangeCanvasCtx.fillStyle = "#ff3300";
+    rangeCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'range', 60), 15);
+    }
 }
 
 function chooseClass(id)
