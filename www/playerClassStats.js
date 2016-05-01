@@ -19,29 +19,31 @@ self.getMaxValues = function()
 var getMaxValue = function(value)
 	{
 	var currMax = 0;
+	console.log("type:" + value);
 	if(value == 'range')
 		{
 		for(var i = 0; i < 6; i++)
 			{
-			var value = players[i]["bulletSpeed"] * players[i]["bulletLifespan"] / 1000;
-			if(currMax < value)
+			var currValue = players[i]["bulletSpeed"] * players[i]["bulletLifespan"] / 1000;
+			if(currMax < currValue)
 				{
-				currMax = value;
+				currMax = currValue;
 				}
 			}
-		//console.log("getMaxValue range:" + currMax);
+		console.log("max:" + currMax);
 		return currMax;
 		}
 	else
 		{
 		for(var i = 0; i < 6; i++)
 			{
-			var value = players[i][value];
-			if(currMax < value)
+			var currValue = players[i][value];
+			if(currMax < currValue)
 				{
-				currMax = value;
+				currMax = currValue;
 				}
 			}
+			console.log("max:" + currMax);
 		return currMax;
 		}
 	};
@@ -64,7 +66,7 @@ self.getPlayerStatValue = function(id, type, barWidth)
 		}
 	else if(type == 'speed')
 		{
-		value = players[id]["bulletSpeed"];
+		value = players[id]["baseMovementSpeed"];
 		maxValue = maxValues["speed"];
 		}
 	else if(type == 'damage')
@@ -78,6 +80,10 @@ self.getPlayerStatValue = function(id, type, barWidth)
 		maxValue = maxValues["fireRate"];
 		}
 	value = (value/maxValue)*barWidth;
+	if(type=='speed') {
+		console.log("speedvalue:" + value);
+		console.log("maxSpeed" + maxValue);
+	}
 	return parseInt(value, 10);
 	};
 
