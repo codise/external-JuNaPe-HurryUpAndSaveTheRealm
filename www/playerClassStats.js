@@ -16,11 +16,10 @@ self.getMaxValues = function()
 	maxValues["fireRate"] = getMaxValue('baseFireRate');
 	};
 
-var getMaxValue = function(value)
+var getMaxValue = function(type)
 	{
 	var currMax = 0;
-	console.log("type:" + value);
-	if(value == 'range')
+	if(type == 'range')
 		{
 		for(var i = 0; i < 6; i++)
 			{
@@ -30,20 +29,18 @@ var getMaxValue = function(value)
 				currMax = currValue;
 				}
 			}
-		console.log("max:" + currMax);
 		return currMax;
 		}
 	else
 		{
 		for(var i = 0; i < 6; i++)
 			{
-			var currValue = players[i][value];
+			var currValue = players[i][type];
 			if(currMax < currValue)
 				{
 				currMax = currValue;
 				}
 			}
-			console.log("max:" + currMax);
 		return currMax;
 		}
 	};
@@ -55,9 +52,7 @@ self.getPlayerStatValue = function(id, type, barWidth)
 	if(type == 'range')
 		{
 		value = players[id]["bulletSpeed"] * players[id]["bulletLifespan"] / 1000;
-		//console.log("value: " + value);
 		maxValue = maxValues["range"];
-		//console.log("maxrange:" + maxValue);
 		}
 	else if(type == 'health')
 		{
@@ -80,10 +75,6 @@ self.getPlayerStatValue = function(id, type, barWidth)
 		maxValue = maxValues["fireRate"];
 		}
 	value = (value/maxValue)*barWidth;
-	if(type=='speed') {
-		console.log("speedvalue:" + value);
-		console.log("maxSpeed" + maxValue);
-	}
 	return parseInt(value, 10);
 	};
 
