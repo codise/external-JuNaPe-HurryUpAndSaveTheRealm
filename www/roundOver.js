@@ -30,7 +30,7 @@ self.preload = function ()
 	loopTimeout = game.time.now + 5000;
 	countDownText = game.add.text(10, 10, "", {font: "20px Calibri",  fill: "#ffffff"});
 
-  credits = new creditBoard(game, {x: 150, y: 150 });
+  credits = new creditBoard(game, {x: 350, y: 650 });
 	};
 
 var genScore = function (table)
