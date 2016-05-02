@@ -26,13 +26,34 @@ body{
 }
 
 .playerclass{
-  margin: 5px;
+  margin: 5%;
+  width: 260px;
+  height: 170px;
   border-style: solid;
   border-width: 7px;
   border-radius: 10px;
   border-color: #333;
   background-color: #666;
-  padding: 5px;
+  padding-left: 6px;
+}
+
+
+
+.classStats {
+  text-shadow: 2px 2px 2px #000;
+  text-align: left;
+  color: #fff;
+  font-size: 80%;
+  font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+}
+
+.classStats h1 {
+  text-align: left;
+}
+
+.classStats p {
+  font-size: 40%;
+  text-align: left;
 }
 
 .chosenclass {
@@ -45,7 +66,13 @@ body{
   padding: 2px;
   border-radius: 15px;
   text-shadow: 2px 2px 2px #000;
+}
 
+canvas {
+  border: 2px;
+  border-style: solid;
+  border-color: #000000;
+  border-radius: 5px;
 }
 
 div {
@@ -73,23 +100,52 @@ div {
 }
 
     </style>
+    <script src="playerPatternList.js"></script>
+    <script src="playerClassStats.js"></script>
     <script>
 
 var chosenClass = -1;
+
 function init ()
 {
   var playButton = document.getElementById('play');
   playButton.addEventListener('click', playGame);
-  var classImgs = document.getElementsByClassName('playerclass');
-  for (var i = 0; i < classImgs.length; i++)
-  {
-    classImgs[i].addEventListener('click', chooseClass);
-  }
+  drawStatistics();
 }
 
-function chooseClass (event)
+function drawStatistics()
 {
-  chosenClass = event.target.id;
+  var playerClassStats = new PlayerClassStats();
+  playerClassStats.getMaxValues();
+  for(var i = 0; i < 6; i++)
+    {
+    var container = document.getElementById(i);
+    var healthCanvas = container.getElementsByClassName('health')[0];
+    var healthCanvasCtx = healthCanvas.getContext("2d");
+    healthCanvasCtx.fillStyle = "#ff3300";
+    healthCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'health', 60), 15);
+    var speedCanvas = container.getElementsByClassName('speed')[0];
+    var speedCanvasCtx = speedCanvas.getContext("2d");
+    speedCanvasCtx.fillStyle = "#ff3300";
+    speedCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'speed', 60), 15);
+    var damageCanvas = container.getElementsByClassName('damage')[0];
+    var damageCanvasCtx = damageCanvas.getContext("2d");
+    damageCanvasCtx.fillStyle = "#ff3300";
+    damageCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'damage', 60), 15);
+    var fireRateCanvas = container.getElementsByClassName('fireRate')[0];
+    var fireRateCanvasCtx = fireRateCanvas.getContext("2d");
+    fireRateCanvasCtx.fillStyle = "#ff3300";
+    fireRateCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'fireRate', 60), 15);
+    var rangeCanvas = container.getElementsByClassName('range')[0];
+    var rangeCanvasCtx = rangeCanvas.getContext("2d");
+    rangeCanvasCtx.fillStyle = "#ff3300";
+    rangeCanvasCtx.fillRect(0, 0, playerClassStats.getPlayerStatValue(i, 'range', 60), 15);
+    }
+}
+
+function chooseClass(id)
+{
+  chosenClass = id;
   setChosenImg();
 }
 
@@ -148,14 +204,128 @@ function playGame()
       <b class="label">Pick a class</b>
       <br>
 
-      <img class="playerclass" id="0" src="assets/player_classes/knight_with_weapon.png">
-      <img class="playerclass" id="1" src="assets/player_classes/elf_with_weapon.png">
-      <img class="playerclass" id="2" src="assets/player_classes/mage_with_weapon.png">
-      <br>
-
-      <img class="playerclass" id="3" src="assets/player_classes/viking_with_weapon.png">
-      <img class="playerclass" id="4" src="assets/player_classes/ninja_with_weapon.png">
-      <img class="playerclass" id="5" src="assets/player_classes/warlock_with_weapon.png">
+      <table align="center">
+        <tr>
+          <td>
+            <table class="playerclass" onclick="chooseClass(0)">
+              <tr class="classStats" >
+                <td>
+                  <h1>Knight</h1>
+                  <img align="left" src="assets/player_classes/knight_with_weapon.png">
+                </td>
+                <td>
+                  <div id="0" >
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas  width="60" height="15"class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="range"></canvas></p>
+                  </div>
+                </td>
+          
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass" onclick="chooseClass(1)">
+              <tr class="classStats">
+                <td>
+                  <h1>Elf</h1>
+                  <img align="left" src="assets/player_classes/elf_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" id="1">
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="range"></canvas></p>
+                  </div>
+                </td>
+                
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass" onclick="chooseClass(2)">
+              <tr class="classStats" >
+                <td>
+                  <h1>Mage</h1>
+                  <img align="left" src="assets/player_classes/mage_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right"id="2">
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas  width="60" height="15"class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="range"></canvas></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table class="playerclass" onclick="chooseClass(3)">
+              <tr class="classStats" >
+                <td>
+                  <h1>Viking</h1>
+                  <img align="left" src="assets/player_classes/viking_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" id="3">
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas  width="60" height="15"class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="range"></canvas></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass" onclick="chooseClass(4)">
+              <tr class="classStats">
+                <td>
+                <h1>Ninja</h1>
+                  <img align="left" src="assets/player_classes/ninja_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" id="4">
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="range"></canvas></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table class="playerclass" onclick="chooseClass(5)">
+              <tr class="classStats">
+                <td>
+                  <h1>Warlock</h1>
+                  <img align="left" src="assets/player_classes/warlock_with_weapon.png">
+                </td>
+                <td>
+                  <div align="right" id="5">
+                    <p>&nbsp;HEALTH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="health"></canvas></p>
+                    <p>&nbsp;SPEED&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="speed"></canvas></p>
+                    <p>&nbsp;DAMAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="damage"></canvas></p>
+                    <p>&nbsp;FIRE RATE&nbsp;&nbsp;&nbsp;<canvas width="60" height="15" class="fireRate"></canvas></p>
+                    <p>&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<canvas width="60" height="15"class="range"></canvas></p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
       <br><br>
 
       <input id="play" type=button value="  Play  ">
