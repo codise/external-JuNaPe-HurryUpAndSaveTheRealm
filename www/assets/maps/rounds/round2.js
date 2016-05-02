@@ -7,71 +7,26 @@ var round2 = {};
 
 var room1colliders = {};
 //top wall 1
-room1colliders[0] = 
-{
-	width: 15 * tileWidth,
-	height: 1 * tileHeight,
-	x: 1 * tileWidth,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room1colliders[0] = new wallCollider(15, 1, 1, 0, 0, 0);
 //top wall 2
-room1colliders[1] = 
-{
-	width: 13 * tileWidth,
-	height: 2 * tileHeight,
-	x: 2 * tileWidth,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room1colliders[1] = new wallCollider(13, 2, 2, 0, 0, 0);
 //top wall 3
-room1colliders[2] = 
-{
-	width: 6 * tileWidth,
-	height: 1 * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room1colliders[2] = new wallCollider(6, 1, maxTilesX, 0, 1, 0);
 //top wall 4
-room1colliders[3] = 
-{
-	width: 5 * tileWidth,
-	height: 2 * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room1colliders[3] = new wallCollider(5, 2, maxTilesX, 0, 1, 0);
 //bottom corner wall
-room1colliders[4] = 
-{
-	width: 2 * tileWidth,
-	height: (2 - 0.1) * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: maxTilesY * tileHeight,
-	anchorX: 1,
-	anchorY: 1,
-	image: 'empty'
-};
+room1colliders[4] = new wallCollider(2, 1.9, maxTilesX, maxTilesY, 1, 1);
 //pillars
-room1colliders.p1 = new smallCollisionSprite( 4.5* tileWidth, 5 * tileHeight, 'pillar');
-room1colliders.p2 = new smallCollisionSprite( 8.5* tileWidth, 5 * tileHeight, 'pillar');
-room1colliders.p3 = new smallCollisionSprite( 11.5* tileWidth, 5 * tileHeight, 'pillar');
-room1colliders.p4 = new smallCollisionSprite( 15.5* tileWidth, 5 * tileHeight, 'pillar');
-room1colliders.p5 = new smallCollisionSprite( 18.5* tileWidth, 5 * tileHeight, 'pillar');
-room1colliders.p6 = new smallCollisionSprite( 4.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
-room1colliders.p7 = new smallCollisionSprite( 8.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
-room1colliders.p8 = new smallCollisionSprite( 11.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
-room1colliders.p9 = new smallCollisionSprite( 15.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
-room1colliders.p10 = new smallCollisionSprite( 18.5* tileWidth, (maxTilesY - 4) * tileHeight, 'pillar');
+room1colliders.p1 = new smallCollisionSprite( 4, 4 , 'pillar');
+room1colliders.p2 = new smallCollisionSprite( 8, 4 , 'pillar');
+room1colliders.p3 = new smallCollisionSprite( 11, 4 , 'pillar');
+room1colliders.p4 = new smallCollisionSprite( 15, 4 , 'pillar');
+room1colliders.p5 = new smallCollisionSprite( 18, 4 , 'pillar');
+room1colliders.p6 = new smallCollisionSprite( 4, (maxTilesY - 5) , 'pillar');
+room1colliders.p7 = new smallCollisionSprite( 8, (maxTilesY - 5) , 'pillar');
+room1colliders.p8 = new smallCollisionSprite( 11, (maxTilesY - 5) , 'pillar');
+room1colliders.p9 = new smallCollisionSprite( 15, (maxTilesY - 5) , 'pillar');
+room1colliders.p10 = new smallCollisionSprite( 18, (maxTilesY - 5) , 'pillar');
 
 
 
@@ -79,276 +34,85 @@ room1colliders.p10 = new smallCollisionSprite( 18.5* tileWidth, (maxTilesY - 4) 
 
 var room2colliders = {};
 //top wall corner 1
-room2colliders[0] = 
-{
-	width: 2 * tileWidth,
-	height: 2 * tileHeight,
-	x: 0 * tileWidth,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room2colliders[0] = new wallCollider(2, 2, 0, 0, 0, 0);
 //top wall corner 2
-room2colliders[1] = 
-{
-	width: 2 * tileWidth,
-	height: 2 * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room2colliders[1] = new wallCollider(2, 2, maxTilesX, 0, 1, 0);
 //right wall
-room2colliders[2] = 
-{
-	width: 0.7 * tileWidth,
-	height: maxTilesY * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room2colliders[2] = new wallCollider(0.7, maxTilesY, maxTilesX, 0, 1, 0);
 //bottom wall
-room2colliders[3] = 
-{
-	width: (maxTilesX - 3) * tileWidth,
-	height: (2 - 0.1) * tileHeight,
-	x: 0,
-	y: maxTilesY * tileHeight,
-	anchorX: 0,
-	anchorY: 1,
-	image: 'empty'
-};
+room2colliders[3] = new wallCollider(maxTilesX - 3, 1.9, 0, maxTilesY, 0, 1);
 //candelabra
-room2colliders.c1 = new smallCollisionSprite( 17.5*tileWidth, 8*tileHeight, 'candelabrum');
-room2colliders.c2 = new smallCollisionSprite( 12.5*tileWidth, 12*tileHeight, 'candelabrum');
+room2colliders.c1 = new smallCollisionSprite( 17, 7, 'candelabrum');
+room2colliders.c2 = new smallCollisionSprite( 12, 11, 'candelabrum');
 
 //----
 
 var room3colliders = {};
 //left wall
-room3colliders[0] = 
-{
-	width: 2 * tileWidth,
-	height: maxTilesY * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room3colliders[0] = new wallCollider(2, maxTilesY, 0, 0, 0, 0);
 //right wall
-room3colliders[1] = 
-{
-	width: 2 * tileWidth,
-	height: maxTilesY * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room3colliders[1] = new wallCollider(2, maxTilesY, maxTilesX, 0, 1, 0);
 //candelabra
-room3colliders.c1 = new smallCollisionSprite( 8.5*tileWidth, 6*tileHeight, 'candelabrum');
-room3colliders.c2 = new smallCollisionSprite( 16.5*tileWidth, 6*tileHeight, 'candelabrum');
-room3colliders.c3 = new smallCollisionSprite( 8.5*tileWidth, 11*tileHeight, 'candelabrum');
-room3colliders.c4 = new smallCollisionSprite( 16.5*tileWidth, 11*tileHeight, 'candelabrum');
+room3colliders.c1 = new smallCollisionSprite( 8, 5, 'candelabrum');
+room3colliders.c2 = new smallCollisionSprite( 16, 5, 'candelabrum');
+room3colliders.c3 = new smallCollisionSprite( 8, 10, 'candelabrum');
+room3colliders.c4 = new smallCollisionSprite( 16, 10, 'candelabrum');
 
 //----
 
 var room4colliders = {};
 //right wall
-room4colliders[0] = 
-{
-	width: 0.7 * tileWidth,
-	height: maxTilesY * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room4colliders[0] = new wallCollider(0.7, maxTilesY, maxTilesX, 0, 1, 0);
 //top wall
-room4colliders[1] = 
-{
-	width: maxTilesX * tileWidth,
-	height: 2 * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room4colliders[1] = new wallCollider(maxTilesX, 2, 0, 0, 0, 0);
 //right corner
-room4colliders[2] = 
-{
-	width: 2 * tileWidth,
-	height: (2 - 0.1) * tileHeight,
-	x: maxTilesX * tileWidth,
-	y: maxTilesY * tileHeight,
-	anchorX: 1,
-	anchorY: 1,
-	image: 'empty'
-};
+room4colliders[2] = new wallCollider(2, 1.9, maxTilesX, maxTilesY, 1, 1);
 //left corner
-room4colliders[3] = 
-{
-	width: 2 * tileWidth,
-	height: 2 * tileHeight,
-	x: 0,
-	y: maxTilesY * tileHeight,
-	anchorX: 0,
-	anchorY: 1,
-	image: 'empty'
-};
+room4colliders[3] = new wallCollider(2, 2, 0, maxTilesY, 0, 1);
 //left top wall protrusion
-room4colliders[4] = 
-{
-	width: 2 * tileWidth,
-	height: 3 * tileHeight,
-	x: 6 * tileWidth,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room4colliders[4] = new wallCollider(2, 3, 6, 0, 0, 0);
 //right top wall protrusion
-room4colliders[5] = 
-{
-	width: 2 * tileWidth,
-	height: 3 * tileHeight,
-	x: (maxTilesX - 5) * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room4colliders[5] = new wallCollider(2, 3, maxTilesX - 5, 0, 1, 0);
 //candelabra
-room4colliders.c1 = new smallCollisionSprite( 4.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
-room4colliders.c2 = new smallCollisionSprite( 8.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
-room4colliders.c3 = new smallCollisionSprite( 16.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
-room4colliders.c4 = new smallCollisionSprite( 19.5 *tileWidth, (maxTilesY - 1) *tileHeight, 'candelabrum');
-room4colliders.c5 = new smallCollisionSprite( 14.5 *tileWidth, 8*tileHeight, 'candelabrum');
-room4colliders.c6 = new smallCollisionSprite( 12.5 *tileWidth, 6*tileHeight, 'candelabrum');
+room4colliders.c1 = new smallCollisionSprite( 4 , (maxTilesY - 2) , 'candelabrum');
+room4colliders.c2 = new smallCollisionSprite( 8 , (maxTilesY - 2) , 'candelabrum');
+room4colliders.c3 = new smallCollisionSprite( 16 , (maxTilesY - 2) , 'candelabrum');
+room4colliders.c4 = new smallCollisionSprite( 19 , (maxTilesY - 2) , 'candelabrum');
+room4colliders.c5 = new smallCollisionSprite( 14 , 7, 'candelabrum');
+room4colliders.c6 = new smallCollisionSprite( 12 , 5, 'candelabrum');
 //pillars
-room4colliders.p1 = new smallCollisionSprite( 2.5* tileWidth, 4 * tileHeight, 'pillar');
-room4colliders.p2 = new smallCollisionSprite( 2.5* tileWidth, 12 * tileHeight, 'pillar');
+room4colliders.p1 = new smallCollisionSprite( 2, 3 , 'pillar');
+room4colliders.p2 = new smallCollisionSprite( 2, 11 , 'pillar');
 
 //----
 
 var room5colliders = {};
 //top wall
-room5colliders[0] = 
-{
-	width: maxTilesX * tileWidth,
-	height: 2 * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room5colliders[0] = new wallCollider(maxTilesX, 2, 0, 0, 0, 0);
 //bottom wall
-room5colliders[1] = 
-{
-	width: maxTilesX * tileWidth,
-	height: (2 - 0.1) * tileHeight,
-	x: 0,
-	y: maxTilesY * tileHeight,
-	anchorX: 0,
-	anchorY: 1,
-	image: 'empty'
-};
+room5colliders[1] = new wallCollider(maxTilesX, 1.9, 0, maxTilesY, 0, 1);
 //top corner 1
-room5colliders[2] = 
-{
-	width: 3 * tileWidth,
-	height: 3 * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room5colliders[2] = new wallCollider(3, 3, 0, 0, 0, 0);
 //top corner 2
-room5colliders[3] = 
-{
-	width: 2 * tileWidth,
-	height: 4 * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room5colliders[3] = new wallCollider(2, 4, 0, 0, 0, 0);
 //bottom corner 1
-room5colliders[4] = 
-{
-	width: 3 * tileWidth,
-	height: 3 * tileHeight,
-	x: 0,
-	y: maxTilesY * tileHeight,
-	anchorX: 0,
-	anchorY: 1,
-	image: 'empty'
-};
+room5colliders[4] = new wallCollider(3, 3, 0, maxTilesY, 0, 1);
 //bottom corner 2
-room5colliders[5] = 
-{
-	width: 2 * tileWidth,
-	height: 4 * tileHeight,
-	x: 0,
-	y: maxTilesY * tileHeight,
-	anchorX: 0,
-	anchorY: 1,
-	image: 'empty'
-};
+room5colliders[5] = new wallCollider(2, 4, 0, maxTilesY, 0, 1);
 //top protrusion
-room5colliders[6] = 
-{
-	width: 4 * tileWidth,
-	height: 3 * tileHeight,
-	x: (maxTilesX - 5) * tileWidth,
-	y: 0,
-	anchorX: 1,
-	anchorY: 0,
-	image: 'empty'
-};
+room5colliders[6] = new wallCollider(4, 3, maxTilesX - 5, 0, 1, 0);
 //bottom protrusion
-room5colliders[7] = 
-{
-	width: 4 * tileWidth,
-	height: 3 * tileHeight,
-	x: (maxTilesX - 5) * tileWidth,
-	y: maxTilesY * tileHeight,
-	anchorX: 1,
-	anchorY: 1,
-	image: 'empty'
-};
+room5colliders[7] = new wallCollider(4, 3, maxTilesX - 5, maxTilesY, 1, 1);
 //right wall
-room5colliders[8] = 
-{
-	width: 1 * tileWidth,
-	height: maxTilesY * tileHeight,
-	x: 0,
-	y: 0,
-	anchorX: 0,
-	anchorY: 0,
-	image: 'empty'
-};
+room5colliders[8] = new wallCollider(1, maxTilesY, 0, 0, 0, 0);
 //candelabra
-room5colliders.c1 = new smallCollisionSprite( 2.5 *tileWidth, 4 *tileHeight, 'candelabrum');
-room5colliders.c2 = new smallCollisionSprite( 2.5 *tileWidth, (maxTilesY - 3) *tileHeight, 'candelabrum');
+room5colliders.c1 = new smallCollisionSprite( 2 , 3 , 'candelabrum');
+room5colliders.c2 = new smallCollisionSprite( 2 , (maxTilesY - 4) , 'candelabrum');
 //pillars
-/* these awere blocking badly 
-room5colliders.p1 = new smallCollisionSprite( 12.5* tileWidth, 4 * tileHeight, 'pillar');
-room5colliders.p2 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, 4 * tileHeight, 'pillar');
-room5colliders.p3 = new smallCollisionSprite( 12.5* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
-room5colliders.p4 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
-*/
+room5colliders.p1 = new smallCollisionSprite( 14, 2, 'pillar');
+room5colliders.p2 = new smallCollisionSprite( 14, maxTilesY - 3, 'pillar');
+room5colliders.p3 = new smallCollisionSprite( 19, 2, 'pillar');
+room5colliders.p4 = new smallCollisionSprite( 19, maxTilesY - 3, 'pillar');
 
 //----
 
