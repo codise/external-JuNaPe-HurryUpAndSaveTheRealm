@@ -343,10 +343,12 @@ room5colliders[8] =
 room5colliders.c1 = new smallCollisionSprite( 2.5 *tileWidth, 4 *tileHeight, 'candelabrum');
 room5colliders.c2 = new smallCollisionSprite( 2.5 *tileWidth, (maxTilesY - 3) *tileHeight, 'candelabrum');
 //pillars
+/* these awere blocking badly 
 room5colliders.p1 = new smallCollisionSprite( 12.5* tileWidth, 4 * tileHeight, 'pillar');
 room5colliders.p2 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, 4 * tileHeight, 'pillar');
 room5colliders.p3 = new smallCollisionSprite( 12.5* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
 room5colliders.p4 = new smallCollisionSprite( (maxTilesX - 2.5)* tileWidth, (maxTilesY - 3) * tileHeight, 'pillar');
+*/
 
 //----
 
