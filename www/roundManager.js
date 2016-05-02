@@ -7,6 +7,11 @@ var self = this;
 
 // Variables related to managing game mechanics
 
+self.dirty = [];
+self.dirty['score'] = true;
+self.dirty['playerAmount'] = true;
+self.dirty['rooms'] = true;
+
 var players = {};
 var playerGroup = game.add.group();
 playerGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
@@ -14,15 +19,17 @@ playerGroup.enableBody = true;
 
 var minPlayerSpawnDistance = 10;
 
-var scoreTable = [];
-var scoreText = game.add.text(game.camera.x + 16, game.camera.y + 16, '', { fontSize: '32px', fill: '#000' });
+var scoreBoard = new  ScoreBoard(game, {x: 0, y: 0});
 
 var roundRunning = false;
 
-var qr = game.add.image(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko'); //or: 'qr_janika'
+var qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
 qr.scale.x = 0.5*scalingFactors.x;
 qr.scale.y = 0.5*scalingFactors.y;
+game.physics.enable(qr, Phaser.Physics.ARCADE);
+qr.body.immovable = true;
 qr.anchor.setTo(1,1);
+qr.body.bounce.set(1,1);
 
 //This group is used to manage the draw order of other groups
 //The draw order is defined by the order in which groupds are added
@@ -30,13 +37,14 @@ qr.anchor.setTo(1,1);
 var drawOrderGroup = game.add.group(); 
 
 self.backgroundLayerGroup = game.add.group();
-
 self.popUpGroup = game.add.group();
+self.collisionGroup = game.add.group();
 
 var fpsText = game.add.text(game.camera.x, game.camera.y + game.camera.height, '', { fontSize: '12px', fill: '#f00'});
 fpsText.anchor.setTo(0, 1);
 fpsText.stroke = '#000000';
 fpsText.strokeThickness = 1;
+
 
 
 // Variables related to map functioning
@@ -58,7 +66,6 @@ var currentMinDX = defaultMinDX;
 var currentMinDY = defaultMinDY;
 
 var speedDict = [];
-speedDict["slow"] = 0.25;
 speedDict["normal"] = 0.5;
 speedDict["fast"] = 1;
 speedDict["stop"] = null;
@@ -66,6 +73,19 @@ speedDict["stop"] = null;
 self.roundOver = false;
 self.lastRoomTimeout = 600000; //600s
 self.lastRoomTimer = 0;
+
+// Initialize music variables only if not muted
+
+if (game.mute === false)
+	{
+	var bgmMusic;
+
+	var explosionSound;
+
+	var soundReady = false;
+
+	var availableSounds = ['explosion'];
+	}
 
 var done = false;
 
@@ -77,7 +97,6 @@ self.loadRound = function (roundData)
 	game.camera.x = Math.floor(game.world.width/2 - game.camera.width/2);
 	game.camera.y = Math.floor(game.world.height/2 - game.camera.height/2);
 	currentRound = roundData;
-
 	rooms[0] = null;
 
 	// Load first two rooms;
@@ -85,9 +104,11 @@ self.loadRound = function (roundData)
 		{
 		rooms[i + 1] = new Room(game,
 														currentRound.rooms[i].roomBg,
+														currentRound.rooms[i].colliders,
 														currentRound.rooms[i].moveDirection,
 														currentRound.rooms[i].moveSpeed,
 														self);
+		self.dirty['rooms'] = true;
 		}
 	nextRoom = 2;
 
@@ -115,6 +136,15 @@ self.loadRound = function (roundData)
 			}
 		}
 
+	// Setup music only if not muted	
+	if (game.mute === false)
+		{
+		startBgmMusic(currentRound.bgm);
+
+		explosionSound = game.add.audio('explosion');
+		game.sound.setDecodedCallback([explosionSound], function () { soundReady = true; }, this);
+		}
+
 	roundRunning = true;
 	currentDirection = rooms[1].moveDirection;
 	currentSpeed = rooms[1].moveSpeed;
@@ -129,16 +159,18 @@ self.loadRound = function (roundData)
 */
 var establishDrawOrder = function() 
 	{
-	drawOrderGroup.add(self.backgroundLayerGroup);	
+	drawOrderGroup.add(self.backgroundLayerGroup);
 	drawOrderGroup.add(enemyManager.enemyGroup);
 	drawOrderGroup.add(powerupManager.pUpGroup);
 	drawOrderGroup.add(playerGroup);
 	drawOrderGroup.add(weaponManager.weaponGroup);
-	drawOrderGroup.add(scoreText);
+	drawOrderGroup.add(self.collisionGroup);
+	drawOrderGroup.add(scoreBoard.sprite);
 	drawOrderGroup.add(bulletManager.playerBulletGroup);
 	drawOrderGroup.add(bulletManager.enemyBulletGroup);
 	drawOrderGroup.add(self.popUpGroup);
 	drawOrderGroup.add(qr);
+	drawOrderGroup.add(fpsText);
 	};
 
 // Client data parsing
@@ -159,6 +191,8 @@ self.newPlayer = function (id)
 	players[id].sprite.scale.x = scalingFactors.x;
 	players[id].sprite.scale.y = scalingFactors.y;
 	playerGroup.add(players[id].sprite);
+
+	self.dirty['playerAmount'] = true;
 	};
 
 self.disconnectPlayer = function (id)
@@ -177,11 +211,10 @@ self.disconnectPlayer = function (id)
 
 self.update = function ()
 	{
+	scoreBoard.update(players);
 
-	updateScore();
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 
-	fpsText.bringToTop();
 	fpsText.text = ' FPS: ' + game.time.fps + '\n now.elapsed: ' + game.time.elapsed + 'ms\n time.elapsed: ' + game.time.elapsedMS + 'ms';
 	fpsText.position.setTo(game.camera.x, game.camera.y + game.camera.height);
 
@@ -203,6 +236,12 @@ self.update = function ()
 		game.physics.arcade.collide(playerGroup);
 		game.physics.arcade.collide(enemyManager.enemyGroup);
 		game.physics.arcade.collide(playerGroup, enemyManager.enemyGroup);
+		game.physics.arcade.collide(enemyManager.enemyGroup, self.collisionGroup);
+		game.physics.arcade.collide(bulletManager.playerBulletGroup, self.collisionGroup, bulletCollisionHandler);
+		game.physics.arcade.collide(bulletManager.enemyBulletGroup, self.collisionGroup, bulletCollisionHandler);
+		game.physics.arcade.collide(playerGroup, self.collisionGroup);
+		game.physics.arcade.collide(qr, playerGroup);
+		game.physics.arcade.collide(qr, enemyManager.enemyGroup);
 
 		updateRoomMovement();
 		if(self.lastRoomTimer > 0)
@@ -210,15 +249,25 @@ self.update = function ()
 			if (self.lastRoomTimer < game.time.now)
 				{
 				self.roundOver = true;
+				stopBgmMusic();
 				}
 			}
 		} 
 
 	};
 
+var bulletCollisionHandler = function(bullet, wall) 
+	{
+		bulletManager.killBullet(bullet);
+	}
+
 var updateRoomMovement = function ()
 	{
-	rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+	if (self.dirty['rooms'])
+		{
+		rooms.forEach(function (room, index, array) { if (room != undefined && !room.onceScaled) { room.updateScaling(); } });
+		self.dirty['rooms'] = false;
+		}
 
 	if (speedDict[currentSpeed] != undefined)
 		{
@@ -277,9 +326,11 @@ var updateRoomMovement = function ()
 					{
 					rooms[2] = new Room(game,
 															currentRound.rooms[nextRoom].roomBg,
+															currentRound.rooms[nextRoom].colliders,
 															currentRound.rooms[nextRoom].moveDirection,
 															currentRound.rooms[nextRoom].moveSpeed,
 															self);
+					self.dirty['rooms'] = true;
 					switch (rooms[1].moveDirection)
     					{
     					case "north":
@@ -343,41 +394,37 @@ var updateRoomMovement = function ()
 		}
 	};
 
-var updateScore = function ()
-	{
-	scoreTable = [];	
-	for (var i in players)
-		{
-		if (players[i] != undefined && game.playerList[players[i].id] != undefined)
-			{
-			scoreTable.push({"id": players[i].id, "name": players[i].playerName, "score": players[i].score, "totalScore": game.playerList[players[i].id].totalScore});
-			}
-		}
-	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
-	scoreText.text = scoreTableToText(scoreTable);
-	scoreText.position.x = game.camera.x + 16;
-	scoreText.position.y = game.camera.y + 16;
-	};
-
-var scoreTableToText = function (scoreTable)
-	{
-	var text = '';
-
-	for (var i in scoreTable)
-		{
-		if (scoreTable[i].name != undefined)
-			{
-			text += scoreTable[i].name + " :: " + scoreTable[i].score + " / " + scoreTable[i].totalScore + "\n";
-			}
-		}
-	return text;
-	};
-
 self.getScoreTable = function ()
 	{
-	return scoreTable;
+	return scoreBoard.getScoreTable();
 	};
+
+var startBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic = game.sound.play(bgmTrack);
+		bgmMusic.loopFull();
+	}
 	
+
+var stopBgmMusic = function(bgmTrack) 
+	{
+		bgmMusic.stop();
+	}
+
+self.playSoundOnScreen = function (soundIdentifier)
+	{
+	if (soundReady && !game.mute && availableSounds.indexOf(soundIdentifier) > -1)
+		{
+		switch (soundIdentifier)
+			{
+			case 'explosion':
+				explosionSound.play();
+				break;
+			default:
+				explosionSound.play();
+			}
+		}
+	};
 
 }
 
