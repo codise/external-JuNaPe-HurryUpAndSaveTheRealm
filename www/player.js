@@ -77,7 +77,7 @@ var spawnTimer = game.time.now;
 var deathRelativePos = {x: 0, y: 0};
 var enemyFreeSpawnRadius = game.width/15;
 var spawnBorder = game.width/15;
-
+var spawnCount = 75;
 // Powerup shimmer effects, using emitters
 
 var emitterList = [];
@@ -435,19 +435,23 @@ self.losePoints = function(amount)
 
 var checkSpawnPosition = function()
 	{
-	var distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); //why doesn't work getAllLivingFromObject('enemyList')?
-	while(distance < enemyFreeSpawnRadius)
+	var count = spawnCount;
+	var distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); 
+	var newPosition = self.sprite.position;
+	while(distance < enemyFreeSpawnRadius && count > 0)
 		{
-		findNewSpawnPostion();
-		distance = dClosestEnemy(enemyManager.enemyList, self.sprite.position); 
+		newPosition = findNewSpawnPostion();
+		distance = dClosestEnemy(enemyManager.enemyList, newPosition); 
+		count--;
 		}
+	self.sprite.position.x = newPosition.x;
+	self.sprite.position.y = newPosition.y;
 	};
 
 var findNewSpawnPostion = function()
 	{
 	var newPosition = getRandomPosition(spawnBorder);
-	self.sprite.position.x = newPosition.x;
-	self.sprite.position.y = newPosition.y;
+	return newPosition;
 	};
 
 
