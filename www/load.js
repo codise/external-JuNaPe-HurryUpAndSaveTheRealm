@@ -199,6 +199,8 @@ var load = function ()
 	//Load particles
 	game.load.image('particle_blue','assets/particles/SmallBlingBlue.png');
 	game.load.image('particle_red','assets/particles/SmallBlingRed.png');
+	game.load.image('particle_green','assets/particles/SmallBlingGreen.png');
+	game.load.image('particle_orange','assets/particles/SmallBlingOrange.png'); // not used currently?
 
 	// Set loadingtext
 
