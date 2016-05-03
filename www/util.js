@@ -86,12 +86,13 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
 		currentDistance = dClosestPlayer(playerList, randomPos);
-		if (currentDistance >= minimumDistance)
+		var collide = isPointInsideCollisionBox(game,randomPos);
+		if (currentDistance >= minimumDistance && !collide)
 			{
 			acceptablePosition = true;
 			currentBestPos = randomPos;
 			}
-		else if(currentDistance >= currentBestDistance) {
+		else if(currentDistance >= currentBestDistance && !collide) {
 			currentBestPos = randomPos;
 		}
 		tryCount++;
@@ -389,3 +390,42 @@ var broadcastSound = function (players, soundIdentifier)
 			game.state.states.play.roundManager.playSoundOnScreen(soundIdentifier);
 		}
 	};
+
+/**
+* Checks if a specified point is inside any currently loaded colliders
+* @param {Phaser.game} game current game instance
+* @param {Point} pos the point which we check
+* @return {Boolean} True if point is inside a collider, false otherwise 
+*/
+var isPointInsideCollisionBox = function(game, pos) 
+{
+	var colGroup = game.state.states.play.roundManager.collisionGroup.children;
+
+	for (var i = colGroup.length - 1; i >= 0; i--) {
+		if(colGroup[i].getBounds().contains(pos.x,pos.y)) 
+		{
+			return true;
+		}
+	}
+	return false;
+
+}
+
+/**
+* Gets a random point that's not inside a collider
+* @param {Phaser.game} game current game instance
+* @param {Number} amount The maximum number of attempts
+* @return {Point} A random non collidable point
+*/
+var getRandomPointOutsideColliders = function(game, amount) 
+{
+	var randomPos = {};
+	var collide = true;
+	while(collide) 
+	{
+		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
+		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
+		collide = isPointInsideCollisionBox(game,randomPos)
+	}
+	return randomPos;
+}
