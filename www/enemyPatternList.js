@@ -78,7 +78,7 @@ bossPatterns.spiral1 = {
 	bulletAmount: 5,
 	shotRotation: 15,
 	shotAngleVariance: 0,
-	bulletGraphic: 'enemyBullet4',	¨
+	bulletGraphic: 'enemyBullet4',
 	
 	texture: 0, //normi
 };
