@@ -431,6 +431,7 @@ self.losePoints = function(amount)
 		{
 		game.playerList[id].totalScore -= amount;
 		}
+	game.state.states.play.roundManager.dirty['score'] = true;
 	}
 
 var checkSpawnPosition = function()
