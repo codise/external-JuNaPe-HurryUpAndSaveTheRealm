@@ -31,6 +31,20 @@ var getMaxValue = function(type)
 			}
 		return currMax;
 		}
+	else if(type == 'baseFireRate')
+		{
+		for(var i = 0; i < 6; i++)
+			{
+			//console.log("perusarvo: " + players[i]["baseFireRate"] + ", muutettu arvo: " + 1/players[i]["baseFireRate"]);
+			var currValue = parseInt((1/players[i]["baseFireRate"])*10000, 10);
+			//console.log("currValue:" + currValue);
+			if(currMax < currValue)
+				{
+				currMax = currValue;
+				}
+			}
+		return currMax;
+		}
 	else
 		{
 		for(var i = 0; i < 6; i++)
@@ -71,7 +85,7 @@ self.getPlayerStatValue = function(id, type, barWidth)
 		}
 	else if(type == 'fireRate')
 		{
-		value = players[id]["baseFireRate"];
+		value = parseInt((1/players[id]["baseFireRate"])*10000, 10);
 		maxValue = maxValues["fireRate"];
 		}
 	value = (value/maxValue)*barWidth;
