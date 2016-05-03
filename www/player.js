@@ -81,8 +81,8 @@ var spawnCount = 75;
 // Powerup shimmer effects, using emitters
 
 var emitterList = [];
-emitterList[0] = game.effectManager.createPlayerEmitter('particle_blue');
-emitterList[1] = game.effectManager.createPlayerEmitter('particle_red');
+emitterList[0] = game.effectManager.createPlayerEmitter('particle_green');	//movementSpeed powerup
+emitterList[1] = game.effectManager.createPlayerEmitter('particle_red');	//attack speed powerup
 
 self.sprite.addChild(emitterList[0]);
 self.sprite.addChild(emitterList[1]);
