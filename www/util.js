@@ -34,7 +34,7 @@ self.x = xPos * tileWidth;
 self.y = yPos * tileHeight;
 self.anchorX = xAnchor;
 self.anchorY = yAnchor;
-self.image = 'test';
+self.image = 'empty';
 }
 
 /**
