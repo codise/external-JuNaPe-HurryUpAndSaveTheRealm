@@ -7,44 +7,35 @@ var round3 = {};
 
 var room1colliders = {};
 //structure
-room1colliders[0] = 
-{
-	width: 6 * tileWidth,
-	height: 3 * tileHeight,
-	x: maxTilesX * tileWidth / 2,
-	y: 0,
-	anchorX: 0.5,
-	anchorY: 0,
-	image: 'empty'
-};
+room1colliders[0] = new wallCollider(6, 3, maxTilesX / 2, 0, 0.5, 0);
 
 //----
 
 var room2colliders = {};
 //statue
-room2colliders.s1 = new smallCollisionSprite( maxTilesX / 2 *tileWidth, maxTilesY / 2 *tileHeight, 'statueHero');
+room2colliders.s1 = new smallCollisionSprite( (maxTilesX / 2)-0.5, (maxTilesY / 2)-1, 'statueHero');
 
 //----
 
 var room3colliders = {};
 //pillars
-room3colliders.p1 = new smallCollisionSprite( 7.5 * tileWidth, 6 * tileHeight, 'pillar');
-room3colliders.p2 = new smallCollisionSprite( 15.5 * tileWidth, 6 * tileHeight, 'pillar');
-room3colliders.p3 = new smallCollisionSprite( 7.5 * tileWidth, 11 * tileHeight, 'pillar');
-room3colliders.p4 = new smallCollisionSprite( 15.5 * tileWidth, 11 * tileHeight, 'pillar');
+room3colliders.p1 = new smallCollisionSprite( 7, 5, 'pillar');
+room3colliders.p2 = new smallCollisionSprite( 15, 5, 'pillar');
+room3colliders.p3 = new smallCollisionSprite( 7, 10, 'pillar');
+room3colliders.p4 = new smallCollisionSprite( 15, 10, 'pillar');
 
 //----
 
 var room4colliders = {};
 //statue
-room4colliders.s1 = new smallCollisionSprite( maxTilesX / 2 *tileWidth, maxTilesY / 2 *tileHeight, 'statueHeroBroken');
+room4colliders.s1 = new smallCollisionSprite( (maxTilesX / 2)-0.5, (maxTilesY / 2)-1, 'statueHeroBroken');
 
 //----
 
 var room5colliders = {};
 //pillars
-room5colliders.p1 = new smallCollisionSprite( 7.5 * tileWidth, 5 * tileHeight, 'pillar');
-room5colliders.p2 = new smallCollisionSprite( 7.5 * tileWidth, 12 * tileHeight, 'pillar');
+room5colliders.p1 = new smallCollisionSprite( 7, 4, 'pillar');
+room5colliders.p2 = new smallCollisionSprite( 7, 11, 'pillar');
 
 //----
 
