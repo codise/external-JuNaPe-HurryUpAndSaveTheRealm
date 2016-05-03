@@ -78,7 +78,9 @@ bossPatterns.spiral1 = {
 	bulletAmount: 5,
 	shotRotation: 15,
 	shotAngleVariance: 0,
-	bulletGraphic: 'enemyBullet4',
+	bulletGraphic: 'enemyBullet4',	¨
+	
+	texture: 1,	//Doomball texture
 };
 
 //boss1
@@ -96,6 +98,8 @@ bossPatterns.spiral1Reverse = {
 	shotRotation: -15,
 	shotAngleVariance: 5,
 	bulletGraphic: 'enemyBullet4',
+	
+	texture: 1,	//Doomball texture
 };
 
 //boss1
@@ -224,6 +228,8 @@ bossPatterns.burst3 = {
 	bulletSpeedVariance: 50,
 	bulletLifespan: 4500,
 	bulletGraphic: 'enemyBullet5',
+		
+	texture: 2,	//swirly tentacle texture
 };
 
 
