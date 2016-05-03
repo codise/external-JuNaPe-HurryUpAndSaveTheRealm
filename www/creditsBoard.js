@@ -21,10 +21,12 @@ var parseCredits = function ()
 	return text;
 	};
 
-
-var creditInfo = [ {what: 'Programming', who: ['Katiska', 'Novitsky', 'Sibakov', 'Janika']},
-									 {what: 'Art', who: ['Taipale', 'Risto']},
-									 {what: 'Music', who: ['Kevin MacLeod (incompetech.com)']} ];
+		
+									{what: 'Programming', who: ['Ahti Katiska', 'Niko Novitsky', 'Markus Sibakov', 'Janika Kääriäinen', 'Valtter Taipale']},
+									{what: 'Game Design', who: ['Valtter Taipale', 'Markus Sibakov', 'Niko Novinsky', 'Janika Kääriäinen']},
+									{what: 'Art', who: ['Valtter Taipale', 'Risto Ollila', 'Markus Sibakov']},
+									{what: 'Music', who: ['Kevin MacLeod (incompetech.com)']},
+									];
 
 var creditText = game.add.text(position.x, position.y, '', {font: '25px Courier', fill: '#ffffff'});
 
