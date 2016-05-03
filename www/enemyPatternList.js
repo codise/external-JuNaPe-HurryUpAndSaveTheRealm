@@ -80,7 +80,7 @@ bossPatterns.spiral1 = {
 	shotAngleVariance: 0,
 	bulletGraphic: 'enemyBullet4',	¨
 	
-	texture: 1,	//Doomball texture
+	texture: 0, //normi
 };
 
 //boss1
@@ -99,7 +99,7 @@ bossPatterns.spiral1Reverse = {
 	shotAngleVariance: 5,
 	bulletGraphic: 'enemyBullet4',
 	
-	texture: 1,	//Doomball texture
+	texture: 0, //normi
 };
 
 //boss1
@@ -117,6 +117,8 @@ bossPatterns.spiral2 = {
 	shotRotation: 25,
 	shotAngleVariance: 0,
 	bulletGraphic: 'enemyBullet5',
+	
+	texture: 1,	//Doomball texture
 };
 
 //boss2
@@ -191,6 +193,8 @@ bossPatterns.burst1 = {
 	bulletSpeedVariance: 0,
 	bulletLifespan: 4500,
 	bulletGraphic: 'enemyBullet6',
+		
+	texture: 0,	//normi
 };
 
 //boss1
@@ -209,6 +213,8 @@ bossPatterns.burst2 = {
 	bulletSpeedVariance: 0,
 	bulletLifespan: 4500,
 	bulletGraphic: 'enemyBullet6',
+	
+	texture: 0,	//normi
 };
 
 //boss1 rage
