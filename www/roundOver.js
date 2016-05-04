@@ -14,6 +14,8 @@ var cdText = 'Time remaining until next round: ';
 var qr;
 var qrText;
 
+var credits;
+
 self.preload = function ()
 	{
 	qr = game.add.sprite(game.camera.x + game.camera.width, game.camera.y + game.camera.height, 'qr_niko_wlan_niko'); //or: 'qr_janika'
@@ -27,20 +29,25 @@ self.preload = function ()
 	scoreText = game.add.text(100, 100, genScore(roundScores), {font: "30px Calibri",  fill: "#ffffff"});
 	loopTimeout = game.time.now + 5000;
 	countDownText = game.add.text(10, 10, "", {font: "20px Calibri",  fill: "#ffffff"});
+
+  credits = new creditBoard(game, {x: 350, y: 650 });
 	};
 
 var genScore = function (table)
 	{
-	var text = 'Final scores: \n';
-
-	for (var i = 0; i < table.length; i++)
+	if (table != undefined)
 		{
-		if (table[i].name != undefined)
+		var text = 'Final scores: \n';
+
+		for (var i = 0; i < table.length; i++)
 			{
-			text += table[i].name + ": " + table[i].score + " / " + table[i].totalScore + "\n";
+			if (table[i].name != undefined)
+				{
+				text += table[i].name + ": " + table[i].score + " / " + table[i].totalScore + "\n";
+				}
 			}
+		return text;
 		}
-	return text;
 	};
 
 self.update = function ()
@@ -48,6 +55,7 @@ self.update = function ()
 	qr.bringToTop();
 	qr.position.setTo(game.camera.x + game.camera.width, game.camera.y + game.camera.height);
 	countDownText.text = cdText + (loopTimeout - game.time.now);
+	credits.update();
 	if(game.time.now > loopTimeout)
 		{
 		game.state.start('waiting');

@@ -10,11 +10,8 @@ var scoreText = game.add.text(position.x, position.y, '', { font: 'Courier New',
 scoreText.stroke = '#000000';
 scoreText.strokeThickness = 4;
 
-var lineCount = (scoreText.text.split('\n').length - 1)
-
 var scoreBackground = game.add.sprite(position.x, position.y, 'scoreBackground');
 scoreBackground.width = scoreText.width;
-scoreBackground.height = lineCount * 22;
 scoreBackground.alpha = 0.25;
 
 self.sprite = game.add.sprite(position.x, position.y, 'empty');
@@ -40,7 +37,7 @@ self.update = function (players)
       	}
     	}
   	scoreTable = scoreTable.sort(function (scoreEntryA, scoreEntryB) { return scoreEntryB.score - scoreEntryA.score; })
-  	scoreText.text = scoreTableToText(scoreTable);
+  	scoreText.text = scoreTableToText(scoreTable.slice(0, 5));
 		scoreBackground.width = scoreText.width;
 		scoreBackground.height = scoreText.height;
 		game.state.states.play.roundManager.dirty['score'] = false;

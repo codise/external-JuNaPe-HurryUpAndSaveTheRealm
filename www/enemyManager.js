@@ -31,7 +31,7 @@ var enemyDictionary =
 
 var bossDictionary = 
 	{
-	tentacle: {sprites: ['boss_tentaclemonster'],
+	tentacle: {sprites: ['boss_tentaclemonster1','boss_tentaclemonster2','boss_tentaclemonster3'],
 		boss: true,
 		normalPatterns: [bossPatterns.spiral1, bossPatterns.spiral1Reverse, bossPatterns.spiral2, bossPatterns.burst1],
 		ragePatterns: [bossPatterns.burst3, bossPatterns.burst2],

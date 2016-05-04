@@ -1,14 +1,28 @@
 'use strict';
 
+/* This is a currently unused type of bullet, which takes the sprite
+and an info object. Info object is of type:
+
+	{type: A, amplitude: B, waveTime: C},
+
+where:
+	A is one of 'sine'/'sawTooth',
+	B is a real number,
+	C is a real number.
+*/
+
 function SpecialBullet (bulletSprite, info)
 {
-
 var self = this;
 var sprite = bulletSprite;
 
 var type = info.type;
 var amplitude = info.amplitude;
 var waveTime = info.waveTime;
+
+/* Here we just define lot of vector functions which help in defining 
+	 the movement patterns of the bullets 
+*/
 
 var getPerpendicularVec = function (vec)
 	{
@@ -49,8 +63,12 @@ var rotate = function (angle, vec)
 	return {x: x, y: y};
 	};
 
+// End of vector functions
+
+
 self.dead = false;
 
+// Main update function, which is responsible for updating the bullets' velocity
 
 self.update = function ()
 	{
@@ -72,14 +90,16 @@ self.update = function ()
 		}
 	};
 
+/* Variables useful in both the sine wave and sawtooth wave definition */
+
 var perpendicularVec = normalize(getPerpendicularVec(sprite.body.velocity));
 var started = false;
 var tau = Math.PI * 2;
 var origLength = vecLength(bulletSprite.body.velocity);
 var freq;
 
-
 // Sine wave
+
 var sineClock = 0;
 
 var moveBulletSine = function (bullet, amplitude, period)
@@ -96,6 +116,8 @@ var moveBulletSine = function (bullet, amplitude, period)
 	bullet.body.velocity.y = origLength * normalizedVec.y;
 	sineClock += 0.05;
 	};
+
+// Sawtooth wave
 
 var sawClock = 0;
 

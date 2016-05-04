@@ -179,14 +179,16 @@ var load = function ()
 	game.load.image('enemy_skeleton', 'assets/enemies/enemy_01b.png');
 	game.load.image('enemy_slasher', 'assets/enemies/enemy_08b.png');
 	game.load.image('enemy_ghost', 'assets/enemies/enemy_04b.png');
-	game.load.image('boss_tentaclemonster', 'assets/enemies/enemy_06b.png');
+	game.load.image('boss_tentaclemonster1', 'assets/enemies/enemy_06b.png');
+	game.load.image('boss_tentaclemonster2', 'assets/enemies/enemy_06b_2.png');
+	game.load.image('boss_tentaclemonster3', 'assets/enemies/enemy_06b_3.png');
 	game.load.image('boss_king1', 'assets/enemies/enemy_10.png');
 	game.load.image('boss_king2', 'assets/enemies/enemy_10_2.png');
 	game.load.image('boss_king3', 'assets/enemies/enemy_10_3.png');
 
 	// Load effects
 
-	game.load.spritesheet('explosion', 'assets/effects/placeholder_explosion.png', 64, 64, 23);
+	game.load.spritesheet('death_cloud', 'assets/effects/death_cloud.png', 100, 100, 6);
 	game.load.spritesheet('spawn', 'assets/effects/SpawnCloud.png', 100, 100, 6);
 
 	//Load powerup sprites
@@ -199,6 +201,8 @@ var load = function ()
 	//Load particles
 	game.load.image('particle_blue','assets/particles/SmallBlingBlue.png');
 	game.load.image('particle_red','assets/particles/SmallBlingRed.png');
+	game.load.image('particle_green','assets/particles/SmallBlingGreen.png');
+	game.load.image('particle_orange','assets/particles/SmallBlingOrange.png'); // not used currently?
 
 	// Set loadingtext
 
