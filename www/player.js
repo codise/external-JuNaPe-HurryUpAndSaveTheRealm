@@ -445,7 +445,7 @@ var checkSpawnPosition = function()
 
 var findNewSpawnPostion = function()
 	{
-	var newPosition = getRandomPosition(spawnBorder);
+	var newPosition = getRandomPointOutsideColliders(game,50);
 	self.sprite.position.x = newPosition.x;
 	self.sprite.position.y = newPosition.y;
 	};

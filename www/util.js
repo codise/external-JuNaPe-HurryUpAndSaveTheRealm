@@ -5,7 +5,7 @@
 |     Here you'll find useful functions    |
 ==========================================*/
 
-
+var rect = new Phaser.Rectangle(0,0,200,200);
 
 /**
 * Helper variables for room collision generation
@@ -80,19 +80,20 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 	var currentBestPos = {};
 	var acceptablePosition = false;
 	var currentDistance = 0;
-	while (!acceptablePosition || (tryCount < maxTryCount && maxTryCount != undefined))
+	var collide = true;
+	while (!acceptablePosition && (tryCount < maxTryCount && maxTryCount != undefined))
 		{
 		var randomPos = {};
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
 		currentDistance = dClosestPlayer(playerList, randomPos);
-		var collide = isPointInsideCollisionBox(game,randomPos);
-		if (currentDistance >= minimumDistance && !collide)
+		collide = isPointInsideCollisionBox(game,randomPos);
+		if (currentDistance >= minimumDistance && collide == false)
 			{
 			acceptablePosition = true;
 			currentBestPos = randomPos;
 			}
-		else if(currentDistance >= currentBestDistance && !collide) {
+		else if(currentDistance >= currentBestDistance &&!collide == false) {
 			currentBestPos = randomPos;
 		}
 		tryCount++;
@@ -128,7 +129,7 @@ var getInitialSpawnPos = function (game, playerList, minimumDistance, borderLeng
 			}
 		else if(currentDistance >= currentBestDistance) {
 			currentBestPos = randomPos;
-		}
+			}
 		tryCount++;
 		}
 		return currentBestPos;
@@ -400,9 +401,10 @@ var broadcastSound = function (players, soundIdentifier)
 var isPointInsideCollisionBox = function(game, pos) 
 {
 	var colGroup = game.state.states.play.roundManager.collisionGroup.children;
-
+	rect.x = pos.x;
+	rect.y = pos.y;
 	for (var i = colGroup.length - 1; i >= 0; i--) {
-		if(colGroup[i].getBounds().contains(pos.x,pos.y)) 
+		if(rect.intersects(colGroup[i]))
 		{
 			return true;
 		}
