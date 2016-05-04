@@ -58,8 +58,8 @@ self.update = function(players)
 {
 	if (Object.keys(players).length > 0 && pUpList.length < MAX_PUP_SPAWNS && CurrentCooldownTime < game.time.now) {
 		if(getRandomInt(0,100) <= POWERUP_SPAWN_RATE) {		
-			var randomPos = {x: game.camera.x + game.rnd.integerInRange(0, game.camera.width), y: game.camera.y + game.rnd.integerInRange(0, game.camera.height)};
-			var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), randomPos, players);
+			var powerupPosition = getRandomPointOutsideColliders(game, 50);
+			var newpUp = new powerup(game, self, pickRandomFromDictionary(pUpDictionary), powerupPosition, players);
       newpUp.sprite.scale.x = 2 * scalingFactors.x;
       newpUp.sprite.scale.y = 2 * scalingFactors.y;
 			self.pUpGroup.add(newpUp.sprite);
