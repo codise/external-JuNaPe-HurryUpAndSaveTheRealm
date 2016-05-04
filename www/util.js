@@ -34,7 +34,11 @@ self.x = xPos * tileWidth;
 self.y = yPos * tileHeight;
 self.anchorX = xAnchor;
 self.anchorY = yAnchor;
-self.image = 'empty';
+self.image = 'test';
+/*
+self.image = 'test';	//to test wall collision
+self.image = 'empty';	//to testimages to remain invisible
+*/
 }
 
 /**
