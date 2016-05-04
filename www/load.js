@@ -188,7 +188,7 @@ var load = function ()
 
 	// Load effects
 
-	game.load.spritesheet('explosion', 'assets/effects/placeholder_explosion.png', 64, 64, 23);
+	game.load.spritesheet('death_cloud', 'assets/effects/death_cloud.png', 100, 100, 6);
 	game.load.spritesheet('spawn', 'assets/effects/SpawnCloud.png', 100, 100, 6);
 
 	//Load powerup sprites
