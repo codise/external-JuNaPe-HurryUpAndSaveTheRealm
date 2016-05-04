@@ -76,7 +76,7 @@ var load = function ()
 	game.load.image('grave2', 'assets/maps/fieldObjects/smallCollidables/Grave2.png');
 	game.load.image('grave3', 'assets/maps/fieldObjects/smallCollidables/Grave3.png');
 	game.load.image('grave4', 'assets/maps/fieldObjects/smallCollidables/Grave4.png');
-	game.load.image('grave5', 'assets/maps/fieldObjects/sroundmallCollidables/Grave5.png');
+	game.load.image('grave5', 'assets/maps/fieldObjects/smallCollidables/Grave5.png');
 	game.load.image('candelabrum', 'assets/maps/fieldObjects/smallCollidables/candelabrum.png');
 	game.load.image('pillar', 'assets/maps/fieldObjects/smallCollidables/pillar.png');
 	game.load.image('pillarGone', 'assets/maps/fieldObjects/smallCollidables/pillar_Gone.png');
