@@ -145,6 +145,7 @@ self.kill = function ()
 		game.state.states.play.roundManager.lastRoomTimeout = 5000; //5 sec
 		game.state.states.play.roundManager.lastRoomTimer = game.time.now + game.state.states.play.roundManager.lastRoomTimeout;
 		}
+	game.effectManager.createDeathEffect(self, players);
 	self.sprite.destroy();
 	};
 

@@ -332,22 +332,22 @@ var updateRoomMovement = function ()
 															self);
 					self.dirty['rooms'] = true;
 					switch (rooms[1].moveDirection)
-    					{
-    					case "north":
-      					rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
-      					break;
-    					case "east":
-      					rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
-      					break;
-    					case "south":
-      					rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
-      					break;
-    					case "west":
-      					rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
-      					break;
-    					default:
-      					rooms[2] = null;
-    					}
+						{
+						case "north":
+							rooms[2].moveTo(game.camera.x, game.camera.y - game.camera.height);
+							break;
+						case "east":
+							rooms[2].moveTo(game.camera.x + game.camera.width, game.camera.y);
+							break;
+						case "south":
+							rooms[2].moveTo(game.camera.x, game.camera.y+ game.camera.height);
+							break;
+						case "west":
+							rooms[2].moveTo(game.camera.x - game.camera.width, game.camera.y);
+							break;
+						default:
+							rooms[2] = null;
+						}
 					lastPaused = game.time.now + pauseTime;
 					nextRoom++;
 					} else
@@ -401,14 +401,17 @@ self.getScoreTable = function ()
 
 var startBgmMusic = function(bgmTrack) 
 	{
-		bgmMusic = game.sound.play(bgmTrack);
-		bgmMusic.loopFull();
+	bgmMusic = game.sound.play(bgmTrack);
+	bgmMusic.loopFull();
 	}
 	
 
 var stopBgmMusic = function(bgmTrack) 
 	{
+	if(bgmMusic != undefined)
+		{
 		bgmMusic.stop();
+		}
 	}
 
 self.playSoundOnScreen = function (soundIdentifier)

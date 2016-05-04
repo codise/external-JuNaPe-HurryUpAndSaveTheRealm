@@ -17,8 +17,36 @@ var maxTilesY = 15;
 
 /**
 * Collision objects to help streamline positioning them in a room
+* This particular object is used to place an invisible collider on a wall
+* @param {Number} width - width of the wall in tiles
+* @param {Number} height - height of the wall in tiles
+* @param {Number} xPos - x position based on tiles
+* @param {Number} yPos - y position based on tiles
+* @param {Number} xAnchor - value is used to set collision sprites anchor
+* @param {Number} yAnchor - value is used to set collision sprites anchor
+*/
+function wallCollider (width, height, xPos, yPos, xAnchor, yAnchor)
+{
+var self = this;
+self.width = width * tileWidth;
+self.height = height * tileHeight;
+self.x = xPos * tileWidth;
+self.y = yPos * tileHeight;
+self.anchorX = xAnchor;
+self.anchorY = yAnchor;
+self.image = 'empty';
+}
+
+/**
+* Collision objects to help streamline positioning them in a room
 * the body size is based on the current collidable object's images
 * new such images should follow similar dimensions
+* Refer to /assets/maps/fieldObjects/smallCollidables for image sizes
+* Object placed in position (0, 0) will be positioned in the bottom middle of the top leftmost visible tile
+* Object at (maxTilesX, maxTilesY) will be placed outside of the room; 1 tile to the right and 1 tile under the room
+* @param {Number} xPos - x position based on tiles
+* @param {Number} yPos - y position based on tiles
+* @param {String} image - the identifier of the image to use with the sprite; refer to load.js
 */
 function smallCollisionSprite (xPos, yPos, image)
 {
@@ -27,8 +55,8 @@ self.width = 94;
 self.height = 145;
 self.anchorX = 0.5;
 self.anchorY = 1;
-self.x = xPos;
-self.y = yPos;
+self.x = (xPos + 0.5) * tileWidth;
+self.y = (yPos + 1) * tileHeight;
 self.image = image;
 self.bodyBoxLength = 58;
 }
@@ -37,6 +65,12 @@ self.bodyBoxLength = 58;
 * Collision objects to help streamline positioning them in a room
 * the body size is based on the current collidable object's images
 * new such images should follow similar dimensions
+* Refer to /assets/maps/fieldObjects/largeCollidables for image sizes
+* Object placed in position (0, 0) will be positioned in the bottom middle of the top leftmost visible tile
+* Object at (maxTilesX, maxTilesY) will be placed (partially) outside of the room; 1 tile to the right and 1 tile under the room
+* @param {Number} xPos - x position based on tiles
+* @param {Number} yPos - y position based on tiles
+* @param {String} image - the identifier of the image to use with the sprite; refer to load.js
 */
 function largeCollisionSprite (xPos, yPos, image)
 {
@@ -45,24 +79,11 @@ self.width = 280;
 self.height = 286;
 self.anchorX = 0.5;
 self.anchorY = 1;
-self.x = xPos;
-self.y = yPos;
+self.x = (xPos + 0.5) * tileWidth;
+self.y = (yPos - 1) * tileHeight;
 self.image = image;
 self.bodyBoxLength = 156;
 }
-
-/*
-room1colliders[0] = 
-{
-	width: 6 * tileWidth,
-	height: 3 * tileHeight,
-	x: maxTilesX * tileWidth / 2,
-	y: 0,
-	anchorX: 0.5,
-	anchorY: 0,
-	image: 'test'
-};
-*/
 
 
 /**

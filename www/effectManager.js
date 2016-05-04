@@ -52,7 +52,7 @@ self.getSpawnDuration = function ()
 
 self.createDeathEffect = function (target, broadcastList = undefined)
 	{
-	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'explosion');
+	var effect = game.add.sprite(target.sprite.position.x, target.sprite.position.y, 'death_cloud');
 	scale(effect);
 	effect.anchor.setTo(0.5, 0.5);
 	effect.animations.add('kaboom');
