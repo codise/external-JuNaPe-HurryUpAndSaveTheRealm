@@ -27,7 +27,7 @@ var creditInfo = [ 					{what: 'To ', who: ['OhtuProjekti-course, University of 
 									{what: 'Game Design', who: ['Valtter Taipale', 'Markus Sibakov', 'Niko Novinsky', 'Janika Kääriäinen']},
 									{what: 'Art', who: ['Valtter Taipale', 'Risto Ollila', 'Markus Sibakov']},
 									{what: 'Music', who: ['Kevin MacLeod (incompetech.com)']},
-									{what: 'Thanks', who: ['Matti Luukkainen', 'Leftpad','Our families', 'All the Cats of Earth']}
+									{what: 'Thanks', who: ['Jimi Welling', 'Matti Luukkainen', 'Leftpad','Our families', 'All the Cats of Earth']}
 									];
 
 var creditText = game.add.text(position.x, position.y, '', {font: '25px Courier', fill: '#ffffff'});
