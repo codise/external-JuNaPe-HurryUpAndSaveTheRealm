@@ -445,7 +445,7 @@ var getRandomPointOutsideColliders = function(game, amount)
 	var randomPos = {};
 	var collide = true;
 	var tryCount = amount;
-	while(collide && trycount > 0) 
+	while(collide && tryCount > 0) 
 	{
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
