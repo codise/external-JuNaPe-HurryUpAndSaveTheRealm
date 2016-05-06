@@ -75,4 +75,4 @@ generic3.rooms = [
 	];
 
 generic3.boss = 'tentacle';
-round5.bgm = 'bgm05'
+generic3.bgm = 'bgm05'
