@@ -79,3 +79,4 @@ generic1.rooms = [
 	];
 
 generic1.boss = 'king';
+generic1.bgm = 'bgm05'

@@ -233,7 +233,7 @@ var load = function ()
 		game.load.audio('bgm03', 'assets/sounds/bgm/bgm03.ogg');
 		game.load.audio('bgm04', 'assets/sounds/bgm/bgm04.ogg');
 		game.load.audio('bgm05', 'assets/sounds/bgm/bgm05.ogg');
-		game.load.audio('explosion', 'assets/sounds/effects/placeholder_explosion.ogg');
+		game.load.audio('explosion', 'assets/sounds/effects/explosion.ogg');
 
 		var audioList = [];
     
