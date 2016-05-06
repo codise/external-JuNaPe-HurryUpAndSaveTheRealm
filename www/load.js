@@ -33,7 +33,7 @@ var load = function ()
 
 	// Load waiting state demo video
 	
-	game.load.video('demo', 'assets/video/placeholder_demo.mp4');
+	game.load.video('demo', 'assets/video/GameDemo.mp4');
 
 	// Load level backgrounds
 
