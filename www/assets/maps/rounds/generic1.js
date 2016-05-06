@@ -72,7 +72,7 @@ room5colliders.p4 = new smallCollisionSprite( 19, 10, 'pillar');
 
 generic1.rooms = [
 	{"roomBg": "generic_Entrance_FromEast2", "colliders": room1colliders, "moveDirection": "west", "moveSpeed": "normal"},
-	{"roomBg": "generic_Turn_WtS1", "colliders": room2colliders, "moveDirection": "south", "moveSpeed": "normal"},
+	{"roomBg": "generic_Turn_WtS2_fix", "colliders": room2colliders, "moveDirection": "south", "moveSpeed": "normal"},
 	{"roomBg": "generic_Turn_EtN2", "colliders": room3colliders, "moveDirection": "west", "moveSpeed": "normal"},
 	{"roomBg": "generic_Straight_Vert3"	, "colliders": room4colliders, "moveDirection": "west", "moveSpeed": "normal"},
 	{"roomBg": "generic_DeadEnd_FromEast2", "colliders": room5colliders, "moveDirection": "null", "moveSpeed": "stop"},
