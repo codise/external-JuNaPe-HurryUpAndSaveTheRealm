@@ -97,6 +97,7 @@ var load = function ()
 	//Entrances
 	game.load.image('generic_Entrance_FromEast1', 'assets/maps/backgrounds/Generics/Entrance_FromEast1.png');
 	game.load.image('generic_Entrance_FromEast2', 'assets/maps/backgrounds/Generics/Entrance_FromEast2.png');
+	game.load.image('generic_Entrance_FromEast3', 'assets/maps/backgrounds/Generics/Entrance_FromEast3.png');	
 	game.load.image('generic_Entrance_FromWest1', 'assets/maps/backgrounds/Generics/Entrance_FromWest1.png');
 
 	//straight leftright
@@ -104,6 +105,9 @@ var load = function ()
 	game.load.image('generic_Straight_Vert2', 'assets/maps/backgrounds/Generics/Straight_Vert2.png');
 	game.load.image('generic_Straight_Vert3', 'assets/maps/backgrounds/Generics/Straight_Vert3.png');
 	game.load.image('generic_Straight_Vert4', 'assets/maps/backgrounds/Generics/Straight_Vert4.png');
+	game.load.image('generic_Straight_Vert5', 'assets/maps/backgrounds/Generics/Straight_Vert5.png');
+	game.load.image('generic_Straight_Vert6', 'assets/maps/backgrounds/Generics/Straight_Vert6.png');
+	game.load.image('generic_Straight_Vert7', 'assets/maps/backgrounds/Generics/Straight_Vert7.png');
 
 	//Straight updown
 	game.load.image('generic_Straight_Hori_short_stairs1', 'assets/maps/backgrounds/Generics/Straight_Hori_short_stairs1.png');
@@ -125,6 +129,9 @@ var load = function ()
 	game.load.image('generic_Turn_WtN2', 'assets/maps/backgrounds/Generics/Turn_WtN2.png');
 	game.load.image('generic_Turn_WtS1', 'assets/maps/backgrounds/Generics/Turn_WtS1.png');
 	game.load.image('generic_Turn_WtS2', 'assets/maps/backgrounds/Generics/Turn_WtS2.png');
+	
+	game.load.image('generic_Turn_WtS2_fix', 'assets/maps/backgrounds/Generics/Turn_WtS2_Quickfix.png');
+	
 
 	// Load player sprites
 
@@ -188,7 +195,7 @@ var load = function ()
 
 	// Load effects
 
-	game.load.spritesheet('explosion', 'assets/effects/placeholder_explosion.png', 64, 64, 23);
+	game.load.spritesheet('death_cloud', 'assets/effects/death_cloud.png', 100, 100, 6);
 	game.load.spritesheet('spawn', 'assets/effects/SpawnCloud.png', 100, 100, 6);
 
 	//Load powerup sprites
@@ -226,7 +233,7 @@ var load = function ()
 		game.load.audio('bgm03', 'assets/sounds/bgm/bgm03.ogg');
 		game.load.audio('bgm04', 'assets/sounds/bgm/bgm04.ogg');
 		game.load.audio('bgm05', 'assets/sounds/bgm/bgm05.ogg');
-		game.load.audio('explosion', 'assets/sounds/effects/placeholder_explosion.ogg');
+		game.load.audio('explosion', 'assets/sounds/effects/explosion.ogg');
 
 		var audioList = [];
     

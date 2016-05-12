@@ -5,7 +5,7 @@
 |     Here you'll find useful functions    |
 ==========================================*/
 
-
+var rect = new Phaser.Rectangle(0,0,200,200);
 
 /**
 * Helper variables for room collision generation
@@ -35,6 +35,10 @@ self.y = yPos * tileHeight;
 self.anchorX = xAnchor;
 self.anchorY = yAnchor;
 self.image = 'empty';
+/*
+self.image = 'test';	//to test wall collision
+self.image = 'empty';	//to testimages to remain invisible
+*/
 }
 
 /**
@@ -101,18 +105,20 @@ var getPosMinDPlayers = function (game, playerList, minimumDistance, maxTryCount
 	var currentBestPos = {};
 	var acceptablePosition = false;
 	var currentDistance = 0;
-	while (!acceptablePosition || (tryCount < maxTryCount && maxTryCount != undefined))
+	var collide = true;
+	while (!acceptablePosition && (tryCount < maxTryCount && maxTryCount != undefined))
 		{
 		var randomPos = {};
 		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
 		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
 		currentDistance = dClosestPlayer(playerList, randomPos);
-		if (currentDistance >= minimumDistance)
+		collide = isPointInsideCollisionBox(game,randomPos);
+		if (currentDistance >= minimumDistance && collide == false)
 			{
 			acceptablePosition = true;
 			currentBestPos = randomPos;
 			}
-		else if(currentDistance >= currentBestDistance) {
+		else if(currentDistance >= currentBestDistance &&!collide == false) {
 			currentBestPos = randomPos;
 		}
 		tryCount++;
@@ -148,7 +154,7 @@ var getInitialSpawnPos = function (game, playerList, minimumDistance, borderLeng
 			}
 		else if(currentDistance >= currentBestDistance) {
 			currentBestPos = randomPos;
-		}
+			}
 		tryCount++;
 		}
 		return currentBestPos;
@@ -410,3 +416,45 @@ var broadcastSound = function (players, soundIdentifier)
 			game.state.states.play.roundManager.playSoundOnScreen(soundIdentifier);
 		}
 	};
+
+/**
+* Checks if a specified point is inside any currently loaded colliders
+* @param {Phaser.game} game current game instance
+* @param {Point} pos the point which we check
+* @return {Boolean} True if point is inside a collider, false otherwise 
+*/
+var isPointInsideCollisionBox = function(game, pos) 
+{
+	var colGroup = game.state.states.play.roundManager.collisionGroup.children;
+	rect.x = pos.x;
+	rect.y = pos.y;
+	for (var i = colGroup.length - 1; i >= 0; i--) {
+		if(rect.intersects(colGroup[i]))
+		{
+			return true;
+		}
+	}
+	return false;
+
+}
+
+/**
+* Gets a random point that's not inside a collider
+* @param {Phaser.game} game current game instance
+* @param {Number} amount The maximum number of attempts
+* @return {Point} A random non collidable point
+*/
+var getRandomPointOutsideColliders = function(game, amount) 
+{
+	var randomPos = {};
+	var collide = true;
+	var tryCount = amount;
+	while(collide && tryCount > 0) 
+	{
+		randomPos.x = game.camera.x + game.rnd.integerInRange(0, game.camera.width);
+		randomPos.y = game.camera.y + game.rnd.integerInRange(0, game.camera.height);
+		collide = isPointInsideCollisionBox(game,randomPos)
+		tryCount--;
+	}
+	return randomPos;
+}
