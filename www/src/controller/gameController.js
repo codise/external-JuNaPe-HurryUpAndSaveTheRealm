@@ -72,13 +72,13 @@ self.preload = function ()
 		}
 
 	//Sound effects need to be loaded on the phone if we want to play them on the phone
-	game.load.audio('damage', ['assets/sounds/effects/damage.ogg', 'assets/sounds/effects/damage_ios.m4a']);
-	game.load.audio('explosion', ['assets/sounds/effects/explosion.ogg', 'assets/sounds/effects/explosion_ios.m4a']);
+	game.load.audio('damage', ['../assets/sounds/effects/damage.ogg', 'assets/sounds/effects/damage_ios.m4a']);
+	game.load.audio('explosion', ['../assets/sounds/effects/explosion.ogg', 'assets/sounds/effects/explosion_ios.m4a']);
 
 	gameClient.connect(serverAddress, controllerPort, self.id, clientConnected);
 	//console.log("Game.js Connecting to: "+serverAddress+ "Port: "+controllerPort);
-	game.load.image('background', 'assets/bg/controllerBackground.png');
-	game.load.image('circlepad', 'assets/other/controller_circle.png');
+	game.load.image('background', '../assets/bg/controllerBackground.png');
+	game.load.image('circlepad', '../assets/other/controller_circle.png');
 	deadText = game.add.text(0, game.height/2, '', {font: '50px Courier', fill: '#ffffff'});
 	};
 

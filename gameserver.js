@@ -1,7 +1,7 @@
 'use strict';
 
 var spaceify = require("./spaceifyapplication/spaceifyapplication.js");
-var serverConfig = require("./www/serverconfig.js");
+var serverConfig = require("./www/src/serverconfig.js");
 
 
 function GameServer ()

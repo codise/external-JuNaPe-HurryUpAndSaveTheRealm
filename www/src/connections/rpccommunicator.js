@@ -1,1 +1,1 @@
-../spaceifyapplication/rpccommunicator.js
+../../../spaceifyapplication/rpccommunicator.js

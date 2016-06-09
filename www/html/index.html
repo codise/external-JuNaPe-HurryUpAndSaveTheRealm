@@ -100,8 +100,8 @@ div {
 }
 
     </style>
-    <script src="playerPatternList.js"></script>
-    <script src="playerClassStats.js"></script>
+    <script src="src/gameStates/play/round/player/playerPatternList.js"></script>
+    <script src="src/gameSTates/play/round/player/playerClassStats.js"></script>
     <script>
 
 var chosenClass = -1;
@@ -168,7 +168,7 @@ function playGame()
 
   if(chosenClass > -1 && /^[a-z0-9]+$/i.test(name))
   {
-    window.location.href = 'controller.html' + '?n=' + name + '&c=' + chosenClass;
+    window.location.href = 'html/controller.html' + '?n=' + name + '&c=' + chosenClass;
   } else
   {
     //TODO if nimi!= alnum värjää nimiruutu

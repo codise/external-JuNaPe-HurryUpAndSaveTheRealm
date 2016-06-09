@@ -1,1 +1,1 @@
-../spaceifyapplication/websocketconnection.js
+../../../spaceifyapplication/websocketconnection.js
