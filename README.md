@@ -1,33 +1,59 @@
-JuNaPe--gamenamehere-
-======================
+JuNaPe-HurryUpAndSaveTheRealm
+=============================
 
-Spring 2016 software development project.
+This is a twin-stick 'dungeon'-crawler game. The main game screen is designed to be viewed on a large public screen, and mobile devices
+work as controllers for players. Best way to figure out the mechanics of the game is by playing it, so go on, don't be shy!
 
-##### Product & Sprint backlog:
+All feedback is appreciated, the game is currently under slovelopment ( very slow development ), and it's mostly extended by request. 
 
-https://trello.com/b/4aalMS2C/junape
+#### Installation instructions
 
-##### Burndown chart: 
+Prerequisites
+--------------
+* git
+* Node.js (tested with v4.2.6): https://nodejs.org
+* npm (Node package manager, usually comes with the node installation, if not install separately)
 
-https://BurndownForTrello.com/share/xcmpg12uq0
+Installing
+----------
+These instruction apply in the command-line with working git, node.js and npm. In Windows it's probably usefull to install [Git for Windows](https://git-for-windows.github.io/).
 
-##### Hour accounting:
+Checkout the code from Github
 
-https://docs.google.com/spreadsheets/d/1qR0STTPIfG2O4oNOOeTi-rLpZHYI5CIzRS0F_ACi13I/edit?usp=sharing
+        git clone https://github.com/codise/JuNaPe-HurryUpAndSaveTheRealm.git
 
-#### Contributing guidelines
+Install dependencies with npm
 
-* **Never push to master branch!**
-* Create your own branch in which you develop features
-* Create pull request when the feature is ready, someone will review it for you.
+        cd JuNaPe-HurryUpAndSaveTheRealm/
+        npm install
 
-##### How to manage branches.
+        cd spaceifyapplication/api
+        npm install
+        cd ../..
 
-When starting a new task first pull latest master and then make a new branch on your local system with command `git branch -b <tasknamehere>`
-After making the feature, commit your changes and push them to server with `git push origin <tasknamehere>`
-When your branch is merged remember to make sure that it is deleted by deleting it with `git branch -d <tasknamehere> && git push origin :<tasknamehere>`
+Running
+-------
+        node gameserver.js
 
-#### Coding guidelines
+This starts a http server for serving files and websocket communication server.
+
+Screen is served at: [http://localhost:8080/screen.html](http://localhost:8080/screen.html)
+
+Mobile clients area served at: [http://localhost:8080/](http://localhost:8080/)
+
+If you want to use real mobile clients, remember to edit server address in www/src/serverconfig.js
+
+#### Contributing
+
+If you like the game and you have the greatest idea for a new feature/bugfix/cool-stuff just fork the repository
+develop your feature and create a pull request which depicts to point what you have done, and optionally why it needs
+to be in the game.
+
+You can also report bugs if you find them, preferably with instructions to replicate the bug, and pick issues from 
+the issue tracker and fix them in your fork and pull request them.
+
+
+##### Coding guidelines
 
 Follow this coding example to the point.
 
@@ -63,39 +89,4 @@ self.printYourselfUsingCallback = function(callback)      // Define a public met
 }
 ```
 
-**Indent with two tabs!**
-
-#### Installation instructions
-
-Prequisities
-------------
-* git
-* Node.js (tested with v4.2.6): https://nodejs.org
-* npm (Node package manager, usually comes with the node installation, if not install separately)
-
-Installing
-----------
-These instruction apply in the command-line with working git, node.js and npm. In Windows it's probably usefull to install [Git for Windows](https://git-for-windows.github.io/).
-
-Checkout the code from Github
-
-        git clone https://github.com/KatsCyl/JuNaPe--gamenamehere-/
-
-Install dependencies with npm
-
-        cd JuNaPe--gamenamehere-/
-        npm install
-
-        cd spaceifyapplication/api
-        npm install
-        cd ../..
-
-Running
--------
-        node gameserver.js
-
-This starts a http server for serving files and websocket communication server.
-
-Big screen is served at: [http://localhost:8080/screen.html](http://localhost:8080/screen.html)
-
-Mobile clients area served at: [http://localhost:8080/](http://localhost:8080/)
+**Indent with tabs**
