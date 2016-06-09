@@ -1,9 +1,11 @@
 'use strict';
 
-var gameWidth = window.innerWidth * window.devicePixelRatio;
-var gameHeight = window.innerHeight * window.devicePixelRatio;
+var gameWidth = window.innerWidth
+var gameHeight = window.innerHeight
 var wantedGameWidth = 1920;
 var wantedGameHeight = 1080;
+
+console.log(gameWidth + " " + window.innerWidth);
 
 
 var scalingFactors = { "x": gameWidth / wantedGameWidth,
